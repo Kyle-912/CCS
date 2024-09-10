@@ -157,6 +157,12 @@ void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_by
 void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_bytes)
 {
     // Set the address in the slave address register
+    I2CMasterSlaveAddrSet(mod, addr, false);
+
+    // Trigger I2C module receive
+    I2CMasterControl(mod, I2C_MASTER_CMD_BURST_RECEIVE_START);
+
+    // Set the address in the slave address register
     I2CMasterSlaveAddrSet(mod, addr, true);
 
     // Trigger I2C module receive
