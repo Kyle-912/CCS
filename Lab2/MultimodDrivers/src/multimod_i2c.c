@@ -62,7 +62,7 @@ void I2C_WriteSingle(uint32_t mod, uint8_t addr, uint8_t byte)
     I2CMasterDataPut(mod, byte);
 
     // Trigger I2C module send
-    I
+    I2CMasterControl(mod, I2C_MASTER_CMD_SINGLE_SEND);
 
     // Wait until I2C module is no longer busy
 
