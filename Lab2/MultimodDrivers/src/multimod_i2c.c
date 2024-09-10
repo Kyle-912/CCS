@@ -91,6 +91,7 @@ uint8_t I2C_ReadSingle(uint32_t mod, uint8_t addr)
     }
 
     // Return received data
+    return data;
 }
 
 // I2C_WriteMultiple
