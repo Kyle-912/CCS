@@ -111,8 +111,10 @@ void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_by
     I2CMasterDataPut(mod, data);
 
     // Trigger I2C module send
+    I2CMasterControl(mod, I2C_MASTER_CMD_SINGLE_SEND);
 
     // Wait until I2C module is no longer busy
+    
 
     // While num_bytes > 1
     // Input data into I2C module
