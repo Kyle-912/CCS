@@ -123,7 +123,7 @@ void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_by
     // Trigger I2C module send
     // Wait until I2C module is no longer busy
     data++;
-    while (num_bytes > 1) //modify num bytes and move pointer
+    while (num_bytes > 1) // modify num bytes and move pointer
     {
         I2CMasterDataPut(mod, data);
         I2CMasterControl(mod, I2C_MASTER_CMD_BURST_SEND_CONT);
@@ -156,14 +156,6 @@ void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_by
 // Return: void
 void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_bytes)
 {
-    // Set the address in the slave address register
-    I2CMasterSlaveAddrSet(mod, addr, false);
-
-    //i2c data put the register addr
-
-    // Trigger I2C module receive
-    I2CMasterControl(mod, I2C_MASTER_CMD_BURST_SEND_START);
-
     // Set the address in the slave address register
     I2CMasterSlaveAddrSet(mod, addr, true);
 
