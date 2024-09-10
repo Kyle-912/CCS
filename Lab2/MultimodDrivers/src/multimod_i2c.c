@@ -24,7 +24,7 @@
 // Return: void
 void I2C_Init(uint32_t mod) {
     // Note:    The multimod board uses multiple I2C modules
-//              to communicate with different devices. You can use
+    //          to communicate with different devices. You can use
     //          the 'mod' parameter to choose which module to initialize
     //          and use.
 
