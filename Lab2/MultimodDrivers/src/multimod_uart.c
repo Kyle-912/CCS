@@ -31,15 +31,6 @@ void UART_Init() {
     // Set system clock speed
     SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
 
-    // Enable relevant port for launchpad switches
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
-    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF))
-    {
-    }
-
-    // Configure SW1 input
-    GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
-
     // Enable port A
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOA))
