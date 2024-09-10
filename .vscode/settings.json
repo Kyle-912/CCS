@@ -4,6 +4,8 @@
         "EEPROM",
         "GPIOA",
         "GPIOF",
+        "GYRCONFG",
+        "GYRRANGE",
         "PERIPH",
         "PMUSTATUS",
         "PORTA",
