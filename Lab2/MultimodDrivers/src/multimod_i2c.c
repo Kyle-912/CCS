@@ -84,7 +84,6 @@ uint8_t I2C_ReadSingle(uint32_t mod, uint8_t addr)
 
     // Trigger I2C module receive
     I2CMasterControl(mod, I2C_MASTER_CMD_SINGLE_RECEIVE);
-    // I2CMasterDataPut(mod, );
     uint32_t data = I2CMasterDataGet(mod);
 
     // Wait until I2C module is no longer busy
@@ -106,8 +105,10 @@ uint8_t I2C_ReadSingle(uint32_t mod, uint8_t addr)
 void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_bytes)
 {
     // Set the address in the slave address register
+    I2CMasterSlaveAddrSet(mod, addr, true);
 
     // Input data into I2C module
+    I2CMasterDataPut(mod, data);
 
     // Trigger I2C module send
 
