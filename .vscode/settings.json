@@ -1,9 +1,11 @@
 {
     "cSpell.ignoreWords": [
+        "DEVICEID",
         "EEPROM",
         "GPIOA",
         "GPIOF",
         "PERIPH",
+        "PMUSTATUS",
         "PORTA",
         "PORTB",
         "PORTF",
