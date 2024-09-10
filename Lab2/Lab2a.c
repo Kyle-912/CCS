@@ -53,7 +53,7 @@ int main(void)
 
     while (1)
     {
-        UARTprintf("Button pressed!\n");
+        UARTprintf("Test\n");
         SysCtlDelay(delay_0_1_s);
     }
 }
