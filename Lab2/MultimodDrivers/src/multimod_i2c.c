@@ -131,6 +131,7 @@ void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_by
         {
         }
         data++;
+        num_bytes--;
     }
 
     // Input last byte into I2C module
