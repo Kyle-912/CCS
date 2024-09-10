@@ -35,7 +35,10 @@ void I2C_Init(uint32_t mod)
     {
     }
 
-    
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOA))
+    {
+    }
 
     // Configure pins for I2C module
 
