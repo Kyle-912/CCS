@@ -5,6 +5,7 @@
         "GPIOF",
         "PERIPH",
         "PORTA",
+        "PORTB",
         "PORTF",
         "Tiva",
         "XTAL"
