@@ -174,7 +174,7 @@ void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_byt
     // Read received data
     while (num_bytes > 1)
     {
-        I2CMasterControl(mod, I2C_MASTER_CMD_BURST_RECEIVE_START);
+        I2CMasterControl(mod, I2C_MASTER_CMD_BURST_RECEIVE_CONT);
         while (I2CMasterBusy(mod))
         {
         }
@@ -183,7 +183,7 @@ void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_byt
     // Trigger I2C module receive
     // Wait until I2C module is no longer busy
     // Read last byte
-    I2CMasterControl(mod, I2C_MASTER_CMD_BURST_RECEIVE_START);
+    I2CMasterControl(mod, I2C_MASTER_CMD_BURST_RECEIVE_FINISH);
     while (I2CMasterBusy(mod))
     {
     }
