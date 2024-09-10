@@ -59,8 +59,10 @@ void I2C_WriteSingle(uint32_t mod, uint8_t addr, uint8_t byte)
     I2CMasterSlaveAddrSet(mod, addr, false);
 
     // Input data into I2C module
+    I2CMasterDataPut(mod, byte);
 
     // Trigger I2C module send
+    I
 
     // Wait until I2C module is no longer busy
 
