@@ -50,7 +50,7 @@ uint8_t BMI160_ReadRegister(uint8_t addr)
     I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_SEND_START);
 
     int arr;
-    I2C_ReadMultiple(I2C1_BASE, BMI160_ADDR, arr, 8); //16 bit in 
+    I2C_ReadMultiple(I2C1_BASE, BMI160_ADDR, arr, 8); //16 bit for other one
 
     return;
 }
