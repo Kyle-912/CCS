@@ -44,7 +44,7 @@ void I2C_Init(uint32_t mod)
     GPIOPinTypeI2C(GPIO_PORTA_BASE, (GPIO_PIN_6 | GPIO_PIN_7));
 
     // Configure I2C SCL speed, set as master
-    
+    I2CMasterInitExpClk(I2C1_BASE, SysCtlClockGet(), true);
 }
 
 // I2C_WriteSingle
