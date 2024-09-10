@@ -1,0 +1,12 @@
+{
+    "cSpell.ignoreWords": [
+        "EEPROM",
+        "GPIOA",
+        "GPIOF",
+        "PERIPH",
+        "PORTA",
+        "PORTF",
+        "Tiva",
+        "XTAL"
+    ]
+}
