@@ -55,7 +55,7 @@ int main(void)
 
     while (1)
     {
-        UARTprintf("%d,BMI_chipid\n");
+        UARTprintf("%d\n", BMI160_chipid);
         SysCtlDelay(delay_0_1_s);
     }
 }
