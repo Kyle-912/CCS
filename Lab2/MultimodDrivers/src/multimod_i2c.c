@@ -122,11 +122,10 @@ void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_by
     // Input data into I2C module
     // Trigger I2C module send
     // Wait until I2C module is no longer busy
-    while (/* condition */)
+    while (num_bytes > 1)
     {
         /* code */
     }
-    
 
     // Input last byte into I2C module
 
@@ -171,7 +170,6 @@ void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_byt
         {
         }
     }
-
 
     // Trigger I2C module receive
     // Wait until I2C module is no longer busy
