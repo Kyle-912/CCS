@@ -41,6 +41,7 @@ void I2C_Init(uint32_t mod)
     }
 
     // Configure pins for I2C module
+    
 
     // Configure I2C SCL speed, set as master
 }
