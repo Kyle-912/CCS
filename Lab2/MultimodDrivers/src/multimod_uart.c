@@ -51,8 +51,6 @@ void UART_Init() {
 
     // Configure UART baud rate
     UARTStdioConfig(0, 115200, SysCtlClockGet());
-    // This should have been done in lab 0, so it's just copy & paste.
-
 }
 
 /********************************Public Functions***********************************/
