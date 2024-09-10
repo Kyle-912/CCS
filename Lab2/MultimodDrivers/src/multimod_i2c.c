@@ -56,7 +56,7 @@ void I2C_Init(uint32_t mod)
 void I2C_WriteSingle(uint32_t mod, uint8_t addr, uint8_t byte)
 {
     // Set the address in the slave address register
-    I2CMasterSlaveAddrSet(mod, addr, false);
+    I2CMasterSlaveAddrSet(mod, addr, true);
 
     // Input data into I2C module
     I2CMasterDataPut(mod, byte);
