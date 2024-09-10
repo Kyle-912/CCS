@@ -40,7 +40,8 @@
 /************************************MAIN*******************************************/
 
 // Write i2c functions, check to see if you can get the chip IDs.
-int main(void) {
+int main(void)
+{
     UART_Init();
 
     uint8_t BMI160_chipid = BMI160_ReadRegister(BMI160_CHIPID_ADDR);
@@ -49,7 +50,8 @@ int main(void) {
 
     // Output chip IDs
 
-    while(1);
+    while (1)
+        ;
 }
 
 /************************************MAIN*******************************************/
