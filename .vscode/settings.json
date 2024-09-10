@@ -11,6 +11,7 @@
         "GYROY",
         "GYROZ",
         "GYRRANGE",
+        "I2C_SLAVE_ACT_RREQ_FBR",
         "INTEN",
         "MAGIF",
         "MAGX",
@@ -23,6 +24,8 @@
         "PORTA",
         "PORTB",
         "PORTF",
+        "RREQ",
+        "TREQ",
         "Tiva",
         "XTAL"
     ],
