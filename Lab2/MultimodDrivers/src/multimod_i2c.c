@@ -83,7 +83,7 @@ uint8_t I2C_ReadSingle(uint32_t mod, uint8_t addr)
     I2CMasterSlaveAddrSet(mod, addr, false);
 
     // Trigger I2C module receive
-    I2CMasterControl(mod, I2C_MASTER_CMD_BURST_SEND_START);
+    I2CMasterControl(mod, I2C_MASTER_CMD_SINGLE_RECEIVE);
     // I2CMasterDataPut(mod, );
     uint32_t data = I2CMasterDataGet(mod);
 
