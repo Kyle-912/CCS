@@ -46,7 +46,7 @@ int main(void)
 
     uint8_t BMI160_chipid = BMI160_ReadRegister(BMI160_CHIPID_ADDR);
 
-    uint8_t OPT3001_chipid = BMI160_ReadRegister(OPT3001_DEVICEID_ADDR);
+    uint8_t OPT3001_chipid = OPT3001_ReadRegister(OPT3001_DEVICEID_ADDR);
 
     // Output chip IDs
 
