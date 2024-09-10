@@ -83,7 +83,7 @@ uint8_t I2C_ReadSingle(uint32_t mod, uint8_t addr)
     I2CMasterSlaveAddrSet(mod, addr, false);
 
     // Trigger I2C module receive
-    uint32_t data = (mod);
+    uint32_t data = I2CMasterDataGet(mod);
 
     // Wait until I2C module is no longer busy
     while (I2CMasterBusy(mod))
