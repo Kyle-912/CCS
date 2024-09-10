@@ -182,6 +182,8 @@ void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_byt
         while (I2CMasterBusy(mod))
         {
         }
+        data++;
+        num_bytes--;
     }
 
     // Trigger I2C module receive
