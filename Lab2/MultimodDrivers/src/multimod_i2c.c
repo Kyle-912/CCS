@@ -22,7 +22,8 @@
 // Initializes specified I2C module
 // Param uint32_t "mod": base address of module
 // Return: void
-void I2C_Init(uint32_t mod) {
+void I2C_Init(uint32_t mod)
+{
     // Note:    The multimod board uses multiple I2C modules
     //          to communicate with different devices. You can use
     //          the 'mod' parameter to choose which module to initialize
@@ -33,7 +34,6 @@ void I2C_Init(uint32_t mod) {
     // Configure pins for I2C module
 
     // Configure I2C SCL speed, set as master
-
 }
 
 // I2C_WriteSingle
@@ -42,7 +42,8 @@ void I2C_Init(uint32_t mod) {
 // Param uint8_t "addr": address to device
 // Param uint8_t "byte": byte to send
 // Return: void
-void I2C_WriteSingle(uint32_t mod, uint8_t addr, uint8_t byte) {
+void I2C_WriteSingle(uint32_t mod, uint8_t addr, uint8_t byte)
+{
     // Set the address in the slave address register
 
     // Input data into I2C module
@@ -50,7 +51,6 @@ void I2C_WriteSingle(uint32_t mod, uint8_t addr, uint8_t byte) {
     // Trigger I2C module send
 
     // Wait until I2C module is no longer busy
-
 
     return;
 }
@@ -60,7 +60,8 @@ void I2C_WriteSingle(uint32_t mod, uint8_t addr, uint8_t byte) {
 // Param uint32_t "mod": base address of module
 // Param uint8_t "addr": address to device
 // Return: uint8_t
-uint8_t I2C_ReadSingle(uint32_t mod, uint8_t addr) {
+uint8_t I2C_ReadSingle(uint32_t mod, uint8_t addr)
+{
     // Set the address in the slave address register
 
     // Trigger I2C module receive
@@ -77,7 +78,8 @@ uint8_t I2C_ReadSingle(uint32_t mod, uint8_t addr) {
 // Param uint8_t* "data": pointer to an array of bytes
 // Param uint8_t "num_bytes": number of bytes to transmit
 // Return: void
-void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t* data, uint8_t num_bytes) {
+void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_bytes)
+{
     // Set the address in the slave address register
 
     // Input data into I2C module
@@ -87,16 +89,15 @@ void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t* data, uint8_t num_by
     // Wait until I2C module is no longer busy
 
     // While num_bytes > 1
-        // Input data into I2C module
-        // Trigger I2C module send
-        // Wait until I2C module is no longer busy
+    // Input data into I2C module
+    // Trigger I2C module send
+    // Wait until I2C module is no longer busy
 
     // Input last byte into I2C module
 
     // Trigger I2C module send
 
     // Wait until I2C module is no longer busy
-
 
     return;
 }
@@ -108,7 +109,8 @@ void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t* data, uint8_t num_by
 // Param uint8_t* "data": pointer to an array of bytes
 // Param uint8_t "num_bytes": number of bytes to read
 // Return: void
-void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t* data, uint8_t num_bytes) {
+void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_bytes)
+{
     // Set the address in the slave address register
 
     // Trigger I2C module receive
@@ -118,17 +120,15 @@ void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t* data, uint8_t num_byt
     // Read received data
 
     // While num_bytes > 1
-        // Trigger I2C module receive
-        // Wait until I2C module is no longer busy
-        // Read received data
+    // Trigger I2C module receive
+    // Wait until I2C module is no longer busy
+    // Read received data
 
     // Trigger I2C module receive
     // Wait until I2C module is no longer busy
     // Read last byte
 
-
     return;
 }
 
 /********************************Public Functions***********************************/
-
