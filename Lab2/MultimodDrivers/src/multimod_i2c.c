@@ -138,6 +138,9 @@ void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_by
     I2CMasterControl(mod, I2C_MASTER_CMD_BURST_SEND_FINISH);
 
     // Wait until I2C module is no longer busy
+    while (I2CMasterBusy(mod))
+    {
+    }
 
     return;
 }
