@@ -55,7 +55,7 @@ int main(void)
 
     while (1)
     {
-        UARTprintf("Test\n");
+        UARTprintf("%d,\n");
         SysCtlDelay(delay_0_1_s);
     }
 }
