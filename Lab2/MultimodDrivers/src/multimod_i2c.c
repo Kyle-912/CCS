@@ -160,7 +160,7 @@ void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_byt
     I2CMasterSlaveAddrSet(mod, addr, true);
 
     // Trigger I2C module receive
-    I2CMasterControl(mod, I2C_MASTER_CMD_BURST_RECEIVE_START);
+    I2CMasterControl(mod, I2C_MASTER_CMD_BURST_SEND_START);
 
     // Wait until I2C module is no longer busy
     while (I2CMasterBusy(mod))
