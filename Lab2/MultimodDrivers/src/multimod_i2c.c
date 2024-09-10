@@ -30,6 +30,7 @@ void I2C_Init(uint32_t mod)
     //          and use.
 
     // Enable clock to relevant I2C and GPIO modules
+    
 
     // Configure pins for I2C module
 
