@@ -52,18 +52,6 @@ void UART_Init() {
     // Configure UART baud rate
     UARTStdioConfig(0, 115200, SysCtlClockGet());
     // This should have been done in lab 0, so it's just copy & paste.
-    // Enable port A
-
-    // Enable UART0 module
-
-
-    // Configure UART0 pins on port A
-
-
-
-    // Set UART clock source
-
-    // Configure UART baud rate
 
 }
 
