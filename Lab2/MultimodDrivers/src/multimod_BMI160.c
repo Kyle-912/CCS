@@ -34,7 +34,8 @@ void BMI160_Init()
 void BMI160_WriteRegister(uint8_t addr, uint8_t data)
 {
     // Complete this function
-    I2C_WriteMultiple(I2C1_BASE, BMI160_ADDR, data, );
+    uint8_t arr[2] = {addr, data};
+    I2C_WriteMultiple(I2C1_BASE, BMI160_ADDR, arr, 2);
 }
 
 // BMI160_ReadRegister
@@ -44,9 +45,9 @@ void BMI160_WriteRegister(uint8_t addr, uint8_t data)
 uint8_t BMI160_ReadRegister(uint8_t addr)
 {
     // Complete this function
-    int *data;
-    I2C_ReadMultiple(I2C1_BASE, BMI160_ADDR, data, 64);
-    return data;
+    int arr;
+    I2C_ReadMultiple(I2C1_BASE, BMI160_ADDR, arr, 8);
+    return;
 }
 
 // BMI160_MultiReadRegister

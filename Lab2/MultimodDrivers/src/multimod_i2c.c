@@ -138,21 +138,40 @@ void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_by
 void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_bytes)
 {
     // Set the address in the slave address register
+    I2CMasterSlaveAddrSet(mod, addr, true);
 
     // Trigger I2C module receive
+    I2CMasterControl(mod, I2C_MASTER_CMD_BURST_RECEIVE_START);
 
     // Wait until I2C module is no longer busy
+    while (I2CMasterBusy(mod))
+    {
+    }
 
     // Read received data
+    int *data = I2CMasterDataGet(mod);
 
     // While num_bytes > 1
     // Trigger I2C module receive
     // Wait until I2C module is no longer busy
     // Read received data
+    while (num_bytes > 1)
+    {
+        I2CMasterControl(mod, I2C_MASTER_CMD_BURST_RECEIVE_START);
+        while (I2CMasterBusy(mod))
+        {
+        }
+    }
+
 
     // Trigger I2C module receive
     // Wait until I2C module is no longer busy
     // Read last byte
+    I2CMasterControl(mod, I2C_MASTER_CMD_BURST_RECEIVE_START);
+    while (I2CMasterBusy(mod))
+    {
+    }
+    uint32_t data = I2CMasterDataGet(mod);
 
     return;
 }
