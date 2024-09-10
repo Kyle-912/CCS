@@ -22,7 +22,7 @@ void OPT3001_Init(void) {
     I2C_Init(I2C_A_BASE);
 
     // Set the correct configuration byte for continuous conversions
-    OPT3001_WriteRegister(OPT3001_CONFIG_ADDR,       );
+    OPT3001_WriteRegister(OPT3001_CONFIG_ADDR, OPT3001_CONFIG_CT);
     return;
 }
 
