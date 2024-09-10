@@ -108,7 +108,7 @@ void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_by
     I2CMasterSlaveAddrSet(mod, addr, true);
 
     // Input data into I2C module
-    I2CMasterDataPut(mod, data);
+    I2CMasterDataPut(mod, *data);
 
     // Trigger I2C module send
     I2CMasterControl(mod, I2C_MASTER_CMD_BURST_SEND_START);
@@ -125,7 +125,7 @@ void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_by
     data++;
     while (num_bytes > 1)
     {
-        I2CMasterDataPut(mod, data);
+        I2CMasterDataPut(mod, *data);
         I2CMasterControl(mod, I2C_MASTER_CMD_BURST_SEND_CONT);
         while (I2CMasterBusy(mod))
         {
