@@ -30,7 +30,7 @@ void I2C_Init(uint32_t mod)
     //          and use.
 
     // Enable clock to relevant I2C and GPIO modules
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C0);
 
     // Configure pins for I2C module
 
