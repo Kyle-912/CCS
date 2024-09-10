@@ -49,6 +49,8 @@ int main(void)
 
     uint8_t OPT3001_chipid = OPT3001_ReadRegister(OPT3001_DEVICEID_ADDR);
 
+    BMI160_Init(I2C_A_BASE);
+
     // Output chip IDs
 
     while (1)
