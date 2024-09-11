@@ -169,7 +169,9 @@ void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_byt
     }
 
     // Read received data
-    uint32_t received = I2CMasterDataGet(mod);
+    *data = (uint8_t)I2CMasterDataGet(mod);
+    data++;
+    num_bytes--;
 
     // While num_bytes > 1
     // Trigger I2C module receive
