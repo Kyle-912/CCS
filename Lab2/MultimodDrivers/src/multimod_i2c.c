@@ -31,7 +31,22 @@ void I2C_Init(uint32_t mod)
 
     if (mod == I2C_A_BASE)
     {
-        /* code */
+        // Enable clock to relevant I2C and GPIO modules
+        SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C1);
+        while (!SysCtlPeripheralReady(SYSCTL_PERIPH_I2C1))
+        {
+        }
+
+        SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+        while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOA))
+        {
+        }
+
+        // Configure pins for I2C module
+        GPIOPinTypeI2C(GPIO_PORTA_BASE, (GPIO_PIN_6 | GPIO_PIN_7));
+
+        // Configure I2C SCL speed, set as master
+        I2CMasterInitExpClk(mod, SysCtlClockGet(), false);
     }
 
 }
