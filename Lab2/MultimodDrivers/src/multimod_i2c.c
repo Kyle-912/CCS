@@ -36,6 +36,7 @@ void I2C_Init(uint32_t mod)
         while (!SysCtlPeripheralReady(SYSCTL_PERIPH_I2C1))
         {
         }
+        SysCtlPeripheralReset(SYSCTL_PERIPH_I2C1);
 
         SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
         while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOA))
@@ -45,7 +46,7 @@ void I2C_Init(uint32_t mod)
         // Configure pins for I2C module
         GPIOPinConfigure(GPIO_PCTL_PA6_I2C1SCL);
         GPIOPinTypeI2CSCL(GPIO_PORTA_BASE, GPIO_PIN_6);
-        
+
         GPIOPinConfigure(GPIO_PCTL_PA7_I2C1SDA);
         GPIOPinTypeI2C(GPIO_PORTA_BASE, GPIO_PIN_7);
 
