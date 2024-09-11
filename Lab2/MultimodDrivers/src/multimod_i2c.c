@@ -32,8 +32,6 @@ void I2C_Init(uint32_t mod)
     if (mod == I2C_A_BASE)
     {
         // Enable clock to relevant I2C and GPIO modules
-        SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
-        
         SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C1);
         while (!SysCtlPeripheralReady(SYSCTL_PERIPH_I2C1))
         {
