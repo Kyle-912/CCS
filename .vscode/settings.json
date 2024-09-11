@@ -3,6 +3,7 @@
         "ACCELX",
         "CFIFO",
         "CSCL",
+        "CSDA",
         "DEVICEID",
         "DRDY",
         "EEPROM",
