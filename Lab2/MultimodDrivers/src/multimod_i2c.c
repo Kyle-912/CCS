@@ -36,7 +36,6 @@ void I2C_Init(uint32_t mod)
         while (!SysCtlPeripheralReady(SYSCTL_PERIPH_I2C1))
         {
         }
-        SysCtlPeripheralReset(SYSCTL_PERIPH_I2C1);
 
         SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
         while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOA))
