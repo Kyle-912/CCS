@@ -44,7 +44,8 @@ void I2C_Init(uint32_t mod)
 
         // Configure pins for I2C module
         GPIOPinConfigure(GPIO_PCTL_PA6_I2C1SCL);
-        GPIOPinTypeI2C(GPIO_PORTA_BASE, (GPIO_PIN_6 | GPIO_PIN_7));
+        GPIOPinConfigure(GPIO_PCTL_PA7_I2C1SDA);
+        // GPIOPinTypeI2C(GPIO_PORTA_BASE, (GPIO_PIN_6 | GPIO_PIN_7));
 
         // Configure I2C SCL speed, set as master
         I2CMasterInitExpClk(mod, SysCtlClockGet(), false);
