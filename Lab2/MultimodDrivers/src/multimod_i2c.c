@@ -199,7 +199,7 @@ void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_byt
     }
 
     // Read last byte
-    uint32_t data = I2CMasterDataGet(mod);
+    *data = (uint8_t)I2CMasterDataGet(mod);
 
     return;
 }
