@@ -50,6 +50,7 @@ void I2C_Init(uint32_t mod)
 
         // Configure I2C SCL speed, set as master
         I2CMasterInitExpClk(mod, SysCtlClockGet(), false);
+        I2CMasterEnable(mod);
     }
 }
 
