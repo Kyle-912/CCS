@@ -29,7 +29,7 @@ void I2C_Init(uint32_t mod)
     //          the 'mod' parameter to choose which module to initialize
     //          and use.
 
-    if (mod == I2C_A_BASE)
+    if (mod == I2C1_BASE)
     {
         // Enable clock to relevant I2C and GPIO modules
         SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C1);
