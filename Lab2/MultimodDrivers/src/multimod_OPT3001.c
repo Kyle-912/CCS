@@ -46,8 +46,8 @@ void OPT3001_WriteRegister(uint8_t addr, uint16_t data)
 uint16_t OPT3001_ReadRegister(uint8_t addr)
 {
     // Complete this function
-    uint8_t arr[1] = {addr};
-    I2C_WriteMultiple(I2C1_BASE, OPT3001_ADDR, arr, 1);
+    uint8_t array[1] = {addr};
+    I2C_WriteMultiple(I2C1_BASE, OPT3001_ADDR, array, 1);
     uint8_t arr[2];
     I2C_ReadMultiple(I2C1_BASE, OPT3001_ADDR, arr, 2);
     uint16_t received = (arr[0] << 8) | arr[1];
