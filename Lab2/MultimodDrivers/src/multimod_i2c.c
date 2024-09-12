@@ -87,7 +87,7 @@ void I2C_WriteSingle(uint32_t mod, uint8_t addr, uint8_t byte)
 uint8_t I2C_ReadSingle(uint32_t mod, uint8_t addr)
 {
     // Set the address in the slave address register
-    I2CMasterSlaveAddrSet(mod, addr, false);
+    I2CMasterSlaveAddrSet(mod, addr, true);
 
     // Trigger I2C module receive
     I2CMasterControl(mod, I2C_MASTER_CMD_SINGLE_RECEIVE);
