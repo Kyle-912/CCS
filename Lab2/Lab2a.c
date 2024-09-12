@@ -60,5 +60,5 @@ int main(void)
     }
 }
 
-// Start - Write address - No Stop Bit - Start - Read
+// Start - Write Device Address - Write Register Address - No Stop Bit - Start - Read
 /************************************MAIN*******************************************/

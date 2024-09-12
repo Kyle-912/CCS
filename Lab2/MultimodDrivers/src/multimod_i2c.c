@@ -32,6 +32,7 @@ void I2C_Init(uint32_t mod)
     if (mod == I2C1_BASE)
     {
         // Enable clock to relevant I2C and GPIO modules
+        SysCtlPeripheralReset(SYSCTL_PERIPH_I2C1);
         SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C1);
         while (!SysCtlPeripheralReady(SYSCTL_PERIPH_I2C1))
         {
@@ -50,7 +51,7 @@ void I2C_Init(uint32_t mod)
 
         // Configure I2C SCL speed, set as master
         I2CMasterInitExpClk(mod, SysCtlClockGet(), false);
-        I2CMasterEnable(mod);
+//        I2CMasterEnable(mod);
     }
 }
 
@@ -68,13 +69,12 @@ void I2C_WriteSingle(uint32_t mod, uint8_t addr, uint8_t byte)
     // Input data into I2C module
     I2CMasterDataPut(mod, byte);
 
+
     // Trigger I2C module send
     I2CMasterControl(mod, I2C_MASTER_CMD_SINGLE_SEND);
 
     // Wait until I2C module is no longer busy
-    while (I2CMasterBusy(mod))
-    {
-    }
+    while (I2CMasterBusy(mod));
 
     return;
 }
