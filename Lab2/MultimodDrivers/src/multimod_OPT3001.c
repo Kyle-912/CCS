@@ -46,6 +46,8 @@ void OPT3001_WriteRegister(uint8_t addr, uint16_t data)
 uint16_t OPT3001_ReadRegister(uint8_t addr)
 {
     // Complete this function
+    I2C_WriteSingle(I2C1_BASE, OPT3001_ADDR, addr);
+    return I2C_ReadS(I2C1_BASE, OPT3001_ADDR);
 }
 
 // OPT3001_GetResult
