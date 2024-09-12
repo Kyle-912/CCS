@@ -47,7 +47,8 @@ uint16_t OPT3001_ReadRegister(uint8_t addr)
 {
     // Complete this function
     I2C_WriteSingle(I2C1_BASE, OPT3001_ADDR, addr);
-    return I2C_ReadS(I2C1_BASE, OPT3001_ADDR);
+    uint8_t arr[2];
+    I2C_ReadMultiple(I2C1_BASE, OPT3001_ADDR, arr, 2);
 }
 
 // OPT3001_GetResult
