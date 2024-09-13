@@ -35,7 +35,7 @@ void OPT3001_Init(void)
 void OPT3001_WriteRegister(uint8_t addr, uint16_t data)
 {
     // Read the datasheet!
-    // Complete this function
+    // TODO: Complete this function
     return;
 }
 
