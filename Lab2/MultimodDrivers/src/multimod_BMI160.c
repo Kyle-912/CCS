@@ -60,6 +60,7 @@ void BMI160_MultiReadRegister(uint8_t addr, uint8_t *data, uint8_t num_bytes)
     // TODO: Test this function
     I2C_WriteSingle(I2C1_BASE, BMI160_ADDR, addr);
     I2C_ReadMultiple(I2C1_BASE, BMI160_ADDR, data, num_bytes);
+    return;
 }
 
 // BMI160_AccelXGetResult
