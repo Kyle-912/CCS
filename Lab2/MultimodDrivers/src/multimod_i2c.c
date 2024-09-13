@@ -100,7 +100,6 @@ uint8_t I2C_ReadSingle(uint32_t mod, uint8_t addr)
     }
 
     uint8_t data = (uint8_t)I2CMasterDataGet(mod);
-    // uint32_t data = I2CMasterDataGet(mod);
 
     // Return received data
     return data;
