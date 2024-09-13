@@ -130,16 +130,19 @@ void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_by
     data++;
     num_bytes--;
 
-    // Input data into I2C module
-    // Trigger I2C module send
     while (num_bytes > 1)
     {
+        // Input data into I2C module
         I2CMasterDataPut(mod, *data);
+
+        // Trigger I2C module send
         I2CMasterControl(mod, I2C_MASTER_CMD_BURST_SEND_CONT);
-    // Wait until I2C module is no longer busy
+
+        // Wait until I2C module is no longer busy
         while (I2CMasterBusy(mod))
         {
         }
+
         data++;
         num_bytes--;
     }
