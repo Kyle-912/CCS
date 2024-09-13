@@ -69,7 +69,7 @@ uint8_t BMI160_ReadRegister(uint8_t addr)
 // Return: void
 void BMI160_MultiReadRegister(uint8_t addr, uint8_t *data, uint8_t num_bytes)
 {
-    // Complete this function
+    // TODO: Complete this function
 }
 
 // BMI160_AccelXGetResult
