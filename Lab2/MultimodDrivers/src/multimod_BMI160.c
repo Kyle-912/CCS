@@ -67,7 +67,7 @@ void BMI160_MultiReadRegister(uint8_t addr, uint8_t *data, uint8_t num_bytes)
 int16_t BMI160_AccelXGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_ACC))
-        ;
+        {}
     uint8_t bytes[2];
 
     BMI160_MultiReadRegister(BMI160_DATA_O + ACCELX_O, bytes, 2);
@@ -81,7 +81,7 @@ int16_t BMI160_AccelXGetResult()
 int16_t BMI160_AccelYGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_ACC))
-        ;
+        {}
 
     uint8_t bytes[2];
 
