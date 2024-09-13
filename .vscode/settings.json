@@ -79,5 +79,6 @@
     },
     "explorerExclude.backup": {},
     "gitdoc.enabled": true,
-    "C_Cpp.errorSquiggles": "enabled"
+    "C_Cpp.errorSquiggles": "enabled",
+    "C_Cpp.default.compilerPath": "C:\\MinGW64\\bin\\gcc.exe"
 }
