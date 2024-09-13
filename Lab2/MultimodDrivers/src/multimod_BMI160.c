@@ -96,7 +96,7 @@ int16_t BMI160_AccelYGetResult()
 int16_t BMI160_AccelZGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_GYR))
-        ;
+        {}
 
     uint8_t bytes[2];
 
@@ -111,7 +111,7 @@ int16_t BMI160_AccelZGetResult()
 int16_t BMI160_GyroXGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_GYR))
-        ;
+        {}
 
     uint8_t bytes[2];
 
@@ -126,7 +126,7 @@ int16_t BMI160_GyroXGetResult()
 int16_t BMI160_GyroYGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_GYR))
-        ;
+        {}
 
     uint8_t bytes[2];
 
@@ -141,7 +141,7 @@ int16_t BMI160_GyroYGetResult()
 int16_t BMI160_GyroZGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_GYR))
-        ;
+        {}
 
     uint8_t bytes[2];
 
@@ -156,7 +156,7 @@ int16_t BMI160_GyroZGetResult()
 int16_t BMI160_MagXGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_MAG))
-        ;
+        {}
 
     uint8_t bytes[2];
 
