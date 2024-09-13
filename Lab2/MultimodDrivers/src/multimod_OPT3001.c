@@ -36,7 +36,10 @@ void OPT3001_WriteRegister(uint8_t addr, uint16_t data)
 {
     // Read the datasheet!
     // TODO: Test this function
-    uint8_t arr[3] = {addr, data};
+    uint8_t arr[3] = {addr, };
+    arr[0] = addr;               // 8-bit register address
+    arr[1] = (data >> 8) & 0xFF; // MSB of the 16-bit data
+    arr[2] = data & 0xFF;
     I2C_WriteMultiple(I2C1_BASE, OPT3001_ADDR, arr, 3);
     return;
 }
