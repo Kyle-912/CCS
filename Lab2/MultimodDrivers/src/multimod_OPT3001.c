@@ -36,7 +36,7 @@ void OPT3001_WriteRegister(uint8_t addr, uint16_t data)
 {
     // Read the datasheet!
     // TODO: Test this function
-    uint8_t arr[3] = {addr, };
+    uint8_t arr[3] = {addr, (data >> 8) & 0xFF, data & 0xFF};
     arr[0] = addr;               // 8-bit register address
     arr[1] = (data >> 8) & 0xFF; // MSB of the 16-bit data
     arr[2] = data & 0xFF;
