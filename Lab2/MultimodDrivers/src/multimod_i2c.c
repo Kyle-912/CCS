@@ -44,8 +44,8 @@ void I2C_Init(uint32_t mod)
         }
 
         // Configure pins for I2C module
-        GPIOPinConfigure(GPIO_PCTL_PA6_I2C1SCL);
-        GPIOPinConfigure(GPIO_PCTL_PA7_I2C1SDA);
+        GPIOPinConfigure(GPIO_PA6_I2C1SCL);
+        GPIOPinConfigure(GPIO_PA7_I2C1SDA);
         GPIOPinTypeI2CSCL(GPIO_PORTA_BASE, GPIO_PIN_6);
         GPIOPinTypeI2C(GPIO_PORTA_BASE, GPIO_PIN_7);
 
