@@ -10,8 +10,8 @@
 #include <driverlib/gpio.h>
 #include <driverlib/sysctl.h>
 #include <driverlib/pin_map.h>
-#define GPIO_PA6_I2C1SCL 0x00001803 // To remove 
-#define GPIO_PA7_I2C1SDA 0x00001C03
+#define GPIO_PA6_I2C1SCL 0x00001803 // To remove VSCode linting error
+#define GPIO_PA7_I2C1SDA 0x00001C03 // To remove VSCode linting error
 
 #include <inc/tm4c123gh6pm.h>
 #include <inc/hw_i2c.h>
