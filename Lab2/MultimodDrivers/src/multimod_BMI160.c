@@ -48,12 +48,12 @@ uint8_t BMI160_ReadRegister(uint8_t addr)
     I2C_WriteSingle(I2C1_BASE, BMI160_ADDR, addr);
     return I2C_ReadSingle(I2C1_BASE, BMI160_ADDR);
 
-    I2CMasterSlaveAddrSet(I2C1_BASE, BMI160_ADDR, false);
-    I2CMasterDataPut(I2C1_BASE, addr);
-    I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_SEND_START);
-    while (I2CMasterBusy(I2C1_BASE))
-    {
-    }
+    // I2CMasterSlaveAddrSet(I2C1_BASE, BMI160_ADDR, false);
+    // I2CMasterDataPut(I2C1_BASE, addr);
+    // I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_SEND_START);
+    // while (I2CMasterBusy(I2C1_BASE))
+    // {
+    // }
 
     uint8_t arr[1];
     I2C_ReadMultiple(I2C1_BASE, BMI160_ADDR, arr, 1);
