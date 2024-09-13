@@ -28,20 +28,26 @@
 // Initializes UART serial communication with PC
 // Return: void
 void UART_Init() {
-    // This should have been done in lab 0, so it's just copy & paste.
     // Enable port A
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOA))
+    {
+    }
 
     // Enable UART0 module
-
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_UART0))
+    {
+    }
 
     // Configure UART0 pins on port A
-
-
+    GPIOPinTypeUART(GPIO_PORTA_BASE, (GPIO_PIN_0 | GPIO_PIN_1));
 
     // Set UART clock source
+    UARTClockSourceSet(UART0_BASE, UART_CLOCK_SYSTEM);
 
     // Configure UART baud rate
-
+    UARTStdioConfig(0, 115200, SysCtlClockGet());
 }
 
 /********************************Public Functions***********************************/

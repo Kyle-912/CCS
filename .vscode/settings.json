@@ -1,11 +1,35 @@
 {
     "cSpell.ignoreWords": [
+        "ACCELX",
+        "CFIFO",
+        "CSCL",
+        "CSDA",
+        "DEVICEID",
+        "DRDY",
         "EEPROM",
         "GPIOA",
         "GPIOF",
+        "GYRCONFG",
+        "GYROX",
+        "GYROY",
+        "GYROZ",
+        "GYRRANGE",
+        "I2C_SLAVE_ACT_RREQ_FBR",
+        "INTEN",
+        "MAGIF",
+        "MAGX",
+        "MAGY",
+        "MAGZ",
+        "NVCONF",
+        "PCTL",
         "PERIPH",
+        "PMUSTATUS",
+        "PMUTRIGGER",
         "PORTA",
+        "PORTB",
         "PORTF",
+        "RREQ",
+        "TREQ",
         "Tiva",
         "XTAL"
     ],
@@ -54,5 +78,7 @@
         "RemoteSystemsTempFiles": true
     },
     "explorerExclude.backup": {},
-    "gitdoc.enabled": true
+    "gitdoc.enabled": true,
+    "C_Cpp.errorSquiggles": "enabled",
+    "C_Cpp.default.compilerPath": "C:\\MinGW64\\bin\\gcc.exe"
 }

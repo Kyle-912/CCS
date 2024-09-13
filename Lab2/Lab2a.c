@@ -29,6 +29,7 @@
 /************************************Includes***************************************/
 
 /*************************************Defines***************************************/
+#define delay_0_1_s 1600000
 /*************************************Defines***************************************/
 
 /********************************Public Variables***********************************/
@@ -40,16 +41,25 @@
 /************************************MAIN*******************************************/
 
 // Write i2c functions, check to see if you can get the chip IDs.
-int main(void) {
+int main(void)
+{
+    SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
+
     UART_Init();
+    BMI160_Init();
+    OPT3001_Init();
 
     uint8_t BMI160_chipid = BMI160_ReadRegister(BMI160_CHIPID_ADDR);
-
-    uint8_t OPT3001_chipid = BMI160_ReadRegister(BMI160_CHIPID_ADDR);
+    uint16_t OPT3001_chipid = OPT3001_ReadRegister(OPT3001_DEVICEID_ADDR);
 
     // Output chip IDs
+    UARTprintf("BMI160 Chip ID: 0x%x\n", BMI160_chipid);
+    UARTprintf("OPT3001 Chip ID: 0x%x\n", OPT3001_chipid);
 
-    while(1);
+    while (1)
+    {
+    }
 }
 
+// Start - Write Device Address - Write Register Address - No Stop Bit - Start - Read
 /************************************MAIN*******************************************/
