@@ -55,8 +55,9 @@ int main(void)
     // Output chip IDs
     while (1)
     {
-//        UARTprintf("%d\n", BMI160_chipid);
-        SysCtlDelay(delay_0_1_s);
+       UARTprintf("%d\n", BMI160_chipid);
+       UARTprintf("%d\n", OPT3001_chipid);
+       SysCtlDelay(delay_0_1_s);
     }
 }
 
