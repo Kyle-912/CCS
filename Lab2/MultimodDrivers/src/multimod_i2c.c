@@ -45,12 +45,11 @@ void I2C_Init(uint32_t mod)
         // Configure pins for I2C module
         GPIOPinConfigure(GPIO_PCTL_PA6_I2C1SCL);
         GPIOPinConfigure(GPIO_PCTL_PA7_I2C1SDA);
-        GPIOPinTypeI2CSCL(GPIO_PORTA_BASE, (GPIO_PIN_6 | GPIO_PIN_7));
-        // GPIOPinTypeI2C(GPIO_PORTA_BASE, GPIO_PIN_7);
+        GPIOPinTypeI2CSCL(GPIO_PORTA_BASE, GPIO_PIN_6);
+        GPIOPinTypeI2C(GPIO_PORTA_BASE, GPIO_PIN_7);
 
         // Configure I2C SCL speed, set as master
         I2CMasterInitExpClk(mod, SysCtlClockGet(), false);
-        I2CMasterEnable(mod);
     }
 }
 
@@ -87,17 +86,16 @@ void I2C_WriteSingle(uint32_t mod, uint8_t addr, uint8_t byte)
 uint8_t I2C_ReadSingle(uint32_t mod, uint8_t addr)
 {
     // Set the address in the slave address register
-    I2CMasterSlaveAddrSet(mod, addr, true);
+    I2CMasterSlaveAddrSet(mod, addr, false);
 
     // Trigger I2C module receive
     I2CMasterControl(mod, I2C_MASTER_CMD_SINGLE_RECEIVE);
+    uint32_t data = I2CMasterDataGet(mod);
 
     // Wait until I2C module is no longer busy
     while (I2CMasterBusy(mod))
     {
     }
-    
-    uint32_t data = I2CMasterDataGet(mod);
 
     // Return received data
     return data;
