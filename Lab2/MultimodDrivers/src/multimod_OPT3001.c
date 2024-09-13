@@ -34,7 +34,7 @@ void OPT3001_Init(void)
 // Return: void
 void OPT3001_WriteRegister(uint8_t addr, uint16_t data)
 {
-    // Read the datasheet!
+    // Read the datasheet! - Probably for endianess
     // TODO: Test this function
     uint8_t arr[3] = {addr, (data >> 8), data};
     I2C_WriteMultiple(I2C1_BASE, OPT3001_ADDR, arr, 3);
