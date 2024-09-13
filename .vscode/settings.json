@@ -78,5 +78,6 @@
         "RemoteSystemsTempFiles": true
     },
     "explorerExclude.backup": {},
-    "gitdoc.enabled": true
+    "gitdoc.enabled": true,
+    "C_Cpp.errorSquiggles": "disabled"
 }
