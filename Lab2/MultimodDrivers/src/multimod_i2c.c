@@ -56,7 +56,6 @@ void I2C_Init(uint32_t mod)
     }
 }
 
-
 // I2C_WriteSingle
 // Writes a single byte to an address.
 // Param uint32_t "mod": base address of module
@@ -75,7 +74,9 @@ void I2C_WriteSingle(uint32_t mod, uint8_t addr, uint8_t byte)
     I2CMasterControl(mod, I2C_MASTER_CMD_SINGLE_SEND);
 
     // Wait until I2C module is no longer busy
-    while (I2CMasterBusy(mod));
+    while (I2CMasterBusy(mod))
+    {
+    }
 
     return;
 }
