@@ -71,7 +71,6 @@ void I2C_WriteSingle(uint32_t mod, uint8_t addr, uint8_t byte)
     // Input data into I2C module
     I2CMasterDataPut(mod, byte);
 
-
     // Trigger I2C module send
     I2CMasterControl(mod, I2C_MASTER_CMD_SINGLE_SEND);
 
