@@ -4,7 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/Lab2/driverlib/pin_map.h"
+                "${workspaceFolder}/Lab2/driverlib"
             ],
             "defines": [
                 "_DEBUG",
