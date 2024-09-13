@@ -114,7 +114,8 @@ uint8_t I2C_ReadSingle(uint32_t mod, uint8_t addr)
 // Return: void
 void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_bytes)
 {
-    // Set the address in the slave address register
+    // TODO: Test this function
+    //  Set the address in the slave address register
     I2CMasterSlaveAddrSet(mod, addr, true);
 
     // Input data into I2C module
