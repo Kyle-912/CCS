@@ -61,6 +61,7 @@ uint16_t OPT3001_ReadRegister(uint8_t addr)
 // Return: uint32_t
 uint32_t OPT3001_GetResult(void)
 {
+    //TODO: Complete this function
     // Check if data is ready first
 
     uint16_t result = OPT3001_ReadRegister(OPT3001_RESULT_ADDR);
