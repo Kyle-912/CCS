@@ -53,8 +53,8 @@ int main(void)
     uint16_t OPT3001_chipid = OPT3001_ReadRegister(OPT3001_DEVICEID_ADDR);
 
     // Output chip IDs
-    UARTprintf("BMI160 Chip ID: 0x%X\n", BMI160_chipid);
-    UARTprintf("OPT3001 Chip ID: 0x%X\n", OPT3001_chipid);
+    UARTprintf("BMI160 Chip ID: 0x%x\n", BMI160_chipid);
+    UARTprintf("OPT3001 Chip ID: 0x%x\n", OPT3001_chipid);
 
     while (1)
     {
