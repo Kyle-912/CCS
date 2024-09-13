@@ -175,7 +175,6 @@ void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_byt
 
     // Trigger I2C module receive
     I2CMasterControl(mod, I2C_MASTER_CMD_BURST_RECEIVE_START);
-    num_bytes--;
 
     // Wait until I2C module is no longer busy
     while (I2CMasterBusy(mod))
@@ -185,6 +184,7 @@ void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_byt
     // Read received data
     *data = (uint8_t)I2CMasterDataGet(mod);
     data++;
+    num_bytes--;
 
     // While num_bytes > 1
     // Trigger I2C module receive
@@ -193,7 +193,6 @@ void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_byt
     while (num_bytes > 1)
     {
         I2CMasterControl(mod, I2C_MASTER_CMD_BURST_RECEIVE_CONT);
-        num_bytes--;
 
         while (I2CMasterBusy(mod))
         {
@@ -201,6 +200,7 @@ void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_byt
 
         *data = (uint8_t)I2CMasterDataGet(mod);
         data++;
+        num_bytes--;
     }
 
     // Trigger I2C module receive
