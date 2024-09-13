@@ -67,7 +67,8 @@ void BMI160_MultiReadRegister(uint8_t addr, uint8_t *data, uint8_t num_bytes)
 int16_t BMI160_AccelXGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_ACC))
-        {}
+    {
+    }
     uint8_t bytes[2];
 
     BMI160_MultiReadRegister(BMI160_DATA_O + ACCELX_O, bytes, 2);
@@ -81,7 +82,8 @@ int16_t BMI160_AccelXGetResult()
 int16_t BMI160_AccelYGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_ACC))
-        {}
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -96,7 +98,8 @@ int16_t BMI160_AccelYGetResult()
 int16_t BMI160_AccelZGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_GYR))
-        {}
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -111,7 +114,8 @@ int16_t BMI160_AccelZGetResult()
 int16_t BMI160_GyroXGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_GYR))
-        {}
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -126,7 +130,8 @@ int16_t BMI160_GyroXGetResult()
 int16_t BMI160_GyroYGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_GYR))
-        {}
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -141,7 +146,8 @@ int16_t BMI160_GyroYGetResult()
 int16_t BMI160_GyroZGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_GYR))
-        {}
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -156,7 +162,8 @@ int16_t BMI160_GyroZGetResult()
 int16_t BMI160_MagXGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_MAG))
-        {}
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -171,7 +178,8 @@ int16_t BMI160_MagXGetResult()
 int16_t BMI160_MagYGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_MAG))
-        ;
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -186,7 +194,8 @@ int16_t BMI160_MagYGetResult()
 int16_t BMI160_MagZGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_MAG))
-        ;
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -202,7 +211,8 @@ int16_t BMI160_MagZGetResult()
 void BMI160_AccelXYZGetResult(uint16_t *data)
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_ACC))
-        ;
+    {
+    }
 
     uint8_t bytes[6];
 
@@ -222,7 +232,8 @@ void BMI160_AccelXYZGetResult(uint16_t *data)
 void BMI160_GyroXYZGetResult(uint16_t *data)
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_GYR))
-        ;
+    {
+    }
 
     uint8_t bytes[6];
 
@@ -242,7 +253,8 @@ void BMI160_GyroXYZGetResult(uint16_t *data)
 void BMI160_MagXYZGetResult(uint16_t *data)
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_MAG))
-        ;
+    {
+    }
 
     uint8_t bytes[6];
 
