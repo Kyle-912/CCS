@@ -133,8 +133,8 @@ int main(void)
     BMI160_Init();
     OPT3001_Init();
 
-    Int_Init();
     Timer_Init();
+    Int_Init();
 
     int16_t x_accel_value = 0;
     uint16_t opt_value = 0;
