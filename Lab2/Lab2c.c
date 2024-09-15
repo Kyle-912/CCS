@@ -85,6 +85,8 @@ void Int_Init(void)
     IntMasterDisable();
 
     // Enable timer interrupt, set interrupt priorities
+    IntEnable(INT_TIMER0A); // UART output interrupt
+    IntEnable(INT_TIMER0B); // LED toggle interrupt
 
     // Point to relevant timer handler function
 
