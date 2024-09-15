@@ -168,7 +168,20 @@ int main(void)
         if (toggle_led_flag)
         {
             toggle_led_flag = 0; // Clear flag after handling
-            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, ~(GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_1))); // Toggle the LED
+                                 // Read the current state of Port F
+            uint8_t current_val = GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_1);
+
+            // Toggle the Red LED (PF1) while ensuring Blue (PF2) and Green (PF3) are off
+            if (current_val & GPIO_PIN_1)
+            {
+                // If Red LED is on, turn it off
+                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, 0x00);
+            }
+            else
+            {
+                // If Red LED is off, turn it on
+                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, GPIO_PIN_1);
+            }
         }
     }
 }
