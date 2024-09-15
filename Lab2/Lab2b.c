@@ -56,8 +56,7 @@ int main(void)
         x_accel_value = BMI160_AccelXGetResult();
         opt_value = OPT3001_GetResult();
 
-        UARTprintf("\rAccelerometer X: %d   ", x_accel_value);
-        UARTprintf("\rOptical: %d   ", opt_value);
+        UARTprintf("\rAccelerometer X: %d   Optical: %d   ", x_accel_value, opt_value);
     }
 }
 
