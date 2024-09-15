@@ -40,8 +40,8 @@
 
 // Read accelerometer x sensor values, output them through UART.
 int main(void) {
-    UART_Init();
 
+    UART_Init();
     BMI160_Init();
     OPT3001_Init();
 
