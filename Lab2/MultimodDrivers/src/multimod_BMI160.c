@@ -22,7 +22,7 @@ void BMI160_Init()
 {
     I2C_Init(I2C1_BASE);
     // TODO: Power on accelerometer
-    // BMI160_WriteRegister(BMI160_CONF_ADDR, );
+    BMI160_WriteRegister(BMI160_CMD_ADDR, 0x11);
     return;
 }
 
