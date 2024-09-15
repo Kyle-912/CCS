@@ -73,7 +73,7 @@ void Timer_Init()
     // Set prescalers TODO: ask how this was meant to be used
 
     // Load initial timer values
-    // Sysclock / prescaler * desired seconds = timer period FIXME: m
+    // Sysclock / prescaler * desired seconds = timer period FIXME: maybe modify to use prescalers
     TimerLoadSet(TIMER0_BASE, TIMER_A, 8000000); // 500 ms for UART output
     TimerLoadSet(TIMER0_BASE, TIMER_B, 1600000); // 100 ms for LED toggle
     TimerLoadSet(TIMER1_BASE, TIMER_A, 1600000); // 100 ms for BMI160 sampling
