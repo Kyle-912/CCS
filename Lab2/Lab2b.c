@@ -41,6 +41,8 @@
 // Read accelerometer x sensor values, output them through UART.
 int main(void)
 {
+    SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
+
     UART_Init();
     BMI160_Init();
     OPT3001_Init();
