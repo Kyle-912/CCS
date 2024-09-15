@@ -70,7 +70,7 @@ void Timer_Init()
     TimerConfigure(TIMER0_BASE, TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC);
     TimerConfigure(TIMER1_BASE, TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC);
 
-    // Set prescalers TODO:
+    // Set prescalers TODO: ask how this was meant to be 
 
     // Load initial timer values
     // Sysclock / prescaler * desired seconds = timer period FIXME:
@@ -105,7 +105,7 @@ void Int_Init(void)
     IntPrioritySet(INT_TIMER1A, 0x40);
     IntPrioritySet(INT_TIMER1B, 0x60);
 
-    // Point to relevant timer handler function TODO: ask if this is referring to modifying 
+    // Point to relevant timer handler function TODO: ask if this is referring to modifying tm4c123gh6pm_startup_ccs.c
 
     IntMasterEnable();
 }
