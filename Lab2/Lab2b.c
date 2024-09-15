@@ -57,7 +57,7 @@ int main(void)
         opt_value = OPT3001_GetResult();
 
         UARTprintf("\rAccelerometer X: %d   ", x_accel_value);
-        UARTprintf("\rAccelerometer X: %d   ", opt_value);
+        UARTprintf("\rOptical: %d   ", opt_value);
     }
 }
 
