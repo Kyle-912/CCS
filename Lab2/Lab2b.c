@@ -39,8 +39,8 @@
 /************************************MAIN*******************************************/
 
 // Read accelerometer x sensor values, output them through UART.
-int main(void) {
-
+int main(void)
+{
     UART_Init();
     BMI160_Init();
     OPT3001_Init();
@@ -48,9 +48,9 @@ int main(void) {
     int16_t x_accel_value = 0;
     uint16_t opt_value = 0;
 
-    while(1) {
+    while (1)
+    {
         // Get accelerometer and optical sensor results, then print them to the console.
-
     }
 }
 
