@@ -168,7 +168,7 @@ int main(void)
         if (toggle_led_flag)
         {
             toggle_led_flag = 0; // Clear flag after handling
-            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, ~(GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_1)));
+            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, ~(GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_1))); // Toggle the LED
         }
     }
 }
