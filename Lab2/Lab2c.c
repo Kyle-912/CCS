@@ -100,6 +100,11 @@ void Int_Init(void)
     IntEnable(INT_TIMER1A); // BMI160 sampling interrupt
     IntEnable(INT_TIMER1B); // OPT3001 sampling interrupt
 
+    IntPrioritySet(INT_TIMER0A, 0x00);
+    IntPrioritySet(INT_TIMER0B, 0x20);
+    IntPrioritySet(INT_TIMER1A, 0x40);
+    IntPrioritySet(INT_TIMER1B, 0x60);
+
     // Point to relevant timer handler function TODO: delete
 
     IntMasterEnable();
