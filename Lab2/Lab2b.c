@@ -54,6 +54,8 @@ int main(void)
     {
         // Get accelerometer and optical sensor results, then print them to the console.
         x_accel_value = BMI160_AccelXGetResult();
+        uint16_t opt_value = OPT3001_GetResult();
+        
         UARTprintf("\rAccelerometer X: %d   ", x_accel_value);
     }
 }
