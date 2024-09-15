@@ -21,13 +21,13 @@
 void BMI160_Init()
 {
     I2C_Init(I2C1_BASE);
-    
+
     // TODO: Power on accelerometer
     BMI160_WriteRegister(BMI160_CMD_ADDR, 0x11);
-    while ((BMI160_ReadRegister(BMI160_PMUSTATUS_ADDR) & 0x1E) != 0x10)
-    {
-        // Polling the PMU_STATUS register until accelerometer status bits [3:1] are "010" (Normal mode)
-    }
+    // while ((BMI160_ReadRegister(BMI160_PMUSTATUS_ADDR) & 0x1E) != 0x10)
+    // {
+    //     // Polling the PMU_STATUS register until accelerometer status bits [3:1] are "010" (Normal mode)
+    // }
 
     return;
 }
