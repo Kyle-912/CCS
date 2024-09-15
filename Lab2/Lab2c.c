@@ -80,6 +80,8 @@ void Timer_Init()
     TimerLoadSet(TIMER1_BASE, TIMER_B, (SysCtlClockGet() / (1000 / 150))); // 150 ms for OPT3001 sampling
 
     // Enable timer interrupts
+    TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT | TIMER_TIMB_TIMEOUT);
+    TimerIntEnable(TIMER1_BASE, TIMER_TIMA_TIMEOUT | TIMER_TIMB_TIMEOUT);
 
     // Enable timers
 }
