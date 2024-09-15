@@ -139,6 +139,33 @@ int main(void)
         // Write code to read the x-axis accelerometer value,
         // opt3001 sensor, toggle the red led, and print
         // values out to the console when needed.
+
+        if (print_uart_flag)
+        {
+            print_uart_flag = 0; // Clear flag after handling
+            UARTprintf("Message: Output every 500 ms\n");
+        }
+
+        if (read_imu_flag)
+        {
+            read_imu_flag = 0;                        // Clear flag after handling
+            x_accel_value = BMI160_AccelXGetResult(); // Read x-axis acceleration
+            UARTprintf("Accelerometer X: %d\n", x_accel_value);
+        }
+
+        if (read_opt_flag)
+        {
+            read_opt_flag = 0;               // Clear flag after handling
+            opt_value = OPT3001_GetResult(); // Read optical sensor data
+            UARTprintf("Optical: %d\n", opt_value);
+        }
+
+        if (toggle_led_flag)
+        {
+            toggle_led_flag = 0; // Clear flag after handling
+            // Toggle the LED on the Tiva Launchpad (assuming PF1 - Red LED)
+            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, ~(GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_1)));
+        }
     }
 }
 
