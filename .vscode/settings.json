@@ -29,6 +29,8 @@
         "PORTB",
         "PORTF",
         "RREQ",
+        "TIMA",
+        "TIMB",
         "TREQ",
         "Tiva",
         "XTAL"
