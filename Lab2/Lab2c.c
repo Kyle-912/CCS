@@ -70,10 +70,10 @@ void Timer_Init()
     TimerConfigure(TIMER0_BASE, TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC);
     TimerConfigure(TIMER1_BASE, TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC);
 
-    // Set prescalers TODO: ask how this was meant to be 
+    // Set prescalers TODO: ask how this was meant to be used
 
     // Load initial timer values
-    // Sysclock / prescaler * desired seconds = timer period FIXME:
+    // Sysclock / prescaler * desired seconds = timer period FIXME: m
     TimerLoadSet(TIMER0_BASE, TIMER_A, 8000000); // 500 ms for UART output
     TimerLoadSet(TIMER0_BASE, TIMER_B, 1600000); // 100 ms for LED toggle
     TimerLoadSet(TIMER1_BASE, TIMER_A, 1600000); // 100 ms for BMI160 sampling
