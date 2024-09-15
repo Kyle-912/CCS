@@ -48,39 +48,45 @@ void TIMER0B_Handler(void);
 void TIMER1A_Handler(void);
 void TIMER1B_Handler(void);
 
-void Timer_Init() {
+void Timer_Init()
+{
     // Initialize timers
     SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0); // For UART output and LED toggle
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER0))
+    {
+    }
     SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER1); // For BMI160 and OPT3001 sampling
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER1))
+    {
+    }
 
     // Disable timers
 
     // Configure timers as half-width, periodic 16-bit or (32-bit if using 64-bit timers) timers for a total of 4 timers
 
-
     // Set prescalers
 
     // Load initial timer values
-        // Sysclock / prescaler * desired seconds = timer period
+    // Sysclock / prescaler * desired seconds = timer period
 
     // Enable timer interrupts
 
     // Enable timers
 }
 
-void Int_Init(void) {
+void Int_Init(void)
+{
     IntMasterDisable();
 
     // Enable timer interrupt, set interrupt priorities
 
-
     // Point to relevant timer handler function
-
 
     IntMasterEnable();
 }
 
-void LED_Init(void) {
+void LED_Init(void)
+{
     // Enable clock to port F
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 
@@ -89,12 +95,12 @@ void LED_Init(void) {
     GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_3 | GPIO_PIN_2 | GPIO_PIN_1);
 }
 
-
 /********************************Public Functions***********************************/
 
 /************************************MAIN*******************************************/
 // Use timers to enforce specific schedules for each event.
-int main(void) {
+int main(void)
+{
     SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
 
     Int_Init();
@@ -108,14 +114,13 @@ int main(void) {
     int16_t x_accel_value = 0;
     uint16_t opt_value = 0;
 
-    while(1) {
+    while (1)
+    {
         // Write code to read the x-axis accelerometer value,
         // opt3001 sensor, toggle the red led, and print
         // values out to the console when needed.
-
     }
 }
-
 
 /************************************MAIN*******************************************/
 
@@ -124,25 +129,29 @@ int main(void) {
 /*******************************Interrupt Handlers**********************************/
 
 // Timer handlers are provided to you.
-void TIMER0A_Handler(void) {
+void TIMER0A_Handler(void)
+{
     read_imu_flag = 1;
     TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
     return;
 }
 
-void TIMER0B_Handler(void) {
+void TIMER0B_Handler(void)
+{
     read_opt_flag = 1;
     TimerIntClear(TIMER0_BASE, TIMER_TIMB_TIMEOUT);
     return;
 }
 
-void TIMER1A_Handler(void) {
+void TIMER1A_Handler(void)
+{
     toggle_led_flag = 1;
     TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
     return;
 }
 
-void TIMER1B_Handler(void) {
+void TIMER1B_Handler(void)
+{
     print_uart_flag = 1;
     TimerIntClear(TIMER1_BASE, TIMER_TIMB_TIMEOUT);
     return;
