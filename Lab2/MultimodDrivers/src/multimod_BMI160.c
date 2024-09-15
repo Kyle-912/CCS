@@ -23,6 +23,7 @@ void BMI160_Init()
     I2C_Init(I2C1_BASE);
 
     // TODO: Power on accelerometer
+    UARTprintf("CMD register value: 0x%02X\n", BMI160_ReadRegister(BMI160_CMD_ADDR));
     BMI160_WriteRegister(BMI160_CMD_ADDR, 0x11);
     UARTprintf("CMD register value: 0x%02X\n", BMI160_ReadRegister(BMI160_CMD_ADDR));
 
