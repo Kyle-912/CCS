@@ -170,7 +170,6 @@ int main(void)
             toggle_led_flag = 0; // Clear flag after handling
 
             uint8_t current_val = GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_1); // Read the current state of Port F
-
             // Toggle the Red LED (PF1) while ensuring Blue (PF2) and Green (PF3) are off
             if (current_val & GPIO_PIN_1)
             {
