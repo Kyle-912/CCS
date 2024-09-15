@@ -21,8 +21,20 @@
 void BMI160_Init()
 {
     I2C_Init(I2C1_BASE);
+
     // TODO: Power on accelerometer
-    // BMI160_WriteRegister(BMI160_CONF_ADDR, );
+    BMI160_WriteRegister(BMI160_CMD_ADDR, 0x11);
+    UARTprintf("PMU_CMD set to power on accelerometer. CMD register value: 0x%02X\n", BMI160_ReadRegister(BMI160_CMD_ADDR));
+
+    // Configure accelerometer output data rate and bandwidth (100 Hz, normal mode)
+    BMI160_WriteRegister(BMI160_ACCCONF_ADDR, 0x28);                                  // Example value for 100 Hz, normal mode
+    UARTprintf("ACC_CONF set to 0x%02X\n", BMI160_ReadRegister(BMI160_ACCCONF_ADDR)); // Print ACC_CONF register value
+
+    // Set accelerometer range (example: ±4g)
+    BMI160_WriteRegister(BMI160_ACCRANGE_ADDR, 0x03);                                   // Example value for ±4g range
+    UARTprintf("ACC_RANGE set to 0x%02X\n", BMI160_ReadRegister(BMI160_ACCRANGE_ADDR)); // Print ACC_RANGE register value
+    
+
     return;
 }
 
