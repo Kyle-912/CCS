@@ -38,7 +38,7 @@
 
 /************************************MAIN*******************************************/
 
-// Read acclerometer x sensor values, output them through UART.
+// Read accelerometer x sensor values, output them through UART.
 int main(void) {
     UART_Init();
 
