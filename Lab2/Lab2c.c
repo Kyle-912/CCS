@@ -84,6 +84,10 @@ void Timer_Init()
     TimerIntEnable(TIMER1_BASE, TIMER_TIMA_TIMEOUT | TIMER_TIMB_TIMEOUT);
 
     // Enable timers
+    TimerEnable(TIMER0_BASE, TIMER_A);
+    TimerEnable(TIMER0_BASE, TIMER_B);
+    TimerEnable(TIMER1_BASE, TIMER_A);
+    TimerEnable(TIMER1_BASE, TIMER_B);
 }
 
 void Int_Init(void)
