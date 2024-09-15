@@ -105,7 +105,7 @@ void Int_Init(void)
     IntPrioritySet(INT_TIMER1A, 0x40);
     IntPrioritySet(INT_TIMER1B, 0x60);
 
-    // Point to relevant timer handler function TODO:
+    // Point to relevant timer handler function TODO: ask if this is referring to modifying 
 
     IntMasterEnable();
 }
