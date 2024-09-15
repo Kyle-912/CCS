@@ -70,7 +70,7 @@ void Timer_Init()
     TimerConfigure(TIMER0_BASE, TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC);
     TimerConfigure(TIMER1_BASE, TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC);
 
-    // Set prescalers
+    // Set prescalers TODO:
 
     // Load initial timer values
     // Sysclock / prescaler * desired seconds = timer period
