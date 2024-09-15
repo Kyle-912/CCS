@@ -148,7 +148,7 @@ int main(void)
         if (print_uart_flag)
         {
             print_uart_flag = 0; // Clear flag after handling
-            UARTprintf("Message: Output every 500 ms\n");
+            UARTprintf("Print every 500 ms\n");
         }
 
         if (read_imu_flag)
