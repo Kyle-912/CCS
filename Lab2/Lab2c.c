@@ -95,6 +95,11 @@ void Int_Init(void)
     IntMasterDisable();
 
     // Enable timer interrupt, set interrupt priorities
+    TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
+    TimerIntClear(TIMER0_BASE, TIMER_TIMB_TIMEOUT);
+    TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
+    TimerIntClear(TIMER1_BASE, TIMER_TIMB_TIMEOUT);
+
     IntEnable(INT_TIMER0A); // UART output interrupt
     IntEnable(INT_TIMER0B); // LED toggle interrupt
     IntEnable(INT_TIMER1A); // BMI160 sampling interrupt
