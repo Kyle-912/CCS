@@ -33,8 +33,8 @@ void BMI160_Init()
     // Set accelerometer range (example: ±4g)
     BMI160_WriteRegister(BMI160_ACCRANGE_ADDR, 0x03);                                   // Example value for ±4g range
     UARTprintf("ACC_RANGE set to 0x%02X\n", BMI160_ReadRegister(BMI160_ACCRANGE_ADDR)); // Print ACC_RANGE register value
-    
 
+    // BMI160_WriteRegister(BMI160_CONF_ADDR, );
     return;
 }
 
