@@ -21,8 +21,10 @@
 void BMI160_Init()
 {
     I2C_Init(I2C1_BASE);
-    // TODO: Power on accelerometer
-    // BMI160_WriteRegister(BMI160_CONF_ADDR, );
+
+    // Power on accelerometer
+    BMI160_WriteRegister(BMI160_CMD_ADDR, 0x11);
+
     return;
 }
 
@@ -33,7 +35,6 @@ void BMI160_Init()
 // Return: void
 void BMI160_WriteRegister(uint8_t addr, uint8_t data)
 {
-    // TODO: Test this function
     uint8_t arr[2] = {addr, data};
     I2C_WriteMultiple(I2C1_BASE, BMI160_ADDR, arr, 2);
     return;
@@ -57,7 +58,6 @@ uint8_t BMI160_ReadRegister(uint8_t addr)
 // Return: void
 void BMI160_MultiReadRegister(uint8_t addr, uint8_t *data, uint8_t num_bytes)
 {
-    // TODO: Test this function
     I2C_WriteSingle(I2C1_BASE, BMI160_ADDR, addr);
     I2C_ReadMultiple(I2C1_BASE, BMI160_ADDR, data, num_bytes);
     return;
