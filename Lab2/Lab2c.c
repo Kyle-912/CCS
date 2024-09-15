@@ -93,7 +93,7 @@ void LED_Init(void) {
 /************************************MAIN*******************************************/
 // Use timers to enforce specific schedules for each event.
 int main(void) {
-    
+    SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
 
     Int_Init();
     Timer_Init();
