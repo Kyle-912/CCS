@@ -128,9 +128,9 @@ int main(void)
 {
     SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
 
+    UART_Init();
     Int_Init();
     Timer_Init();
-    UART_Init();
 
     LED_Init();
     BMI160_Init();
