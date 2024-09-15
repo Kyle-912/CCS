@@ -26,11 +26,9 @@ void BMI160_Init()
     BMI160_WriteRegister(BMI160_CMD_ADDR, 0x11);
     BMI160_WriteRegister(BMI160_ACCCONF_ADDR, 0x28);  // Example value for 100 Hz, normal mode
     BMI160_WriteRegister(BMI160_ACCRANGE_ADDR, 0x03); // Example value for 4g range
-    // while ((BMI160_ReadRegister(BMI160_PMUSTATUS_ADDR) & 0x1E) != 0x10)
-    // {
-    //     // Polling the PMU_STATUS register until accelerometer status bits [3:1] are "010" (Normal mode)
-    // }
 
+    uint8_t status = BMI160_GetDataStatus();
+    UARTprintf("Initial BMI160 STATUS register: 0x%02X\n", status);
     return;
 }
 
