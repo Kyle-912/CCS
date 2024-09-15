@@ -50,7 +50,8 @@ int main(void) {
 
     while(1) {
         // Get accelerometer and optical sensor results, then print them to the console.
-
+        x_accel_value = BMI160_Read_Accel_X();
+        
     }
 }
 
