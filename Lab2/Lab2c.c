@@ -87,6 +87,8 @@ void Int_Init(void)
     // Enable timer interrupt, set interrupt priorities
     IntEnable(INT_TIMER0A); // UART output interrupt
     IntEnable(INT_TIMER0B); // LED toggle interrupt
+    IntEnable(INT_TIMER1A); // BMI160 sampling interrupt
+    IntEnable(INT_TIMER1B); // OPT3001 sampling interrupt
 
     // Point to relevant timer handler function
 
