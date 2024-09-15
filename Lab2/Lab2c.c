@@ -100,7 +100,7 @@ void Int_Init(void)
     IntEnable(INT_TIMER1A); // BMI160 sampling interrupt
     IntEnable(INT_TIMER1B); // OPT3001 sampling interrupt
 
-    // Point to relevant timer handler function
+    // Point to relevant timer handler function TODO: delete
 
     IntMasterEnable();
 }
