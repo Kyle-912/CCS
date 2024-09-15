@@ -67,6 +67,8 @@ void Timer_Init()
     TimerDisable(TIMER1_BASE, TIMER_B); // Timer 1B for OPT3001 sampling
 
     // Configure timers as half-width, periodic 16-bit or (32-bit if using 64-bit timers) timers for a total of 4 timers
+    TimerConfigure(TIMER0_BASE, TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC);
+    TimerConfigure(TIMER1_BASE, TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC);
 
     // Set prescalers
 
