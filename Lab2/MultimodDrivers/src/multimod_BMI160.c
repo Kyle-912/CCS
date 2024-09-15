@@ -24,7 +24,7 @@ void BMI160_Init()
 
     // TODO: Power on accelerometer
     BMI160_WriteRegister(BMI160_CMD_ADDR, 0x11);
-    UARTprintf("PMU_CMD set to power on accelerometer. CMD register value: 0x%02X\n", BMI160_ReadRegister(BMI160_CMD_ADDR));
+    UARTprintf("CMD register value: 0x%02X\n", BMI160_ReadRegister(BMI160_CMD_ADDR));
 
     // Configure accelerometer output data rate and bandwidth (100 Hz, normal mode)
     UARTprintf("ACC_CONF set to 0x%02X\n", BMI160_ReadRegister(BMI160_ACCCONF_ADDR)); // Print ACC_CONF register value
