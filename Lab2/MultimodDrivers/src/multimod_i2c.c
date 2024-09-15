@@ -116,7 +116,7 @@ void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_by
 {
     // TODO: Test this function
     // Set the address in the slave address register
-    I2CMasterSlaveAddrSet(mod, addr, true);
+    I2CMasterSlaveAddrSet(mod, addr, false);
 
     // Input data into I2C module
     I2CMasterDataPut(mod, *data);
