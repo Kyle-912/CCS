@@ -93,6 +93,8 @@ void LED_Init(void) {
 /************************************MAIN*******************************************/
 // Use timers to enforce specific schedules for each event.
 int main(void) {
+    
+
     Int_Init();
     Timer_Init();
     UART_Init();
