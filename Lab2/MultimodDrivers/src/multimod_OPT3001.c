@@ -22,7 +22,7 @@ void OPT3001_Init(void)
     // Initialize I2C module
     I2C_Init(I2C_A_BASE);
 
-    // TODO: Set the correct configuration byte for continuous conversions
+    // Set the correct configuration byte for continuous conversions
     OPT3001_WriteRegister(OPT3001_CONFIG_ADDR, 0xCC10);
     return;
 }
@@ -35,7 +35,6 @@ void OPT3001_Init(void)
 void OPT3001_WriteRegister(uint8_t addr, uint16_t data)
 {
     // Read the datasheet! - Probably for endianess of data bytes
-    // TODO: Test this function
     uint8_t arr[3] = {addr, (data >> 8), data};
     I2C_WriteMultiple(I2C1_BASE, OPT3001_ADDR, arr, 3);
     return;
