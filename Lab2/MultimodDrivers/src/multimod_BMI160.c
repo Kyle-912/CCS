@@ -35,7 +35,6 @@ void BMI160_Init()
 // Return: void
 void BMI160_WriteRegister(uint8_t addr, uint8_t data)
 {
-    // TODO: Test this function
     uint8_t arr[2] = {addr, data};
     I2C_WriteMultiple(I2C1_BASE, BMI160_ADDR, arr, 2);
     return;
