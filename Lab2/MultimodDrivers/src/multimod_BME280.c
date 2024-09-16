@@ -16,12 +16,16 @@ void BME280_Init(void)
     I2C_WriteSingle(I2C1_BASE, BME280_I2C_ADDR, BME280_REG_RESET); // Set register address
     I2C_WriteSingle(I2C1_BASE, BME280_I2C_ADDR, 0xB6);             // Reset command
 
+    // Wait for the reset to complete (2 ms delay)
+    SysCtlDelay(SysCtlClockGet() / (1000 * 3)); // Approximate delay for 2 ms
+
     // Read temperature calibration data from the sensor (registers 0x88 to 0x8D)
     uint8_t calib[6];
     I2C_WriteSingle(I2C1_BASE, BME280_I2C_ADDR, 0x88); // Set starting register address
+
     for (uint8_t i = 0; i < 6; i++)
     {
-        calib[i] = I2C_ReadSingle(I2C1_BASE, BME280_I2C_ADDR); // Read data
+        calib[i] = I2C_ReadSingle(I2C1_BASE, BME280_I2C_ADDR); // Sequentially read calibration data
     }
 
     // Parse temperature calibration data
@@ -29,9 +33,14 @@ void BME280_Init(void)
     dig_T2 = (calib[3] << 8) | calib[2];
     dig_T3 = (calib[5] << 8) | calib[4];
 
+    // Debug prints for calibration data (optional)
+    UARTprintf("dig_T1: %u\n", dig_T1);
+    UARTprintf("dig_T2: %d\n", dig_T2);
+    UARTprintf("dig_T3: %d\n", dig_T3);
+
     // Set the sensor to forced mode, temperature oversampling x1
     I2C_WriteSingle(I2C1_BASE, BME280_I2C_ADDR, BME280_REG_CTRL_MEAS); // Set register address
-    I2C_WriteSingle(I2C1_BASE, BME280_I2C_ADDR, 0x20);                 // Control measurement configuration
+    I2C_WriteSingle(I2C1_BASE, BME280_I2C_ADDR, 0x25);                 // 0x20 for temperature oversampling x1, 0x05 for forced mode (0b00000101)
 }
 
 // Function to read the temperature from BME280 and return it as an int32_t in units of 0.01°C
@@ -39,11 +48,13 @@ int32_t BME280_ReadTemperature(void)
 {
     uint8_t temp_raw[3];
 
-    // Read the raw temperature data from the sensor (registers 0xFA, 0xFB, 0xFC)
+    // Set the starting register address to read temperature data (registers 0xFA, 0xFB, 0xFC)
     I2C_WriteSingle(I2C1_BASE, BME280_I2C_ADDR, BME280_REG_TEMP_MSB); // Set starting register address
-    temp_raw[0] = I2C_ReadSingle(I2C1_BASE, BME280_I2C_ADDR);         // Read MSB
-    temp_raw[1] = I2C_ReadSingle(I2C1_BASE, BME280_I2C_ADDR);         // Read LSB
-    temp_raw[2] = I2C_ReadSingle(I2C1_BASE, BME280_I2C_ADDR);         // Read XLSB
+
+    // Read the raw temperature data from the sensor
+    temp_raw[0] = I2C_ReadSingle(I2C1_BASE, BME280_I2C_ADDR); // Read MSB
+    temp_raw[1] = I2C_ReadSingle(I2C1_BASE, BME280_I2C_ADDR); // Read LSB
+    temp_raw[2] = I2C_ReadSingle(I2C1_BASE, BME280_I2C_ADDR); // Read XLSB
 
     // Convert the raw temperature data to a 20-bit integer
     int32_t adc_T = ((int32_t)(temp_raw[0]) << 12) | ((int32_t)(temp_raw[1]) << 4) | ((int32_t)(temp_raw[2] >> 4));
