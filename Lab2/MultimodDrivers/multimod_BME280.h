@@ -15,6 +15,6 @@
 
 // Function Prototypes
 void BME280_Init(void);
-float BME280_ReadTemperature(void);
+int32_t BME280_ReadTemperature(void); // Return type changed to int32_t
 
 #endif // MULTIMOD_BME280_H
