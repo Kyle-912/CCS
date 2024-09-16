@@ -1,6 +1,7 @@
 {
     "cSpell.ignoreWords": [
         "ACCELX",
+        "CALIB",
         "CFIFO",
         "CSCL",
         "CSDA",
@@ -33,6 +34,7 @@
         "TIMB",
         "TREQ",
         "Tiva",
+        "XLSB",
         "XTAL"
     ],
     "files.exclude": {
