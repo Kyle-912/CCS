@@ -1,17 +1,17 @@
 ******************************************************************************
                   TI ARM Linker PC v20.2.7                     
 ******************************************************************************
->> Linked Sun Sep 15 21:07:39 2024
+>> Linked Sun Sep 15 21:13:15 2024
 
 OUTPUT FILE NAME:   <Lab2.out>
-ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 00003915
+ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 0000394d
 
 
 MEMORY CONFIGURATION
 
          name            origin    length      used     unused   attr    fill
 ----------------------  --------  ---------  --------  --------  ----  --------
-  FLASH                 00000000   00040000  00004084  0003bf7c  R  X
+  FLASH                 00000000   00040000  000040bc  0003bf44  R  X
   SRAM                  20000000   00008000  00000477  00007b89  RW X
 
 
@@ -19,11 +19,11 @@ SEGMENT ALLOCATION MAP
 
 run origin  load origin   length   init length attrs members
 ----------  ----------- ---------- ----------- ----- -------
-00000000    00000000    00004088   00004088    r-x
+00000000    00000000    000040c0   000040c0    r-x
   00000000    00000000    0000026c   0000026c    r-- .intvecs
-  0000026c    0000026c    00003720   00003720    r-x .text
-  0000398c    0000398c    000006b8   000006b8    r-- .const
-  00004048    00004048    00000040   00000040    r-- .cinit
+  0000026c    0000026c    00003758   00003758    r-x .text
+  000039c4    000039c4    000006b8   000006b8    r-- .const
+  00004080    00004080    00000040   00000040    r-- .cinit
 20000000    20000000    0000047d   00000000    rw-
   20000000    20000000    0000026c   00000000    rw- .vtable
   20000270    20000270    00000200   00000000    rw- .stack
@@ -39,7 +39,7 @@ section   page    origin      length       input sections
 .intvecs   0    00000000    0000026c     
                   00000000    0000026c     tm4c123gh6pm_startup_ccs.obj (.intvecs)
 
-.text      0    0000026c    00003720     
+.text      0    0000026c    00003758     
                   0000026c    00000f80     sysctl.obj (.text)
                   000011ec    00000c14     gpio.obj (.text)
                   00001e00    000006f8     i2c.obj (.text)
@@ -48,55 +48,55 @@ section   page    origin      length       input sections
                   00002b28    000004a8     uartstdio.obj (.text)
                   00002fd0    000003c0     interrupt.obj (.text)
                   00003390    00000220     multimod_i2c.obj (.text)
-                  000035b0    000000f0     multimod_BME280.obj (.text)
-                  000036a0    0000009c     rtsv7M4_T_le_v4SPD16_eabi.lib : memcpy_t2.asm.obj (.text)
-                  0000373c    00000068                                   : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
-                  000037a4    00000058     Lab2Bonus.obj (.text)
-                  000037fc    00000054     multimod_uart.obj (.text)
-                  00003850    00000044     rtsv7M4_T_le_v4SPD16_eabi.lib : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit:__TI_auto_init_nobinit_nopinit)
-                  00003894    00000040                                   : u_divt2.asm.obj (.text)
-                  000038d4    0000003e     cpu.obj (.text)
-                  00003912    00000002     --HOLE-- [fill = 0]
-                  00003914    00000034     rtsv7M4_T_le_v4SPD16_eabi.lib : boot_cortex_m.c.obj (.text:_c_int00_noargs:_c_int00_noargs)
-                  00003948    0000001c                                   : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init_nomemset:__TI_zero_init_nomemset)
-                  00003964    0000000e                                   : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
-                  00003972    0000000c     tm4c123gh6pm_startup_ccs.obj (.text)
-                  0000397e    00000006     sysctl.obj (.text:SysCtlDelay)
-                  00003984    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
-                  00003988    00000004                                   : exit.c.obj (.text:abort:abort)
+                  000035b0    00000128     multimod_BME280.obj (.text)
+                  000036d8    0000009c     rtsv7M4_T_le_v4SPD16_eabi.lib : memcpy_t2.asm.obj (.text)
+                  00003774    00000068                                   : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
+                  000037dc    00000058     Lab2Bonus.obj (.text)
+                  00003834    00000054     multimod_uart.obj (.text)
+                  00003888    00000044     rtsv7M4_T_le_v4SPD16_eabi.lib : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit:__TI_auto_init_nobinit_nopinit)
+                  000038cc    00000040                                   : u_divt2.asm.obj (.text)
+                  0000390c    0000003e     cpu.obj (.text)
+                  0000394a    00000002     --HOLE-- [fill = 0]
+                  0000394c    00000034     rtsv7M4_T_le_v4SPD16_eabi.lib : boot_cortex_m.c.obj (.text:_c_int00_noargs:_c_int00_noargs)
+                  00003980    0000001c                                   : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init_nomemset:__TI_zero_init_nomemset)
+                  0000399c    0000000e                                   : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
+                  000039aa    0000000c     tm4c123gh6pm_startup_ccs.obj (.text)
+                  000039b6    00000006     sysctl.obj (.text:SysCtlDelay)
+                  000039bc    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
+                  000039c0    00000004                                   : exit.c.obj (.text:abort:abort)
 
-.const     0    0000398c    000006b8     
-                  0000398c    000001b0     sysctl.obj (.const:g_pppui32XTALtoVCO)
-                  00003b3c    000000d8     gpio.obj (.const:g_ppui32GPIOIntMapSnowflake)
-                  00003c14    000000c0     gpio.obj (.const:g_ppui32GPIOIntMapBlizzard)
-                  00003cd4    0000009c     interrupt.obj (.const:g_pui32Regs)
-                  00003d70    00000090     gpio.obj (.const:g_pui32GPIOBaseAddrs)
-                  00003e00    0000006c     sysctl.obj (.const:g_pui32Xtals)
-                  00003e6c    00000050     i2c.obj (.const:g_ppui32I2CIntMapSnowflake)
-                  00003ebc    00000040     uart.obj (.const:g_ppui32UARTIntMap)
-                  00003efc    00000040     uart.obj (.const:g_ppui32UARTIntMapSnowflake)
-                  00003f3c    00000030     i2c.obj (.const:g_ppui32I2CIntMap)
-                  00003f6c    00000030     sysctl.obj (.const:g_sXTALtoMEMTIM)
-                  00003f9c    00000020     interrupt.obj (.const:g_pui32Priority)
-                  00003fbc    00000014     interrupt.obj (.const:g_pui32Dii16Regs)
-                  00003fd0    00000014     interrupt.obj (.const:g_pui32EnRegs)
-                  00003fe4    00000014     interrupt.obj (.const:g_pui32PendRegs)
-                  00003ff8    00000014     interrupt.obj (.const:g_pui32UnpendRegs)
-                  0000400c    00000012     uartstdio.obj (.const:.string)
-                  0000401e    00000002     --HOLE-- [fill = 0]
-                  00004020    0000000c     uartstdio.obj (.const:g_ui32UARTBase)
-                  0000402c    0000000c     uartstdio.obj (.const:g_ui32UARTPeriph)
-                  00004038    00000008     sysctl.obj (.const:g_pui32VCOFrequencies)
-                  00004040    00000004     uartstdio.obj (.const)
+.const     0    000039c4    000006b8     
+                  000039c4    000001b0     sysctl.obj (.const:g_pppui32XTALtoVCO)
+                  00003b74    000000d8     gpio.obj (.const:g_ppui32GPIOIntMapSnowflake)
+                  00003c4c    000000c0     gpio.obj (.const:g_ppui32GPIOIntMapBlizzard)
+                  00003d0c    0000009c     interrupt.obj (.const:g_pui32Regs)
+                  00003da8    00000090     gpio.obj (.const:g_pui32GPIOBaseAddrs)
+                  00003e38    0000006c     sysctl.obj (.const:g_pui32Xtals)
+                  00003ea4    00000050     i2c.obj (.const:g_ppui32I2CIntMapSnowflake)
+                  00003ef4    00000040     uart.obj (.const:g_ppui32UARTIntMap)
+                  00003f34    00000040     uart.obj (.const:g_ppui32UARTIntMapSnowflake)
+                  00003f74    00000030     i2c.obj (.const:g_ppui32I2CIntMap)
+                  00003fa4    00000030     sysctl.obj (.const:g_sXTALtoMEMTIM)
+                  00003fd4    00000020     interrupt.obj (.const:g_pui32Priority)
+                  00003ff4    00000014     interrupt.obj (.const:g_pui32Dii16Regs)
+                  00004008    00000014     interrupt.obj (.const:g_pui32EnRegs)
+                  0000401c    00000014     interrupt.obj (.const:g_pui32PendRegs)
+                  00004030    00000014     interrupt.obj (.const:g_pui32UnpendRegs)
+                  00004044    00000012     uartstdio.obj (.const:.string)
+                  00004056    00000002     --HOLE-- [fill = 0]
+                  00004058    0000000c     uartstdio.obj (.const:g_ui32UARTBase)
+                  00004064    0000000c     uartstdio.obj (.const:g_ui32UARTPeriph)
+                  00004070    00000008     sysctl.obj (.const:g_pui32VCOFrequencies)
+                  00004078    00000004     uartstdio.obj (.const)
 
-.cinit     0    00004048    00000040     
-                  00004048    0000000c     (__TI_handler_table)
-                  00004054    00000004     --HOLE-- [fill = 0]
-                  00004058    00000008     (.cinit..bss.load) [load image, compression = zero_init]
-                  00004060    00000008     (.cinit..vtable.load) [load image, compression = zero_init]
-                  00004068    00000007     (.cinit..data.load) [load image, compression = lzss]
-                  0000406f    00000001     --HOLE-- [fill = 0]
-                  00004070    00000018     (__TI_cinit_table)
+.cinit     0    00004080    00000040     
+                  00004080    0000000c     (__TI_handler_table)
+                  0000408c    00000004     --HOLE-- [fill = 0]
+                  00004090    00000008     (.cinit..bss.load) [load image, compression = zero_init]
+                  00004098    00000008     (.cinit..vtable.load) [load image, compression = zero_init]
+                  000040a0    00000007     (.cinit..data.load) [load image, compression = lzss]
+                  000040a7    00000001     --HOLE-- [fill = 0]
+                  000040a8    00000018     (__TI_cinit_table)
 
 .init_array 
 *          0    00000000    00000000     UNINITIALIZED
@@ -129,10 +129,10 @@ MODULE SUMMARY
                                                                
     .\MultimodDrivers\src\
        multimod_i2c.obj               544     0         0      
-       multimod_BME280.obj            240     0         6      
+       multimod_BME280.obj            296     0         6      
        multimod_uart.obj              84      0         0      
     +--+------------------------------+-------+---------+---------+
-       Total:                         868     0         6      
+       Total:                         924     0         6      
                                                                
     .\driverlib\
        sysctl.obj                     3974    596       0      
@@ -162,20 +162,20 @@ MODULE SUMMARY
        Stack:                         0       0         512    
        Linker Generated:              0       59        0      
     +--+------------------------------+-------+---------+---------+
-       Grand Total:                   14110   2397      1143   
+       Grand Total:                   14166   2397      1143   
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 00004070 records: 3, size/record: 8, table size: 24
-	.bss: load addr=00004058, load size=00000008 bytes, run addr=20000470, run size=00000006 bytes, compression=zero_init
-	.vtable: load addr=00004060, load size=00000008 bytes, run addr=20000000, run size=0000026c bytes, compression=zero_init
-	.data: load addr=00004068, load size=00000007 bytes, run addr=20000478, run size=00000005 bytes, compression=lzss
+__TI_cinit_table @ 000040a8 records: 3, size/record: 8, table size: 24
+	.bss: load addr=00004090, load size=00000008 bytes, run addr=20000470, run size=00000006 bytes, compression=zero_init
+	.vtable: load addr=00004098, load size=00000008 bytes, run addr=20000000, run size=0000026c bytes, compression=zero_init
+	.data: load addr=000040a0, load size=00000007 bytes, run addr=20000478, run size=00000005 bytes, compression=lzss
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 00004048 records: 3, size/record: 4, table size: 12
+__TI_handler_table @ 00004080 records: 3, size/record: 4, table size: 12
 	index: 0, handler: __TI_zero_init
 	index: 1, handler: __TI_decompress_lzss
 	index: 2, handler: __TI_decompress_none
@@ -186,14 +186,14 @@ GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name
 address   name                            
 -------   ----                            
 000035b1  BME280_Init                     
-0000360f  BME280_ReadTemperature          
-00003989  C$$EXIT                         
-00003909  CPUbasepriGet                   
-000038fb  CPUbasepriSet                   
-000038d5  CPUcpsid                        
-000038eb  CPUcpsie                        
-000038e1  CPUprimask                      
-000038f7  CPUwfi                          
+0000362f  BME280_ReadTemperature          
+000039c1  C$$EXIT                         
+00003941  CPUbasepriGet                   
+00003933  CPUbasepriSet                   
+0000390d  CPUcpsid                        
+00003923  CPUcpsie                        
+00003919  CPUprimask                      
+0000392f  CPUwfi                          
 00001db1  GPIOADCTriggerDisable           
 00001d93  GPIOADCTriggerEnable            
 00001d75  GPIODMATriggerDisable           
@@ -301,7 +301,6 @@ address   name
 00003503  I2C_ReadMultiple                
 0000342d  I2C_ReadSingle                  
 00003463  I2C_WriteMultiple               
-UNDEFED   I2C_WriteRegister               
 000033f7  I2C_WriteSingle                 
 00003191  IntDisable                      
 0000311f  IntEnable                       
@@ -319,7 +318,7 @@ UNDEFED   I2C_WriteRegister
 00002ff3  IntRegister                     
 0000335b  IntTrigger                      
 00003045  IntUnregister                   
-00003973  ResetISR                        
+000039ab  ResetISR                        
 000011a9  SysCtlAltClkConfig              
 000008d1  SysCtlClockFreqSet              
 00000d99  SysCtlClockGet                  
@@ -329,7 +328,7 @@ UNDEFED   I2C_WriteRegister
 00000f5d  SysCtlDeepSleepClockConfigSet   
 00000f3f  SysCtlDeepSleepClockSet         
 000007b5  SysCtlDeepSleepPowerSet         
-0000397f  SysCtlDelay                     
+000039b7  SysCtlDelay                     
 00000363  SysCtlFlashSectorSizeGet        
 00000337  SysCtlFlashSizeGet              
 00001033  SysCtlGPIOAHBDisable            
@@ -428,7 +427,7 @@ UNDEFED   TIMER1B_Handler
 00002b29  UARTStdioConfig                 
 00002859  UARTTxIntModeGet                
 0000283d  UARTTxIntModeSet                
-000037fd  UART_Init                       
+00003835  UART_Init                       
 00002c79  UARTgetc                        
 00002bbf  UARTgets                        
 00002f9b  UARTprintf                      
@@ -437,40 +436,40 @@ UNDEFED   TIMER1B_Handler
 20000470  __STACK_END                     
 00000200  __STACK_SIZE                    
 20000470  __STACK_TOP                     
-00004070  __TI_CINIT_Base                 
-00004088  __TI_CINIT_Limit                
-00004048  __TI_Handler_Table_Base         
-00004054  __TI_Handler_Table_Limit        
-00003851  __TI_auto_init_nobinit_nopinit  
-0000373d  __TI_decompress_lzss            
-00003965  __TI_decompress_none            
+000040a8  __TI_CINIT_Base                 
+000040c0  __TI_CINIT_Limit                
+00004080  __TI_Handler_Table_Base         
+0000408c  __TI_Handler_Table_Limit        
+00003889  __TI_auto_init_nobinit_nopinit  
+00003775  __TI_decompress_lzss            
+0000399d  __TI_decompress_none            
 ffffffff  __TI_pprof_out_hndl             
 ffffffff  __TI_prof_data_size             
 ffffffff  __TI_prof_data_start            
 00000000  __TI_static_base__              
-00003949  __TI_zero_init_nomemset         
+00003981  __TI_zero_init_nomemset         
 00002b27  __aeabi_idiv0                   
 00002b27  __aeabi_ldiv0                   
-000036a1  __aeabi_memcpy                  
-000036a1  __aeabi_memcpy4                 
-000036a1  __aeabi_memcpy8                 
-00003895  __aeabi_uidiv                   
-00003895  __aeabi_uidivmod                
+000036d9  __aeabi_memcpy                  
+000036d9  __aeabi_memcpy4                 
+000036d9  __aeabi_memcpy8                 
+000038cd  __aeabi_uidiv                   
+000038cd  __aeabi_uidivmod                
 ffffffff  __binit__                       
 ffffffff  __c_args__                      
 UNDEFED   __mpu_init                      
 20000270  __stack                         
 20000000  __start___llvm_prf_cnts         
 20000000  __stop___llvm_prf_cnts          
-00003915  _c_int00_noargs                 
+0000394d  _c_int00_noargs                 
 UNDEFED   _system_post_cinit              
-00003985  _system_pre_init                
-00003989  abort                           
+000039bd  _system_pre_init                
+000039c1  abort                           
 ffffffff  binit                           
 20000000  g_pfnRAMVectors                 
 00000000  g_pfnVectors                    
-000037a5  main                            
-000036a1  memcpy                          
+000037dd  main                            
+000036d9  memcpy                          
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -715,35 +714,35 @@ address   name
 00003463  I2C_WriteMultiple               
 00003503  I2C_ReadMultiple                
 000035b1  BME280_Init                     
-0000360f  BME280_ReadTemperature          
-000036a1  __aeabi_memcpy                  
-000036a1  __aeabi_memcpy4                 
-000036a1  __aeabi_memcpy8                 
-000036a1  memcpy                          
-0000373d  __TI_decompress_lzss            
-000037a5  main                            
-000037fd  UART_Init                       
-00003851  __TI_auto_init_nobinit_nopinit  
-00003895  __aeabi_uidiv                   
-00003895  __aeabi_uidivmod                
-000038d5  CPUcpsid                        
-000038e1  CPUprimask                      
-000038eb  CPUcpsie                        
-000038f7  CPUwfi                          
-000038fb  CPUbasepriSet                   
-00003909  CPUbasepriGet                   
-00003915  _c_int00_noargs                 
-00003949  __TI_zero_init_nomemset         
-00003965  __TI_decompress_none            
-00003973  ResetISR                        
-0000397f  SysCtlDelay                     
-00003985  _system_pre_init                
-00003989  C$$EXIT                         
-00003989  abort                           
-00004048  __TI_Handler_Table_Base         
-00004054  __TI_Handler_Table_Limit        
-00004070  __TI_CINIT_Base                 
-00004088  __TI_CINIT_Limit                
+0000362f  BME280_ReadTemperature          
+000036d9  __aeabi_memcpy                  
+000036d9  __aeabi_memcpy4                 
+000036d9  __aeabi_memcpy8                 
+000036d9  memcpy                          
+00003775  __TI_decompress_lzss            
+000037dd  main                            
+00003835  UART_Init                       
+00003889  __TI_auto_init_nobinit_nopinit  
+000038cd  __aeabi_uidiv                   
+000038cd  __aeabi_uidivmod                
+0000390d  CPUcpsid                        
+00003919  CPUprimask                      
+00003923  CPUcpsie                        
+0000392f  CPUwfi                          
+00003933  CPUbasepriSet                   
+00003941  CPUbasepriGet                   
+0000394d  _c_int00_noargs                 
+00003981  __TI_zero_init_nomemset         
+0000399d  __TI_decompress_none            
+000039ab  ResetISR                        
+000039b7  SysCtlDelay                     
+000039bd  _system_pre_init                
+000039c1  C$$EXIT                         
+000039c1  abort                           
+00004080  __TI_Handler_Table_Base         
+0000408c  __TI_Handler_Table_Limit        
+000040a8  __TI_CINIT_Base                 
+000040c0  __TI_CINIT_Limit                
 20000000  __start___llvm_prf_cnts         
 20000000  __stop___llvm_prf_cnts          
 20000000  g_pfnRAMVectors                 
@@ -756,7 +755,6 @@ ffffffff  __TI_prof_data_start
 ffffffff  __binit__                       
 ffffffff  __c_args__                      
 ffffffff  binit                           
-UNDEFED   I2C_WriteRegister               
 UNDEFED   TIMER0A_Handler                 
 UNDEFED   TIMER0B_Handler                 
 UNDEFED   TIMER1A_Handler                 
@@ -764,4 +762,4 @@ UNDEFED   TIMER1B_Handler
 UNDEFED   __mpu_init                      
 UNDEFED   _system_post_cinit              
 
-[286 symbols]
+[285 symbols]
