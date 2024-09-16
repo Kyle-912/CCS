@@ -38,13 +38,14 @@ int main(void)
     UART_Init();
     BME280_Init();
 
-    uint16_t temp_value = 0;
+    int32_t temp_value = 0;
 
     while (1)
     {
-        BME280_Data temp_value = BME280_ReadTemperature();
+        int32_t temp_value = BME280_ReadTemperature();
 
-        UARTprintf("Temperature: %.2f °C\n", temp_value.temperature);
+        // Print the temperature data over UART
+        UARTprintf("Temperature: %d.%02d °C\n", temp_value / 100, temp_value % 100);
     }
 }
 
