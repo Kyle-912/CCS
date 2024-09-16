@@ -13,14 +13,8 @@
 #define BME280_REG_CTRL_MEAS 0xF4
 #define BME280_REG_RESET 0xE0
 
-// Temperature Data Structure
-typedef struct
-{
-    float temperature; // Temperature in Celsius
-} BME280_Data;
-
 // Function Prototypes
 void BME280_Init(void);
-BME280_Data BME280_ReadTemperature(void);
+float BME280_ReadTemperature(void);
 
 #endif // MULTIMOD_BME280_H

@@ -1,6 +1,6 @@
 #include "multimod_BME280.h"
-#include "multimod_i2c.h"  // Replace with your actual I2C library
-#include "multimod_uart.h" // Replace with your actual UART library
+#include "multimod_i2c.h"  // Include your actual I2C library
+#include "multimod_uart.h" // Include your actual UART library
 
 // Calibration data variables
 static uint16_t dig_T1;
@@ -28,10 +28,9 @@ void BME280_Init(void)
     I2C_WriteRegister(I2C1_BASE, BME280_I2C_ADDR, BME280_REG_CTRL_MEAS, 0x20);
 }
 
-// Function to read the temperature from BME280
-BME280_Data BME280_ReadTemperature(void)
+// Function to read the temperature from BME280 and return it as a float
+float BME280_ReadTemperature(void)
 {
-    BME280_Data data;
     uint8_t temp_raw[3];
 
     // Read the raw temperature data from the sensor
@@ -44,8 +43,8 @@ BME280_Data BME280_ReadTemperature(void)
     int32_t var1 = ((((adc_T >> 3) - ((int32_t)dig_T1 << 1))) * ((int32_t)dig_T2)) >> 11;
     int32_t var2 = (((((adc_T >> 4) - ((int32_t)dig_T1)) * ((adc_T >> 4) - ((int32_t)dig_T1))) >> 12) * ((int32_t)dig_T3)) >> 14;
     int32_t t_fine = var1 + var2;
-    data.temperature = (t_fine * 5 + 128) >> 8;
-    data.temperature /= 100.0f;
+    float temperature = (t_fine * 5 + 128) >> 8;
+    temperature /= 100.0f;
 
-    return data;
+    return temperature;
 }
