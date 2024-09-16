@@ -1,5 +1,5 @@
-#include "multimod_BME280.h"
-#include "multimod_i2c.h" // Include your actual I2C library
+#include "../multimod_BME280.h"
+#include "../multimod_i2c.h" // Include your actual I2C library
 
 // Calibration data variables
 static uint16_t dig_T1;
