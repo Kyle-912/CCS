@@ -1,6 +1,6 @@
-"./Lab2c.obj"
-"./temp.obj"
+"./Lab2Bonus.obj"
 "./tm4c123gh6pm_startup_ccs.obj"
+"./MultimodDrivers/src/multimod_BME280.obj"
 "./MultimodDrivers/src/multimod_BMI160.obj"
 "./MultimodDrivers/src/multimod_OPT3001.obj"
 "./MultimodDrivers/src/multimod_PCA9956b.obj"
