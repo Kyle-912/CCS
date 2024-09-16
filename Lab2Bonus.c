@@ -1,11 +1,3 @@
-// Lab 1, uP2 Fall 2023
-// Created: 2023-07-31
-// Updated: 2023-08-01
-// Lab 1 is intended to introduce you to I2C, the sensor backpack, how to interface with them,
-// and output the values through UART.
-
-// b. Read values from sensors, UART these values
-
 /************************************Includes***************************************/
 
 #include <stdint.h>
