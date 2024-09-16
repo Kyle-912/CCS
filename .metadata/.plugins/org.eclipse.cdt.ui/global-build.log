@@ -2183,3 +2183,21 @@ makefile:186: recipe for target 'all' failed
 gmake: *** [all] Error 2
 
 **** Build Finished ****
+
+**** Build of configuration Debug for project Lab2 ****
+
+"C:\\ti\\ccs1280\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building file: "../tm4c123gh6pm_startup_ccs.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CSS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CSS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="tm4c123gh6pm_startup_ccs.d_raw"  "../tm4c123gh6pm_startup_ccs.c"
+Finished building: "../tm4c123gh6pm_startup_ccs.c"
+ 
+Building target: "Lab2.out"
+Invoking: Arm Linker
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"Lab2.map" --heap_size=0 --stack_size=512 -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Lab2_linkInfo.xml" --rom_model -o "Lab2.out" "./Lab2Bonus.obj" "./tm4c123gh6pm_startup_ccs.obj" "./MultimodDrivers/src/multimod_BME280.obj" "./MultimodDrivers/src/multimod_BMI160.obj" "./MultimodDrivers/src/multimod_OPT3001.obj" "./MultimodDrivers/src/multimod_PCA9956b.obj" "./MultimodDrivers/src/multimod_i2c.obj" "./MultimodDrivers/src/multimod_uart.obj" "./driverlib/adc.obj" "./driverlib/aes.obj" "./driverlib/can.obj" "./driverlib/comp.obj" "./driverlib/cpu.obj" "./driverlib/crc.obj" "./driverlib/des.obj" "./driverlib/eeprom.obj" "./driverlib/emac.obj" "./driverlib/epi.obj" "./driverlib/epi_workaround_ccs.obj" "./driverlib/flash.obj" "./driverlib/fpu.obj" "./driverlib/gpio.obj" "./driverlib/hibernate.obj" "./driverlib/i2c.obj" "./driverlib/interrupt.obj" "./driverlib/lcd.obj" "./driverlib/mpu.obj" "./driverlib/onewire.obj" "./driverlib/pwm.obj" "./driverlib/qei.obj" "./driverlib/shamd5.obj" "./driverlib/ssi.obj" "./driverlib/sw_crc.obj" "./driverlib/sysctl.obj" "./driverlib/sysexc.obj" "./driverlib/systick.obj" "./driverlib/timer.obj" "./driverlib/uart.obj" "./driverlib/uartstdio.obj" "./driverlib/udma.obj" "./driverlib/usb.obj" "./driverlib/watchdog.obj" "../tm4c123gh6pm.cmd" "../driverlib/ccs/Debug/driverlib.lib" "../driverlib/rvmdk/driverlib.lib"  -llibc.a   ../driverlib/ewarm/Exe/driverlib.a  ../driverlib/gcc/libdriver.a 
+<Linking>
+Finished building target: "Lab2.out"
+ 
+
+**** Build Finished ****
