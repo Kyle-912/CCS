@@ -1,6 +1,6 @@
 #include "../multimod_BME280.h"
-#include "multimod_i2c.h"  // Include your actual I2C library
-#include "multimod_uart.h" // Include your actual UART library
+#include "../multimod_i2c.h"  // Include your actual I2C library
+#include "../multimod_uart.h" // Include your actual UART library
 
 // Calibration data variables
 static uint16_t dig_T1;
