@@ -1,4 +1,4 @@
-#include "multimod_BME280.h"
+#include "../multimod_BME280.h"
 #include "multimod_i2c.h"  // Include your actual I2C library
 #include "multimod_uart.h" // Include your actual UART library
 
