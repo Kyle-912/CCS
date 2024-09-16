@@ -26,44 +26,15 @@
 /********************************Public Variables***********************************/
 
 /********************************Public Functions***********************************/
-// Timer 0A interrupt handler
-void TIMER0A_Handler(void)
-{
-    // Clear the timer interrupt flag
-    TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
-
-    // Add your code here to handle the interrupt
-}
-
-// Timer 0B interrupt handler
-void TIMER0B_Handler(void)
-{
-    // Clear the timer interrupt flag
-    TimerIntClear(TIMER0_BASE, TIMER_TIMB_TIMEOUT);
-
-    // Add your code here to handle the interrupt
-}
-
-// Timer 1A interrupt handler
-void TIMER1A_Handler(void)
-{
-    // Clear the timer interrupt flag
-    TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
-
-    // Add your code here to handle the interrupt
-}
-
-// Timer 1B interrupt handler
-void TIMER1B_Handler(void)
-{
-    // Clear the timer interrupt flag
-    TimerIntClear(TIMER1_BASE, TIMER_TIMB_TIMEOUT);
-
-    // Add your code here to handle the interrupt
-}
+void TIMER0A_Handler(void);
+void TIMER0B_Handler(void);
+void TIMER1A_Handler(void);
+void TIMER1B_Handler(void);
 /********************************Public Functions***********************************/
 
 /************************************MAIN*******************************************/
+
+// Read accelerometer x sensor values, output them through UART.
 int main(void)
 {
     SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
@@ -71,14 +42,15 @@ int main(void)
     UART_Init();
     BME280_Init();
 
-    int32_t temp_value;
+    int32_t temp_value = 0;
 
     while (1)
     {
-        temp_value = BME280_ReadTemperature();
+        int32_t temp_value = BME280_ReadTemperature();
 
         // Print the temperature data over UART
         UARTprintf("Temperature: %d.%02d °C\n", temp_value / 100, temp_value % 100);
     }
 }
+
 /************************************MAIN*******************************************/

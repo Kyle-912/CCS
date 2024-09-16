@@ -1054,3 +1054,7 @@ Binding(ALT+E,
 !ENTRY com.ti.ccstudio.debug 1 0 2024-09-15 11:54:07.379
 !MESSAGE DS_ERROR: CORTEX_M4_0: Failed to remove the debug state from the target before disconnecting.  There may still be breakpoint op-codes embedded in program memory.  It is recommended that you reset the emulator before you connect and reload your program before you continue debugging
 
+
+!ENTRY com.ti.ccstudio.debug 1 0 2024-09-15 21:18:28.412
+!MESSAGE DS_ERROR: CORTEX_M4_0: GEL: Encountered a problem loading file: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Texas Instruments\Code Composer Studio 12.8.0\CSS\Lab2\Debug\Lab2.out Could not open file
+

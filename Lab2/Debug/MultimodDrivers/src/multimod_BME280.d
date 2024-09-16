@@ -17,6 +17,7 @@ MultimodDrivers/src/multimod_BME280.obj: C:/ti/ccs1280/ccs/tools/compiler/ti-cgt
 MultimodDrivers/src/multimod_BME280.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CSS/SW-TM4C-2.2.0.295/inc/hw_memmap.h
 MultimodDrivers/src/multimod_BME280.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CSS/SW-TM4C-2.2.0.295/inc/hw_gpio.h
 MultimodDrivers/src/multimod_BME280.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CSS/Lab2/driverlib/i2c.h
+MultimodDrivers/src/multimod_BME280.obj: ../MultimodDrivers/multimod_uart.h
 
 ../MultimodDrivers/src/multimod_BME280.c:
 
@@ -51,4 +52,6 @@ C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ C
 C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CSS/SW-TM4C-2.2.0.295/inc/hw_gpio.h:
 
 C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CSS/Lab2/driverlib/i2c.h:
+
+../MultimodDrivers/multimod_uart.h:
 
