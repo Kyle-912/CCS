@@ -73,15 +73,15 @@ void Timer_Init()
     // Set prescalers
     TimerPrescaleSet(TIMER0_BASE, TIMER_A, 255); // Prescaler for Timer 0A (UART output)
     TimerPrescaleSet(TIMER0_BASE, TIMER_B, 255); // Prescaler for Timer 0B (LED toggle)
-    TimerPrescaleSet(TIMER1_BASE, TIMER_A, 127); // Prescaler for Timer 1A (BMI160 sampling)
+    TimerPrescaleSet(TIMER1_BASE, TIMER_A, 255); // Prescaler for Timer 1A (BMI160 sampling)
     TimerPrescaleSet(TIMER1_BASE, TIMER_B, 255); // Prescaler for Timer 1B (OPT3001 sampling)
 
     // Load initial timer values
     // Sysclock / prescaler * desired seconds = timer period
-    TimerLoadSet(TIMER0_BASE, TIMER_A, (SysCtlClockGet() / TimerPrescaleGet(TIMER0_BASE, TIMER_A) * 0.5));  // 500 ms for UART output
-    TimerLoadSet(TIMER0_BASE, TIMER_B, (SysCtlClockGet() / TimerPrescaleGet(TIMER0_BASE, TIMER_B) * 0.1));  // 100 ms for LED toggle
-    TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / TimerPrescaleGet(TIMER1_BASE, TIMER_A) * 0.1));  // 100 ms for BMI160 sampling
-    TimerLoadSet(TIMER1_BASE, TIMER_B, (SysCtlClockGet() / TimerPrescaleGet(TIMER1_BASE, TIMER_B) * 0.15)); // 150 ms for OPT3001 sampling
+    TimerLoadSet(TIMER0_BASE, TIMER_A, (SysCtlClockGet() / TimerPrescaleGet(TIMER0_BASE, TIMER_A) * 0.1));  // 100 ms for BMI160 sampling
+    TimerLoadSet(TIMER0_BASE, TIMER_B, (SysCtlClockGet() / TimerPrescaleGet(TIMER0_BASE, TIMER_B) * 0.15)); // 150 ms for OPT3001 sampling
+    TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / TimerPrescaleGet(TIMER1_BASE, TIMER_A) * 0.1));  // 100 ms for LED toggle
+    TimerLoadSet(TIMER1_BASE, TIMER_B, (SysCtlClockGet() / TimerPrescaleGet(TIMER1_BASE, TIMER_B) * 0.5));  // 500 ms for UART output
 
     // Enable timer interrupts
     TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT | TIMER_TIMB_TIMEOUT);
@@ -147,10 +147,6 @@ int main(void)
     int16_t x_accel_value = 0;
     uint16_t opt_value = 0;
 
-    // TODO: delete
-    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_4);
-    uint8_t toggle = 0;
-
     while (1)
     {
         // Write code to read the x-axis accelerometer value,
@@ -168,16 +164,6 @@ int main(void)
             read_imu_flag = 0;                        // Clear flag after handling
             x_accel_value = BMI160_AccelXGetResult(); // Read x-axis acceleration
             UARTprintf("Accelerometer X: %d\n", x_accel_value);
-            if (toggle)
-            {
-                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x00);
-                toggle = !toggle;
-            }
-            else
-            {
-                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0xFF);
-                toggle = !toggle;
-            }
         }
 
         if (read_opt_flag)
