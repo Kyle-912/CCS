@@ -78,9 +78,9 @@ void Timer_Init()
 
     // Load initial timer values
     // Sysclock / prescaler * desired seconds = timer period
-    TimerLoadSet(TIMER0_BASE, TIMER_A, (SysCtlClockGet() / TimerPrescaleGet(TIMER0_BASE, TIMER_A) * 0.5)); // 500 ms for UART output
-    TimerLoadSet(TIMER0_BASE, TIMER_B, (SysCtlClockGet() / TimerPrescaleGet(TIMER0_BASE, TIMER_B) * 0.1)); // 100 ms for LED toggle
-    TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / TimerPrescaleGet(TIMER1_BASE, TIMER_A) * 0.1)); // 100 ms for BMI160 sampling
+    TimerLoadSet(TIMER0_BASE, TIMER_A, (SysCtlClockGet() / TimerPrescaleGet(TIMER0_BASE, TIMER_A) * 0.5));  // 500 ms for UART output
+    TimerLoadSet(TIMER0_BASE, TIMER_B, (SysCtlClockGet() / TimerPrescaleGet(TIMER0_BASE, TIMER_B) * 0.1));  // 100 ms for LED toggle
+    TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / TimerPrescaleGet(TIMER1_BASE, TIMER_A) * 0.1));  // 100 ms for BMI160 sampling
     TimerLoadSet(TIMER1_BASE, TIMER_B, (SysCtlClockGet() / TimerPrescaleGet(TIMER1_BASE, TIMER_B) * 0.15)); // 150 ms for OPT3001 sampling
 
     // Enable timer interrupts
@@ -147,7 +147,7 @@ int main(void)
     int16_t x_accel_value = 0;
     uint16_t opt_value = 0;
 
-    //TODO: delete
+    // TODO: delete
     GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_4);
     uint8_t toggle = 0;
 
@@ -170,11 +170,13 @@ int main(void)
             UARTprintf("Accelerometer X: %d\n", x_accel_value);
             if (toggle)
             {
-            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x00);
-            }else{
+                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0x00);
+                toggle = !toggle;
+            }
+            else
+            {
                 GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0xFF);
             }
-
         }
 
         if (read_opt_flag)
