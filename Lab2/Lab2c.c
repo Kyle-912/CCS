@@ -148,7 +148,7 @@ int main(void)
     uint16_t opt_value = 0;
 
     //TODO: delete
-    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_3 | GPIO_PIN_2 | GPIO_PIN_1);
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_4);
 
     while (1)
     {
@@ -167,6 +167,7 @@ int main(void)
             read_imu_flag = 0;                        // Clear flag after handling
             x_accel_value = BMI160_AccelXGetResult(); // Read x-axis acceleration
             UARTprintf("Accelerometer X: %d\n", x_accel_value);
+            
         }
 
         if (read_opt_flag)
