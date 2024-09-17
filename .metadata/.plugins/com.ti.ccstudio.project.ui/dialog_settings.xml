@@ -5,7 +5,7 @@
 	<section name="com.ti.ccstudio.project.ui.internal.properties.DynamicPropertiesPageManager">
 	</section>
 	<section name="com.ti.ccstudio.project.ui.internal.wizards.importexport.ProjectImportPage">
-		<item key="CCS.BROWSE_DIRS_FILTER" value="C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Texas Instruments\Code Composer Studio 12.8.0\CSS\Lab2"/>
+		<item key="CCS.BROWSE_DIRS_FILTER" value="C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Texas Instruments\Code Composer Studio 12.8.0\CCS\Lab2"/>
 		<item key="CCS.COPY_INTO_WORKSPACE" value="false"/>
 		<item key="CCS.IMPORT_REFERENCED_PROJECTS" value="false"/>
 		<item key="CCS.IMPORT_FROM_ARCHIVE" value="false"/>
