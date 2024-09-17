@@ -51,30 +51,30 @@ void TIMER1B_Handler(void);
 void Timer_Init()
 {
     // Initialize timers
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0); // For UART output and LED toggle
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0); // For BMI160 and OPT3001 sampling
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER0))
     {
     }
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER1); // For BMI160 and OPT3001 sampling
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER1); // For UART output and LED toggle
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER1))
     {
     }
 
     // Disable timers
-    TimerDisable(TIMER0_BASE, TIMER_A); // Timer 0A for UART output
-    TimerDisable(TIMER0_BASE, TIMER_B); // Timer 0B for LED toggle
-    TimerDisable(TIMER1_BASE, TIMER_A); // Timer 1A for BMI160 sampling
-    TimerDisable(TIMER1_BASE, TIMER_B); // Timer 1B for OPT3001 sampling
+    TimerDisable(TIMER0_BASE, TIMER_A); // Timer 0A for BMI160 sampling
+    TimerDisable(TIMER0_BASE, TIMER_B); // Timer 0B for OPT3001 sampling
+    TimerDisable(TIMER1_BASE, TIMER_A); // Timer 1A for LED toggle
+    TimerDisable(TIMER1_BASE, TIMER_B); // Timer 1B for UART output
 
     // Configure timers as half-width, periodic 16-bit or (32-bit if using 64-bit timers) timers for a total of 4 timers
     TimerConfigure(TIMER0_BASE, TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC);
     TimerConfigure(TIMER1_BASE, TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC);
 
     // Set prescalers
-    TimerPrescaleSet(TIMER0_BASE, TIMER_A, 255); // Prescaler for Timer 0A (UART output)
-    TimerPrescaleSet(TIMER0_BASE, TIMER_B, 255); // Prescaler for Timer 0B (LED toggle)
-    TimerPrescaleSet(TIMER1_BASE, TIMER_A, 255); // Prescaler for Timer 1A (BMI160 sampling)
-    TimerPrescaleSet(TIMER1_BASE, TIMER_B, 255); // Prescaler for Timer 1B (OPT3001 sampling)
+    TimerPrescaleSet(TIMER0_BASE, TIMER_A, 255); // Prescaler for Timer 0A (BMI160 sampling)
+    TimerPrescaleSet(TIMER0_BASE, TIMER_B, 255); // Prescaler for Timer 0B (OPT3001 sampling)
+    TimerPrescaleSet(TIMER1_BASE, TIMER_A, 255); // Prescaler for Timer 1A (LED toggle)
+    TimerPrescaleSet(TIMER1_BASE, TIMER_B, 255); // Prescaler for Timer 1B (UART output)
 
     // Load initial timer values
     // Sysclock / prescaler * desired seconds = timer period
@@ -99,10 +99,10 @@ void Int_Init(void)
     IntMasterDisable();
 
     // Enable timer interrupt, set interrupt priorities
-    IntEnable(INT_TIMER0A); // UART output interrupt
-    IntEnable(INT_TIMER0B); // LED toggle interrupt
-    IntEnable(INT_TIMER1A); // BMI160 sampling interrupt
-    IntEnable(INT_TIMER1B); // OPT3001 sampling interrupt
+    IntEnable(INT_TIMER0A); // BMI160 sampling interrupt
+    IntEnable(INT_TIMER0B); // OPT3001 sampling interrupt
+    IntEnable(INT_TIMER1A); // LED toggle interrupt
+    IntEnable(INT_TIMER1B); // UART output interrupt
 
     IntPrioritySet(INT_TIMER0A, 0x00);
     IntPrioritySet(INT_TIMER0B, 0x20);
