@@ -170,7 +170,8 @@ int main(void)
             UARTprintf("Accelerometer X: %d\n", x_accel_value);
             if (toggle)
             {
-                /* code */
+            }else{
+
             }
 
             GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
