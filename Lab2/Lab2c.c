@@ -167,7 +167,7 @@ int main(void)
             read_imu_flag = 0;                        // Clear flag after handling
             x_accel_value = BMI160_AccelXGetResult(); // Read x-axis acceleration
             UARTprintf("Accelerometer X: %d\n", x_accel_value);
-            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_1);
+            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4);
         }
 
         if (read_opt_flag)
