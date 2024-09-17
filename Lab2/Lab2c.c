@@ -72,9 +72,9 @@ void Timer_Init()
 
     // Set prescalers
     TimerPrescaleSet(TIMER0_BASE, TIMER_A, 255); // Prescaler for Timer 0A (BMI160 sampling)
-    TimerPrescaleSet(TIMER0_BASE, TIMER_B, 255); // Prescaler for Timer 0B (LED toggle)
-    TimerPrescaleSet(TIMER1_BASE, TIMER_A, 255); // Prescaler for Timer 1A ()
-    TimerPrescaleSet(TIMER1_BASE, TIMER_B, 255); // Prescaler for Timer 1B (OPT3001 sampling)
+    TimerPrescaleSet(TIMER0_BASE, TIMER_B, 255); // Prescaler for Timer 0B (OPT3001 sampling)
+    TimerPrescaleSet(TIMER1_BASE, TIMER_A, 255); // Prescaler for Timer 1A (LED toggle)
+    TimerPrescaleSet(TIMER1_BASE, TIMER_B, 255); // Prescaler for Timer 1B (UART output)
 
     // Load initial timer values
     // Sysclock / prescaler * desired seconds = timer period
