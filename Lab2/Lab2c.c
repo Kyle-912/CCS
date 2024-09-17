@@ -71,6 +71,7 @@ void Timer_Init()
     TimerConfigure(TIMER1_BASE, TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC);
 
     // Set prescalers TODO: ask how this was meant to be used
+    TimerPre
 
     // Load initial timer values
     // Sysclock / prescaler * desired seconds = timer period FIXME: maybe modify to use prescalers
@@ -155,7 +156,7 @@ int main(void)
         {
             read_imu_flag = 0;                        // Clear flag after handling
             x_accel_value = BMI160_AccelXGetResult(); // Read x-axis acceleration
-//            UARTprintf("Accelerometer X: %d\n", x_accel_value);
+            UARTprintf("Accelerometer X: %d\n", x_accel_value);
         }
 
         if (read_opt_flag)
