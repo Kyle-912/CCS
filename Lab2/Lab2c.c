@@ -74,14 +74,14 @@ void Timer_Init()
     TimerPrescaleSet(TIMER0_BASE, TIMER_A, 255); // Prescaler for Timer 0A (UART output)
     TimerPrescaleSet(TIMER0_BASE, TIMER_B, 255); // Prescaler for Timer 0B (LED toggle)
     TimerPrescaleSet(TIMER1_BASE, TIMER_A, 255); // Prescaler for Timer 1A (BMI160 sampling)
-    TimerPrescaleSet(TIMER1_BASE, TIMER_B, 50); // Prescaler for Timer 1B (OPT3001 sampling)
+    TimerPrescaleSet(TIMER1_BASE, TIMER_B, 255); // Prescaler for Timer 1B (OPT3001 sampling)
 
     // Load initial timer values
     // Sysclock / prescaler * desired seconds = timer period
-    TimerLoadSet(TIMER0_BASE, TIMER_A, (SysCtlClockGet() / 50 * 0.5)); // 500 ms for UART output
-    TimerLoadSet(TIMER0_BASE, TIMER_B, (SysCtlClockGet() / 50 * 0.1)); // 100 ms for LED toggle
-    TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / 50 * 0.1)); // 100 ms for BMI160 sampling
-    TimerLoadSet(TIMER1_BASE, TIMER_B, (SysCtlClockGet() / 50 * 0.15)); // 150 ms for OPT3001 sampling
+    TimerLoadSet(TIMER0_BASE, TIMER_A, (SysCtlClockGet() / TimerPrescaleGet(TIMER0_BASE, TIMER_A) * 0.5)); // 500 ms for UART output
+    TimerLoadSet(TIMER0_BASE, TIMER_B, (SysCtlClockGet() / TimerPrescaleGet(TIMER0_BASE, TIMER_B) * 0.1)); // 100 ms for LED toggle
+    TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / TimerPrescaleGet(TIMER1_BASE, TIMER_A) * 0.1)); // 100 ms for BMI160 sampling
+    TimerLoadSet(TIMER1_BASE, TIMER_B, (SysCtlClockGet() / TimerPrescaleGet(TIMER1_BASE, TIMER_B) * 0.15)); // 150 ms for OPT3001 sampling
 
     // Enable timer interrupts
     TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT | TIMER_TIMB_TIMEOUT);
