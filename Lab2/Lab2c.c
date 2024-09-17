@@ -78,6 +78,7 @@ void Timer_Init()
 
     // Load initial timer values
     // Sysclock / prescaler * desired seconds = timer period
+    SysCtlClockGet();
     TimerLoadSet(TIMER0_BASE, TIMER_A, (16000000 / 50 * 0.5)); // 500 ms for UART output
     TimerLoadSet(TIMER0_BASE, TIMER_B, (16000000 / 50 * 0.1)); // 100 ms for LED toggle
     TimerLoadSet(TIMER1_BASE, TIMER_A, (16000000 / 50 * 0.1)); // 100 ms for BMI160 sampling
