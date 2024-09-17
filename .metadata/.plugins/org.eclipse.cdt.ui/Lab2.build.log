@@ -3,6 +3,224 @@
 
 "C:\\ti\\ccs1280\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
  
-gmake[1]: 'Lab2.out' is up to date.
+Building file: "../tm4c123gh6pm_startup_ccs.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="tm4c123gh6pm_startup_ccs.d_raw"  "../tm4c123gh6pm_startup_ccs.c"
+Finished building: "../tm4c123gh6pm_startup_ccs.c"
+ 
+Building file: "../MultimodDrivers/src/multimod_BME280.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="MultimodDrivers/src/multimod_BME280.d_raw" --obj_directory="MultimodDrivers/src"  "../MultimodDrivers/src/multimod_BME280.c"
+"../MultimodDrivers/src/multimod_BME280.c", line 20: warning #225-D: function "SysCtlDelay" declared implicitly
+"../MultimodDrivers/src/multimod_BME280.c", line 20: warning #225-D: function "SysCtlClockGet" declared implicitly
+"../MultimodDrivers/src/multimod_BME280.c", line 37: warning #225-D: function "UARTprintf" declared implicitly
+Finished building: "../MultimodDrivers/src/multimod_BME280.c"
+ 
+Building file: "../Lab2c.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Lab2c.d_raw"  "../Lab2c.c"
+Finished building: "../Lab2c.c"
+ 
+Building file: "../MultimodDrivers/src/multimod_BMI160.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="MultimodDrivers/src/multimod_BMI160.d_raw" --obj_directory="MultimodDrivers/src"  "../MultimodDrivers/src/multimod_BMI160.c"
+Finished building: "../MultimodDrivers/src/multimod_BMI160.c"
+ 
+Building file: "../MultimodDrivers/src/multimod_OPT3001.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="MultimodDrivers/src/multimod_OPT3001.d_raw" --obj_directory="MultimodDrivers/src"  "../MultimodDrivers/src/multimod_OPT3001.c"
+Finished building: "../MultimodDrivers/src/multimod_OPT3001.c"
+ 
+Building file: "../MultimodDrivers/src/multimod_PCA9956b.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="MultimodDrivers/src/multimod_PCA9956b.d_raw" --obj_directory="MultimodDrivers/src"  "../MultimodDrivers/src/multimod_PCA9956b.c"
+Finished building: "../MultimodDrivers/src/multimod_PCA9956b.c"
+ 
+Building file: "../MultimodDrivers/src/multimod_i2c.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="MultimodDrivers/src/multimod_i2c.d_raw" --obj_directory="MultimodDrivers/src"  "../MultimodDrivers/src/multimod_i2c.c"
+Finished building: "../MultimodDrivers/src/multimod_i2c.c"
+ 
+Building file: "../MultimodDrivers/src/multimod_uart.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="MultimodDrivers/src/multimod_uart.d_raw" --obj_directory="MultimodDrivers/src"  "../MultimodDrivers/src/multimod_uart.c"
+Finished building: "../MultimodDrivers/src/multimod_uart.c"
+ 
+Building file: "../driverlib/aes.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/aes.d_raw" --obj_directory="driverlib"  "../driverlib/aes.c"
+Finished building: "../driverlib/aes.c"
+ 
+Building file: "../driverlib/adc.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/adc.d_raw" --obj_directory="driverlib"  "../driverlib/adc.c"
+Finished building: "../driverlib/adc.c"
+ 
+Building file: "../driverlib/comp.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/comp.d_raw" --obj_directory="driverlib"  "../driverlib/comp.c"
+Finished building: "../driverlib/comp.c"
+ 
+Building file: "../driverlib/can.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/can.d_raw" --obj_directory="driverlib"  "../driverlib/can.c"
+Finished building: "../driverlib/can.c"
+ 
+Building file: "../driverlib/cpu.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/cpu.d_raw" --obj_directory="driverlib"  "../driverlib/cpu.c"
+Finished building: "../driverlib/cpu.c"
+ 
+Building file: "../driverlib/crc.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/crc.d_raw" --obj_directory="driverlib"  "../driverlib/crc.c"
+Finished building: "../driverlib/crc.c"
+ 
+Building file: "../driverlib/eeprom.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/eeprom.d_raw" --obj_directory="driverlib"  "../driverlib/eeprom.c"
+Finished building: "../driverlib/eeprom.c"
+ 
+Building file: "../driverlib/des.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/des.d_raw" --obj_directory="driverlib"  "../driverlib/des.c"
+Finished building: "../driverlib/des.c"
+ 
+Building file: "../driverlib/epi_workaround_ccs.s"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/epi_workaround_ccs.d_raw" --obj_directory="driverlib"  "../driverlib/epi_workaround_ccs.s"
+Finished building: "../driverlib/epi_workaround_ccs.s"
+ 
+Building file: "../driverlib/flash.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/flash.d_raw" --obj_directory="driverlib"  "../driverlib/flash.c"
+Finished building: "../driverlib/flash.c"
+ 
+Building file: "../driverlib/epi.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/epi.d_raw" --obj_directory="driverlib"  "../driverlib/epi.c"
+Finished building: "../driverlib/epi.c"
+ 
+Building file: "../driverlib/emac.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/emac.d_raw" --obj_directory="driverlib"  "../driverlib/emac.c"
+Finished building: "../driverlib/emac.c"
+ 
+Building file: "../driverlib/fpu.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/fpu.d_raw" --obj_directory="driverlib"  "../driverlib/fpu.c"
+Finished building: "../driverlib/fpu.c"
+ 
+Building file: "../driverlib/hibernate.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/hibernate.d_raw" --obj_directory="driverlib"  "../driverlib/hibernate.c"
+Finished building: "../driverlib/hibernate.c"
+ 
+Building file: "../driverlib/gpio.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/gpio.d_raw" --obj_directory="driverlib"  "../driverlib/gpio.c"
+Finished building: "../driverlib/gpio.c"
+ 
+Building file: "../driverlib/i2c.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/i2c.d_raw" --obj_directory="driverlib"  "../driverlib/i2c.c"
+Finished building: "../driverlib/i2c.c"
+ 
+Building file: "../driverlib/interrupt.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/interrupt.d_raw" --obj_directory="driverlib"  "../driverlib/interrupt.c"
+Finished building: "../driverlib/interrupt.c"
+ 
+Building file: "../driverlib/mpu.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/mpu.d_raw" --obj_directory="driverlib"  "../driverlib/mpu.c"
+Finished building: "../driverlib/mpu.c"
+ 
+Building file: "../driverlib/onewire.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/onewire.d_raw" --obj_directory="driverlib"  "../driverlib/onewire.c"
+Finished building: "../driverlib/onewire.c"
+ 
+Building file: "../driverlib/lcd.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/lcd.d_raw" --obj_directory="driverlib"  "../driverlib/lcd.c"
+Finished building: "../driverlib/lcd.c"
+ 
+Building file: "../driverlib/qei.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/qei.d_raw" --obj_directory="driverlib"  "../driverlib/qei.c"
+Finished building: "../driverlib/qei.c"
+ 
+Building file: "../driverlib/pwm.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/pwm.d_raw" --obj_directory="driverlib"  "../driverlib/pwm.c"
+Finished building: "../driverlib/pwm.c"
+ 
+Building file: "../driverlib/shamd5.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/shamd5.d_raw" --obj_directory="driverlib"  "../driverlib/shamd5.c"
+Finished building: "../driverlib/shamd5.c"
+ 
+Building file: "../driverlib/ssi.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/ssi.d_raw" --obj_directory="driverlib"  "../driverlib/ssi.c"
+Finished building: "../driverlib/ssi.c"
+ 
+Building file: "../driverlib/sw_crc.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/sw_crc.d_raw" --obj_directory="driverlib"  "../driverlib/sw_crc.c"
+Finished building: "../driverlib/sw_crc.c"
+ 
+Building file: "../driverlib/sysexc.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/sysexc.d_raw" --obj_directory="driverlib"  "../driverlib/sysexc.c"
+Finished building: "../driverlib/sysexc.c"
+ 
+Building file: "../driverlib/systick.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/systick.d_raw" --obj_directory="driverlib"  "../driverlib/systick.c"
+Finished building: "../driverlib/systick.c"
+ 
+Building file: "../driverlib/sysctl.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/sysctl.d_raw" --obj_directory="driverlib"  "../driverlib/sysctl.c"
+Finished building: "../driverlib/sysctl.c"
+ 
+Building file: "../driverlib/timer.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/timer.d_raw" --obj_directory="driverlib"  "../driverlib/timer.c"
+Finished building: "../driverlib/timer.c"
+ 
+Building file: "../driverlib/uart.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/uart.d_raw" --obj_directory="driverlib"  "../driverlib/uart.c"
+Finished building: "../driverlib/uart.c"
+ 
+Building file: "../driverlib/uartstdio.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/uartstdio.d_raw" --obj_directory="driverlib"  "../driverlib/uartstdio.c"
+Finished building: "../driverlib/uartstdio.c"
+ 
+Building file: "../driverlib/watchdog.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/watchdog.d_raw" --obj_directory="driverlib"  "../driverlib/watchdog.c"
+Finished building: "../driverlib/watchdog.c"
+ 
+Building file: "../driverlib/udma.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/udma.d_raw" --obj_directory="driverlib"  "../driverlib/udma.c"
+Finished building: "../driverlib/udma.c"
+ 
+Building file: "../driverlib/usb.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/SW-TM4C-2.2.0.295" --include_path="C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Texas Instruments/Code Composer Studio 12.8.0/CCS/Lab2" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="driverlib/usb.d_raw" --obj_directory="driverlib"  "../driverlib/usb.c"
+Finished building: "../driverlib/usb.c"
+ 
+Building target: "Lab2.out"
+Invoking: Arm Linker
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --c99 --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"Lab2.map" --heap_size=0 --stack_size=512 -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Lab2_linkInfo.xml" --rom_model -o "Lab2.out" "./Lab2c.obj" "./tm4c123gh6pm_startup_ccs.obj" "./MultimodDrivers/src/multimod_BME280.obj" "./MultimodDrivers/src/multimod_BMI160.obj" "./MultimodDrivers/src/multimod_OPT3001.obj" "./MultimodDrivers/src/multimod_PCA9956b.obj" "./MultimodDrivers/src/multimod_i2c.obj" "./MultimodDrivers/src/multimod_uart.obj" "./driverlib/adc.obj" "./driverlib/aes.obj" "./driverlib/can.obj" "./driverlib/comp.obj" "./driverlib/cpu.obj" "./driverlib/crc.obj" "./driverlib/des.obj" "./driverlib/eeprom.obj" "./driverlib/emac.obj" "./driverlib/epi.obj" "./driverlib/epi_workaround_ccs.obj" "./driverlib/flash.obj" "./driverlib/fpu.obj" "./driverlib/gpio.obj" "./driverlib/hibernate.obj" "./driverlib/i2c.obj" "./driverlib/interrupt.obj" "./driverlib/lcd.obj" "./driverlib/mpu.obj" "./driverlib/onewire.obj" "./driverlib/pwm.obj" "./driverlib/qei.obj" "./driverlib/shamd5.obj" "./driverlib/ssi.obj" "./driverlib/sw_crc.obj" "./driverlib/sysctl.obj" "./driverlib/sysexc.obj" "./driverlib/systick.obj" "./driverlib/timer.obj" "./driverlib/uart.obj" "./driverlib/uartstdio.obj" "./driverlib/udma.obj" "./driverlib/usb.obj" "./driverlib/watchdog.obj" "../tm4c123gh6pm.cmd" "../driverlib/ccs/Debug/driverlib.lib" "../driverlib/rvmdk/driverlib.lib"  -llibc.a   ../driverlib/ewarm/Exe/driverlib.a  ../driverlib/gcc/libdriver.a 
+<Linking>
+Finished building target: "Lab2.out"
+ 
 
 **** Build Finished ****

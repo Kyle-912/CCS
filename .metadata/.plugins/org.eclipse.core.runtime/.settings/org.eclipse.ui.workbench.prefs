@@ -2,6 +2,7 @@
 //org.eclipse.ui.commands/state/org.eclipse.ui.navigator.resources.nested.changeProjectPresentation/org.eclipse.ui.commands.radioState=false
 <<<<<<<=HEAD
 >>>>>>>=24dfec7664f07c730d104b36ef7397e1b0608c87
+RUN_IN_BACKGROUND=false
 UIActivities.com.ti.ccstudio.activities.RSEActivity=true
 com.ti.ccstudio.debug.ui.symbolFontColor=0,128,255
 com.ti.ccstudio.memory.ui.view.rendering.colorBackground=30,30,30
