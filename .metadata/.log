@@ -1058,6 +1058,7 @@ Binding(ALT+E,
 !ENTRY com.ti.ccstudio.debug 1 0 2024-09-15 21:18:28.412
 !MESSAGE DS_ERROR: CORTEX_M4_0: GEL: Encountered a problem loading file: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Texas Instruments\Code Composer Studio 12.8.0\CSS\Lab2\Debug\Lab2.out Could not open file
 
+<<<<<<< HEAD
 
 !ENTRY org.eclipse.ui.console 4 2 2024-09-17 09:35:28.976
 !MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.ui.console".
@@ -1232,3 +1233,5 @@ org.eclipse.swt.SWTException: Widget is disposed
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:659)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
+=======
+>>>>>>> 24dfec7664f07c730d104b36ef7397e1b0608c87
