@@ -70,14 +70,18 @@ void Timer_Init()
     TimerConfigure(TIMER0_BASE, TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC);
     TimerConfigure(TIMER1_BASE, TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC);
 
-    // Set prescalers TODO: ask how this was meant to be used
+    // Set prescalers
+    TimerPrescaleSet(TIMER0_BASE, TIMER_A, 255); // Prescaler for Timer 0A (UART output)
+    TimerPrescaleSet(TIMER0_BASE, TIMER_B, 255); // Prescaler for Timer 0B (LED toggle)
+    TimerPrescaleSet(TIMER1_BASE, TIMER_A, 255); // Prescaler for Timer 1A (BMI160 sampling)
+    TimerPrescaleSet(TIMER1_BASE, TIMER_B, 255); // Prescaler for Timer 1B (OPT3001 sampling)
 
     // Load initial timer values
-    // Sysclock / prescaler * desired seconds = timer period FIXME: maybe modify to use prescalers
-    TimerLoadSet(TIMER0_BASE, TIMER_A, 8000000); // 500 ms for UART output
-    TimerLoadSet(TIMER0_BASE, TIMER_B, 1600000); // 100 ms for LED toggle
-    TimerLoadSet(TIMER1_BASE, TIMER_A, 1600000); // 100 ms for BMI160 sampling
-    TimerLoadSet(TIMER1_BASE, TIMER_B, 2400000); // 150 ms for OPT3001 sampling
+    // Sysclock / prescaler * desired seconds = timer period
+    TimerLoadSet(TIMER0_BASE, TIMER_A, (SysCtlClockGet() / TimerPrescaleGet(TIMER0_BASE, TIMER_A) * 0.1));  // 100 ms for BMI160 sampling
+    TimerLoadSet(TIMER0_BASE, TIMER_B, (SysCtlClockGet() / TimerPrescaleGet(TIMER0_BASE, TIMER_B) * 0.15)); // 150 ms for OPT3001 sampling
+    TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / TimerPrescaleGet(TIMER1_BASE, TIMER_A) * 0.1));  // 100 ms for LED toggle
+    TimerLoadSet(TIMER1_BASE, TIMER_B, (SysCtlClockGet() / TimerPrescaleGet(TIMER1_BASE, TIMER_B) * 0.5));  // 500 ms for UART output
 
     // Enable timer interrupts
     TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT | TIMER_TIMB_TIMEOUT);
@@ -105,7 +109,11 @@ void Int_Init(void)
     IntPrioritySet(INT_TIMER1A, 0x40);
     IntPrioritySet(INT_TIMER1B, 0x60);
 
-    // Point to relevant timer handler function TODO: ask if this is referring to modifying tm4c123gh6pm_startup_ccs.c
+    // Point to relevant timer handler function
+    IntRegister(INT_TIMER0A, TIMER0A_Handler);
+    IntRegister(INT_TIMER0B, TIMER0B_Handler);
+    IntRegister(INT_TIMER1A, TIMER1A_Handler);
+    IntRegister(INT_TIMER1B, TIMER1B_Handler);
 
     IntMasterEnable();
 }
@@ -148,7 +156,7 @@ int main(void)
         if (print_uart_flag)
         {
             print_uart_flag = 0; // Clear flag after handling
-            UARTprintf("Print every 500 ms\n");
+            UARTprintf("Print every 500 ms\n\n\n");
         }
 
         if (read_imu_flag)
