@@ -23,7 +23,7 @@ void OPT3001_Init(void)
     I2C_Init(I2C_A_BASE);
 
     // Set the correct configuration byte for continuous conversions
-    // OPT3001_WriteRegister(OPT3001_CONFIG_ADDR, 0b11);
+    OPT3001_WriteRegister(OPT3001_CONFIG_ADDR, 0xCC10);
     return;
 }
 
@@ -34,8 +34,8 @@ void OPT3001_Init(void)
 // Return: void
 void OPT3001_WriteRegister(uint8_t addr, uint16_t data)
 {
-    // Read the datasheet!
-    // Complete this function
+    uint8_t arr[3] = {addr, (data >> 8), data};
+    I2C_WriteMultiple(I2C1_BASE, OPT3001_ADDR, arr, 3);
     return;
 }
 
@@ -45,7 +45,6 @@ void OPT3001_WriteRegister(uint8_t addr, uint16_t data)
 // Return: uint16_t
 uint16_t OPT3001_ReadRegister(uint8_t addr)
 {
-    // Complete this function
     I2C_WriteSingle(I2C1_BASE, OPT3001_ADDR, addr);
     uint8_t arr[2];
     I2C_ReadMultiple(I2C1_BASE, OPT3001_ADDR, arr, 2);

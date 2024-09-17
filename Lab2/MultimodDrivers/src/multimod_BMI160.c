@@ -21,8 +21,10 @@
 void BMI160_Init()
 {
     I2C_Init(I2C1_BASE);
-    // TODO: Power on accelerometer
-    // BMI160_WriteRegister(BMI160_CONF_ADDR, );
+
+    // Power on accelerometer
+    BMI160_WriteRegister(BMI160_CMD_ADDR, 0x11);
+
     return;
 }
 
@@ -33,9 +35,9 @@ void BMI160_Init()
 // Return: void
 void BMI160_WriteRegister(uint8_t addr, uint8_t data)
 {
-    // Complete this function TODO: Test this function
     uint8_t arr[2] = {addr, data};
     I2C_WriteMultiple(I2C1_BASE, BMI160_ADDR, arr, 2);
+    return;
 }
 
 // BMI160_ReadRegister
@@ -44,21 +46,8 @@ void BMI160_WriteRegister(uint8_t addr, uint8_t data)
 // Return: void
 uint8_t BMI160_ReadRegister(uint8_t addr)
 {
-    // FIXME: Complete this function
     I2C_WriteSingle(I2C1_BASE, BMI160_ADDR, addr);
     return I2C_ReadSingle(I2C1_BASE, BMI160_ADDR);
-
-    // I2CMasterSlaveAddrSet(I2C1_BASE, BMI160_ADDR, false);
-    // I2CMasterDataPut(I2C1_BASE, addr);
-    // I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_SEND_START);
-    // while (I2CMasterBusy(I2C1_BASE))
-    // {
-    // }
-
-    // uint8_t arr[1];
-    // I2C_ReadMultiple(I2C1_BASE, BMI160_ADDR, arr, 1);
-
-    // return arr[0];
 }
 
 // BMI160_MultiReadRegister
@@ -69,7 +58,9 @@ uint8_t BMI160_ReadRegister(uint8_t addr)
 // Return: void
 void BMI160_MultiReadRegister(uint8_t addr, uint8_t *data, uint8_t num_bytes)
 {
-    // TODO: Complete this function
+    I2C_WriteSingle(I2C1_BASE, BMI160_ADDR, addr);
+    I2C_ReadMultiple(I2C1_BASE, BMI160_ADDR, data, num_bytes);
+    return;
 }
 
 // BMI160_AccelXGetResult
@@ -78,7 +69,8 @@ void BMI160_MultiReadRegister(uint8_t addr, uint8_t *data, uint8_t num_bytes)
 int16_t BMI160_AccelXGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_ACC))
-        ;
+    {
+    }
     uint8_t bytes[2];
 
     BMI160_MultiReadRegister(BMI160_DATA_O + ACCELX_O, bytes, 2);
@@ -92,7 +84,8 @@ int16_t BMI160_AccelXGetResult()
 int16_t BMI160_AccelYGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_ACC))
-        ;
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -107,7 +100,8 @@ int16_t BMI160_AccelYGetResult()
 int16_t BMI160_AccelZGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_GYR))
-        ;
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -122,7 +116,8 @@ int16_t BMI160_AccelZGetResult()
 int16_t BMI160_GyroXGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_GYR))
-        ;
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -137,7 +132,8 @@ int16_t BMI160_GyroXGetResult()
 int16_t BMI160_GyroYGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_GYR))
-        ;
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -152,7 +148,8 @@ int16_t BMI160_GyroYGetResult()
 int16_t BMI160_GyroZGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_GYR))
-        ;
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -167,7 +164,8 @@ int16_t BMI160_GyroZGetResult()
 int16_t BMI160_MagXGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_MAG))
-        ;
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -182,7 +180,8 @@ int16_t BMI160_MagXGetResult()
 int16_t BMI160_MagYGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_MAG))
-        ;
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -197,7 +196,8 @@ int16_t BMI160_MagYGetResult()
 int16_t BMI160_MagZGetResult()
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_MAG))
-        ;
+    {
+    }
 
     uint8_t bytes[2];
 
@@ -213,7 +213,8 @@ int16_t BMI160_MagZGetResult()
 void BMI160_AccelXYZGetResult(uint16_t *data)
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_ACC))
-        ;
+    {
+    }
 
     uint8_t bytes[6];
 
@@ -233,7 +234,8 @@ void BMI160_AccelXYZGetResult(uint16_t *data)
 void BMI160_GyroXYZGetResult(uint16_t *data)
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_GYR))
-        ;
+    {
+    }
 
     uint8_t bytes[6];
 
@@ -253,7 +255,8 @@ void BMI160_GyroXYZGetResult(uint16_t *data)
 void BMI160_MagXYZGetResult(uint16_t *data)
 {
     while (!(BMI160_GetDataStatus() & BMI160_STATUS_DRDY_MAG))
-        ;
+    {
+    }
 
     uint8_t bytes[6];
 

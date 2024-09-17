@@ -10,6 +10,8 @@
 #include <driverlib/gpio.h>
 #include <driverlib/sysctl.h>
 #include <driverlib/pin_map.h>
+#define GPIO_PA6_I2C1SCL 0x00001803 // To remove VSCode linting error
+#define GPIO_PA7_I2C1SDA 0x00001C03 // To remove VSCode linting error
 
 #include <inc/tm4c123gh6pm.h>
 #include <inc/hw_i2c.h>
@@ -54,7 +56,6 @@ void I2C_Init(uint32_t mod)
     }
 }
 
-
 // I2C_WriteSingle
 // Writes a single byte to an address.
 // Param uint32_t "mod": base address of module
@@ -69,12 +70,13 @@ void I2C_WriteSingle(uint32_t mod, uint8_t addr, uint8_t byte)
     // Input data into I2C module
     I2CMasterDataPut(mod, byte);
 
-
     // Trigger I2C module send
     I2CMasterControl(mod, I2C_MASTER_CMD_SINGLE_SEND);
 
     // Wait until I2C module is no longer busy
-    while (I2CMasterBusy(mod));
+    while (I2CMasterBusy(mod))
+    {
+    }
 
     return;
 }
@@ -98,7 +100,6 @@ uint8_t I2C_ReadSingle(uint32_t mod, uint8_t addr)
     }
 
     uint8_t data = (uint8_t)I2CMasterDataGet(mod);
-    // uint32_t data = I2CMasterDataGet(mod);
 
     // Return received data
     return data;
@@ -114,36 +115,36 @@ uint8_t I2C_ReadSingle(uint32_t mod, uint8_t addr)
 void I2C_WriteMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_bytes)
 {
     // Set the address in the slave address register
-    I2CMasterSlaveAddrSet(mod, addr, true);
+    I2CMasterSlaveAddrSet(mod, addr, false);
 
     // Input data into I2C module
     I2CMasterDataPut(mod, *data);
 
     // Trigger I2C module send
     I2CMasterControl(mod, I2C_MASTER_CMD_BURST_SEND_START);
-    data++;
-    num_bytes--;
 
     // Wait until I2C module is no longer busy
     while (I2CMasterBusy(mod))
     {
     }
-
-    // While num_bytes > 1
-    // Input data into I2C module
-    // Trigger I2C module send
-    // Wait until I2C module is no longer busy
     data++;
     num_bytes--;
+
     while (num_bytes > 1)
     {
+        // Input data into I2C module
         I2CMasterDataPut(mod, *data);
+
+        // Trigger I2C module send
         I2CMasterControl(mod, I2C_MASTER_CMD_BURST_SEND_CONT);
-        data++;
-        num_bytes--;
+
+        // Wait until I2C module is no longer busy
         while (I2CMasterBusy(mod))
         {
         }
+
+        data++;
+        num_bytes--;
     }
 
     // Input last byte into I2C module
@@ -174,7 +175,6 @@ void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_byt
 
     // Trigger I2C module receive
     I2CMasterControl(mod, I2C_MASTER_CMD_BURST_RECEIVE_START);
-    num_bytes--;
 
     // Wait until I2C module is no longer busy
     while (I2CMasterBusy(mod))
@@ -184,22 +184,22 @@ void I2C_ReadMultiple(uint32_t mod, uint8_t addr, uint8_t *data, uint8_t num_byt
     // Read received data
     *data = (uint8_t)I2CMasterDataGet(mod);
     data++;
+    num_bytes--;
 
-    // While num_bytes > 1
-    // Trigger I2C module receive
-    // Wait until I2C module is no longer busy
-    // Read received data
     while (num_bytes > 1)
     {
+        // Trigger I2C module receive
         I2CMasterControl(mod, I2C_MASTER_CMD_BURST_RECEIVE_CONT);
-        num_bytes--;
 
+        // Wait until I2C module is no longer busy
         while (I2CMasterBusy(mod))
         {
         }
 
+        // Read received data
         *data = (uint8_t)I2CMasterDataGet(mod);
         data++;
+        num_bytes--;
     }
 
     // Trigger I2C module receive

@@ -38,19 +38,25 @@
 
 /************************************MAIN*******************************************/
 
-// Read acclerometer x sensor values, output them through UART.
-int main(void) {
-    UART_Init();
+// Read accelerometer x sensor values, output them through UART.
+int main(void)
+{
+    SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
 
+    UART_Init();
     BMI160_Init();
     OPT3001_Init();
 
     int16_t x_accel_value = 0;
     uint16_t opt_value = 0;
 
-    while(1) {
+    while (1)
+    {
         // Get accelerometer and optical sensor results, then print them to the console.
+        x_accel_value = BMI160_AccelXGetResult();
+        opt_value = OPT3001_GetResult();
 
+        UARTprintf("\rAccelerometer X: %d   Optical: %d   ", x_accel_value, opt_value);
     }
 }
 
