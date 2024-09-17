@@ -51,11 +51,11 @@ void TIMER1B_Handler(void);
 void Timer_Init()
 {
     // Initialize timers
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0); // For UART output and LED toggle
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0); // For BMI160 and OPT3001 sampling
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER0))
     {
     }
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER1); // For BMI160 and OPT3001 sampling
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER1); // For UART output and LED toggle
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER1))
     {
     }
