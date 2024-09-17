@@ -176,6 +176,7 @@ int main(void)
             else
             {
                 GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0xFF);
+                toggle = !toggle;
             }
         }
 
