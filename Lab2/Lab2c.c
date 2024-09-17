@@ -147,6 +147,9 @@ int main(void)
     int16_t x_accel_value = 0;
     uint16_t opt_value = 0;
 
+    //TODO: delete
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_3 | GPIO_PIN_2 | GPIO_PIN_1);
+
     while (1)
     {
         // Write code to read the x-axis accelerometer value,
