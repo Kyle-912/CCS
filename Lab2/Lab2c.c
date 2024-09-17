@@ -61,10 +61,10 @@ void Timer_Init()
     }
 
     // Disable timers
-    TimerDisable(TIMER0_BASE, TIMER_A); // Timer 0A for UART output
-    TimerDisable(TIMER0_BASE, TIMER_B); // Timer 0B for LED toggle
-    TimerDisable(TIMER1_BASE, TIMER_A); // Timer 1A for BMI160 sampling
-    TimerDisable(TIMER1_BASE, TIMER_B); // Timer 1B for OPT3001 sampling
+    TimerDisable(TIMER0_BASE, TIMER_A); // Timer 0A for BMI160 sampling
+    TimerDisable(TIMER0_BASE, TIMER_B); // Timer 0B for OPT3001 sampling
+    TimerDisable(TIMER1_BASE, TIMER_A); // Timer 1A for
+    TimerDisable(TIMER1_BASE, TIMER_B); // Timer 1B for UART output
 
     // Configure timers as half-width, periodic 16-bit or (32-bit if using 64-bit timers) timers for a total of 4 timers
     TimerConfigure(TIMER0_BASE, TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC);
