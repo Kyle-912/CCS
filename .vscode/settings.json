@@ -82,7 +82,7 @@
         "RemoteSystemsTempFiles": true
     },
     "explorerExclude.backup": {},
-    "gitdoc.enabled": true,
+    "gitdoc.enabled": false,
     "C_Cpp.errorSquiggles": "enabled",
     "C_Cpp.default.compilerPath": "C:\\MinGW64\\bin\\gcc.exe"
 }
