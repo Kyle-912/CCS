@@ -37,7 +37,7 @@ static uint32_t NumberOfThreads;
 /*******************************Private Functions***********************************/
 
 // Occurs every 1 ms.
-static void InitSysTick(void)
+static void InitSysTick(void) //TODO:
 {
     // hint: use SysCtlClockGet() to get the clock speed without having to hardcode it!
     // Set systick period to overflow every 1 ms.
@@ -67,7 +67,7 @@ tcb_t* CurrentlyRunningThread;
 // G8RTOS_Init
 // Initializes the RTOS by initializing system time.
 // Return: void
-void G8RTOS_Init() {
+void G8RTOS_Init() { //TODO:
     // Initialize system time to zero
     // Set the number of threads to zero
 }

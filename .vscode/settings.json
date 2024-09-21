@@ -29,6 +29,7 @@
         "PORTA",
         "PORTB",
         "PORTF",
+        "Pendsv",
         "RREQ",
         "TIMA",
         "TIMB",
