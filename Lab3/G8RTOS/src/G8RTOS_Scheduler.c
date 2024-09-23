@@ -70,8 +70,8 @@ tcb_t *CurrentlyRunningThread;
 // G8RTOS_Init
 // Initializes the RTOS by initializing system time.
 // Return: void
-void G8RTOS_Init()
-{ // TODO:
+void G8RTOS_Init() // TODO:
+{
   // Initialize system time to zero
   // Set the number of threads to zero
 }
