@@ -126,6 +126,40 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void))
     * 4. Set the first thread's previous thread to be the new thread, so that it goes in the right spot in the list
     * 5. Point the previousTCB of the new thread to the current thread so that it moves in the correct order
     */
+    if (NumberOfThreads >= MAX_THREADS)
+        return -1; // Error: too many threads
+
+    // Get the next available thread control block
+    tcb_t *newTCB = &threadControlBlocks[NumberOfThreads];
+
+    // Initialize the stack for the new thread
+    newTCB->stackPointer = &threadStacks[NumberOfThreads][STACKSIZE - 16];
+
+    // Set up the thread context with initial register values
+    newTCB->stackPointer[15] = (int32_t)threadToAdd; // PC = thread function address
+    newTCB->stackPointer[14] = 0x01000000;           // xPSR with Thumb bit set
+
+    // Add the TCB to the round-robin list
+    if (NumberOfThreads == 0)
+    {
+        // First thread, point to itself
+        newTCB->nextTCB = newTCB;
+        newTCB->prevTCB = newTCB;
+    }
+    else
+    {
+        // Add to the end of the list
+        tcb_t *lastTCB = CurrentlyRunningThread->prevTCB;
+        lastTCB->nextTCB = newTCB;
+        newTCB->prevTCB = lastTCB;
+        newTCB->nextTCB = CurrentlyRunningThread;
+        CurrentlyRunningThread->prevTCB = newTCB;
+    }
+
+    // Increase the number of threads
+    NumberOfThreads++;
+
+    return 0; // Success
 }
 
 // SysTick_Handler
