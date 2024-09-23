@@ -80,6 +80,7 @@ int main(void)
     while (1)
     {
         UARTprintf("Counter0: %d, Counter1: %d, Counter2: %d\n", counter0, counter1, counter2);
+        SysCtlDelay(SysCtlClockGet() / 3);
     }
 }
 
