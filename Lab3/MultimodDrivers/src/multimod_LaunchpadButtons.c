@@ -50,6 +50,7 @@ void LaunchpadButtons_Init()
 // Return: uint8_t
 uint8_t LaunchpadButtons_ReadSW1()
 {
+    return (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4) == 0);
 }
 
 // LaunchpadButtons_ReadSW2
@@ -57,6 +58,7 @@ uint8_t LaunchpadButtons_ReadSW1()
 // Return: uint8_t
 uint8_t LaunchpadButtons_ReadSW2()
 {
+    return (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0) == 0);
 }
 
 /********************************Public Functions***********************************/
