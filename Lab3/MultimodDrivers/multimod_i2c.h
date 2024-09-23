@@ -35,8 +35,8 @@
 #define I2C_C_PIN_SCL       GPIO_PIN_2
 #define I2C_C_PIN_SDA       GPIO_PIN_3
 
-#define GPIO_PA6_I2C1SCL 0x00001803 // To remove VSCode linting error
-#define GPIO_PA7_I2C1SDA 0x00001C03 // To remove VSCode linting error
+#define GPIO_PA6_I2C1SCL 0x00001803 // For IntelliSense
+#define GPIO_PA7_I2C1SDA 0x00001C03 // For IntelliSense
 
 /*************************************Defines***************************************/
 
