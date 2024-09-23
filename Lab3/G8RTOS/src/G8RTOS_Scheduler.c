@@ -145,8 +145,22 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void))
     newTCB->stackPointer = &threadStacks[NumberOfThreads][STACKSIZE - 16];
 
     // Set up the thread context with initial register values
-    newTCB->stackPointer[15] = (int32_t)threadToAdd; // PC = thread function address
-    newTCB->stackPointer[14] = 0x01000000;           // xPSR with Thumb bit set
+    newTCB->stackPointer[15] = (int32_t)threadToAdd; // PC (Thread entry point)
+    newTCB->stackPointer[14] = 0x01000000;           // xPSR (Thumb bit set)
+    newTCB->stackPointer[13] = 0xFFFFFFFD;           // LR (Return to Thread mode with PSP)
+    newTCB->stackPointer[12] = 0x12121212;           // R12 (General-purpose register, not initialized to any particular value)
+    newTCB->stackPointer[11] = 0x11111111;           // R11 (General-purpose register, not initialized to any particular value)
+    newTCB->stackPointer[10] = 0x10101010;           // R10 (General-purpose register, not initialized to any particular value)
+    newTCB->stackPointer[9] = 0x09090909;            // R9 (General-purpose register, not initialized to any particular value)
+    newTCB->stackPointer[8] = 0x08080808;            // R8 (General-purpose register, not initialized to any particular value)
+    newTCB->stackPointer[7] = 0x07070707;            // R7 (General-purpose register, not initialized to any particular value)
+    newTCB->stackPointer[6] = 0x06060606;            // R6 (General-purpose register, not initialized to any particular value)
+    newTCB->stackPointer[5] = 0x05050505;            // R5 (General-purpose register, not initialized to any particular value)
+    newTCB->stackPointer[4] = 0x04040404;            // R4 (General-purpose register, not initialized to any particular value)
+    newTCB->stackPointer[3] = 0x03030303;            // R3 (General-purpose register, not initialized to any particular value)
+    newTCB->stackPointer[2] = 0x02020202;            // R2 (General-purpose register, not initialized to any particular value)
+    newTCB->stackPointer[1] = 0x01010101;            // R1 (General-purpose register, not initialized to any particular value)
+    newTCB->stackPointer[0] = 0x00000000;            // R0 (Argument register, usually initialized to zero)
 
     // Add the TCB to the round-robin list
     if (NumberOfThreads == 0)
