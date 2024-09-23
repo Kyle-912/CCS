@@ -22,9 +22,9 @@
 
 /********************************Public Variables***********************************/
 
-volatile int32_t counter0 = 0;
-volatile int32_t counter1 = 0;
-volatile int32_t counter2 = 0;
+int32_t counter0 = 0;
+int32_t counter1 = 0;
+int32_t counter2 = 0;
 
 /********************************Public Variables***********************************/
 
