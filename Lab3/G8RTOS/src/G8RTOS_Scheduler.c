@@ -98,6 +98,7 @@ int32_t G8RTOS_Launch()
     IntPrioritySet(FAULT_SYSTICK, 0xFF); // Lowest priority for SysTick
 
     // Call G8RTOS_Start()
+    G8RTOS_Start();
 
     return 0;
 }
