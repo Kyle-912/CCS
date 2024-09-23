@@ -79,8 +79,14 @@ int main(void)
     G8RTOS_Launch();
     while (1)
     {
-        UARTprintf("Counter0: %d, Counter1: %d, Counter2: %d\n", counter0, counter1, counter2);
-        SysCtlDelay(SysCtlClockGet() / 3);
+        UARTprintf("Counter0: %d\n", counter0);
+        SysCtlDelay(SysCtlClockGet() / 6); // Delay for approximately 0.5 second
+
+        UARTprintf("Counter1: %d\n", counter1);
+        SysCtlDelay(SysCtlClockGet() / 6); // Delay for approximately 0.5 second
+
+        UARTprintf("Counter2: %d\n", counter2);
+        SysCtlDelay(SysCtlClockGet() / 6); // Delay for approximately 0.5 second
     }
 }
 
