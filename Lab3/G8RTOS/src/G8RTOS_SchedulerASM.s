@@ -72,7 +72,6 @@ PendSV_Handler:
     ; Reload the new value of CurrentlyRunningThread
     LDR     R1, RunningPtr                  ; Load the address of the updated currently running thread
     LDR     R2, [R1]                        ; Load the new thread's TCB
-    LDR     R0, [R2]                        ; Load the PSP (stack pointer) of the new thread
 
     ; Step 4: Load the stack pointer of the new thread from the new TCB
     LDR     R0, [R2]                        ; Load the PSP (stack pointer) of the new thread
