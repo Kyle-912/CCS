@@ -79,7 +79,7 @@ int main(void)
     G8RTOS_Launch();
     while (1)
     {
-        // Add prints
+        UARTprintf("Counter0: %d, Counter1: %d, Counter2: %d\n", counter0, counter1, counter2);
     }
 }
 
