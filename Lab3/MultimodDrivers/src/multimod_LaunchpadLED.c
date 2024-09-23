@@ -61,6 +61,7 @@ void LaunchpadLED_Init()
     PWMGenEnable(PWM0_BASE, PWM_GEN_0);
 
     // Enable PWM output
+    PWMOutputState(PWM0_BASE, PWM_OUT_5_BIT | PWM_OUT_6_BIT | PWM_OUT_7_BIT, true);
 }
 
 // LaunchpadLED_PWMSetDuty
