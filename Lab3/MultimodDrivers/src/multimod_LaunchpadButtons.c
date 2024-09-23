@@ -32,6 +32,9 @@ void LaunchpadButtons_Init()
 {
     // Enable port F for switches
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF))
+    {
+    }
 
     // Use SW1 & SW2, configure as inputs.
     // Pay attention to the pin connected to SW2!!! PF0 is a locked pin.
