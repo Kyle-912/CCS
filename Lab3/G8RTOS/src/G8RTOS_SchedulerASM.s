@@ -69,8 +69,11 @@ PendSV_Handler:
     ; Step 3: Call the scheduler to get the new thread to run
     BL      G8RTOS_Scheduler                ; Call the scheduler to switch to the next thread
 
-    ; Step 4: Load the stack pointer of the new thread from the new TCB
+    ; Reload the new value of CurrentlyRunningThread
+    LDR     R1, RunningPtr                  ; Load the address of the updated currently running thread
     LDR     R2, [R1]                        ; Load the new thread's TCB
+
+    ; Step 4: Load the stack pointer of the new thread from the new TCB
     LDR     R0, [R2]                        ; Load the PSP (stack pointer) of the new thread
 
     ; Step 5: Restore the saved registers (R4-R11) from the new thread's stack
