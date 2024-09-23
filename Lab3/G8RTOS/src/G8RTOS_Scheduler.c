@@ -167,8 +167,6 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void))
 // Return: void
 void SysTick_Handler()
 {
-    // Trigger PendSV for context switching
-    // NVIC_INT_CTRL_R |= NVIC_PENDSVSET;
     IntPendSet(FAULT_PENDSV);
 
     SystemTime++;
