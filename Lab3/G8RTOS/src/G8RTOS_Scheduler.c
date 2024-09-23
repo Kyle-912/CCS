@@ -142,7 +142,7 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void))
     tcb_t *newTCB = &threadControlBlocks[NumberOfThreads];
 
     // Initialize the stack for the new thread
-    newTCB->stackPointer = &threadStacks[NumberOfThreads][STACKSIZE - 16];
+    newTCB->stackPointer = (uint32_t *)((uint32_t)&threadStacks[NumberOfThreads][STACKSIZE - 16] & ~0x7);
 
     // Set up the thread context with initial register values
     newTCB->stackPointer[15] = (int32_t)threadToAdd; // PC (Thread entry point)
