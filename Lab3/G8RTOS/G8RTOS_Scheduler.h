@@ -23,6 +23,8 @@
 #define STACKSIZE 1024
 #define OSINT_PRIORITY 7
 
+#define NVIC_INT_CTRL_R (*((volatile uint32_t *)0xE000ED04)) // For IntelliSense
+
 /*************************************Defines***************************************/
 
 /******************************Data Type Definitions********************************/

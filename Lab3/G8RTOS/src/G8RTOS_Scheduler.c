@@ -100,6 +100,7 @@ int32_t G8RTOS_Launch()
 // Return: void
 void G8RTOS_Scheduler()
 {
+    CurrentlyRunningThread = CurrentlyRunningThread->nextTCB;
 }
 
 // G8RTOS_AddThread
@@ -166,6 +167,11 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void))
 // Return: void
 void SysTick_Handler()
 {
+    // Trigger PendSV for context switching
+    // NVIC_INT_CTRL_R |= NVIC_PENDSVSET;
+    IntPendSet(FAULT_PENDSV);
+
+    SystemTime++;
 }
 
 /********************************Public Functions***********************************/
