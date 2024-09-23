@@ -30,7 +30,7 @@ G8RTOS_Start:
 	; Load LR with the first thread's PC
 
 	; Load the stack pointer of the currently running thread
-    LDR     R0, =RunningPtr     ; Load address of RunningPtr
+    LDR     R0, RunningPtr     ; Load address of RunningPtr
     LDR     R1, [R0]                        ; Load the current thread's TCB
     LDR     R2, [R1]                        ; Load the stack pointer of the current thread (PSP)
     MSR     PSP, R2                         ; Set the Process Stack Pointer (PSP) to the current thread's stack
@@ -62,7 +62,7 @@ PendSV_Handler:
     STMDB   R0!, {R4-R11}                   ; Store R4-R11 onto the current thread's stack
 
     ; Step 2: Save the current stack pointer to the current thread's TCB
-    LDR     R1, =RunningPtr      ; Load the address of the currently running thread
+    LDR     R1, RunningPtr      ; Load the address of the currently running thread
     LDR     R2, [R1]                        ; Get the current thread's TCB
     STR     R0, [R2]                        ; Save the PSP (R0) into the TCB's stack pointer
 
