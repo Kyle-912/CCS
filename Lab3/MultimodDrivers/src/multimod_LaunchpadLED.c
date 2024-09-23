@@ -95,7 +95,6 @@ void LaunchpadLED_PWMSetDuty(LED_Color_t LED, float duty)
         PWMPulseWidthSet(PWM0_BASE, PWM_OUT_7, pulse_width);
         break;
     default:
-        // Handle invalid LED selection
         break;
     }
 
