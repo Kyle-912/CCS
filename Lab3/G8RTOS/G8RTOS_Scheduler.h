@@ -22,6 +22,7 @@
 #define MAX_THREADS 6
 #define STACKSIZE 1024
 #define OSINT_PRIORITY 7
+
 /*************************************Defines***************************************/
 
 /******************************Data Type Definitions********************************/
