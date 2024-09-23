@@ -41,7 +41,7 @@ typedef int32_t threadID_t;
  *  Create thread control block structure here
  *      - pay close attention to the order of variables!
  * */
-typedef struct tcb_t // TODO: Test this
+typedef struct tcb_t
 {
     // Add three pointers: stackPointer, nextTCB, and previousTCB
     struct tcb_t *nextTCB;
