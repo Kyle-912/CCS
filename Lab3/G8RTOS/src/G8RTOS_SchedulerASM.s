@@ -44,7 +44,31 @@ PendSV_Handler:
 
 	.asmfunc
 	; put your assembly code here!
+    ; Step 1: Save the remaining registers (R4-R11) of the current thread
+    MRS     R0, PSP                         ; Get current Process Stack Pointer (PSP)
+    STMDB   R0!, {R4-R11}                   ; Store R4-R11 onto the current thread's stack
 
+    ; Step 2: Save the current stack pointer to the current thread's TCB
+    LDR     R1, =CurrentlyRunningThread      ; Load the address of the currently running thread
+    LDR     R2, [R1]                        ; Get the current thread's TCB
+    STR     R0, [R2]                        ; Save the PSP (R0) into the TCB's stack pointer
+
+    ; Step 3: Call the scheduler to get the new thread to run
+    BL      G8RTOS_Scheduler                ; Call the scheduler to switch to the next thread
+
+    ; Step 4: Load the stack pointer of the new thread from the new TCB
+    LDR     R2, [R1]                        ; Load the new thread's TCB
+    LDR     R0, [R2]                        ; Load the PSP (stack pointer) of the new thread
+
+    ; Step 5: Restore the saved registers (R4-R11) from the new thread's stack
+    LDMIA   R0!, {R4-R11}                   ; Load R4-R11 from the new thread's stack
+
+    ; Update the PSP to point to the new stack pointer
+    MSR     PSP, R0                         ; Update PSP to the new thread's stack pointer
+
+    ; Return from the exception
+    ORR     LR, LR, #0x04                   ; Ensure the exception returns to thread mode using PSP
+    BX      LR                              ; Return from PendSV_Handler
 
 	.endasmfunc
 
