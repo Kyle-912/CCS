@@ -32,6 +32,7 @@
 void LaunchpadLED_Init()
 {
     // Enable clock to port F
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 
     // Enable PWM module
 
