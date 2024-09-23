@@ -44,10 +44,17 @@ void LaunchpadLED_Init()
     }
 
     // Configure necessary pins as PWM
+    // GPIOPinConfigure(GPIO_PF1_M1PWM5); // Red LED (PF1)
+    // GPIOPinConfigure(GPIO_PF2_M1PWM6); // Blue LED (PF2)
+    // GPIOPinConfigure(GPIO_PF3_M1PWM7); // Green LED (PF3)
+    GPIOPinTypePWM(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
 
     // Configure necessary PWM generators in count down mode, no sync
+    PWMGenConfigure(PWM0_BASE, PWM_GEN_0, PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
 
     // Set generator periods
+    uint32_t PWM_Pe = 400;
+    PWMGenPeriodSet(PWM0_BASE, PWM_GEN_0, PWM_Per);
 
     // Set the default pulse width (duty cycles).
 
