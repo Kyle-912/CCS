@@ -42,10 +42,20 @@ void task0()
 
 void task1()
 {
+    while (1)
+    {
+        counter1++;
+        SysCtlDelay(2000000);
+    }
 }
 
 void task2()
 {
+    while (1)
+    {
+        counter0++;
+        SysCtlDelay(1000000);
+    }
 }
 
 /********************************Public Functions***********************************/
