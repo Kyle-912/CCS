@@ -35,6 +35,7 @@ void LaunchpadButtons_Init()
 
     // Use SW1 & SW2, configure as inputs.
     // Pay attention to the pin connected to SW2!!! PF0 is a locked pin.
+    GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4 | GPIO_PIN_0);
 }
 
 // LaunchpadButtons_ReadSW1
