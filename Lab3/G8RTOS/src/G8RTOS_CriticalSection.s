@@ -6,9 +6,9 @@
 	; Functions Defined
 	.def StartCriticalSection, EndCriticalSection
 
-	.thumb		; Set to thumb mode
-	.align 2	; Align by 2 bytes (thumb mode uses allignment by 2 or 4)
-	.text		; Text section
+	.thumb        		; Set to thumb mode
+	.align 2       	; Align by 2 bytes (thumb mode uses allignment by 2 or 4)
+	.text         		; Text section
 
 ; Starts a critical section
 ; 	- Saves the state of the current PRIMASK (I-bit)
@@ -17,9 +17,9 @@
 StartCriticalSection:
 	.asmfunc
 
-	MRS R0, PRIMASK		; Save PRIMASK to R0 (Return Register)
-	CPSID I				; Disable Interrupts
-	BX LR				; Return
+	MRS R0, PRIMASK	; Save PRIMASK to R0 (Return Register)
+	CPSID I     				; Disable Interrupts
+	BX LR       				; Return
 
 	.endasmfunc
 
@@ -29,8 +29,8 @@ StartCriticalSection:
 EndCriticalSection:
 	.asmfunc
 
-	MSR PRIMASK, R0		; Save R0 (Param) to PRIMASK
-	BX LR				; Return
+	MSR PRIMASK, R0	; Save R0 (Param) to PRIMASK
+	BX LR       				; Return
 
 	.endasmfunc
 
