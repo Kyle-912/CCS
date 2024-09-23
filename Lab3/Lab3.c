@@ -53,8 +53,8 @@ void task2()
 {
     while (1)
     {
-        counter0++;
-        SysCtlDelay(1000000);
+        counter2++;
+        SysCtlDelay(3000000);
     }
 }
 
