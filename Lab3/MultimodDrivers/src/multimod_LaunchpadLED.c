@@ -34,22 +34,26 @@ void LaunchpadLED_Init()
     // Enable clock to port F
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF))
-        {}
+    {
+    }
 
     // Enable PWM module
-        SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM0);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM0);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_PWM0))
+    {
+    }
 
-        // Configure necessary pins as PWM
+    // Configure necessary pins as PWM
 
-        // Configure necessary PWM generators in count down mode, no sync
+    // Configure necessary PWM generators in count down mode, no sync
 
-        // Set generator periods
+    // Set generator periods
 
-        // Set the default pulse width (duty cycles).
+    // Set the default pulse width (duty cycles).
 
-        // Enable the PWM generators
+    // Enable the PWM generators
 
-        // Enable PWM output
+    // Enable PWM output
 }
 
 // LaunchpadLED_PWMSetDuty
