@@ -86,13 +86,13 @@ void LaunchpadLED_PWMSetDuty(LED_Color_t LED, float duty)
     switch (LED)
     {
     case RED:
-        PWMPulseWidthSet(PWM0_BASE, PWM_OUT_5, pulse_width); // Red LED
+        PWMPulseWidthSet(PWM0_BASE, PWM_OUT_5, pulse_width);
         break;
     case BLUE:
-        PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, pulse_width); // Blue LED
+        PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, pulse_width);
         break;
     case GREEN:
-        PWMPulseWidthSet(PWM0_BASE, PWM_OUT_7, pulse_width); // Green LED
+        PWMPulseWidthSet(PWM0_BASE, PWM_OUT_7, pulse_width);
         break;
     default:
         // Handle invalid LED selection
