@@ -72,9 +72,9 @@ int main(void)
     Multimod_Init();
 
     // Add threads, initialize semaphores here!
-    G8RTOS_AddThread(&Thread0);
-    G8RTOS_AddThread(&Thread0);
-    G8RTOS_AddThread(&Thread0);
+    G8RTOS_AddThread(&task0);
+    G8RTOS_AddThread(&task1);
+    G8RTOS_AddThread(&task2);
 
     G8RTOS_Launch();
     while (1)
