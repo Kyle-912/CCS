@@ -33,6 +33,11 @@ int32_t counter2 = 0;
 // Complete the functions below as test threads.
 void task0()
 {
+    while (1)
+    {
+        counter0++;           // Increment thread-specific counter
+        SysCtlDelay(2000000);
+    }
 }
 
 void task1()
