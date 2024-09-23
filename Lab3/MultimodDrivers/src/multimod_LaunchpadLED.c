@@ -58,6 +58,7 @@ void LaunchpadLED_Init()
     // Set the default pulse width (duty cycles).
 
     // Enable the PWM generators
+    PWMGenEnable(PWM0_BASE, PWM_GEN_0);
 
     // Enable PWM output
 }
