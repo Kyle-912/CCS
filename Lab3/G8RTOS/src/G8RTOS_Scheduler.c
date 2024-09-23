@@ -127,7 +127,7 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void))
     * 5. Point the previousTCB of the new thread to the current thread so that it moves in the correct order
     */
     if (NumberOfThreads >= MAX_THREADS)
-        return;
+        return -1;
 
     // Get the next available thread control block
     tcb_t *newTCB = &threadControlBlocks[NumberOfThreads];
