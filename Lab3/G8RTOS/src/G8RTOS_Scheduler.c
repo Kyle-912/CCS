@@ -86,10 +86,18 @@ int32_t G8RTOS_Launch()
 {
     // Initialize system tick
     InitSysTick();
+
     // Set currently running thread to the first control block
+
+
     // Set interrupt priorities
+
+
     // Pendsv
+
+
     // Systick
+
     // Call G8RTOS_Start()
 
     return 0;
