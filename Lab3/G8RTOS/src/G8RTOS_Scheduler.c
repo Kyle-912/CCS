@@ -91,13 +91,11 @@ int32_t G8RTOS_Launch()
     CurrentlyRunningThread = &threadControlBlocks[0];
 
     // Set interrupt priorities
-
-
     // Pendsv
-
+    IntPrioritySet(FAULT_PENDSV, 0xFF); // Lowest priority for PendSV
 
     // Systick
-
+    IntPrioritySet(FAULT_SYSTICK, 0xFF); // Lowest priority for SysTick
 
     // Call G8RTOS_Start()
 
