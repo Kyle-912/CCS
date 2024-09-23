@@ -39,6 +39,7 @@ static uint32_t NumberOfThreads;
 static void InitSysTick(void) // TODO:
 {
     // hint: use SysCtlClockGet() to get the clock speed without having to hardcode it!
+    SysTickPeriodSet(SysCtlClockGet() / 1000);
     // Set systick period to overflow every 1 ms.
     // Set systick interrupt handler
     // Set pendsv handler
