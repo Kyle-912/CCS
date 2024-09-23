@@ -28,6 +28,19 @@ G8RTOS_Start:
 	; Load the address of the thread control block of the currently running pointer
 	; Load the first thread's stack pointer
 	; Load LR with the first thread's PC
+	
+	; Load the stack pointer of the currently running thread
+    LDR     R0, =CurrentlyRunningThread     ; Load address of CurrentlyRunningThread
+    LDR     R1, [R0]                        ; Load the current thread's TCB
+    LDR     R2, [R1]                        ; Load the stack pointer of the current thread (PSP)
+    MSR     PSP, R2                         ; Set the Process Stack Pointer (PSP) to the current thread's stack
+
+    ; Restore the context of the first thread (R4-R11)
+    LDMIA   R2!, {R4-R11}                   ; Load R4-R11 from the thread's stack
+
+    ; Return to thread mode using PSP
+    ORR     LR, LR, #0x04                   ; Ensure the exception returns using PSP (Thread mode)
+    BX      LR                              ; Branch back to the thread (switch context)
 
 	BX LR				;Branches to the first thread
 
