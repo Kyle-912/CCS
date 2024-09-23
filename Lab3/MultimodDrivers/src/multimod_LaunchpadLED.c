@@ -29,7 +29,8 @@
 // launchpad. Also configures it so that the LEDs are controlled via PWM signal.
 // Initial default period of 400.
 // Return: void
-void LaunchpadLED_Init() {
+void LaunchpadLED_Init()
+{
     // Enable clock to port F
 
     // Enable PWM module
@@ -50,16 +51,19 @@ void LaunchpadLED_Init() {
 // LaunchpadLED_PWMSetDuty
 // Sets the duty cycle of the PWM generator associated with the LED.
 // Return: void
-void LaunchpadLED_PWMSetDuty(LED_Color_t LED, float duty) {
+void LaunchpadLED_PWMSetDuty(LED_Color_t LED, float duty)
+{
     uint32_t pulse_width = (duty * PWM_Per);
 
     // If pulse width < 1, set as 1
-    if (pulse_width < 1) {
+    if (pulse_width < 1)
+    {
         pulse_width = 1;
     }
 
     // If pulse width > set period, cap it
-    if (pulse_width > PWM_Per) {
+    if (pulse_width > PWM_Per)
+    {
         pulse_width = PWM_Per - 1;
     }
 
