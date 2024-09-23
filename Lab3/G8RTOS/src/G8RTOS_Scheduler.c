@@ -92,10 +92,10 @@ int32_t G8RTOS_Launch()
 
     // Set interrupt priorities
     // Pendsv
-    IntPrioritySet(FAULT_PENDSV, 0xFF); // Lowest priority for PendSV
+    IntPrioritySet(FAULT_PENDSV, 0xFF);
 
     // Systick
-    IntPrioritySet(FAULT_SYSTICK, 0xFF); // Lowest priority for SysTick
+    IntPrioritySet(FAULT_SYSTICK, 0xFF);
 
     // Call G8RTOS_Start()
     G8RTOS_Start();
