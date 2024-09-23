@@ -37,7 +37,7 @@ void LaunchpadButtons_Init()
     }
 
     // Use SW1 & SW2, configure as inputs.
-    // Pay attention to the pin connected to SW2!!! PF0 is a locked pin. //TODO: Test SW2 unlocking
+    // Pay attention to the pin connected to SW2!!! PF0 is a locked pin.
     HWREG(GPIO_PORTF_BASE + GPIO_O_LOCK) = GPIO_LOCK_KEY;
     HWREG(GPIO_PORTF_BASE + GPIO_O_CR) |= GPIO_PIN_0;
     HWREG(GPIO_PORTF_BASE + GPIO_O_LOCK) = 0;
