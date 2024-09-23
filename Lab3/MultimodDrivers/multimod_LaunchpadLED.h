@@ -19,9 +19,9 @@
 /*************************************Defines***************************************/
 
 #define PWM_Per 400
-#define GPIO_PF1_M1PWM5 0x00050405 // For intellisense
-#define GPIO_PF2_M1PWM6 0x00050805 // For intellisense
-#define GPIO_PF3_M1PWM7 0x00050C05 // For intellisense
+#define GPIO_PF1_M1PWM5 0x00050405 // For IntelliSense
+#define GPIO_PF2_M1PWM6 0x00050805 // For IntelliSense
+#define GPIO_PF3_M1PWM7 0x00050C05 // For IntelliSense
 
 /*************************************Defines***************************************/
 
