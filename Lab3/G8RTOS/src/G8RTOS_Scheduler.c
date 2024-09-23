@@ -46,7 +46,9 @@ static void InitSysTick(void) // TODO:
     // Set pendsv handler
     IntRegister(FAULT_PENDSV, PendSV_Handler);
     // Enable systick interrupt
+    SysTickIntEnable();
     // Enable systick
+    SysTickEnable();
 }
 
 /*******************************Private Functions***********************************/
@@ -66,8 +68,8 @@ tcb_t *CurrentlyRunningThread;
 // Return: void
 void G8RTOS_Init()
 { // TODO:
-    // Initialize system time to zero
-    // Set the number of threads to zero
+  // Initialize system time to zero
+  // Set the number of threads to zero
 }
 
 // G8RTOS_Launch
