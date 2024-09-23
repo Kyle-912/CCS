@@ -26,16 +26,16 @@
 /********************************Public Functions***********************************/
 
 // Complete the functions below as test threads.
-void task0() {
-
+void task0()
+{
 }
 
-void task1() {
-
+void task1()
+{
 }
 
-void task2() {
-
+void task2()
+{
 }
 
 /********************************Public Functions***********************************/
@@ -52,7 +52,9 @@ int main(void)
     // Add threads, initialize semaphores here!
 
     G8RTOS_Launch();
-    while (1);
+    while (1)
+    {
+    }
 }
 
 /************************************MAIN*******************************************/

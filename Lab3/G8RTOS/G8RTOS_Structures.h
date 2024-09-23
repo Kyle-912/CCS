@@ -18,7 +18,7 @@
 
 /*************************************Defines***************************************/
 
-#define MAX_NAME_LENGTH             16
+#define MAX_NAME_LENGTH 16
 
 /*************************************Defines***************************************/
 
@@ -41,7 +41,8 @@ typedef int32_t threadID_t;
  *  Create thread control block structure here
  *      - pay close attention to the order of variables!
  * */
-typedef struct tcb_t { //TODO:
+typedef struct tcb_t
+{ // TODO:
     // Add three pointers: stackPointer, nextTCB, and previousTCB
     struct tcb_t *nextTCB;
     struct tcb_t *prevTCB;
