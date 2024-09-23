@@ -41,12 +41,16 @@ static void InitSysTick(void) // TODO:
     // hint: use SysCtlClockGet() to get the clock speed without having to hardcode it!
     // Set systick period to overflow every 1 ms.
     SysTickPeriodSet(SysCtlClockGet() / 1000);
+
     // Set systick interrupt handler
     SysTickIntRegister(SysTick_Handler);
+
     // Set pendsv handler
     IntRegister(FAULT_PENDSV, PendSV_Handler);
+
     // Enable systick interrupt
     SysTickIntEnable();
+
     // Enable systick
     SysTickEnable();
 }
