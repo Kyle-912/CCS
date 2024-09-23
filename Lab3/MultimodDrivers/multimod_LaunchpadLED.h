@@ -18,7 +18,10 @@
 
 /*************************************Defines***************************************/
 
-#define PWM_Per                     400
+#define PWM_Per 400
+#define GPIO_PF1_M1PWM5 0x00050405
+#define GPIO_PF2_M1PWM6 0x00050805
+#define GPIO_PF3_M1PWM7 0x00050C05
 
 /*************************************Defines***************************************/
 
@@ -27,7 +30,8 @@
 
 /****************************Data Structure Definitions*****************************/
 
-typedef enum {
+typedef enum
+{
     RED = GPIO_PIN_1,
     BLUE = GPIO_PIN_2,
     GREEN = GPIO_PIN_3
@@ -55,5 +59,3 @@ void LaunchpadLED_PWMSetDuty(LED_Color_t LED, float duty);
 /*******************************Private Functions***********************************/
 
 #endif /* MULTIMOD_LAUNCHPADLED_H_ */
-
-
