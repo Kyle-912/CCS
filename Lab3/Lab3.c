@@ -42,9 +42,6 @@ void task2() {
 
 /************************************MAIN*******************************************/
 
-// Be sure to add in your source files from previous labs into "MultimodDrivers/src/"!
-// If you made any modifications to the corresponding header files, be sure to update
-// those, too.
 int main(void)
 {
     G8RTOS_Init();
