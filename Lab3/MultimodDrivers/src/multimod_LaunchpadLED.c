@@ -55,7 +55,7 @@ void LaunchpadLED_Init()
     // Set generator periods
     PWMGenPeriodSet(PWM0_BASE, PWM_GEN_0, PWM_Per);
 
-    // Set the default pulse width (duty cycles).
+    // Set the default pulse width (duty cycles). (50%)
     PWMPulseWidthSet(PWM0_BASE, PWM_OUT_5, PWM_Per / 2);
     PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, PWM_Per / 2);
     PWMPulseWidthSet(PWM0_BASE, PWM_OUT_7, PWM_Per / 2);
