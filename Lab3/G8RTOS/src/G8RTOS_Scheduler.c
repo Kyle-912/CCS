@@ -44,6 +44,7 @@ static void InitSysTick(void) // TODO:
     // Set systick interrupt handler
     SysTickIntRegister(SysTick_Handler);
     // Set pendsv handler
+    IntRegister(FAULT_PENDSV, PendSV_Handler);
     // Enable systick interrupt
     // Enable systick
 }
