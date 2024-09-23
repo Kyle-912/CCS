@@ -42,6 +42,7 @@ static void InitSysTick(void) // TODO:
     // Set systick period to overflow every 1 ms.
     SysTickPeriodSet(SysCtlClockGet() / 1000);
     // Set systick interrupt handler
+    SysTickIntRegister(SysTick_Handler);
     // Set pendsv handler
     // Enable systick interrupt
     // Enable systick
