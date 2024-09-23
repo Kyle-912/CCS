@@ -44,8 +44,8 @@ void LaunchpadLED_Init()
     }
 
     // Configure necessary pins as PWM
-    GPIOPinConfigure(RED); // Red LED (PF1)
-    GPIOPinConfigure(BLUE); // Blue LED (PF2)
+    GPIOPinConfigure(RED);   // Red LED (PF1)
+    GPIOPinConfigure(BLUE);  // Blue LED (PF2)
     GPIOPinConfigure(GREEN); // Green LED (PF3)
     GPIOPinTypePWM(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
 
@@ -83,6 +83,21 @@ void LaunchpadLED_PWMSetDuty(LED_Color_t LED, float duty)
 
     // Depending on chosen LED(s), adjust corresponding duty cycle of the PWM output
     // Your code below.
+    switch (LED)
+    {
+    case RED:
+        PWMPulseWidthSet(PWM0_BASE, PWM_OUT_5, pulse_width); // Red LED
+        break;
+    case BLUE:
+        PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, pulse_width); // Blue LED
+        break;
+    case GREEN:
+        PWMPulseWidthSet(PWM0_BASE, PWM_OUT_7, pulse_width); // Green LED
+        break;
+    default:
+        // Handle invalid LED selection
+        break;
+    }
 
     return;
 }
