@@ -156,10 +156,9 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void))
         CurrentlyRunningThread->prevTCB = newTCB;
     }
 
-    // Increase the number of threads
     NumberOfThreads++;
 
-    return 0; // Success
+    return 0;
 }
 
 // SysTick_Handler
