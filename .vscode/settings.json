@@ -15,6 +15,7 @@
         "GYROY",
         "GYROZ",
         "GYRRANGE",
+        "HWREG",
         "I2C_SLAVE_ACT_RREQ_FBR",
         "INTEN",
         "MAGIF",
