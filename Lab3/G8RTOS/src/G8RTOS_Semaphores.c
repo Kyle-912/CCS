@@ -33,8 +33,8 @@ uint32_t IBit_State;
 // Param "s": Pointer to semaphore
 // Param "value": Value to initialize semaphore to
 // Return: void
-void G8RTOS_InitSemaphore(semaphore_t* s, int32_t value) {
-
+void G8RTOS_InitSemaphore(semaphore_t *s, int32_t value)
+{
 }
 
 // G8RTOS_WaitSemaphore
@@ -43,8 +43,8 @@ void G8RTOS_InitSemaphore(semaphore_t* s, int32_t value) {
 // Currently spin-locks.
 // Param "s": Pointer to semaphore
 // Return: void
-void G8RTOS_WaitSemaphore(semaphore_t* s) {
-
+void G8RTOS_WaitSemaphore(semaphore_t *s)
+{
 }
 
 // G8RTOS_SignalSemaphore
@@ -52,8 +52,8 @@ void G8RTOS_WaitSemaphore(semaphore_t* s) {
 // This is a critical section!
 // Param "s": Pointer to semaphore
 // Return: void
-void G8RTOS_SignalSemaphore(semaphore_t* s) {
-
+void G8RTOS_SignalSemaphore(semaphore_t *s)
+{
 }
 
 /********************************Public Functions***********************************/
