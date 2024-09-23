@@ -73,7 +73,10 @@ tcb_t *CurrentlyRunningThread;
 void G8RTOS_Init() // TODO:
 {
   // Initialize system time to zero
+  SystemTime = 0;
+
   // Set the number of threads to zero
+  NumberOfThreads = 0;
 }
 
 // G8RTOS_Launch
