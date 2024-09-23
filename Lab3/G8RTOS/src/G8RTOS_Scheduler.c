@@ -88,7 +88,7 @@ int32_t G8RTOS_Launch()
     InitSysTick();
 
     // Set currently running thread to the first control block
-
+    CurrentlyRunningThread = &threadControlBlocks[0];
 
     // Set interrupt priorities
 
@@ -97,6 +97,7 @@ int32_t G8RTOS_Launch()
 
 
     // Systick
+
 
     // Call G8RTOS_Start()
 
