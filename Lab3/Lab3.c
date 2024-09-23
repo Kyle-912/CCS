@@ -35,8 +35,8 @@ void task0()
 {
     while (1)
     {
-        counter0++;           // Increment thread-specific counter
-        SysCtlDelay(2000000);
+        counter0++;
+        SysCtlDelay(1000000);
     }
 }
 
