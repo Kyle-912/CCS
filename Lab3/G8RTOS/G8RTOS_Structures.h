@@ -44,9 +44,9 @@ typedef int32_t threadID_t;
 typedef struct tcb_t
 {
     // Add three pointers: stackPointer, nextTCB, and previousTCB
+    int32_t *stackPointer;
     struct tcb_t *nextTCB;
     struct tcb_t *prevTCB;
-    int32_t *stackPointer;
 } tcb_t;
 
 /****************************Data Structure Definitions*****************************/
