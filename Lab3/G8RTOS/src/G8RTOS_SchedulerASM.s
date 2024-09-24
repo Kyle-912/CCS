@@ -34,29 +34,27 @@ G8RTOS_Start:
     LDR     R1, [R0]                        ; Load the current thread's TCB
     LDR     R6, [R1]
 
-    ADD R6, R6, #60
-    STR R6, [R5]
-    MOV SP, R6
-    LDR LR, [R6, #-4]
-   ;LDR     SP, [R1]                        ; Load the stack pointer of the current thread (PSP)
-    ;LDR     R2, [R1]                        ; Load the stack pointer of the current thread (PSP)
-    ;MSR     PSP, R2                         ; Set the Process Stack Pointer (PSP) to the current thread's stack
+    ;TODO: Try with this included
+    ;ADD R6, R6, #60
+    ;STR R6, [R5]
+    ;MOV SP, R6
+    ;LDR LR, [R6, #-4]
+    ;to here
+
+    ;TODO: comment out below
+    LDR     SP, [R1]                        ; Load the stack pointer of the current thread (PSP)
 
     ; Restore the context of the first thread (R4-R11)
-   ;POP     {R4-R11}                   ; Load R4-R11 from the thread's stack
-    ;POP {R0-R3}
-   ; POP {R12}
-    ;POP {LR}
-   ;POP {LR}
-    ;LDMIA   R2!, {R4-R11}                   ; Load R4-R11 from the thread's stack
+    POP     {R4-R11}                   ; Load R4-R11 from the thread's stack
+    POP {R0-R3}
+    POP {R12}
+    POP {LR}
+    POP {LR}
 
-    ;MOV R0,SP
-   ; ADD R0, R0, #4
-   ; MOV SP,R0
-
-    ; Return to thread mode using PSP
-    ;ORR     LR, LR, #0x04                   ; Ensure the exception returns using PSP (Thread mode)
-    ;BX      LR                              ; Branch back to the thread (switch context)
+    MOV R0,SP
+    ADD R0, R0, #4
+    MOV SP,R0
+   ;to here
 
 	CPSIE I
 
@@ -80,15 +78,12 @@ PendSV_Handler:
 
 	; put your assembly code here!
     ; Step 1: Save the remaining registers (R4-R11) of the current thread
-    ;MRS     R0, PSP                         ; Get current Process Stack Pointer (PSP)
-    ;STMDB   R0!, {R4-R11}
 	PUSH    {R4-R11}                        ; Store R4-R11 onto the current thread's stack
 
     ; Step 2: Save the current stack pointer to the current thread's TCB
     LDR     R1, RunningPtr                  ; Load the address of the currently running thread
     LDR     R2, [R1]                        ; Get the current thread's TCB
     STR     SP, [R2]                        ; Save the PSP (R0) into the TCB's stack pointer
-    ;STR     R0, [R2]                        ; Save the PSP (R0) into the TCB's stack pointer
 
 	PUSH    {LR}
 
@@ -103,20 +98,14 @@ PendSV_Handler:
 
     ; Step 4: Load the stack pointer of the new thread from the new TCB
     LDR     SP, [R2]                        ; Load the PSP (stack pointer) of the new thread
-    ;LDR     R0, [R2]                        ; Load the PSP (stack pointer) of the new thread
 
     ; Step 5: Restore the saved registers (R4-R11) from the new thread's stack
-    ;LDMIA   R0!, {R4-R11}
     POP     {R4-R11}                        ; Load R4-R11 from the new thread's stack
-
-    ; Update the PSP to point to the new stack pointer
-    ;MSR     PSP, R0                         ; Update PSP to the new thread's stack pointer
 
     ; Enable interrupts
 	CPSIE   I
 
     ; Return from the exception
-    ;ORR     LR, LR, #0x04                   ; Ensure the exception returns to thread mode using PSP
     BX      LR                              ; Return from PendSV_Handler
 
 	.endasmfunc
