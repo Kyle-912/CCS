@@ -15,7 +15,7 @@
 /*************************************Defines***************************************/
 // Assumes that the system clock is 16 MHz.
 #define delay_0_1_s (1600000 / 3)
-#define bonus true
+#define doingBonus true
 /*************************************Defines***************************************/
 
 /********************************Public Functions***********************************/
@@ -27,7 +27,7 @@ void Thread0(void)
     {
         G8RTOS_WaitSemaphore(&sem_I2CA);
 
-        if (!bonus)
+        if (!doingBonus)
         {
             int16_t accelX = BMI160_AccelXGetResult();
 
