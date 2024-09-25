@@ -79,7 +79,7 @@ void Thread3(void)
 
     G8RTOS_SignalSemaphore(&sem_UART);
 
-    SysCtlDelay(delay_0_1_s);
+    // SysCtlDelay(delay_0_1_s);
 }
 
 // Thread4, reads and output button 2 status using polling
@@ -94,7 +94,7 @@ void Thread4(void)
 
     G8RTOS_SignalSemaphore(&sem_UART);
 
-    SysCtlDelay(delay_0_1_s);
+    // SysCtlDelay(delay_0_1_s);
 }
 
 /********************************Public Functions***********************************/
