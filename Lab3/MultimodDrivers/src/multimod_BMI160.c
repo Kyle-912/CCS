@@ -28,7 +28,7 @@ void BMI160_Init()
     // Power on gyroscope
     BMI160_WriteRegister(BMI160_CMD_ADDR, 0x15);
 
-    
+    // FIXME: From here down
 
     // Configure magnetometer interface
     BMI160_WriteRegister(BMI160_MAGCONF_ADDR, 0x08);
