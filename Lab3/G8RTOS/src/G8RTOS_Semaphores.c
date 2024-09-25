@@ -69,6 +69,11 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
 // Return: void
 void G8RTOS_SignalSemaphore(semaphore_t *s)
 {
+    int32_t IBit_State = StartCriticalSection();
+
+    (*s)++; // Increment semaphore
+
+    EndCriticalSection(IBit_State);
 }
 
 /********************************Public Functions***********************************/
