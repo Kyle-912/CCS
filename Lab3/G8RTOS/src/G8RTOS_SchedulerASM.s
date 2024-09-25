@@ -28,8 +28,10 @@ G8RTOS_Start:
 	; Load the stack pointer of the currently running thread
 	; Load the address of RunningPtr
     LDR     R0, RunningPtr
+
 	; Load the address of the thread control block of the currently running pointer
     LDR     R1, [R0]
+
 	; Load the first thread's stack pointer
     LDR     SP, [R1]
 
