@@ -72,19 +72,21 @@ void LaunchpadLED_Init()
 // Return: void
 void LaunchpadLED_PWMSetDuty(LED_Color_t LED, float duty)
 {
-    uint32_t pulse_width = (duty * PWM_Per);
+    // uint32_t pulse_width = (duty * PWM_Per);
 
-    // If pulse width < 1, set as 1
-    if (pulse_width < 1)
-    {
-        pulse_width = 1;
-    }
+    // // If pulse width < 1, set as 1
+    // if (pulse_width < 1)
+    // {
+    //     pulse_width = 1;
+    // }
 
-    // If pulse width > set period, cap it
-    if (pulse_width > PWM_Per)
-    {
-        pulse_width = PWM_Per - 1;
-    }
+    // // If pulse width > set period, cap it
+    // if (pulse_width > PWM_Per)
+    // {
+    //     pulse_width = PWM_Per - 1;
+    // }
+
+    uint32_t pulse_width = PWM_Per / 2;
 
     // Depending on chosen LED(s), adjust corresponding duty cycle of the PWM output
     switch (LED)
