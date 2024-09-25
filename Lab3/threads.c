@@ -38,7 +38,11 @@ void Thread0(void)
             }
 
             LaunchpadLED_PWMSetDuty(BLUE, absAccelX);
+        } else
+        {
+            /* code */
         }
+
 
         G8RTOS_SignalSemaphore(&sem_I2CA);
 
