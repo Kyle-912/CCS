@@ -172,8 +172,8 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void))
     else
     {
         // Add to the end of the list
-        tcb_t *lastTCB = &threadControlBlocks[NumberOfThreads - 1]; // Get the last thread added
-        tcb_t *firstTCB = &threadControlBlocks[0];                  // First thread is at index 0
+        tcb_t *lastTCB = &threadControlBlocks[NumberOfThreads - 1];
+        tcb_t *firstTCB = &threadControlBlocks[0];
 
         lastTCB->nextTCB = &threadControlBlocks[NumberOfThreads];  // Point last thread's next to new thread
         threadControlBlocks[NumberOfThreads].prevTCB = lastTCB;    // New thread's prev points to the last thread
