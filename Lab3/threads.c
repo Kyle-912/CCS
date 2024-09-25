@@ -62,8 +62,20 @@ void Thread1(void)
 void Thread2(void)
 {
     G8RTOS_WaitSemaphore(&sem_I2CA);
-    // Critical section: access I2CA
+
+    // Read light intensity from the optical sensor
+    uint32_t lightIntensity = OPT3001_GetResult();
+
+    // Normalize the light intensity to a PWM duty cycle (0 to 1)
+    float dutyCycle = (float)lightIntensity / 65536.0f;
+
+    // Set the duty cycle of the green LED
+    LaunchpadLED_PWMSetDuty(GREEN, dutyCycle);
+
     G8RTOS_SignalSemaphore(&sem_I2CA);
+
+    // Delay to prevent rapid changes
+    SysCtlDelay(delay_0_1_s);
 }
 
 // Thread3, reads and output button 1 status using polling
