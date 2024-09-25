@@ -77,11 +77,9 @@ PendSV_Handler:
     LDR     R2, [R1]                        ; Get the current thread's TCB
     STR     SP, [R2]                        ; Save the PSP (R0) into the TCB's stack pointer
 
-	PUSH    {LR}
-
     ; Step 3: Call the scheduler to get the new thread to run
+	PUSH    {LR}
     BL      G8RTOS_Scheduler                ; Call the scheduler to switch to the next thread
-
 	POP     {LR}
 
     ; Reload the new value of CurrentlyRunningThread
