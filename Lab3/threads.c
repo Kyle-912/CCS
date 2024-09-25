@@ -40,7 +40,17 @@ void Thread0(void)
             LaunchpadLED_PWMSetDuty(BLUE, absAccelX);
         } else
         {
-            /* code */
+            int16_t magX = BMI160_MagXGetResult();
+
+            // Normalize magnetometer data. Assuming ±1300μT as the range (check BMM150 datasheet for exact range).
+            float absMagX = (float)(abs(magX)) / 1300.0f; // Normalize to μT
+            if (absMagX > 1.0f)
+            {
+                absMagX = 1.0f; // Cap at 100%
+            }
+
+            // Set the blue LED duty cycle based on normalized magnetometer data
+            LaunchpadLED_PWMSetDuty(BLUE, absMagX);
         }
 
 
