@@ -8,6 +8,7 @@
 #include "./threads.h"
 
 #include "./MultimodDrivers/multimod.h"
+#include <driverlib/uartstdio.h>
 
 /************************************Includes***************************************/
 
