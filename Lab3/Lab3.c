@@ -79,7 +79,7 @@ int main(void)
     G8RTOS_InitSemaphore(&sem_UART, 1);
     G8RTOS_InitSemaphore(&sem_I2CA, 1);
 
-    G8RTOS_AddThread(&Thread0);
+    G8RTOS_AddThread(&task0);
 
     G8RTOS_AddThread(&Thread0);
     G8RTOS_AddThread(&Thread1);
