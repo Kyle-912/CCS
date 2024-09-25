@@ -65,34 +65,32 @@ PendSV_Handler:
 
 	.asmfunc
 
-    ; Disable interrupts
-	CPSID   I
+    ; Disable interrupts to prevent context switching during this process
+    CPSID   I
 
     ; Step 1: Save the remaining registers (R4-R11) of the current thread
-	PUSH    {R4-R11}                        ; Store R4-R11 onto the current thread's stack
+    PUSH    {R4-R11}                        ; Store R4-R11 onto the current thread's stack
 
     ; Step 2: Save the current stack pointer to the current thread's TCB
     LDR     R1, RunningPtr                  ; Load the address of the currently running thread
     LDR     R2, [R1]                        ; Get the current thread's TCB
-    STR     SP, [R2]                        ; Save the PSP (R0) into the TCB's stack pointer
+    STR     SP, [R2]                        ; Save the current stack pointer (SP) into the TCB
 
     ; Step 3: Call the scheduler to select the next thread to run
-	PUSH    {LR}
-    BL      G8RTOS_Scheduler                ; Call the scheduler to switch to the next thread
-	POP     {LR}
-
-    ; Reload the new value of CurrentlyRunningThread
-    LDR     R1, RunningPtr                  ; Load the address of the updated currently running thread
-    LDR     R2, [R1]                        ; Load the new thread's TCB
+    PUSH    {LR}                            ; Save LR before calling the scheduler
+    BL      G8RTOS_Scheduler                ; Call the scheduler
+    POP     {LR}                            ; Restore LR after scheduler call
 
     ; Step 4: Load the stack pointer of the new thread from the new TCB
-    LDR     SP, [R2]                        ; Load the PSP (stack pointer) of the new thread
+    LDR     R1, RunningPtr                  ; Load the updated currently running thread (next thread)
+    LDR     R2, [R1]                        ; Get the new thread's TCB
+    LDR     SP, [R2]                        ; Load the new thread's stack pointer (SP)
 
     ; Step 5: Restore the saved registers (R4-R11) from the new thread's stack
-    POP     {R4-R11}                        ; Load R4-R11 from the new thread's stack
+    POP     {R4-R11}                        ; Restore R4-R11 for the new thread
 
     ; Enable interrupts
-	CPSIE   I
+    CPSIE   I
 
     ; Return from the exception
     BX      LR                              ; Return from PendSV_Handler
