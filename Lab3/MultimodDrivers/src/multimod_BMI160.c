@@ -35,7 +35,7 @@ void BMI160_Init()
     BMI160_WriteRegister(BMI160_IFCONF_ADDR, 0x40); // Enable I2C for external devices
 
     // Step 2: Configure the BMM150's I2C address (shifted left by 1)
-    BMI160_WriteRegister(BMI160_MAGIF_O, 0x10 << 1); // BMM150 address = 0x20
+    BMI160_WriteRegister(BMI160_MAGIF_O, 0x20); // BMM150 address = 0x20
 
     // Step 3: Power up the BMM150 magnetometer
     // Write to BMM150's power control register (0x4B)
