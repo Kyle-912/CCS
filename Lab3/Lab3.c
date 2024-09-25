@@ -76,17 +76,17 @@ int main(void)
     Multimod_Init();
 
     // Add threads, initialize semaphores
+    G8RTOS_InitSemaphore(&sem_UART, 1);
+    G8RTOS_InitSemaphore(&sem_I2CA, 1);
+
     G8RTOS_AddThread(&Thread0);
     G8RTOS_AddThread(&Thread1);
     G8RTOS_AddThread(&Thread2);
     G8RTOS_AddThread(&Thread3);
     G8RTOS_AddThread(&Thread4);
 
-    G8RTOS_InitSemaphore(&sem_UART, 1);
-    G8RTOS_InitSemaphore(&sem_I2CA, 1);
-
     G8RTOS_Launch();
-    
+
     while (1)
     {
     }
