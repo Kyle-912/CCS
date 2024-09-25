@@ -32,10 +32,6 @@ void Thread0(void)
             int16_t accelX = BMI160_AccelXGetResult();
 
             float absAccelX = (float)(abs(accelX)) / 16384.0f; // Normalize based on ±1g
-            if (absAccelX > 1.0f)
-            {
-                absAccelX = 1.0f; // Cap at 100%
-            }
 
             LaunchpadLED_PWMSetDuty(BLUE, absAccelX);
         } else
@@ -43,12 +39,7 @@ void Thread0(void)
             int16_t magX = BMI160_MagXGetResult();
 
             float absMagX = (float)(abs(magX)) / 1300.0f; // Normalize based on ±1300μT
-            if (absMagX > 1.0f)
-            {
-                absMagX = 1.0f; // Cap at 100%
-            }
 
-            // Set the blue LED duty cycle based on normalized magnetometer data
             LaunchpadLED_PWMSetDuty(BLUE, absMagX);
         }
 
