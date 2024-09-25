@@ -42,7 +42,7 @@ void Thread0(void)
         {
             int16_t magX = BMI160_MagXGetResult();
 
-            // Normalize magnetometer data. Assuming ±1300μT as the range (check BMM150 datasheet for exact range).
+            // Normalize magnetometer data. Assuming ±1300μT as the range
             float absMagX = (float)(abs(magX)) / 1300.0f; // Normalize to μT
             if (absMagX > 1.0f)
             {
