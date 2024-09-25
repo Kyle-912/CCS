@@ -21,22 +21,25 @@
 // Thread0, reads accel_x data, adjusts BLUE led duty cycle.
 void Thread0(void)
 {
-    // sem_I2CA
+    G8RTOS_WaitSemaphore(&sem_I2CA);
+    // Critical section: access UART
+    G8RTOS_SignalSemaphore(&sem_I2CA);
 }
 
 // Thread1, reads gyro_x data, adjusts RED led duty cycle.
 void Thread1(void)
 {
-    // sem_I2CA
+    G8RTOS_WaitSemaphore(&sem_I2CA);
+    // Critical section: access UART
+    G8RTOS_SignalSemaphore(&sem_I2CA);
 }
 
 // Thread2, reads optical sensor values, adjusts GREEN led duty cycle.
 void Thread2(void)
 {
-    // sem_I2CA
-    G8RTOS_WaitSemaphore(&sem_UART);
+    G8RTOS_WaitSemaphore(&sem_I2CA);
     // Critical section: access UART
-    G8RTOS_SignalSemaphore(&sem_UART);
+    G8RTOS_SignalSemaphore(&sem_I2CA);
 }
 
 // Thread3, reads and output button 1 status using polling
