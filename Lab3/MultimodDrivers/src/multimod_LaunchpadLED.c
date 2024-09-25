@@ -53,18 +53,18 @@ void LaunchpadLED_Init()
     PWMGenConfigure(PWM1_BASE, PWM_GEN_0, PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
 
     // Set generator periods
-    PWMGenPeriodSet(PWM0_BASE, PWM_GEN_0, PWM_Per);
+    PWMGenPeriodSet(PWM1_BASE, PWM_GEN_0, PWM_Per);
 
     // Set the default pulse width (duty cycles). (50%)
-    PWMPulseWidthSet(PWM0_BASE, PWM_OUT_5, PWM_Per / 2);
-    PWMPulseWidthSet(PWM0_BASE, PWM_OUT_6, PWM_Per / 2);
-    PWMPulseWidthSet(PWM0_BASE, PWM_OUT_7, PWM_Per / 2);
+    PWMPulseWidthSet(PWM1_BASE, PWM_OUT_5, PWM_Per / 2);
+    PWMPulseWidthSet(PWM1_BASE, PWM_OUT_6, PWM_Per / 2);
+    PWMPulseWidthSet(PWM1_BASE, PWM_OUT_7, PWM_Per / 2);
 
     // Enable the PWM generators
-    PWMGenEnable(PWM0_BASE, PWM_GEN_0);
+    PWMGenEnable(PWM1_BASE, PWM_GEN_0);
 
     // Enable PWM output
-    PWMOutputState(PWM0_BASE, PWM_OUT_5_BIT | PWM_OUT_6_BIT | PWM_OUT_7_BIT, true);
+    PWMOutputState(PWM1_BASE, PWM_OUT_5_BIT | PWM_OUT_6_BIT | PWM_OUT_7_BIT, true);
 }
 
 // LaunchpadLED_PWMSetDuty
