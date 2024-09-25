@@ -27,6 +27,12 @@ void Thread0(void)
     {
         G8RTOS_WaitSemaphore(&sem_I2CA);
 
+        if (!bonus)
+        {
+            /* code */
+        }
+
+
         int16_t accelX = BMI160_AccelXGetResult();
 
         float absAccelX = (float)(abs(accelX)) / 16384.0f; // Normalize based on ±1g
