@@ -34,23 +34,32 @@ int32_t counter2 = 0;
 // Test threads
 void task0()
 {
-    counter0++;
-    UARTprintf("Counter 0: %d\n", counter0);
-    SysCtlDelay(1000);
+    while (1)
+    {
+        counter0++;
+        UARTprintf("Counter 0: %d\n", counter0);
+        SysCtlDelay(1000);
+    }
 }
 
 void task1()
 {
-    counter1++;
-    UARTprintf("Counter 1: %d\n", counter1);
-    SysCtlDelay(2000);
+    while (1)
+    {
+        counter1++;
+        UARTprintf("Counter 1: %d\n", counter1);
+        SysCtlDelay(2000);
+    }
 }
 
 void task2()
 {
-    counter2++;
-    UARTprintf("Counter 2: %d\n", counter2);
-    SysCtlDelay(3000);
+    while (1)
+    {
+        counter2++;
+        UARTprintf("Counter 2: %d\n", counter2);
+        SysCtlDelay(3000);
+    }
 }
 
 /********************************Public Functions***********************************/
@@ -70,15 +79,15 @@ int main(void)
     G8RTOS_InitSemaphore(&sem_UART, 1);
     G8RTOS_InitSemaphore(&sem_I2CA, 1);
 
-    G8RTOS_AddThread(&task0);
-    G8RTOS_AddThread(&task1);
-    G8RTOS_AddThread(&task2);
+    // G8RTOS_AddThread(&task0);
+    // G8RTOS_AddThread(&task1);
+    // G8RTOS_AddThread(&task2);
 
     // G8RTOS_AddThread(&Thread0);
     // G8RTOS_AddThread(&Thread1);
     // G8RTOS_AddThread(&Thread2);
-    // G8RTOS_AddThread(&Thread3);
-    // G8RTOS_AddThread(&Thread4);
+    G8RTOS_AddThread(&Thread3);
+    G8RTOS_AddThread(&Thread4);
 
     G8RTOS_Launch();
 
