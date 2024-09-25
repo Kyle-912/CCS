@@ -45,11 +45,10 @@ G8RTOS_Start:
     MOV     R0,SP
     ADD     R0, R0, #4
     MOV     SP,R0
-   ;to here
 
 	CPSIE I
 
-    BX      LR				                    ; Branches to the first thread
+    BX      LR				                ; Branches to the first thread
 
 	.endasmfunc
 
