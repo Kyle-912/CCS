@@ -90,7 +90,7 @@ PendSV_Handler:
     ; Enable interrupts
     CPSIE I
 
-    BX LR               ; Return from PendSV_Handler
+    BX LR                   ; Branch to the new thread's PC (Link Register holds the PC)
 
 	.endasmfunc
 
