@@ -41,7 +41,7 @@ G8RTOS_Start:
     @LDR LR, [R6, #-4]
     @to here
 
-    @TODO: comment out below
+    @ TODO: comment out below
     LDR     SP, [R1]                        @ Load the stack pointer of the current thread (PSP)
 
     @ Restore the context of the first thread (R4-R11)
