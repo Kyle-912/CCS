@@ -59,30 +59,30 @@ int main(void)
 
     while (1)
     {
-//        if (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4) == 0)
-//        {
-//            if (count == 0)
-//            {
-//                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0);
-//                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0);
-//                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 255); // Red
-//                count = 1;
-//            }
-//            else if (count == 1)
-//            {
-//                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
-//                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0);
-//                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 255); // Green
-//                count = 2;
-//            }
-//            else
-//            {
-//                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
-//                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0);
-//                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 255); // Blue
-//                count = 0;
-//            }
-//        }
+        if (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4) == 0)
+        {
+            if (count == 0)
+            {
+                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0);
+                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0);
+                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 255); // Red
+                count = 1;
+            }
+            else if (count == 1)
+            {
+                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
+                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0);
+                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 255); // Green
+                count = 2;
+            }
+            else
+            {
+                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
+                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0);
+                GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 255); // Blue
+                count = 0;
+            }
+        }
         // GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 255);
         // GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 255);
         // GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 255);
