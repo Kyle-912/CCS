@@ -50,7 +50,7 @@ void LaunchpadLED_Init()
     GPIOPinTypePWM(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
 
     // Configure necessary PWM generators in count down mode, no sync
-    PWMGenConfigure(PWM0_BASE, PWM_GEN_0, PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
+    PWMGenConfigure(PWM1_BASE, PWM_GEN_0, PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
 
     // Set generator periods
     PWMGenPeriodSet(PWM0_BASE, PWM_GEN_0, PWM_Per);
