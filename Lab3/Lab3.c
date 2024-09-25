@@ -37,8 +37,8 @@ void task0()
     while (1)
     {
         counter0++;
-        SysCtlDelay(1000000);
         UARTprintf("Counter 0: %d\n", counter0);
+        SysCtlDelay(10000);
     }
 }
 
@@ -47,8 +47,8 @@ void task1()
     while (1)
     {
         counter1++;
-        SysCtlDelay(2000000);
         UARTprintf("Counter 1: %d\n", counter1);
+        SysCtlDelay(20000);
     }
 }
 
@@ -57,8 +57,8 @@ void task2()
     while (1)
     {
         counter2++;
-        SysCtlDelay(3000000);
         UARTprintf("Counter 2: %d\n", counter2);
+        SysCtlDelay(30000);
     }
 }
 
