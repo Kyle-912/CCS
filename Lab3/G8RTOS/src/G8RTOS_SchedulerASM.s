@@ -41,7 +41,7 @@ G8RTOS_Start:
     POP     {R12}                           ; Load R12 from the thread's stack
 
 	; Load LR with the first thread's PC
-    POP     {LR}                            ; 
+    POP     {LR}                            ; Pop past LR
     POP     {LR}
 
     MOV     R0,SP
