@@ -72,7 +72,7 @@ PendSV_Handler:
     ; Step 2: Save the current stack pointer to the current thread's TCB
     LDR R0, RunningPtr      ; Load the address of the currently running thread
     LDR R1, [R0]            ; Get the current thread's TCB
-    STR SP, [R1]            ; Save the current stack pointer (SP) into the TCB
+    STR SP, [R1]            ; Save the current stack pointer into the TCB
 
     ; Step 3: Call the scheduler to select the next thread to run
     PUSH{LR}                ; Save LR before calling the scheduler
@@ -82,7 +82,7 @@ PendSV_Handler:
     ; Step 4: Load the stack pointer of the new thread from the new TCB
     LDR R0, RunningPtr      ; Load the updated currently running thread (next thread)
     LDR R1, [R0]            ; Get the new thread's TCB
-    LDR SP, [R1]            ; Load the new thread's stack pointer (SP)
+    LDR SP, [R1]            ; Load the new thread's stack pointer
 
     ; Step 5: Restore the saved registers (R4-R11) from the new thread's stack
     POP {R4-R11}            ; Restore R4-R11 for the new thread
