@@ -37,7 +37,7 @@ G8RTOS_Start:
 
     ; Restore the context of the first thread (R4-R11)
     POP     {R4-R11}                        ; Load R4-R11 from the thread's stack
-    POP     {R0-R3}                         ; Load R4-R11 from the thread's stack
+    POP     {R0-R3}                         ; Load R0-R3 from the thread's stack
     POP     {R12}
     POP     {LR}
     POP     {LR}
