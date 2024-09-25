@@ -24,15 +24,15 @@ G8RTOS_Start:
 
 	.asmfunc
 
-	; Load the first thread's stack pointer
 	; Load LR with the first thread's PC
     CPSID I
 	; Load the stack pointer of the currently running thread
 	; Load the address of RunningPtr
     LDR     R0, RunningPtr
 	; Load the address of the thread control block of the currently running pointer
-    LDR     R1, [R0]                        ; Load the current thread's TCB
-    LDR     SP, [R1]                        ; Load the stack pointer of the current thread
+    LDR     R1, [R0]
+	; Load the first thread's stack pointer
+    LDR     SP, [R1]
 
     ; Restore the context of the first thread (R4-R11)
     POP     {R4-R11}                        ; Load R4-R11 from the thread's stack
