@@ -38,8 +38,8 @@ void LaunchpadLED_Init()
     }
 
     // Enable PWM module
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM0);
-    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_PWM0))
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM1);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_PWM1))
     {
     }
 
