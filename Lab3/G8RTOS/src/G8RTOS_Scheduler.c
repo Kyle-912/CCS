@@ -146,8 +146,8 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void))
 
     // Set up the thread context with initial register values
     newTCB->stackPointer[15] = THUMBBIT;              // xPSR
-    newTCB->stackPointer[14] = (uint32_t)threadToAdd; // PC
-    newTCB->stackPointer[13] = 0x00000000;            // LR
+    newTCB->stackPointer[13] = (uint32_t)threadToAdd; // PC
+    newTCB->stackPointer[14] = 0x00000000;            // LR
     newTCB->stackPointer[12] = 0x12121212;            // R12
     newTCB->stackPointer[11] = 0x03030303;            // R3
     newTCB->stackPointer[10] = 0x02020202;            // R2
