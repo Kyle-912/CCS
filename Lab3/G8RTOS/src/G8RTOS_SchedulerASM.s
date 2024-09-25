@@ -37,19 +37,19 @@ G8RTOS_Start:
 
     ; Restore the context of the first thread (R4-R11)
     POP     {R4-R11}                        ; Load R4-R11 from the thread's stack
-    POP {R0-R3}
-    POP {R12}
-    POP {LR}
-    POP {LR}
+    POP     {R0-R3}
+    POP     {R12}
+    POP     {LR}
+    POP     {LR}
 
-    MOV R0,SP
-    ADD R0, R0, #4
-    MOV SP,R0
+    MOV     R0,SP
+    ADD     R0, R0, #4
+    MOV     SP,R0
    ;to here
 
 	CPSIE I
 
-    BX LR				                    ; Branches to the first thread
+    BX      LR				                    ; Branches to the first thread
 
 	.endasmfunc
 
