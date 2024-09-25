@@ -53,7 +53,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
     while (*s <= 0)
     {
         EndCriticalSection(IBit_State);
-        // This would block the thread, in a real system it could yield the CPU
+        // Spin-lock
         IBit_State = StartCriticalSection();
     }
 
