@@ -22,6 +22,8 @@
 // Thread0, reads accel_x data, adjusts BLUE led duty cycle.
 void Thread0(void)
 {
+    SysCtlDelay(delay_0_1_s);
+
     G8RTOS_WaitSemaphore(&sem_I2CA);
 
     // Read the X-axis data from the accelerometer
