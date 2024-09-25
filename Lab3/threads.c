@@ -56,7 +56,7 @@ void Thread1(void)
         {
             absGyroX = 1.0f; // Cap at 100%
         }
-        absGyroX *= 2.0f; // Make Brighter
+        absGyroX *= 2.0f; // Boost brightness
 
         LaunchpadLED_PWMSetDuty(RED, absGyroX); // Set duty cycle for RED
 
