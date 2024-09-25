@@ -89,9 +89,5 @@
     "explorerExclude.backup": {},
     "gitdoc.enabled": false,
     "C_Cpp.errorSquiggles": "enabled",
-    "C_Cpp.default.compilerPath": "C:\\MinGW64\\bin\\gcc.exe",
-    "files.associations": {
-        "*.s": "arm",
-        "*.asm": "arm"
-    }
+    "C_Cpp.default.compilerPath": "C:\\MinGW64\\bin\\gcc.exe"
 }
