@@ -87,7 +87,6 @@ void LaunchpadLED_PWMSetDuty(LED_Color_t LED, float duty)
     }
 
     // Depending on chosen LED(s), adjust corresponding duty cycle of the PWM output
-    // Your code below.
     switch (LED)
     {
     case RED:
