@@ -25,6 +25,9 @@ void BMI160_Init()
     // Power on accelerometer
     BMI160_WriteRegister(BMI160_CMD_ADDR, 0x11);
 
+    // Power on gyroscope
+    BMI160_WriteRegister(BMI160_CMD_ADDR, 0x15);
+
     return;
 }
 

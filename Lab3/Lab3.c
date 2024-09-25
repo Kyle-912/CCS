@@ -31,7 +31,7 @@ int32_t counter2 = 0;
 
 /********************************Public Functions***********************************/
 
-// Complete the functions below as test threads.
+// Test threads
 void task0()
 {
     while (1)
@@ -72,15 +72,25 @@ int main(void)
 
     G8RTOS_Init();
 
-    // Initializes the necessary peripherals.
+    // Initializes the necessary peripherals
     Multimod_Init();
 
-    // Add threads, initialize semaphores here!
-    G8RTOS_AddThread(&task0);
-    G8RTOS_AddThread(&task1);
-    G8RTOS_AddThread(&task2);
+    // Add threads, initialize semaphores
+    G8RTOS_InitSemaphore(&sem_UART, 1);
+    G8RTOS_InitSemaphore(&sem_I2CA, 1);
+
+    // G8RTOS_AddThread(&task0);
+    // G8RTOS_AddThread(&task1);
+    // G8RTOS_AddThread(&task2);
+
+    G8RTOS_AddThread(&Thread0);
+    G8RTOS_AddThread(&Thread1);
+    G8RTOS_AddThread(&Thread2);
+    G8RTOS_AddThread(&Thread3);
+    G8RTOS_AddThread(&Thread4);
 
     G8RTOS_Launch();
+
     while (1)
     {
     }
