@@ -33,6 +33,7 @@ void Thread1(void)
 // Thread2, reads optical sensor values, adjusts GREEN led duty cycle.
 void Thread2(void)
 {
+    // sem_I2CA
 }
 
 // Thread3, reads and output button 1 status using polling
