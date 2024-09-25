@@ -30,22 +30,17 @@ void BMI160_Init()
 
     // FIXME: From here down
 
-    // Step 1: Enable auxiliary interface for I2C communication
-    // This puts the auxiliary interface into auto mode.
+    // Step 1: Enable auxiliary interface for I2C communication with BMM150
     BMI160_WriteRegister(BMI160_IFCONF_ADDR, 0x40); // Enable primary interface to I2C
 
-    // Step 2: Set up auxiliary address for BMM150 (BMM150 address is 0x10 << 1 = 0x20)
-    BMI160_WriteRegister(BMI160_MAGIF_O, 0x10); // Set BMM150 I2C address (shifted left 1 bit)
+    // Step 2: Power up the BMM150 magnetometer by writing to its power control register via the auxiliary I2C interface
+    BMI160_WriteRegister(BMI160_MAGCONF_ADDR, 0x01); // Power up the BMM150
 
-    // Step 3: Power up the BMM150 magnetometer by writing to the BMM150's power control register via the auxiliary I2C interface
-    BMI160_AuxWriteRegister(0x4B, 0x01); // BMM150 Power control: Normal mode
+    // Step 3: Set the magnetometer's data rate and operation mode
+    BMI160_WriteRegister(BMI160_MAGCONF_ADDR, 0x00); // Set magnetometer to normal mode
 
-    // Step 4: Configure the BMM150's data rate, preset, and mode (if necessary)
-    // Set magnetometer to normal mode
-    BMI160_AuxWriteRegister(0x4C, 0x00); // Set BMM150 to normal mode
-
-    // Step 5: Verify communication by reading the BMM150's chip ID (should be 0x32)
-    uint8_t chipID = BMI160_AuxReadRegister(0x40); // Read BMM150 Chip ID register
+    // Step 4: Verify communication by reading the BMM150's chip ID
+    uint8_t chipID = BMI160_ReadRegister(0x40); // Read BMM150 Chip ID register
 
     UARTprintf("Chip ID: 0x%x\n", chipID);
 
