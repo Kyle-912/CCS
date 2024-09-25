@@ -42,8 +42,20 @@ void Thread0(void)
 void Thread1(void)
 {
     G8RTOS_WaitSemaphore(&sem_I2CA);
-    // Critical section: access I2CA
+
+    // Read the X-axis data from the gyroscope
+    int16_t gyroX = BMI160_GyroXGetResult();
+
+    // Normalize the gyroscope value to a PWM duty cycle (0 to 1)
+    float dutyCycle = (float)(gyroX + 32768) / 65536.0f;
+
+    // Set the duty cycle of the red LED
+    LaunchpadLED_PWMSetDuty(RED, dutyCycle);
+
     G8RTOS_SignalSemaphore(&sem_I2CA);
+
+    // Delay to prevent rapid changes
+    SysCtlDelay(delay_0_1_s);
 }
 
 // Thread2, reads optical sensor values, adjusts GREEN led duty cycle.
