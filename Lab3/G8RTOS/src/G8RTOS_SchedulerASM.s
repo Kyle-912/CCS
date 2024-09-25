@@ -68,7 +68,6 @@ PendSV_Handler:
     ; Disable interrupts
 	CPSID   I
 
-	; put your assembly code here!
     ; Step 1: Save the remaining registers (R4-R11) of the current thread
 	PUSH    {R4-R11}                        ; Store R4-R11 onto the current thread's stack
 
