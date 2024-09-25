@@ -58,7 +58,7 @@ G8RTOS_Start:
 
 	CPSIE I
 
-    BX LR				; Branches to the first thread
+    BX LR				                    ; Branches to the first thread
 
 	.endasmfunc
 
