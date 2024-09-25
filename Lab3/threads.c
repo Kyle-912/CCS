@@ -24,17 +24,17 @@ void Thread0(void)
 {
     while (1)
     {
-    G8RTOS_WaitSemaphore(&sem_I2CA);
+        G8RTOS_WaitSemaphore(&sem_I2CA);
 
-    int16_t accelX = BMI160_AccelXGetResult();
+        int16_t accelX = BMI160_AccelXGetResult();
 
-    float dutyCycle = (float)(accelX + 32768) / 65536.0f;
+        float dutyCycle = (float)(accelX + 32768) / 65536.0f;
 
-    LaunchpadLED_PWMSetDuty(BLUE, dutyCycle);
+        LaunchpadLED_PWMSetDuty(BLUE, dutyCycle);
 
-    G8RTOS_SignalSemaphore(&sem_I2CA);
+        G8RTOS_SignalSemaphore(&sem_I2CA);
 
-    SysCtlDelay(delay_0_1_s);
+        SysCtlDelay(delay_0_1_s);
     }
 }
 
@@ -43,17 +43,17 @@ void Thread1(void)
 {
     while (1)
     {
-    G8RTOS_WaitSemaphore(&sem_I2CA);
+        G8RTOS_WaitSemaphore(&sem_I2CA);
 
-    int16_t gyroX = BMI160_GyroXGetResult();
+        int16_t gyroX = BMI160_GyroXGetResult();
 
-    float dutyCycle = (float)(gyroX + 32768) / 65536.0f;
+        float dutyCycle = (float)(gyroX + 32768) / 65536.0f;
 
-    LaunchpadLED_PWMSetDuty(RED, dutyCycle);
+        LaunchpadLED_PWMSetDuty(RED, dutyCycle);
 
-    G8RTOS_SignalSemaphore(&sem_I2CA);
+        G8RTOS_SignalSemaphore(&sem_I2CA);
 
-    SysCtlDelay(delay_0_1_s);
+        SysCtlDelay(delay_0_1_s);
     }
 }
 
@@ -62,17 +62,17 @@ void Thread2(void)
 {
     while (1)
     {
-    G8RTOS_WaitSemaphore(&sem_I2CA);
+        G8RTOS_WaitSemaphore(&sem_I2CA);
 
-    uint32_t lightIntensity = OPT3001_GetResult();
+        uint32_t lightIntensity = OPT3001_GetResult();
 
-    float dutyCycle = (float)lightIntensity / 65536.0f;
+        float dutyCycle = (float)lightIntensity / 65536.0f;
 
-    LaunchpadLED_PWMSetDuty(GREEN, dutyCycle);
+        LaunchpadLED_PWMSetDuty(GREEN, dutyCycle);
 
-    G8RTOS_SignalSemaphore(&sem_I2CA);
+        G8RTOS_SignalSemaphore(&sem_I2CA);
 
-    SysCtlDelay(delay_0_1_s);
+        SysCtlDelay(delay_0_1_s);
     }
 }
 
@@ -81,16 +81,16 @@ void Thread3(void)
 {
     while (1)
     {
-    G8RTOS_WaitSemaphore(&sem_UART);
+        G8RTOS_WaitSemaphore(&sem_UART);
 
-    if (LaunchpadButtons_ReadSW1())
-    {
-        UARTprintf("Button 1 Pressed\n");
-    }
+        if (LaunchpadButtons_ReadSW1())
+        {
+            UARTprintf("Button 1 Pressed\n");
+        }
 
-    G8RTOS_SignalSemaphore(&sem_UART);
+        G8RTOS_SignalSemaphore(&sem_UART);
 
-    // SysCtlDelay(delay_0_1_s);
+        SysCtlDelay(delay_0_1_s);
     }
 }
 
@@ -99,16 +99,16 @@ void Thread4(void)
 {
     while (1)
     {
-    G8RTOS_WaitSemaphore(&sem_UART);
+        G8RTOS_WaitSemaphore(&sem_UART);
 
-    if (LaunchpadButtons_ReadSW2())
-    {
-        UARTprintf("Button 2 Pressed\n");
-    }
+        if (LaunchpadButtons_ReadSW2())
+        {
+            UARTprintf("Button 2 Pressed\n");
+        }
 
-    G8RTOS_SignalSemaphore(&sem_UART);
+        G8RTOS_SignalSemaphore(&sem_UART);
 
-    SysCtlDelay(delay_0_1_s);
+        SysCtlDelay(delay_0_1_s);
     }
 }
 
