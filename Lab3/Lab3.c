@@ -34,29 +34,23 @@ int32_t counter2 = 0;
 // Test threads
 void task0()
 {
-        counter0++;
-        UARTprintf("Counter 0: %d\n", counter0);
-        SysCtlDelay(1000);
+    counter0++;
+    UARTprintf("Counter 0: %d\n", counter0);
+    SysCtlDelay(1000);
 }
 
 void task1()
 {
-    while (1)
-    {
-        counter1++;
-        UARTprintf("Counter 1: %d\n", counter1);
-        SysCtlDelay(2000);
-    }
+    counter1++;
+    UARTprintf("Counter 1: %d\n", counter1);
+    SysCtlDelay(2000);
 }
 
 void task2()
 {
-    while (1)
-    {
-        counter2++;
-        UARTprintf("Counter 2: %d\n", counter2);
-        SysCtlDelay(3000);
-    }
+    counter2++;
+    UARTprintf("Counter 2: %d\n", counter2);
+    SysCtlDelay(3000);
 }
 
 /********************************Public Functions***********************************/
