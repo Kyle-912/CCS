@@ -37,6 +37,9 @@ void BMI160_Init()
     // Set the BMM150 to normal mode (0x4B is the BMM150's power control register)
     BMI160_WriteRegister(0x4B, 0x01);
 
+    // Initialize BMM150 magnetometer by setting the control register
+    BMI160_WriteRegister(0x4C, 0x00);
+
     return;
 }
 
