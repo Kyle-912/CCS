@@ -29,19 +29,16 @@ void Thread0(void)
 
         if (!bonus)
         {
-            /* code */
+            int16_t accelX = BMI160_AccelXGetResult();
+
+            float absAccelX = (float)(abs(accelX)) / 16384.0f; // Normalize based on ±1g
+            if (absAccelX > 1.0f)
+            {
+                absAccelX = 1.0f; // Cap at 100%
+            }
+
+            LaunchpadLED_PWMSetDuty(BLUE, absAccelX);
         }
-
-
-        int16_t accelX = BMI160_AccelXGetResult();
-
-        float absAccelX = (float)(abs(accelX)) / 16384.0f; // Normalize based on ±1g
-        if (absAccelX > 1.0f)
-        {
-            absAccelX = 1.0f; // Cap at 100%
-        }
-
-        LaunchpadLED_PWMSetDuty(BLUE, absAccelX);
 
         G8RTOS_SignalSemaphore(&sem_I2CA);
 
