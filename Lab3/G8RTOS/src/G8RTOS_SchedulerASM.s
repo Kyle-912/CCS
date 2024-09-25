@@ -42,7 +42,7 @@ G8RTOS_Start:
     POP {R12}
 
 	; Load LR with the first thread's PC
-    POP {LR}        ; Pop past LR
+    POP {LR}        ; Skip the dummy LR value
     POP {LR}        ; Pop PC into LR
 
     ; Enable interrupts
@@ -93,6 +93,6 @@ PendSV_Handler:
     BX LR                   ; Branch to the new thread's PC (Link Register holds the PC)
 
 	.endasmfunc
-	
+
 	.align
 	.end
