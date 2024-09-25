@@ -25,7 +25,7 @@ G8RTOS_Start:
 	.asmfunc
 
     CPSID I
-	; Load the stack pointer of the currently running thread
+    
 	; Load the address of RunningPtr
     LDR     R0, RunningPtr
 
