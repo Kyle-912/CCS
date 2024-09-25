@@ -39,7 +39,7 @@ G8RTOS_Start:
     POP     {R4-R11}                        ; Load R4-R11 from the thread's stack
     POP     {R0-R3}                         ; Load R0-R3 from the thread's stack
     POP     {R12}                           ; Load R12 from the thread's stack
-    POP     {LR}
+    POP     {LR}                            ;                         ; Load R4-R11 from the thread's stack
     POP     {LR}
 
     MOV     R0,SP
