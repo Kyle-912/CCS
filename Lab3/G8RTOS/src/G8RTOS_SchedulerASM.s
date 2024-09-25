@@ -32,7 +32,7 @@ G8RTOS_Start:
 	; Load the stack pointer of the currently running thread
     LDR     R0, RunningPtr                  ; Load address of RunningPtr
     LDR     R1, [R0]                        ; Load the current thread's TCB
-    LDR     SP, [R1]                        ; Load the stack pointer of the current thread (PSP)
+    LDR     SP, [R1]                        ; Load the stack pointer of the current thread
 
     ; Restore the context of the first thread (R4-R11)
     POP     {R4-R11}                        ; Load R4-R11 from the thread's stack
