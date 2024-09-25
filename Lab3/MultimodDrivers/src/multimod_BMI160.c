@@ -47,6 +47,8 @@ void BMI160_Init()
     // Step 5: Verify communication by reading the BMM150's chip ID (should be 0x32)
     uint8_t chipID = BMI160_AuxReadRegister(0x40); // Read BMM150 Chip ID register
 
+    UARTprintf("Chip ID: 0x%x\n", chipID);
+
     return;
 }
 
