@@ -34,7 +34,7 @@ void Thread0(void)
             absAccelX = 1.0f; // Cap at 100%
         }
 
-        LaunchpadLED_PWMSetDuty(BLUE, absAccelX); // Set duty cycle for BLUE
+        LaunchpadLED_PWMSetDuty(BLUE, absAccelX);
 
         G8RTOS_SignalSemaphore(&sem_I2CA);
 
@@ -58,7 +58,7 @@ void Thread1(void)
         }
         // absGyroX *= 2.0f; // Boost brightness
 
-        LaunchpadLED_PWMSetDuty(RED, absGyroX); // Set duty cycle for RED
+        LaunchpadLED_PWMSetDuty(RED, absGyroX);
 
         G8RTOS_SignalSemaphore(&sem_I2CA);
 
@@ -82,7 +82,7 @@ void Thread2(void)
         }
         // lightLux *= 2.0f; // Boost brightness
 
-        LaunchpadLED_PWMSetDuty(GREEN, lightLux); // Set duty cycle for GREEN
+        LaunchpadLED_PWMSetDuty(GREEN, lightLux);
 
         G8RTOS_SignalSemaphore(&sem_I2CA);
 
