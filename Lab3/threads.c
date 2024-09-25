@@ -27,7 +27,7 @@ void Thread0(void)
 // Thread1, reads gyro_x data, adjusts RED led duty cycle.
 void Thread1(void)
 {
-    // sem_I2CA/
+    // sem_I2CA
 }
 
 // Thread2, reads optical sensor values, adjusts GREEN led duty cycle.
@@ -39,11 +39,13 @@ void Thread2(void)
 // Thread3, reads and output button 1 status using polling
 void Thread3(void)
 {
+    // sem_UART
 }
 
 // Thread4, reads and output button 2 status using polling
 void Thread4(void)
 {
+    // sem_UART
 }
 
 /********************************Public Functions***********************************/
