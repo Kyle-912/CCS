@@ -35,7 +35,6 @@ void Thread0(void)
         }
 
         LaunchpadLED_PWMSetDuty(BLUE, absAccelX); // Set duty cycle for BLUE
-        LaunchpadLED_PWMSetDuty(BLUE, 0); // Set duty cycle for BLUE
 
         G8RTOS_SignalSemaphore(&sem_I2CA);
 
