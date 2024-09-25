@@ -28,11 +28,11 @@ void BMI160_Init()
     // Power on gyroscope
     BMI160_WriteRegister(BMI160_CMD_ADDR, 0x15);
 
-    // Enable I2C passthrough mode to communicate with BMM150
-    BMI160_WriteRegister(BMI160_IFCONF_ADDR, 0x40);
-
     // Configure magnetometer interface
     BMI160_WriteRegister(BMI160_MAGCONF_ADDR, 0x08);
+
+    // Enable I2C passthrough mode to communicate with BMM150
+    BMI160_WriteRegister(BMI160_IFCONF_ADDR, 0x40);
 
     // Set the BMM150 to normal mode (0x4B is the BMM150's power control register)
     BMI160_WriteRegister(0x4B, 0x01);
