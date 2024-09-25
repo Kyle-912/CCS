@@ -181,7 +181,7 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void))
 
     NumberOfThreads++;
 
-    return 0;
+    return NO_ERROR;
 }
 
 // SysTick_Handler
