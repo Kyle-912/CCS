@@ -28,7 +28,6 @@ void Thread0(void)
 
         int16_t accelX = BMI160_AccelXGetResult();
 
-        int16_t accelX = BMI160_AccelXGetResult();
         float absAccelX = (float)(abs(accelX)) / 16384.0f; // Normalize based on ±1g
         if (absAccelX > 1.0f)
         {
