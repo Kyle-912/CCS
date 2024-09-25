@@ -32,7 +32,6 @@ void Thread0(void)
 
     G8RTOS_SignalSemaphore(&sem_I2CA);
 
-    // Delay to prevent rapid changes
     SysCtlDelay(delay_0_1_s);
 }
 
@@ -41,18 +40,14 @@ void Thread1(void)
 {
     G8RTOS_WaitSemaphore(&sem_I2CA);
 
-    // Read the X-axis data from the gyroscope
     int16_t gyroX = BMI160_GyroXGetResult();
 
-    // Normalize the gyroscope value to a PWM duty cycle (0 to 1)
     float dutyCycle = (float)(gyroX + 32768) / 65536.0f;
 
-    // Set the duty cycle of the red LED
     LaunchpadLED_PWMSetDuty(RED, dutyCycle);
 
     G8RTOS_SignalSemaphore(&sem_I2CA);
 
-    // Delay to prevent rapid changes
     SysCtlDelay(delay_0_1_s);
 }
 
@@ -61,18 +56,14 @@ void Thread2(void)
 {
     G8RTOS_WaitSemaphore(&sem_I2CA);
 
-    // Read light intensity from the optical sensor
     uint32_t lightIntensity = OPT3001_GetResult();
 
-    // Normalize the light intensity to a PWM duty cycle (0 to 1)
     float dutyCycle = (float)lightIntensity / 65536.0f;
 
-    // Set the duty cycle of the green LED
     LaunchpadLED_PWMSetDuty(GREEN, dutyCycle);
 
     G8RTOS_SignalSemaphore(&sem_I2CA);
 
-    // Delay to prevent rapid changes
     SysCtlDelay(delay_0_1_s);
 }
 
@@ -88,7 +79,6 @@ void Thread3(void)
 
     G8RTOS_SignalSemaphore(&sem_UART);
 
-    // Delay to prevent excessive polling
     SysCtlDelay(delay_0_1_s);
 }
 
@@ -104,7 +94,6 @@ void Thread4(void)
 
     G8RTOS_SignalSemaphore(&sem_UART);
 
-    // Delay to prevent excessive polling
     SysCtlDelay(delay_0_1_s);
 }
 
