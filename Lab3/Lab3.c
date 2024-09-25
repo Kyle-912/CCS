@@ -38,7 +38,7 @@ void task0()
     {
         counter0++;
         UARTprintf("Counter 0: %d\n", counter0);
-        SysCtlDelay(10000);
+        SysCtlDelay(1000);
     }
 }
 
@@ -48,7 +48,7 @@ void task1()
     {
         counter1++;
         UARTprintf("Counter 1: %d\n", counter1);
-        SysCtlDelay(20000);
+        SysCtlDelay(2000);
     }
 }
 
@@ -58,7 +58,7 @@ void task2()
     {
         counter2++;
         UARTprintf("Counter 2: %d\n", counter2);
-        SysCtlDelay(30000);
+        SysCtlDelay(3000);
     }
 }
 
