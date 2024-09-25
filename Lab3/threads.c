@@ -22,7 +22,7 @@
 void Thread0(void)
 {
     G8RTOS_WaitSemaphore(&sem_I2CA);
-    // Critical section: access UART
+    // Critical section: access I2CA
     G8RTOS_SignalSemaphore(&sem_I2CA);
 }
 
@@ -30,7 +30,7 @@ void Thread0(void)
 void Thread1(void)
 {
     G8RTOS_WaitSemaphore(&sem_I2CA);
-    // Critical section: access UART
+    // Critical section: access I2CA
     G8RTOS_SignalSemaphore(&sem_I2CA);
 }
 
@@ -38,7 +38,7 @@ void Thread1(void)
 void Thread2(void)
 {
     G8RTOS_WaitSemaphore(&sem_I2CA);
-    // Critical section: access UART
+    // Critical section: access I2CA
     G8RTOS_SignalSemaphore(&sem_I2CA);
 }
 
