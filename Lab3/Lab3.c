@@ -34,12 +34,9 @@ int32_t counter2 = 0;
 // Test threads
 void task0()
 {
-    while (1)
-    {
         counter0++;
         UARTprintf("Counter 0: %d\n", counter0);
         SysCtlDelay(1000);
-    }
 }
 
 void task1()
