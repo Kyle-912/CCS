@@ -31,7 +31,7 @@ void BMI160_Init()
     // Enable I2C passthrough mode to communicate with BMM150
     BMI160_WriteRegister(BMI160_IFCONF_ADDR, 0x40);
 
-    // Power on the magnetometer (BMM150)
+    // Configure magnetometer interface
     BMI160_WriteRegister(BMI160_MAGCONF_ADDR, 0x08);
 
     return;
