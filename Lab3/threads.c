@@ -44,7 +44,7 @@ void Thread1(void)
     G8RTOS_WaitSemaphore(&sem_I2CA);
 
     // Read the X-axis data from the gyroscope
-    int16_t gyroX = BMI160_GyroXGetResult();
+    int16_t gyroX = BMI160_GyroXGetResult(); // TODO: Turn gyro on
 
     // Normalize the gyroscope value to a PWM duty cycle (0 to 1)
     float dutyCycle = (float)(gyroX + 32768) / 65536.0f;
