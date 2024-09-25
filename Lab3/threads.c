@@ -74,9 +74,13 @@ void Thread2(void)
 
         uint32_t lightIntensity = OPT3001_GetResult();
 
-        float dutyCycle = (float)lightIntensity / 65536.0f;
+        float lightLux = (float)lightIntensity / 83865.6f; // Normalize to max lux
+        if (lightLux > 1.0f)
+        {
+            lightLux = 1.0f; // Cap at 100%
+        }
 
-        LaunchpadLED_PWMSetDuty(GREEN, dutyCycle);
+        LaunchpadLED_PWMSetDuty(GREEN, lightLux); // Set duty cycle for GREEN
 
         G8RTOS_SignalSemaphore(&sem_I2CA);
 
