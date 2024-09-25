@@ -21,11 +21,13 @@
 // Thread0, reads accel_x data, adjusts BLUE led duty cycle.
 void Thread0(void)
 {
+    // sem_I2CA
 }
 
 // Thread1, reads gyro_x data, adjusts RED led duty cycle.
 void Thread1(void)
 {
+    // sem_I2CA/
 }
 
 // Thread2, reads optical sensor values, adjusts GREEN led duty cycle.
