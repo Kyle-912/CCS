@@ -44,10 +44,6 @@ G8RTOS_Start:
     POP     {LR}                            ; Pop past LR
     POP     {LR}                            ; Pop PC into LR
 
-    MOV     R0,SP
-    ADD     R0, R0, #4
-    MOV     SP,R0
-
 	CPSIE I
 
     BX      LR				                ; Branches to the first thread
