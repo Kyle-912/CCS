@@ -82,8 +82,20 @@ void Thread2(void)
 void Thread3(void)
 {
     G8RTOS_WaitSemaphore(&sem_UART);
-    // Critical section: access UART
+
+    // Read button 1 status
+    uint8_t buttonStatus = LaunchpadButtons_ReadSW1();
+
+    // Output button status
+    if (buttonStatus == 0)
+    {
+        UARTprintf("Button 1 Pressed\n");
+    }
+
     G8RTOS_SignalSemaphore(&sem_UART);
+
+    // Delay to prevent excessive polling
+    SysCtlDelay(delay_0_1_s);
 }
 
 // Thread4, reads and output button 2 status using polling
