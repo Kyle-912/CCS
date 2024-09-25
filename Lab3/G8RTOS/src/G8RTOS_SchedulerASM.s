@@ -24,7 +24,7 @@ G8RTOS_Start:
 
 	.asmfunc
 
-	@ Load the address of RunningPtr
+	; Load the address of RunningPtr
 	@ Load the address of the thread control block of the currently running pointer
 	@ Load the first thread's stack pointer
 	@ Load LR with the first thread's PC
@@ -45,7 +45,7 @@ G8RTOS_Start:
     LDR     SP, [R1]                        @ Load the stack pointer of the current thread (PSP)
 
     @ Restore the context of the first thread (R4-R11)
-    PO     {R4-R11}                   @ Load R4-R11 from the thread's stack
+    POP     {R4-R11}                   @ Load R4-R11 from the thread's stack
     POP {R0-R3}
     POP {R12}
     POP {LR}
