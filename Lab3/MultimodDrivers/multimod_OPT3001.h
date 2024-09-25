@@ -1,4 +1,4 @@
-// multimod_OPT3001.c
+// multimod_OPT3001.h
 // Date Created: 2023-07-25
 // Date Updated: 2023-07-27
 // Defines for OPT3001 on sensorpack

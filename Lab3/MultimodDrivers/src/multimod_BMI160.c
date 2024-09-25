@@ -28,6 +28,9 @@ void BMI160_Init()
     // Power on gyroscope
     BMI160_WriteRegister(BMI160_CMD_ADDR, 0x15);
 
+    // Enable I2C passthrough mode to communicate with BMM150
+    BMI160_WriteRegister(BMI160_IFCONF_ADDR, 0x40);
+
     return;
 }
 
