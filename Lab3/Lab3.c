@@ -72,10 +72,10 @@ int main(void)
 
     G8RTOS_Init();
 
-    // Initializes the necessary peripherals.
+    // Initializes the necessary peripherals
     Multimod_Init();
 
-    // Add threads, initialize semaphores here!
+    // Add threads, initialize semaphores
     G8RTOS_AddThread(&task0);
     G8RTOS_AddThread(&task1);
     G8RTOS_AddThread(&task2);
