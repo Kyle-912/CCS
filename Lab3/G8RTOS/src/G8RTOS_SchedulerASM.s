@@ -1,51 +1,51 @@
-@ G8RTOS_SchedulerASM.s
-@ Created: 2022-07-26
-@ Updated: 2022-07-26
-@ Contains assembly functions for scheduler.
+; G8RTOS_SchedulerASM.s
+; Created: 2022-07-26
+; Updated: 2022-07-26
+; Contains assembly functions for scheduler.
 
-	@ Functions Defined
+	; Functions Defined
 	.def G8RTOS_Start, PendSV_Handler
 
-	@ Dependencies
+	; Dependencies
 	.ref CurrentlyRunningThread, G8RTOS_Scheduler
 
-	.thumb		@ Set to thumb mode
-	.align 2	@ Align by 2 bytes (thumb mode uses allignment by 2 or 4)
-	.text		@ Text section
+	.thumb		; Set to thumb mode
+	.align 2	; Align by 2 bytes (thumb mode uses allignment by 2 or 4)
+	.text		; Text section
 
-@ Need to have the address defined in file
-@ (label needs to be close enough to asm code to be reached with PC relative addressing)
+; Need to have the address defined in file
+; (label needs to be close enough to asm code to be reached with PC relative addressing)
 RunningPtr: .field CurrentlyRunningThread, 32
 
-@ G8RTOS_Start
-@	Sets the first thread to be the currently running thread
-@	Starts the currently running thread by setting Link Register to tcb's Program Counter
+; G8RTOS_Start
+;	Sets the first thread to be the currently running thread
+;	Starts the currently running thread by setting Link Register to tcb's Program Counter
 G8RTOS_Start:
 
 	.asmfunc
 
-	@ Load the address of RunningPtr
-	@ Load the address of the thread control block of the currently running pointer
-	@ Load the first thread's stack pointer
-	@ Load LR with the first thread's PC
+	; Load the address of RunningPtr
+	; Load the address of the thread control block of the currently running pointer
+	; Load the first thread's stack pointer
+	; Load LR with the first thread's PC
     CPSID I
-	@ Load the stack pointer of the currently running thread
-    LDR     R0, RunningPtr                  @ Load address of RunningPtr
-    LDR     R1, [R0]                        @ Load the current thread's TCB
+	; Load the stack pointer of the currently running thread
+    LDR     R0, RunningPtr                  ; Load address of RunningPtr
+    LDR     R1, [R0]                        ; Load the current thread's TCB
     LDR     R6, [R1]
 
-    @ TODO: Try with this included
-    @ADD R6, R6, #60
-    @STR R6, [R5]
-    @MOV SP, R6
-    @LDR LR, [R6, #-4]
-    @to here
+    ;TODO: Try with this included
+    ;ADD R6, R6, #60
+    ;STR R6, [R5]
+    ;MOV SP, R6
+    ;LDR LR, [R6, #-4]
+    ;to here
 
-    @ TODO: comment out below
-    LDR     SP, [R1]                        @ Load the stack pointer of the current thread (PSP)
+    ;TODO: comment out below
+    LDR     SP, [R1]                        ; Load the stack pointer of the current thread (PSP)
 
-    @ Restore the context of the first thread (R4-R11)
-    POP     {R4-R11}                   @ Load R4-R11 from the thread's stack
+    ; Restore the context of the first thread (R4-R11)
+    POP     {R4-R11}                   ; Load R4-R11 from the thread's stack
     POP {R0-R3}
     POP {R12}
     POP {LR}
@@ -54,62 +54,62 @@ G8RTOS_Start:
     MOV R0,SP
     ADD R0, R0, #4
     MOV SP,R0
-   @to here
+   ;to here
 
 	CPSIE I
 
-	BX LR				@ Branches to the first thread
+	BX LR				;Branches to the first thread
 
 	.endasmfunc
 
-@ PendSV_Handler
-@ - Performs a context switch in G8RTOS
-@ 	- Saves remaining registers into thread stack
-@	- Saves current stack pointer to tcb
-@	- Calls G8RTOS_Scheduler to get new tcb
-@	- Set stack pointer to new stack pointer from new tcb
-@	- Pops registers from thread stack
+; PendSV_Handler
+; - Performs a context switch in G8RTOS
+; 	- Saves remaining registers into thread stack
+;	- Saves current stack pointer to tcb
+;	- Calls G8RTOS_Scheduler to get new tcb
+;	- Set stack pointer to new stack pointer from new tcb
+;	- Pops registers from thread stack
 PendSV_Handler:
 
 	.asmfunc
 
-    @ Disable interrupts
+    ; Disable interrupts
 	CPSID   I
 
-	@ put your assembly code here!
-    @ Step 1: Save the remaining registers (R4-R11) of the current thread
-	PUSH    {R4-R11}                        @ Store R4-R11 onto the current thread's stack
+	; put your assembly code here!
+    ; Step 1: Save the remaining registers (R4-R11) of the current thread
+	PUSH    {R4-R11}                        ; Store R4-R11 onto the current thread's stack
 
-    @ Step 2: Save the current stack pointer to the current thread's TCB
-    LDR     R1, RunningPtr                  @ Load the address of the currently running thread
-    LDR     R2, [R1]                        @ Get the current thread's TCB
-    STR     SP, [R2]                        @ Save the PSP (R0) into the TCB's stack pointer
+    ; Step 2: Save the current stack pointer to the current thread's TCB
+    LDR     R1, RunningPtr                  ; Load the address of the currently running thread
+    LDR     R2, [R1]                        ; Get the current thread's TCB
+    STR     SP, [R2]                        ; Save the PSP (R0) into the TCB's stack pointer
 
 	PUSH    {LR}
 
-    @ Step 3: Call the scheduler to get the new thread to run
-    BL      G8RTOS_Scheduler                @ Call the scheduler to switch to the next thread
+    ; Step 3: Call the scheduler to get the new thread to run
+    BL      G8RTOS_Scheduler                ; Call the scheduler to switch to the next thread
 
 	POP     {LR}
 
-    @ Reload the new value of CurrentlyRunningThread
-    LDR     R1, RunningPtr                  @ Load the address of the updated currently running thread
-    LDR     R2, [R1]                        @ Load the new thread's TCB
+    ; Reload the new value of CurrentlyRunningThread
+    LDR     R1, RunningPtr                  ; Load the address of the updated currently running thread
+    LDR     R2, [R1]                        ; Load the new thread's TCB
 
-    @ Step 4: Load the stack pointer of the new thread from the new TCB
-    LDR     SP, [R2]                        @ Load the PSP (stack pointer) of the new thread
+    ; Step 4: Load the stack pointer of the new thread from the new TCB
+    LDR     SP, [R2]                        ; Load the PSP (stack pointer) of the new thread
 
-    @ Step 5: Restore the saved registers (R4-R11) from the new thread's stack
-    POP     {R4-R11}                        @ Load R4-R11 from the new thread's stack
+    ; Step 5: Restore the saved registers (R4-R11) from the new thread's stack
+    POP     {R4-R11}                        ; Load R4-R11 from the new thread's stack
 
-    @ Enable interrupts
+    ; Enable interrupts
 	CPSIE   I
 
-    @ Return from the exception
-    BX      LR                              @ Return from PendSV_Handler
+    ; Return from the exception
+    BX      LR                              ; Return from PendSV_Handler
 
 	.endasmfunc
 
-	@ end of the asm file
+	; end of the asm file
 	.align
 	.end
