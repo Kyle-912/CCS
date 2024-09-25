@@ -36,7 +36,7 @@ void Thread0(void)
     G8RTOS_SignalSemaphore(&sem_I2CA);
 
     // Delay to prevent rapid changes
-    // SysCtlDelay(delay_0_1_s);
+    SysCtlDelay(delay_0_1_s);
 }
 
 // Thread1, reads gyro_x data, adjusts RED led duty cycle.
