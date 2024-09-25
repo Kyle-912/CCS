@@ -43,7 +43,7 @@ G8RTOS_Start:
 
 	; Load LR with the first thread's PC
     POP {LR}        ; Skip the dummy LR value
-    POP {LR}        ; Pop PC into LR
+    POP {LR}        ; Load the PC into LR
 
     ; Enable interrupts
 	CPSIE I
