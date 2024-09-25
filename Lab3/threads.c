@@ -22,8 +22,20 @@
 void Thread0(void)
 {
     G8RTOS_WaitSemaphore(&sem_I2CA);
-    // Critical section: access I2CA
+
+    // Read the X-axis data from the accelerometer
+    int16_t accelX = BMI160_AccelXGetResult();
+
+    // Normalize the accelerometer value to a PWM duty cycle (0 to 1)
+    float dutyCycle = (float)(accelX + 32768) / 65536.0f;
+
+    // Set the duty cycle of the blue LED
+    LaunchpadLED_PWMSetDuty(BLUE, dutyCycle);
+
     G8RTOS_SignalSemaphore(&sem_I2CA);
+
+    // Delay to prevent rapid changes
+    SysCtlDelay(delay_0_1_s);
 }
 
 // Thread1, reads gyro_x data, adjusts RED led duty cycle.
