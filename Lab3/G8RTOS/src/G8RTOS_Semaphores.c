@@ -35,7 +35,7 @@ uint32_t IBit_State;
 // Return: void
 void G8RTOS_InitSemaphore(semaphore_t *s, int32_t value)
 {
-    int32_t IBit_State = StartCriticalSection();
+    IBit_State = StartCriticalSection();
     *s = value;
     EndCriticalSection(IBit_State);
 }
@@ -48,7 +48,7 @@ void G8RTOS_InitSemaphore(semaphore_t *s, int32_t value)
 // Return: void
 void G8RTOS_WaitSemaphore(semaphore_t *s)
 {
-    int32_t IBit_State = StartCriticalSection();
+    IBit_State = StartCriticalSection();
 
     while (*s <= 0)
     {
