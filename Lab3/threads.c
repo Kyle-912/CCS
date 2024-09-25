@@ -112,7 +112,7 @@ void Thread4(void)
 
         G8RTOS_SignalSemaphore(&sem_UART);
 
-        SysCtlDelay(delay_0_1_s);
+        SysCtlDelay(delay_0_1_s / 3);
     }
 }
 
