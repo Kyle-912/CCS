@@ -25,12 +25,11 @@ typedef int32_t semaphore_t;
 /****************************Data Structure Definitions*****************************/
 /****************************Data Structure Definitions*****************************/
 
-
 /********************************Public Functions***********************************/
 
-void G8RTOS_InitSemaphore(semaphore_t* s, int32_t value);
-void G8RTOS_WaitSemaphore(semaphore_t* s);
-void G8RTOS_SignalSemaphore(semaphore_t* s);
+void G8RTOS_InitSemaphore(semaphore_t *s, int32_t value);
+void G8RTOS_WaitSemaphore(semaphore_t *s);
+void G8RTOS_SignalSemaphore(semaphore_t *s);
 
 /********************************Public Functions***********************************/
 
@@ -41,4 +40,3 @@ void G8RTOS_SignalSemaphore(semaphore_t* s);
 /*******************************Private Functions***********************************/
 
 #endif /* G8RTOS_SEMAPHORES_H_ */
-

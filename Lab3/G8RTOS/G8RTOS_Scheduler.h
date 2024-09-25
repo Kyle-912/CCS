@@ -17,18 +17,19 @@
 /*************************************Defines***************************************/
 
 /* Status Register with the Thumb-bit Set */
-#define THUMBBIT            0x01000000
+#define THUMBBIT 0x01000000
 
-#define MAX_THREADS         6
-#define STACKSIZE           1024
-#define OSINT_PRIORITY      7
+#define MAX_THREADS 6
+#define STACKSIZE 1024
+#define OSINT_PRIORITY 7
 
 /*************************************Defines***************************************/
 
 /******************************Data Type Definitions********************************/
 
 // Scheduler error typedef
-typedef enum {
+typedef enum
+{
     NO_ERROR = 0,
     THREAD_LIMIT_REACHED = -1,
     NO_THREADS_SCHEDULED = -2,
@@ -46,7 +47,7 @@ typedef enum {
 
 /********************************Public Variables***********************************/
 
-extern tcb_t* CurrentlyRunningThread;
+extern tcb_t *CurrentlyRunningThread;
 
 /********************************Public Variables***********************************/
 
@@ -63,6 +64,4 @@ void SysTick_Handler();
 
 /********************************Public Functions***********************************/
 
-
 #endif /* G8RTOS_SCHEDULER_H_ */
-
