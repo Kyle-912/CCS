@@ -63,8 +63,8 @@ void LaunchpadLED_Init()
     PWMPulseWidthSet(PWM1_BASE, PWM_OUT_7, PWM_Per / 2);
 
     // Enable the PWM generators
-    PWMGenEnable(PWM1_BASE, PWM_GEN_2);
-    PWMGenEnable(PWM1_BASE, PWM_GEN_3);
+    PWMGenEnable(PWM1_BASE, PWM_GEN_2); // Red
+    PWMGenEnable(PWM1_BASE, PWM_GEN_3); // Blue and Green
 
     // Enable PWM output
     PWMOutputState(PWM1_BASE, PWM_OUT_5_BIT | PWM_OUT_6_BIT | PWM_OUT_7_BIT, true);
