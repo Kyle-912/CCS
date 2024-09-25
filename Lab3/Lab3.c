@@ -12,6 +12,7 @@
 
 #include "G8RTOS/G8RTOS.h"
 #include "./MultimodDrivers/multimod.h"
+#include <driverlib/uart.h>
 
 #include "./threads.h"
 
