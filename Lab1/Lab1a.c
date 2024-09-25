@@ -83,15 +83,15 @@ int main(void)
 //                count = 0;
 //            }
 //        }
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 255);
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 255);
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 255);
-        SysCtlDelay(delay_0_1_s);
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0);
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0);
-        SysCtlDelay(delay_0_1_s);
-        SysCtlDelay(delay_0_500_ms);
+        // GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 255);
+        // GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 255);
+        // GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 255);
+        // SysCtlDelay(delay_0_1_s);
+        // GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
+        // GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0);
+        // GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0);
+        // SysCtlDelay(delay_0_1_s);
+        // SysCtlDelay(delay_0_500_ms);
     }
 }
 /************************************MAIN*******************************************/
