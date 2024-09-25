@@ -103,11 +103,8 @@ void Thread4(void)
 {
     G8RTOS_WaitSemaphore(&sem_UART);
 
-    // Read button 2 status
-    uint8_t buttonStatus = LaunchpadButtons_ReadSW2();
-
     // Output button status
-    if (buttonStatus == 1)
+    if (LaunchpadButtons_ReadSW2())
     {
         UARTprintf("Button 2 Pressed\n");
     }
