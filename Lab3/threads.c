@@ -51,9 +51,13 @@ void Thread1(void)
 
         int16_t gyroX = BMI160_GyroXGetResult();
 
-        float dutyCycle = (float)(gyroX + 32768) / 65536.0f;
+        float absGyroX = (float)(abs(gyroX)) / 32768.0f; // Normalize based on max rate
+        if (absGyroX > 1.0f)
+        {
+            absGyroX = 1.0f; // Cap at 100%
+        }
 
-        LaunchpadLED_PWMSetDuty(RED, dutyCycle);
+        LaunchpadLED_PWMSetDuty(RED, absGyroX); // Set duty cycle for RED
 
         G8RTOS_SignalSemaphore(&sem_I2CA);
 
