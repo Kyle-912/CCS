@@ -47,7 +47,7 @@ void Thread3(void)
 // Thread4, reads and output button 2 status using polling
 void Thread4(void)
 {
-    G8RTOS_WaitSemaphore(&sem_UART);
+          G8RTOS_WaitSemaphore(&sem_UART);
     // Critical section: access UART
     G8RTOS_SignalSemaphore(&sem_UART);
 }
