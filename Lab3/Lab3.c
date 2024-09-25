@@ -31,7 +31,7 @@ int32_t counter2 = 0;
 
 /********************************Public Functions***********************************/
 
-// test threads
+// Test threads
 void task0()
 {
     while (1)
