@@ -87,7 +87,7 @@ void Thread3(void)
     uint8_t buttonStatus = LaunchpadButtons_ReadSW1();
 
     // Output button status
-    if (buttonStatus == 0)
+    if (buttonStatus == 1)
     {
         UARTprintf("Button 1 Pressed\n");
     }
@@ -107,7 +107,7 @@ void Thread4(void)
     uint8_t buttonStatus = LaunchpadButtons_ReadSW2();
 
     // Output button status
-    if (buttonStatus == 0)
+    if (buttonStatus == 1)
     {
         UARTprintf("Button 2 Pressed\n");
     }
