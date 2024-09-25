@@ -23,7 +23,7 @@
 void Thread0(void)
 {
     while (1)
-    {}
+    {
     G8RTOS_WaitSemaphore(&sem_I2CA);
 
     int16_t accelX = BMI160_AccelXGetResult();
@@ -35,13 +35,14 @@ void Thread0(void)
     G8RTOS_SignalSemaphore(&sem_I2CA);
 
     SysCtlDelay(delay_0_1_s);
+    }
 }
 
 // Thread1, reads gyro_x data, adjusts RED led duty cycle.
 void Thread1(void)
 {
     while (1)
-    {}
+    {
     G8RTOS_WaitSemaphore(&sem_I2CA);
 
     int16_t gyroX = BMI160_GyroXGetResult();
@@ -53,13 +54,14 @@ void Thread1(void)
     G8RTOS_SignalSemaphore(&sem_I2CA);
 
     SysCtlDelay(delay_0_1_s);
+    }
 }
 
 // Thread2, reads optical sensor values, adjusts GREEN led duty cycle.
 void Thread2(void)
 {
     while (1)
-    {}
+    {
     G8RTOS_WaitSemaphore(&sem_I2CA);
 
     uint32_t lightIntensity = OPT3001_GetResult();
@@ -71,13 +73,14 @@ void Thread2(void)
     G8RTOS_SignalSemaphore(&sem_I2CA);
 
     SysCtlDelay(delay_0_1_s);
+    }
 }
 
 // Thread3, reads and output button 1 status using polling
 void Thread3(void)
 {
     while (1)
-    {}
+    {
     G8RTOS_WaitSemaphore(&sem_UART);
 
     if (LaunchpadButtons_ReadSW1())
@@ -88,13 +91,14 @@ void Thread3(void)
     G8RTOS_SignalSemaphore(&sem_UART);
 
     // SysCtlDelay(delay_0_1_s);
+    }
 }
 
 // Thread4, reads and output button 2 status using polling
 void Thread4(void)
 {
     while (1)
-    {}
+    {
     G8RTOS_WaitSemaphore(&sem_UART);
 
     if (LaunchpadButtons_ReadSW2())
@@ -104,7 +108,8 @@ void Thread4(void)
 
     G8RTOS_SignalSemaphore(&sem_UART);
 
-    // SysCtlDelay(delay_0_1_s);
+    SysCtlDelay(delay_0_1_s);
+    }
 }
 
 /********************************Public Functions***********************************/
