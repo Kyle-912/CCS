@@ -48,6 +48,18 @@ void G8RTOS_InitSemaphore(semaphore_t *s, int32_t value)
 // Return: void
 void G8RTOS_WaitSemaphore(semaphore_t *s)
 {
+    int32_t IBit_State = StartCriticalSection();
+
+    while (*s <= 0)
+    {
+        EndCriticalSection(IBit_State);
+        // This would block the thread, in a real system it could yield the CPU
+        IBit_State = StartCriticalSection();
+    }
+
+    (*s)--; // Decrement the semaphore
+
+    EndCriticalSection(IBit_State);
 }
 
 // G8RTOS_SignalSemaphore
