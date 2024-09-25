@@ -28,9 +28,14 @@ void Thread0(void)
 
         int16_t accelX = BMI160_AccelXGetResult();
 
-        float dutyCycle = (float)(accelX + 32768) / 65536.0f;
+        int16_t accelX = BMI160_AccelXGetResult();
+        float absAccelX = (float)(abs(accelX)) / 16384.0f; // Normalize based on ±1g
+        if (absAccelX > 1.0f)
+        {
+            absAccelX = 1.0f; // Cap at 100%
+        }
 
-        LaunchpadLED_PWMSetDuty(BLUE, dutyCycle);
+        LaunchpadLED_PWMSetDuty(BLUE, absAccelX); // Set duty cycle for BLUE
 
         G8RTOS_SignalSemaphore(&sem_I2CA);
 
