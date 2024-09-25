@@ -42,7 +42,7 @@ void BMI160_Init()
     BMI160_WriteRegister(BMI160_MAGCONF_ADDR, 0x01); // Normal mode
 
     // Step 4: Verify communication by reading the BMM150's chip ID
-    uint8_t chipID = BMI160_ReadRegister(BMI160_DATA_O + MAGX_O); // Read BMM150 Chip ID register (0x40)
+    uint8_t chipID = BMI160_ReadRegister(0x40); // Read BMM150 Chip ID register (0x40)
 
     return;
 }
