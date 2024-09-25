@@ -42,7 +42,7 @@ G8RTOS_Start:
 
 	; Load LR with the first thread's PC
     POP     {LR}                            ; Pop past LR
-    POP     {LR}
+    POP     {LR}                            ; Pop PC into LR
 
     MOV     R0,SP
     ADD     R0, R0, #4
