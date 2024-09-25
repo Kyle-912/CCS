@@ -52,10 +52,6 @@ void Thread1(void)
         int16_t gyroX = BMI160_GyroXGetResult();
 
         float absGyroX = (float)(abs(gyroX)) / 32768.0f; // Normalize based on max rate
-        if (absGyroX > 1.0f)
-        {
-            absGyroX = 1.0f; // Cap at 100%
-        }
 
         LaunchpadLED_PWMSetDuty(RED, absGyroX);
 
@@ -75,10 +71,6 @@ void Thread2(void)
         uint32_t lightIntensity = OPT3001_GetResult();
 
         float lightLux = (float)lightIntensity / 83865.6f; // Normalize to max lux
-        if (lightLux > 1.0f)
-        {
-            lightLux = 1.0f; // Cap at 100%
-        }
 
         LaunchpadLED_PWMSetDuty(GREEN, lightLux);
 
