@@ -84,7 +84,7 @@ PendSV_Handler:
     LDR R1, [R0]            ; Get the new thread's TCB
     LDR SP, [R1]            ; Load the new thread's stack pointer
 
-    ; Step 5: Restore the saved registers (R4-R11) from the new thread's stack
+    ; Step 5: Restore the callee-saved registers (R4-R11) from the new thread's stack
     POP {R4-R11}            ; Restore R4-R11 for the new thread
 
     ; Enable interrupts
