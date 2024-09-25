@@ -93,6 +93,6 @@ PendSV_Handler:
     BX LR                   ; Branch to the new thread's PC (Link Register holds the PC)
 
 	.endasmfunc
-	; end of the asm file
+	
 	.align
 	.end
