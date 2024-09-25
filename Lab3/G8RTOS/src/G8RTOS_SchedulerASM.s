@@ -24,7 +24,7 @@ G8RTOS_Start:
 
 	.asmfunc
 
-	; Load the address of RunningPtr
+	@ Load the address of RunningPtr
 	@ Load the address of the thread control block of the currently running pointer
 	@ Load the first thread's stack pointer
 	@ Load LR with the first thread's PC
@@ -58,7 +58,7 @@ G8RTOS_Start:
 
 	CPSIE I
 
-	BX LR				@Branches to the first thread
+	BX LR				@ Branches to the first thread
 
 	.endasmfunc
 
