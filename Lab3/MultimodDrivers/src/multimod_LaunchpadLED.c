@@ -51,6 +51,7 @@ void LaunchpadLED_Init()
 
     // Configure necessary PWM generators in count down mode, no sync
     PWMGenConfigure(PWM1_BASE, PWM_GEN_2, PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
+    PWMGenConfigure(PWM1_BASE, PWM_GEN_3, PWM_GEN_MODE_DOWN | PWM_GEN_MODE_NO_SYNC);
 
     // Set generator periods
     PWMGenPeriodSet(PWM1_BASE, PWM_GEN_2, PWM_Per);
