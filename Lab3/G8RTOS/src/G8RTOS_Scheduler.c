@@ -122,11 +122,6 @@ void G8RTOS_Scheduler()
 // Return: scheduler error code
 sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void))
 {
-    // If number of threads is greater than the maximum number of threads
-    // return
-    // else
-    // if no threads
-    // else
     /*
     Append the new thread to the end of the linked list
     * 1. Number of threads will refer to the newest thread to be added since the current index would be NumberOfThreads-1
