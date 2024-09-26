@@ -32,10 +32,10 @@ void BMI160_Init()
 
     BMI160_WriteRegister(0x4B, 0x80); // Enable magnetometer passthrough mode
 
-    BMI160_MultiWriteRegister(0x4C, 0x4B); // Access BMM150’s power control register
-    BMI160_MultiWriteRegister(0x4D, 0x01); // Set normal mode
+    BMI160_WriteRegister(0x4C, 0x4B); // Access BMM150’s power control register
+    BMI160_WriteRegister(0x4D, 0x01); // Set normal mode
 
-    BMI160_MultiWriteRegister(0x4C, 0x40); // Set register to BMM150 chip ID
+    BMI160_WriteRegister(0x4C, 0x40); // Set register to BMM150 chip ID
     uint8_t chipID = BMI160_ReadRegister(BMI160_DATA_O); // Read BMM150 Chip ID from BMI160's data register
 
     return;
