@@ -34,7 +34,6 @@ void BMI160_Init()
 
     BMI160_WriteRegister(0x4B, 0x01); // Set BMM150 power control to normal mode
 
-    // Step 5: Set BMM150 to continuous measurement mode
     BMI160_WriteRegister(0x4C, 0x00); // Set BMM150 operation mode to continuous measurement
     return;
 }
