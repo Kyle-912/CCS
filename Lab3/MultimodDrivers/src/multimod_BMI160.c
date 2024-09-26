@@ -30,22 +30,32 @@ void BMI160_Init()
 
     // FIXME: From here down
 
-    // Enable manual mode for auxiliary I2C (BMM150 communication)
-    BMI160_WriteRegister(BMI160_IFCONF_ADDR, 0x40); // Enable manual I2C mode
+    // Enable magnetometer interface
+    BMI160_WriteRegister(BMI160_CMD_ADDR, 0x19); // Magnetometer in normal mode
+    SysCtlDelay(SysCtlClockGet() / (3 * 60));    // 60 ms delay
 
-    // Set the BMM150 I2C slave address (0x10 shifted left by 1 -> 0x20)
-    BMI160_WriteRegister(BMI160_MAGIF_O, 0x10); // Set BMM150 address for auxiliary interface
+    // Enable the I2C passthrough mode for the BMM150
+    BMI160_WriteRegister(BMI160_IFCONF_ADDR, 0x02); // Enable I2C passthrough
 
-    // Configure the BMM150 to normal mode by writing to its power control register (0x4B)
-    BMI160_WriteRegister(BMI160_MAGIF_O, 0x4B); // Set register 0x4B for BMM150
-    BMI160_WriteRegister(BMI160_DATA_O, 0x01);  // Write to enable normal mode
+    // Configure the BMM150
+    // Set the BMM150 to normal power mode
+    BMI160_WriteRegister(BMI160_MAGCONF_ADDR, 0x00); // Normal mode for BMM150
+    SysCtlDelay(SysCtlClockGet() / (3 * 10));        // Small delay
 
-    // Read BMM150 Chip ID by writing register address 0x40
-    BMI160_WriteRegister(BMI160_MAGIF_O, 0x40);  // Set register 0x40 for BMM150
-    BMI160_WriteRegister(BMI160_CMD_ADDR, 0x37); // Trigger manual read from BMM150
+    // Set the BMM150 I2C address to 0x10 (BMM150 default address)
+    BMI160_WriteRegister(BMI160_IFCONF_ADDR, 0x10); // Set BMM150 I2C address
+
+    // Repetition settings for X, Y, Z axes
+    // X/Y: set repetitions (example value 0x04)
+    BMI160_WriteRegister(BMI160_DATA_O + 0x51, 0x04); // Repetitions for X/Y
+    // Z: set repetitions (example value 0x0F)
+    BMI160_WriteRegister(BMI160_DATA_O + 0x52, 0x0F); // Repetitions for Z
+
+    // Put BMM150 into forced mode
+    BMI160_WriteRegister(BMI160_CMD_ADDR, 0x4B); // Force BMM150 to start
 
     // Read Chip ID from the BMM150 (using auxiliary data register)
-    uint8_t chipID = BMI160_ReadRegister(BMI160_DATA_O);
+    // uint8_t chipID = BMI160_ReadRegister(BMI160_DATA_O);
 
     return;
 }
