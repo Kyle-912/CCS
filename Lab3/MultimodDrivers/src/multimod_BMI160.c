@@ -44,8 +44,8 @@ void BMI160_Init()
     // Configure BMM150 for normal operation (magnetometer specific registers)
     BMI160_WriteRegister(0x4D, 0x42); // Set the I2C register address to start reading data from BMM150 (0x42)
     BMI160_WriteRegister(0x4C, 0x01); // Trigger a measurement in the BMM150
-    // Step 4: Set
-     BMI160 to Data Mode to automatically read BMM150 data
+    
+    // Step 4: Set BMI160 to Data Mode to automatically read BMM150 data
     BMI160_WriteRegister(0x4B, 0x00); // MAG_IF[1] = 0x00 -> Data Mode enabled
 
     // Step 5: Configure magnetometer output data rate (optional)
