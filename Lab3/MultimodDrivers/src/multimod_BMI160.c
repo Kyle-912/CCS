@@ -35,11 +35,6 @@ void BMI160_Init()
     BMI160_MultiWriteRegister(0x4C, 0x4B); // Access BMM150’s power control register
     BMI160_MultiWriteRegister(0x4D, 0x01); // Set normal mode
 
-    // Step 4: Set the BMM150 to normal mode by writing to the control register
-    BMI160_WriteRegister(0x4C, 0x4C); // Select BMM150 Control Register (0x4C)
-    BMI160_WriteRegister(0x4D, 0x02); // Put BMM150 into normal mode (0x02 for normal)
-
-    // Step 5: Confirm communication by reading BMM150 Chip ID
     uint8_t chipID = BMI160_ReadRegister(BMI160_DATA_O); // Read BMM150 Chip ID from BMI160's data register
 
     return;
