@@ -32,7 +32,7 @@ void BMI160_Init()
 
     BMI160_WriteRegister(0x6B, 0x02); // Enable I2C passthrough mode
 
-    BMI160_WriteRegister(0x4B, 0x01); // Set BMM150 power control to normal mode
+    BMI160_WriteRegister(0x4B, 0x80); // Set mag_manual_en = 1 to enable direct BMM150 access
 
     BMI160_WriteRegister(0x4C, 0x00); // Set BMM150 operation mode to continuous measurement
     return;
