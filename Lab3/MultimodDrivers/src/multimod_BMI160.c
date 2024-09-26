@@ -35,6 +35,7 @@ void BMI160_Init()
     BMI160_WriteRegister(0x4B, 0x80); // Set mag_manual_en = 1 to enable direct BMM150 access
 
     BMI160_WriteRegister(0x4C, 0x00); // Set BMM150 operation mode to continuous measurement
+    
     return;
 }
 
