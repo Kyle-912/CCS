@@ -30,16 +30,19 @@ void BMI160_Init()
 
     // FIXME: From here down
 
-    // Step 1: Enable passthrough mode on BMI160 for communication with BMM150
-    BMI160_WriteRegister(0x4B, 0x80);     // MAG_IF_0 (register address 0x4B)
+    // Step 1: Enable magnetometer interface passthrough mode on the BMI160
+    // Set bit 1 in the MAG_IF register (address 0x4B) to enable passthrough
+    BMI160_WriteRegister(0x4B, 0x80); // MAG_IF_0 register: Enable passthrough mode (bit 7 set)
 
-    // Step 2: Set up the BMM150 via I2C passthrough through the BMI160
+    // Step 2: Set the BMM150 to Normal mode by configuring its control registers through the BMI160 passthrough interface
 
-    // Power up BMM150 - write 0x01 to register 0x4B on BMM150 to bring it to sleep mode
-    BMI160_MultiWriteRegister(0x4B, 0x01);
+    // Select the BMM150's Power Control Register (0x4B) and set it to sleep mode (0x01)
+    BMI160_MultiWriteRegister(0x4C, 0x4B); // Select register 0x4B on BMM150
+    BMI160_MultiWriteRegister(0x4D, 0x01); // Write 0x01 to put BMM150 into sleep mode
 
-    // Set BMM150 to normal mode (0x02) in the Power Control Register (0x4C)
-    BMI160_MultiWriteRegister(0x4C, 0x02); // Register 0x4C, set to normal operation mode
+    // Select the BMM150's Control Register (0x4C) and set it to normal mode (0x02)
+    BMI160_MultiWriteRegister(0x4C, 0x4C); // Select register 0x4C on BMM150
+    BMI160_MultiWriteRegister(0x4D, 0x02); // Write 0x02 to put BMM150 into normal mode
 
     // Read Chip ID from the BMM150 (using auxiliary data register)
     // uint8_t chipID = BMI160_ReadRegister(BMI160_DATA_O);
