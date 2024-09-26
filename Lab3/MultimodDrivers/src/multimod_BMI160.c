@@ -30,29 +30,34 @@ void BMI160_Init()
 
     // FIXME: From here down
 
-    // Enable magnetometer interface
-    BMI160_WriteRegister(BMI160_CMD_ADDR, 0x19); // Magnetometer in normal mode
-    SysCtlDelay(SysCtlClockGet() / (3 * 60));    // 60 ms delay
+    BMI160_WriteRegister(BMI160_CMD_ADDR, 0x15); // Gyroscope normal mode
+    SysCtlDelay(100000);                         // Wait 100ms for gyroscope to power up
 
-    // Enable the I2C passthrough mode for the BMM150
-    BMI160_WriteRegister(BMI160_IFCONF_ADDR, 0x02); // Enable I2C passthrough
+    // Enable the auxiliary I2C interface for the BMM150
+    BMI160_WriteRegister(BMI160_IFCONF_ADDR, 0x40); // Enable I2C interface
+    SysCtlDelay(100000);
 
-    // Configure the BMM150
-    // Set the BMM150 to normal power mode
-    BMI160_WriteRegister(BMI160_MAGCONF_ADDR, 0x00); // Normal mode for BMM150
-    SysCtlDelay(SysCtlClockGet() / (3 * 10));        // Small delay
+    // Configure the auxiliary interface (set to normal mode)
+    BMI160_WriteRegister(BMI160_MAGCONF_ADDR, 0x04); // Magnetometer normal mode, 25Hz
+    SysCtlDelay(100000);
 
-    // Set the BMM150 I2C address to 0x10 (BMM150 default address)
-    BMI160_WriteRegister(BMI160_IFCONF_ADDR, 0x10); // Set BMM150 I2C address
+    // Set BMM150 device address
+    BMI160_WriteRegister(BMI160_MAGIF_O + 1, 0x10); // BMM150 I2C address is 0x10
+    SysCtlDelay(100000);
 
-    // Repetition settings for X, Y, Z axes
-    // X/Y: set repetitions (example value 0x04)
-    BMI160_WriteRegister(BMI160_DATA_O + 0x51, 0x04); // Repetitions for X/Y
-    // Z: set repetitions (example value 0x0F)
-    BMI160_WriteRegister(BMI160_DATA_O + 0x52, 0x0F); // Repetitions for Z
+    // Power on the BMM150
+    BMI160_WriteRegister(BMI160_CMD_ADDR, 0x4B);       // Switch to AUX interface
+    BMI160_WriteRegister(BMI160_MAGIF_O + 0x4B, 0x01); // Write to BMM150 register 0x4B to enable normal mode
 
-    // Put BMM150 into forced mode
-    BMI160_WriteRegister(BMI160_CMD_ADDR, 0x4B); // Force BMM150 to start
+    SysCtlDelay(100000); // Delay for the BMM150 power up sequence
+
+    // Set preset mode for X/Y and Z axis repetitions on BMM150
+    BMI160_WriteRegister(BMI160_MAGIF_O + 0x4C, 0x00); // XY-repetitions preset
+    BMI160_WriteRegister(BMI160_MAGIF_O + 0x4E, 0x01); // Z-repetitions preset
+
+    // Set BMM150 to forced mode operation
+    BMI160_WriteRegister(BMI160_MAGIF_O + 0x4C, 0x02); // Set to forced mode for single measurement
+    SysCtlDelay(100000);
 
     // Read Chip ID from the BMM150 (using auxiliary data register)
     // uint8_t chipID = BMI160_ReadRegister(BMI160_DATA_O);
