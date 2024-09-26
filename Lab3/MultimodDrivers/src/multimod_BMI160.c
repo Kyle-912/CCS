@@ -30,34 +30,30 @@ void BMI160_Init()
 
     // FIXME: From here down
 
-    BMI160_WriteRegister(BMI160_CMD_ADDR, 0x15); // Gyroscope normal mode
-    SysCtlDelay(100000);                         // Wait 100ms for gyroscope to power up
+    // Step 1: Soft reset BMI160
+    BMI160_WriteRegister(0x7E, 0xB6); // Soft reset
+    Delay(100);                       // Wait for reset to complete
 
-    // Enable the auxiliary I2C interface for the BMM150
-    BMI160_WriteRegister(BMI160_IFCONF_ADDR, 0x40); // Enable I2C interface
-    SysCtlDelay(100000);
+    // Step 2: Initialize BMI160 in normal power mode for accelerometer and gyroscope
+    BMI160_WriteRegister(0x7E, 0x11); // Accelerometer to normal mode
+    BMI160_WriteRegister(0x7E, 0x15); // Gyroscope to normal mode
+    Delay(50);                        // Wait for power mode to stabilize
 
-    // Configure the auxiliary interface (set to normal mode)
-    BMI160_WriteRegister(BMI160_MAGCONF_ADDR, 0x04); // Magnetometer normal mode, 25Hz
-    SysCtlDelay(100000);
+    // Step 3: Configure magnetometer interface
+    // Set to Setup Mode to configure the magnetometer (BMM150)
+    BMI160_WriteRegister(0x4B, 0x80); // MAG_IF[1] = 0x80 -> Set to Setup Mode
 
-    // Set BMM150 device address
-    BMI160_WriteRegister(BMI160_MAGIF_O + 1, 0x10); // BMM150 I2C address is 0x10
-    SysCtlDelay(100000);
+    // Configure BMM150 for normal operation (magnetometer specific registers)
+    BMI160_WriteRegister(0x4D, 0x42); // Set the I2C register address to start reading data from BMM150 (0x42)
+    BMI160_WriteRegister(0x4C, 0x01); // Trigger a measurement in the BMM150
+    Delay(50);                        // Delay to allow measurement
 
-    // Power on the BMM150
-    BMI160_WriteRegister(BMI160_CMD_ADDR, 0x4B);       // Switch to AUX interface
-    BMI160_WriteRegister(BMI160_MAGIF_O + 0x4B, 0x01); // Write to BMM150 register 0x4B to enable normal mode
+    // Step 4: Set BMI160 to Data Mode to automatically read BMM150 data
+    BMI160_WriteRegister(0x4B, 0x00); // MAG_IF[1] = 0x00 -> Data Mode enabled
 
-    SysCtlDelay(100000); // Delay for the BMM150 power up sequence
-
-    // Set preset mode for X/Y and Z axis repetitions on BMM150
-    BMI160_WriteRegister(BMI160_MAGIF_O + 0x4C, 0x00); // XY-repetitions preset
-    BMI160_WriteRegister(BMI160_MAGIF_O + 0x4E, 0x01); // Z-repetitions preset
-
-    // Set BMM150 to forced mode operation
-    BMI160_WriteRegister(BMI160_MAGIF_O + 0x4C, 0x02); // Set to forced mode for single measurement
-    SysCtlDelay(100000);
+    // Step 5: Configure magnetometer output data rate (optional)
+    // Configure the ODR for the magnetometer in register 0x44 (MAG_CONF)
+    BMI160_WriteRegister(0x44, 0x05); // Example ODR configuration, 25Hz
 
     // Read Chip ID from the BMM150 (using auxiliary data register)
     // uint8_t chipID = BMI160_ReadRegister(BMI160_DATA_O);
