@@ -30,19 +30,12 @@ void BMI160_Init()
 
     // FIXME: From here down
 
-    // Step 3: Enable I2C passthrough mode on the BMI160
-    // The I2C passthrough is controlled by the 0x6A register, where we enable I2C master mode
-    BMI160_WriteRegister(0x6A, 0x40); // 0x6A is the IF_CONF register, 0x40 enables I2C passthrough
+    BMI160_WriteRegister(0x6B, 0x40); // Enable I2C passthrough mode
 
-    // Step 4: Write to the BMM150 using I2C passthrough mode on BMI160
-    // These are hardcoded I2C transactions directly to the BMM150
-
-    // Set BMM150 power mode to normal (writing to BMM150 power control register 0x4B)
     BMI160_WriteRegister(0x4B, 0x01); // Set BMM150 power control to normal mode
 
-    // Set BMM150 operation mode to continuous measurement (writing to register 0x4C)
-    BMI160_WriteRegister(0x4C, 0x00); // Set BMM150 to continuous measurement mode
-
+    // Step 5: Set BMM150 to continuous measurement mode
+    BMI160_WriteRegister(0x4C, 0x00); // Set BMM150 operation mode to continuous measurement
     return;
 }
 
