@@ -30,7 +30,7 @@ void BMI160_Init()
 
     // FIXME: From here down
 
-    BMI160_WriteRegister(0x6B, 0x40); // Enable I2C passthrough mode
+    BMI160_WriteRegister(0x6B, 0x01); // Enable I2C passthrough mode
 
     BMI160_WriteRegister(0x4B, 0x01); // Set BMM150 power control to normal mode
 
