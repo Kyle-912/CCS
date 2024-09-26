@@ -30,27 +30,16 @@ void BMI160_Init()
 
     // FIXME: From here down
 
-    // Step 1: Soft reset BMI160
-    BMI160_WriteRegister(0x7E, 0xB6); // Soft reset
+    // Step 1: Enable passthrough mode on BMI160 for communication with BMM150
+    BMI160_WriteRegister(0x4B, 0x80);     // MAG_IF_0 (register address 0x4B)
 
-    // Step 2: Initialize BMI160 in normal power mode for accelerometer and gyroscope
-    BMI160_WriteRegister(0x7E, 0x11); // Accelerometer to normal mode
-    BMI160_WriteRegister(0x7E, 0x15); // Gyroscope to normal mode
+    // Step 2: Set up the BMM150 via I2C passthrough through the BMI160
 
-    // Step 3: Configure magnetometer interface
-    // Set to Setup Mode to configure the magnetometer (BMM150)
-    BMI160_WriteRegister(0x4B, 0x80); // MAG_IF[1] = 0x80 -> Set to Setup Mode
+    // Power up BMM150 - write 0x01 to register 0x4B on BMM150 to bring it to sleep mode
+    BMI160_MultiWriteRegister(0x4B, 0x01);
 
-    // Configure BMM150 for normal operation (magnetometer specific registers)
-    BMI160_WriteRegister(0x4D, 0x42); // Set the I2C register address to start reading data from BMM150 (0x42)
-    BMI160_WriteRegister(0x4C, 0x01); // Trigger a measurement in the BMM150
-    
-    // Step 4: Set BMI160 to Data Mode to automatically read BMM150 data
-    BMI160_WriteRegister(0x4B, 0x00); // MAG_IF[1] = 0x00 -> Data Mode enabled
-
-    // Step 5: Configure magnetometer output data rate (optional)
-    // Configure the ODR for the magnetometer in register 0x44 (MAG_CONF)
-    BMI160_WriteRegister(0x44, 0x05); // Example ODR configuration, 25Hz
+    // Set BMM150 to normal mode (0x02) in the Power Control Register (0x4C)
+    BMI160_MultiWriteRegister(0x4C, 0x02); // Register 0x4C, set to normal operation mode
 
     // Read Chip ID from the BMM150 (using auxiliary data register)
     // uint8_t chipID = BMI160_ReadRegister(BMI160_DATA_O);
