@@ -30,13 +30,10 @@ void BMI160_Init()
 
     // FIXME: From here down
 
-    // Step 2: Enable magnetometer interface passthrough mode on the BMI160
-    BMI160_WriteRegister(0x4B, 0x80); // MAG_IF_0 register: Enable passthrough mode (bit 7 set)
+    BMI160_WriteRegister(0x4B, 0x80); // Enable magnetometer passthrough mode
 
-    // Step 3: Wake up BMM150 (Set it to normal mode)
-    // Writing to the BMM150 through the BMI160 auxiliary interface
-    BMI160_WriteRegister(0x4C, 0x4B); // Select the BMM150 Power Control Register (0x4B)
-    BMI160_WriteRegister(0x4D, 0x01); // Put BMM150 into sleep mode (necessary step)
+    BMI160_MultiWriteRegister(0x4C, 0x4B); // Access BMM150’s power control register
+    BMI160_MultiWriteRegister(0x4D, 0x01); // Set normal mode
 
     // Step 4: Set the BMM150 to normal mode by writing to the control register
     BMI160_WriteRegister(0x4C, 0x4C); // Select BMM150 Control Register (0x4C)
