@@ -34,7 +34,7 @@ void BMI160_Init()
     BMI160_WriteRegister(BMI160_IFCONF_ADDR, 0x40); // Enable manual I2C mode
 
     // Set the BMM150 I2C slave address (0x10 shifted left by 1 -> 0x20)
-    BMI160_WriteRegister(BMI160_MAGIF_O, 0x20); // Set BMM150 address for auxiliary interface
+    BMI160_WriteRegister(BMI160_MAGIF_O, 0x10); // Set BMM150 address for auxiliary interface
 
     // Configure the BMM150 to normal mode by writing to its power control register (0x4B)
     BMI160_WriteRegister(BMI160_MAGIF_O, 0x4B); // Set register 0x4B for BMM150
