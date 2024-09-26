@@ -30,12 +30,28 @@ void BMI160_Init()
 
     // FIXME: From here down
 
-    BMI160_WriteRegister(0x6B, 0x02); // Enable I2C passthrough mode
+    // Step 1: Enable I2C passthrough mode for the BMI160
+    // Write 0x02 to IF_CONF (0x6B) to enable the magnetometer interface
+    BMI160_WriteRegister(0x6B, 0x02); // Enable magnetometer mode
 
-    BMI160_WriteRegister(0x4B, 0x80); // Set mag_manual_en = 1 to enable direct BMM150 access
+    // Step 2: Enable manual mode to access the BMM150 registers through BMI160
+    // Write 0x80 to MAG_IF[0] (0x4B) to enable manual mode (mag_manual_en = 1)
+    BMI160_WriteRegister(0x4B, 0x80); // Enable manual access to BMM150
 
-    BMI160_WriteRegister(0x4C, 0x00); // Set BMM150 operation mode to continuous measurement
-    
+    // Step 3: Power up the BMM150 (BMM150 power control register is at 0x4B on the BMM150 side)
+    // First, write the BMM150 register address (0x4B) to MAG_IF[3] (0x4E) and then the data (0x01) to MAG_IF[4] (0x4F)
+    BMI160_WriteRegister(0x4E, 0x4B); // Set the BMM150 register address to 0x4B (power control)
+    BMI160_WriteRegister(0x4F, 0x01); // Set the BMM150 to normal mode
+
+    // Step 4: Set the BMM150 to continuous measurement mode (BMM150 operating mode register is 0x4C)
+    // Write the BMM150 register address (0x4C) to MAG_IF[3] (0x4E) and then the data (0x00) to MAG_IF[4] (0x4F)
+    BMI160_WriteRegister(0x4E, 0x4C); // Set the BMM150 register address to 0x4C (operation mode)
+    BMI160_WriteRegister(0x4F, 0x00); // Set the BMM150 to continuous measurement mode
+
+    // Step 5: Disable manual mode to allow automatic read loop
+    // Write 0x00 to MAG_IF[0] (0x4B) to disable manual access and start automatic data read loop
+    BMI160_WriteRegister(0x4B, 0x00); // Disable manual access to allow auto read
+
     return;
 }
 
