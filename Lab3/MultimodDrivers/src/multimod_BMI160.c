@@ -41,7 +41,7 @@ void BMI160_Init()
     BMI160_WriteRegister(0x4D, 0x01); // Write 0x01 to enter sleep mode on BMM150
 
     // Step 3: Set BMM150 to normal mode
-    BMI160_WriteRegister(0x4C, 0x4C); // Select register 0x4C on BMM150 using past
+    BMI160_WriteRegister(0x4C, 0x4C); // Select register 0x4C on BMM150 using passthrough
 
     // Read Chip ID from the BMM150 (using auxiliary data register)
     // uint8_t chipID = BMI160_ReadRegister(BMI160_DATA_O);
