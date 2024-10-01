@@ -18,7 +18,7 @@
 #define JOYSTICK_FIFO       1
 
 #define ST7789_BLACK 0x0000 // For IntelliSense
-#define ST7789_BLUE 0xF800
+#define ST7789_BLUE 0xF800  // For IntelliSense
 
 /*************************************Defines***************************************/
 
