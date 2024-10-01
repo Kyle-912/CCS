@@ -17,7 +17,7 @@
 #define SPAWNCOOR_FIFO      0
 #define JOYSTICK_FIFO       1
 
-#define ST7789_RDDID_ADDR 0x04 // 
+#define ST7789_BLACK 0x0000 // For IntelliSense
 
 /*************************************Defines***************************************/
 
