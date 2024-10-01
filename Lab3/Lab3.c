@@ -36,8 +36,13 @@ void task0()
 {
     while (1)
     {
+        G8RTOS_WaitSemaphore(&sem_UART);
+
         counter0++;
         UARTprintf("Counter 0: %d\n", counter0);
+
+        G8RTOS_SignalSemaphore(&sem_UART);
+
         SysCtlDelay(1000);
     }
 }
@@ -46,8 +51,13 @@ void task1()
 {
     while (1)
     {
+        G8RTOS_WaitSemaphore(&sem_UART);
+
         counter1++;
         UARTprintf("Counter 1: %d\n", counter1);
+
+        G8RTOS_SignalSemaphore(&sem_UART);
+
         SysCtlDelay(2000);
     }
 }
@@ -56,9 +66,14 @@ void task2()
 {
     while (1)
     {
+        G8RTOS_WaitSemaphore(&sem_UART);
+
         counter2++;
         UARTprintf("Counter 2: %d\n", counter2);
-        SysCtlDelay(3000);
+
+        G8RTOS_SignalSemaphore(&sem_UART);
+
+        SysCtlDelay(2000);
     }
 }
 
@@ -79,15 +94,15 @@ int main(void)
     G8RTOS_InitSemaphore(&sem_UART, 1);
     G8RTOS_InitSemaphore(&sem_I2CA, 1);
 
-    G8RTOS_AddThread(&task0);
-    G8RTOS_AddThread(&task1);
-    G8RTOS_AddThread(&task2);
+    // G8RTOS_AddThread(&task0);
+    // G8RTOS_AddThread(&task1);
+    // G8RTOS_AddThread(&task2);
 
-    // G8RTOS_AddThread(&Thread0);
-    // G8RTOS_AddThread(&Thread1);
-    // G8RTOS_AddThread(&Thread2);
-    // G8RTOS_AddThread(&Thread3);
-    // G8RTOS_AddThread(&Thread4);
+    G8RTOS_AddThread(&Thread0);
+    G8RTOS_AddThread(&Thread1);
+    G8RTOS_AddThread(&Thread2);
+    G8RTOS_AddThread(&Thread3);
+    G8RTOS_AddThread(&Thread4);
 
     G8RTOS_Launch();
 
