@@ -28,8 +28,8 @@ void BMI160_Init()
     // Power on gyroscope
     BMI160_WriteRegister(BMI160_CMD_ADDR, 0x15);
 
+    /*
     // FIXME: From here down
-
     // Step 1: Enable I2C passthrough mode for the BMI160
     // Write 0x02 to IF_CONF (0x6B) to enable the magnetometer interface
     BMI160_WriteRegister(0x6B, 0x02); // Enable magnetometer mode
@@ -51,6 +51,7 @@ void BMI160_Init()
     // Step 5: Disable manual mode to allow automatic read loop
     // Write 0x00 to MAG_IF[0] (0x4B) to disable manual access and start automatic data read loop
     BMI160_WriteRegister(0x4B, 0x00); // Disable manual access to allow auto read
+    */
 
     return;
 }
