@@ -37,6 +37,7 @@
         "PWMALL",
         "Pendsv",
         "RREQ",
+        "SWRESET",
         "TIMA",
         "TIMB",
         "TREQ",
