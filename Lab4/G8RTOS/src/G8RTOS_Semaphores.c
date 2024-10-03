@@ -68,5 +68,11 @@ void G8RTOS_SignalSemaphore(semaphore_t *s)
 
     (*s)++; // Increment semaphore
 
+    if (*s)
+    {
+        /* code */
+    }
+
+
     EndCriticalSection(IBit_State);
 }
