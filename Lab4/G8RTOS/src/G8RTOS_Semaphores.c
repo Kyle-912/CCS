@@ -45,9 +45,6 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
 
     while (*s <= 0)
     {
-        // Spin-lock
-        EndCriticalSection(IBit_State);
-        IBit_State = StartCriticalSection();
     }
 
     (*s)--; // Decrement the semaphore
