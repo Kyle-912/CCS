@@ -122,7 +122,6 @@ int32_t G8RTOS_Launch()
     G8RTOS_Start();
 
     return 0;
-    return 0;
 }
 
 // G8RTOS_Scheduler
