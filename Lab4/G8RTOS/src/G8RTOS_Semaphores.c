@@ -28,7 +28,9 @@
 // Param "value": Value to initialize semaphore to
 // Return: void
 void G8RTOS_InitSemaphore(semaphore_t* s, int32_t value) {
-    // Replace with code from lab 3
+    IBit_State = StartCriticalSection();
+    *s = value;
+    EndCriticalSection(IBit_State);
 }
 
 // G8RTOS_WaitSemaphore
