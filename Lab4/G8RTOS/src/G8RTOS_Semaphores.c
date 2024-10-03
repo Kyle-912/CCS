@@ -46,8 +46,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
     if (*s <= 0)
     {
         CurrentlyRunningThread->blocked = s; // Set the blocked pointer
-        EndCriticalSection(IBit_State);
-        IBit_State = StartCriticalSection();
+        //TODO: yeild
     }
     else
     {
