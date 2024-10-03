@@ -186,9 +186,75 @@ void G8RTOS_Scheduler()
 // Return: sched_ErrCode_t
 sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, char *name)
 {
-    // TODO: Your code here, modified from lab 3
+    IBit_State = StartCriticalSection(); // Start critical section
 
-    // This should be in a critical section!
+    // Check if maximum number of threads is reached
+    if (NumberOfThreads >= MAX_THREADS)
+    {
+        EndCriticalSection(IBit_State);
+        return THREAD_LIMIT_REACHED;
+    }
+
+    // Get the next available thread control block
+    tcb_t *newTCB = &threadControlBlocks[NumberOfThreads];
+
+    // Initialize the stack for the new thread
+    newTCB->stackPointer = &threadStacks[NumberOfThreads][STACKSIZE - 16];
+
+    // Set up the thread context with initial register values
+    newTCB->stackPointer[15] = THUMBBIT;              // xPSR
+    newTCB->stackPointer[14] = (uint32_t)threadToAdd; // PC
+    newTCB->stackPointer[13] = 0x00000000;            // LR
+    newTCB->stackPointer[12] = 0x12121212;            // R12
+    newTCB->stackPointer[11] = 0x03030303;            // R3
+    newTCB->stackPointer[10] = 0x02020202;            // R2
+    newTCB->stackPointer[9] = 0x01010101;             // R1
+    newTCB->stackPointer[8] = 0x00000000;             // R0
+    newTCB->stackPointer[7] = 0x11111111;             // R11
+    newTCB->stackPointer[6] = 0x10101010;             // R10
+    newTCB->stackPointer[5] = 0x09090909;             // R9
+    newTCB->stackPointer[4] = 0x08080808;             // R8
+    newTCB->stackPointer[3] = 0x07070707;             // R7
+    newTCB->stackPointer[2] = 0x06060606;             // R6
+    newTCB->stackPointer[1] = 0x05050505;             // R5
+    newTCB->stackPointer[0] = 0x04040404;             // R4
+
+    // Initialize thread properties
+    newTCB->priority = priority;        // Set the thread priority
+    newTCB->alive = true;               // Mark the thread as alive
+    newTCB->asleep = false;             // Initialize the thread as not asleep
+    newTCB->blocked = NULL;             // Thread is not blocked initially
+    newTCB->sleepCount = 0;             // No sleep duration initially
+    newTCB->ThreadID = threadCounter++; // Assign a unique thread ID
+
+    // Copy the thread name (maximum length = MAX_NAME_LENGTH)
+    strncpy(newTCB->threadName, name, MAX_NAME_LENGTH - 1);
+    newTCB->threadName[MAX_NAME_LENGTH - 1] = '\0'; // Null-terminate the thread name
+
+    // Add the TCB to the round-robin linked list
+    if (NumberOfThreads == 0)
+    {
+        // First thread, point to itself
+        newTCB->nextTCB = newTCB;
+        newTCB->prevTCB = newTCB;
+    }
+    else
+    {
+        // Add to the end of the list
+        tcb_t *lastTCB = &threadControlBlocks[NumberOfThreads - 1];
+        tcb_t *firstTCB = &threadControlBlocks[0];
+
+        lastTCB->nextTCB = newTCB;  // Point last thread's next to new thread
+        newTCB->prevTCB = lastTCB;  // New thread's prev points to the last thread
+        newTCB->nextTCB = firstTCB; // New thread's next points to the first thread
+        firstTCB->prevTCB = newTCB; // First thread's prev points to the new thread
+    }
+
+    NumberOfThreads++; // Increment number of threads
+
+    EndCriticalSection(IBit_State); // End critical section
+
+    return NO_ERROR;
 }
 
 // G8RTOS_Add_APeriodicEvent
