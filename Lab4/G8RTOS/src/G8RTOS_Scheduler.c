@@ -76,7 +76,7 @@ void SysTick_Handler()
     SystemTime++;
 
     tcb_t *pt = CurrentlyRunningThread; // Start from the currently running thread
-    // ptcb_t *Ppt = &Pthread[0];
+    ptcb_t *Ppt = &pthreadControlBlocks[0];
 
     // Traverse the linked-list to find which threads should be awake.
     do
