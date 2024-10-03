@@ -92,7 +92,7 @@ void SysTick_Handler()
         pt = pt->nextTCB; // Move to the next thread in the linked list
     } while (pt != CurrentlyRunningThread); // Stop when we've checked all threads
 
-    // Traverse the periodic linked list to run which functions need to be run.
+    // Traverse the periodic linked list to run which functions need to be run. // TODO:
 }
 
 // G8RTOS_Init
