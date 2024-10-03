@@ -24,7 +24,6 @@ typedef struct G8RTOS_FIFO_t {
 
 static G8RTOS_FIFO_t FIFOs[MAX_NUMBER_OF_FIFOS];
 
-
 /********************************Public Functions***********************************/
 
 // G8RTOS_InitFIFO
@@ -58,4 +57,3 @@ int32_t G8RTOS_ReadFIFO(uint32_t FIFO_index) {
 int32_t G8RTOS_WriteFIFO(uint32_t FIFO_index, uint32_t data) {
     // Your code
 }
-
