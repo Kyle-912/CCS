@@ -76,7 +76,8 @@ void G8RTOS_SignalSemaphore(semaphore_t *s)
         }
 
         pt->blocked = 0;
-    } // FIXME: Move unblocked thread to be next thread?
+    }
+    // FIXME: Move unblocked thread to be next thread?
 
     EndCriticalSection(IBit_State);
 }
