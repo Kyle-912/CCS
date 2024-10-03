@@ -68,11 +68,14 @@ void G8RTOS_SignalSemaphore(semaphore_t *s)
 
     (*s)++; // Increment semaphore
 
-    if (*s)
+    if (*s <= 0)
     {
-        /* code */
+        tcb_t *pt = CurrentlyRunningThread->nextTCB;
+        while (pt->blocked != s)
+        {
+            pt = pt->nextTCB;
+        }
     }
-
 
     EndCriticalSection(IBit_State);
 }
