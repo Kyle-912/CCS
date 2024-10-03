@@ -244,6 +244,7 @@ void sleep(uint32_t durationMS)
     CurrentlyRunningThread->sleepCount = durationMS + SystemTime;
     // Set thread as asleep
     CurrentlyRunningThread->asleep = 1;
+    
 }
 
 // G8RTOS_GetThreadID
