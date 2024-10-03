@@ -36,7 +36,7 @@ typedef struct tcb_t
 {
     uint32_t *stackPointer;
     struct tcb_t *nextTCB;
-    struct tcb_t *previousTCB;
+    struct tcb_t *prevTCB;
     semaphore_t *blocked;
     uint32_t sleepCount;
     bool asleep;
@@ -50,7 +50,7 @@ typedef struct tcb_t
 typedef struct ptcb_t
 {
     void (*handler)(void);
-    struct ptcb_t *previousPTCB;
+    struct ptcb_t *prevPTCB;
     struct ptcb_t *nextPTCB;
     uint32_t period;
     uint32_t executeTime;
