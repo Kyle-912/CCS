@@ -40,7 +40,7 @@ typedef struct tcb_t {
     uint32_t sleepCount;
     bool asleep;
     uint8_t priority;
-    bool isAlive;
+    bool alive;
     char threadName[MAX_NAME_LENGTH];
     threadID_t ThreadID;
 } tcb_t;
