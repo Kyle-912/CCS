@@ -188,7 +188,6 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
 {
     IBit_State = StartCriticalSection();
 
-    // Check if maximum number of threads is reached
     if (NumberOfThreads >= MAX_THREADS)
     {
         EndCriticalSection(IBit_State);
