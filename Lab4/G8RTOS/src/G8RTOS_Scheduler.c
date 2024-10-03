@@ -150,14 +150,14 @@ void G8RTOS_Scheduler()
     // Using priority, determine the most eligible thread to run that
     // is not blocked or asleep. Set current thread to this thread's TCB.
     tcb_t *pt = CurrentlyRunningThread->nextTCB; // Start from the next thread
-    tcb_t *highestPriorityThread = NULL;         // Pointer to hold the highest priority thread
+    tcb_t *highestPriorityThread = 0;            // Pointer to hold the highest priority thread
     uint8_t highestPriority = 255;               // Lowest possible priority (255)
 
     // Traverse the entire list of TCBs to find the highest priority thread that is ready to run
     do
     {
         // Check if the thread is eligible to run (alive, not blocked, and not asleep)
-        if (pt->alive && pt->blocked == NULL && pt->asleep == false)
+        if (pt->alive && pt->blocked == 0 && pt->asleep == false)
         {
             // If the thread has a higher priority (lower number) than the current highest, update
             if (pt->priority < highestPriority)
@@ -171,7 +171,7 @@ void G8RTOS_Scheduler()
     } while (pt != CurrentlyRunningThread); // Stop when we loop back to the starting thread
 
     // Set the currently running thread to the highest priority eligible thread found
-    if (highestPriorityThread != NULL)
+    if (highestPriorityThread != 0)
     {
         CurrentlyRunningThread = highestPriorityThread;
     }
@@ -222,7 +222,7 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
     newTCB->priority = priority;
     newTCB->alive = true;
     newTCB->asleep = false;
-    newTCB->blocked = NULL;
+    newTCB->blocked = 0;
     newTCB->sleepCount = 0;
     newTCB->ThreadID = threadCounter++;
 
@@ -231,7 +231,7 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
     {
         newTCB->threadName[i] = name[i];
     }
-    // newTCB->threadName[MAX_NAME_LENGTH - 1] = '\0'; FIXME: determine if appending null terminator is necessary
+    // newTCB->threadName[MAX_NAME_LENGTH - 1] = '\0'; FIXME: determine if appending 0 terminator is necessary
 
     // Add the TCB to the round-robin linked list
     if (NumberOfThreads == 0)
