@@ -27,7 +27,8 @@
 // Param "s": Pointer to semaphore
 // Param "value": Value to initialize semaphore to
 // Return: void
-void G8RTOS_InitSemaphore(semaphore_t* s, int32_t value) {
+void G8RTOS_InitSemaphore(semaphore_t *s, int32_t value)
+{
     IBit_State = StartCriticalSection();
     *s = value;
     EndCriticalSection(IBit_State);
@@ -38,7 +39,8 @@ void G8RTOS_InitSemaphore(semaphore_t* s, int32_t value) {
 // If the current resource is not available, block the current thread
 // Param "s": Pointer to semaphore
 // Return: void
-void G8RTOS_WaitSemaphore(semaphore_t* s) {
+void G8RTOS_WaitSemaphore(semaphore_t *s)
+{
     // add your code
 }
 
@@ -47,7 +49,7 @@ void G8RTOS_WaitSemaphore(semaphore_t* s) {
 // Unblocks all threads currently blocked on the semaphore.
 // Param "s": Pointer to semaphore
 // Return: void
-void G8RTOS_SignalSemaphore(semaphore_t* s) {
+void G8RTOS_SignalSemaphore(semaphore_t *s)
+{
     // add your code
 }
-
