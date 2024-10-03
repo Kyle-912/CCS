@@ -42,4 +42,3 @@ int32_t G8RTOS_WriteFIFO(uint32_t FIFO_index, uint32_t data);
 /********************************Public Functions***********************************/
 
 #endif /* G8RTOS_IPC_H_ */
-

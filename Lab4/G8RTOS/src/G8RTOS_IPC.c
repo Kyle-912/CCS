@@ -13,10 +13,10 @@
 
 /****************************Data Structure Definitions*****************************/
 
-typedef struct G8RTOS_FIFO_t {
+typedef struct G8RTOS_FIFO_t
+{
 
 } G8RTOS_FIFO_t;
-
 
 /***********************************Externs*****************************************/
 
@@ -31,19 +31,20 @@ static G8RTOS_FIFO_t FIFOs[MAX_NUMBER_OF_FIFOS];
 // memory addresses. Returns - 1 if FIFO full, 0 if no error
 // Param uint32_t "FIFO_index": Index of FIFO block
 // Return: int32_t
-int32_t G8RTOS_InitFIFO(uint32_t FIFO_index) {
+int32_t G8RTOS_InitFIFO(uint32_t FIFO_index)
+{
     // Check if FIFO index is out of bounds
     // Init head, tail pointers
     // Init the mutex, current size
     // Init lost data
-
 }
 
 // G8RTOS_ReadFIFO
 // Reads data from head pointer of FIFO.
 // Param uint32_t "FIFO_index": Index of FIFO block
 // Return: int32_t
-int32_t G8RTOS_ReadFIFO(uint32_t FIFO_index) {
+int32_t G8RTOS_ReadFIFO(uint32_t FIFO_index)
+{
     // Your code
     // Be mindful of boundary conditions!
 }
@@ -54,6 +55,7 @@ int32_t G8RTOS_ReadFIFO(uint32_t FIFO_index) {
 // Param uint32_t "FIFO_index": Index of FIFO block
 // Param uint32_t "data": data to be written
 // Return: int32_t
-int32_t G8RTOS_WriteFIFO(uint32_t FIFO_index, uint32_t data) {
+int32_t G8RTOS_WriteFIFO(uint32_t FIFO_index, uint32_t data)
+{
     // Your code
 }
