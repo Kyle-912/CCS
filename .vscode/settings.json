@@ -9,6 +9,7 @@
         "DEVICEID",
         "DRDY",
         "EEPROM",
+        "FIFOS",
         "GPIOA",
         "GPIOD",
         "GPIOE",
