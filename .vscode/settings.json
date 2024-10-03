@@ -48,7 +48,8 @@
         "Tiva",
         "Vect",
         "XLSB",
-        "XTAL"
+        "XTAL",
+        "ptcb"
     ],
     "files.exclude": {
         "**/.git": true,
