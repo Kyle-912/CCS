@@ -76,6 +76,23 @@ void SysTick_Handler()
     SystemTime++;
 
     // Traverse the linked-list to find which threads should be awake.
+    tcb_t *pt = CurrentlyRunningThread; // Start from the currently running thread
+
+    // Traverse the linked-list to check for sleeping threads
+    do
+    {
+        // If the thread is asleep, check its sleepCount against SystemTime
+        if (pt->asleep)
+        {
+            // Wake up the thread if sleepCount is equal to SystemTime
+            if (pt->sleepCount == SystemTime)
+            {
+                pt->asleep = false; // Mark the thread as awake
+            }
+        }
+
+        pt = pt->nextTCB; // Move to the next thread in the linked list
+    } while (pt != CurrentlyRunningThread); // Stop when we've checked all threads
     // Traverse the periodic linked list to run which functions need to be run.
 }
 
