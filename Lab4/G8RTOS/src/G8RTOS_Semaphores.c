@@ -75,6 +75,8 @@ void G8RTOS_SignalSemaphore(semaphore_t *s)
         {
             pt = pt->nextTCB;
         }
+
+        pt->blocked = 0;
     }
 
     EndCriticalSection(IBit_State);
