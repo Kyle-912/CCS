@@ -24,31 +24,12 @@ G8RTOS_Start:
 
 	.asmfunc
 
-    ; Disable interrupts to prevent context switching during this process
-    CPSID I
-
 	; Load the address of RunningPtr
-    LDR R0, RunningPtr
-
 	; Load the address of the thread control block of the currently running pointer
-    LDR R1, [R0]
-
 	; Load the first thread's stack pointer
-    LDR SP, [R1]
-
-    ; Restore the context of the first thread
-    POP {R4-R11}
-    POP {R0-R3}
-    POP {R12}
-
 	; Load LR with the first thread's PC
-    POP {LR}        ; Skip the dummy LR value
-    POP {LR}        ; Load the PC into LR
 
-    ; Enable interrupts
-	CPSIE I
-
-    BX LR		    ; Branches to the first thread
+	BX LR				;Branches to the first thread
 
 	.endasmfunc
 
@@ -62,37 +43,11 @@ G8RTOS_Start:
 PendSV_Handler:
 
 	.asmfunc
+	; put your assembly code here!
 
-    ; Disable interrupts to prevent context switching during this process
-    CPSID I
-
-    ; Step 1: Save the callee-saved registers (R4-R11) of the current thread onto the stack
-    PUSH {R4-R11}
-
-    ; Step 2: Save the current stack pointer to the current thread's TCB
-    LDR R0, RunningPtr      ; Load the address of the currently running thread
-    LDR R1, [R0]            ; Get the current thread's TCB
-    STR SP, [R1]            ; Save the current stack pointer into the TCB
-
-    ; Step 3: Call the scheduler to select the next thread to run
-    PUSH{LR}                ; Save LR before calling the scheduler
-    BL  G8RTOS_Scheduler    ; Call the scheduler
-    POP {LR}                ; Restore LR after scheduler call
-
-    ; Step 4: Load the stack pointer of the new thread from the new TCB
-    LDR R0, RunningPtr      ; Load the updated currently running thread (next thread)
-    LDR R1, [R0]            ; Get the new thread's TCB
-    LDR SP, [R1]            ; Load the new thread's stack pointer
-
-    ; Step 5: Restore the callee-saved registers (R4-R11) from the new thread's stack
-    POP {R4-R11}            ; Restore R4-R11 for the new thread
-
-    ; Enable interrupts
-    CPSIE I
-
-    BX LR                   ; Branch to the new thread's PC (Link Register holds the PC)
 
 	.endasmfunc
 
+	; end of the asm file
 	.align
 	.end

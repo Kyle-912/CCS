@@ -21,44 +21,23 @@
 
 /*************************************Defines***************************************/
 
-// PCA9956B chip addr
-#define PCA9956B_ADDR               0x01
+#define PCA9956B_ADDR   0x01
+#define I2C_SCL_PIN     GPIO_PIN_6
+#define I2C_SDA_PIN     GPIO_PIN_7
+#define OE_PIN          GPIO_PIN_2
+#define LEDOUT0         0x02
+#define LEDOUT5         0x07
+#define PWM0            0x0A
+#define PWM11           0x15
+#define IREF0           0x22
+#define IREF11          0x2D
+#define MODE2           0x01
+#define EFLAG0          0x41
+#define EFLAG2          0x43
+#define PWMALL          0x3F
+#define IREFALL         0x40
 
-// Auto-increment flag, OR with register address
-#define PCA9956B_AIF_F              0x80
-
-#define PCA9956B_OE_PIN             GPIO_PIN_2
-
-// PCA9956B Register Addresses
-#define PCA9956B_MODE1_ADDR         0x00
-#define PCA9956B_MODE2_ADDR         0x01
-#define PCA9956B_LEDOUT0_ADDR       0x02
-#define PCA9956B_GRPPWM_ADDR        0x08
-#define PCA9956B_GRPFREQ_ADDR       0x09
-#define PCA9956B_PWM0_ADDR          0x0A
-#define PCA9956B_IREF0_ADDR         0x22
-#define PCA9956B_OFFSET_ADDR        0x3A
-#define PCA9956B_SUBADR1_ADDR       0x3B
-#define PCA9956B_ALLCALLADR_ADDR    0x3E
-#define PCA9956B_PWMALL_ADDR        0x3F
-#define PCA9956B_IREFALL_ADDR       0x40
-#define PCA9956B_ELFLAG0_ADDR       0x41
-
-// MODE1 CONFIG BITS
-#define PCA9956_MODE1_AI_ALL        (0x00 << 5)
-#define PCA9956_MODE1_AI_INDVBRIGHT (0x01 << 5)
-#define PCA9956_MODE1_AI_MODETOIREF (0x02 << 5)
-#define PCA9956_MODE1_AI_GLOBBRIGHT (0x03 << 5)
-
-#define PCA9956_MODE1_SLEEP         0x10
-
-#define PCA9956_MODE1_SUB1          0x08
-#define PCA9956_MODE1_SUB2          0x04
-#define PCA9956_MODE1_SUB3          0x02
-
-#define PCA9956_MODE1_ALLCALL       0x01
-
-// add your own defines if needed
+#define AI_BIT          0x80
 
 /*************************************Defines***************************************/
 

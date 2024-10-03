@@ -1,4 +1,4 @@
-// multimod_BMI160.h
+// multimod_BMI160.c
 // Date Created: 2023-07-25
 // Date Updated: 2023-07-27
 // Declarations for BMI160 functions
@@ -132,3 +132,6 @@ uint8_t BMI160_GetDataStatus();
 /*******************************Private Functions***********************************/
 
 #endif /* MULTIMOD_BMI160_H_ */
+
+
+

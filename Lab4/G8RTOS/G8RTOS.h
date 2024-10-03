@@ -10,5 +10,6 @@
 #include "G8RTOS_Semaphores.h"
 #include "G8RTOS_Structures.h"
 #include "G8RTOS_CriticalSection.h"
+#include "G8RTOS_IPC.h"
 
 #endif /* G8RTOS_H_ */

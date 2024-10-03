@@ -37,4 +37,6 @@ extern void EndCriticalSection(int32_t IBit_State);
 
 /********************************Public Functions***********************************/
 
+
 #endif /* G8RTOS_CRITICALSECTION_H_ */
+

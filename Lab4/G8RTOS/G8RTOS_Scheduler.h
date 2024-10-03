@@ -17,11 +17,12 @@
 /*************************************Defines***************************************/
 
 /* Status Register with the Thumb-bit Set */
-#define THUMBBIT 0x01000000
+#define THUMBBIT            0x01000000
 
-#define MAX_THREADS 6
-#define STACKSIZE 1024
-#define OSINT_PRIORITY 7
+#define MAX_THREADS         10
+#define MAX_PTHREADS        3
+#define STACKSIZE           700
+#define OSINT_PRIORITY      7
 
 /*************************************Defines***************************************/
 
@@ -47,7 +48,7 @@ typedef enum
 
 /********************************Public Variables***********************************/
 
-extern tcb_t *CurrentlyRunningThread;
+extern tcb_t* CurrentlyRunningThread;
 
 /********************************Public Variables***********************************/
 
@@ -56,12 +57,25 @@ extern tcb_t *CurrentlyRunningThread;
 extern void G8RTOS_Start();
 extern void PendSV_Handler();
 
+void SysTick_Handler();
+
 void G8RTOS_Init();
 int32_t G8RTOS_Launch();
 void G8RTOS_Scheduler();
-sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void));
-void SysTick_Handler();
+
+sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, char *name);
+sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t priority, int32_t IRQn);
+sched_ErrCode_t G8RTOS_Add_PeriodicEvent(void (*PthreadToAdd)(void), uint32_t period, uint32_t execution);
+sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID);
+sched_ErrCode_t G8RTOS_KillSelf();
+
+void sleep(uint32_t durationMS);
+
+threadID_t G8RTOS_GetThreadID();
+uint32_t G8RTOS_GetNumberOfThreads(void);
 
 /********************************Public Functions***********************************/
 
+
 #endif /* G8RTOS_SCHEDULER_H_ */
+

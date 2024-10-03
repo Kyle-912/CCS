@@ -1,8 +1,7 @@
-// multimod_LaunchpadLED.h
+// multimod_LaunchpadButtons.h
 // Date Created: 2023-07-25
 // Date Updated: 2023-07-27
-// header file for functions related to LEDs on the launchpad, configures them
-// to be controlled by the PWM module.
+// header file for functions related to buttons on the launchpad
 
 #ifndef MULTIMOD_LAUNCHPADLED_H_
 #define MULTIMOD_LAUNCHPADLED_H_
@@ -18,10 +17,8 @@
 
 /*************************************Defines***************************************/
 
-#define PWM_Per 400
-#define GPIO_PF1_M1PWM5 0x00050405 // For IntelliSense
-#define GPIO_PF2_M1PWM6 0x00050805 // For IntelliSense
-#define GPIO_PF3_M1PWM7 0x00050C05 // For IntelliSense
+// You can adjust this for "finer" control over the duty cycle.
+#define PWM_Per                     400
 
 /*************************************Defines***************************************/
 
@@ -30,8 +27,7 @@
 
 /****************************Data Structure Definitions*****************************/
 
-typedef enum
-{
+typedef enum {
     RED = GPIO_PIN_1,
     BLUE = GPIO_PIN_2,
     GREEN = GPIO_PIN_3
@@ -59,3 +55,5 @@ void LaunchpadLED_PWMSetDuty(LED_Color_t LED, float duty);
 /*******************************Private Functions***********************************/
 
 #endif /* MULTIMOD_LAUNCHPADLED_H_ */
+
+
