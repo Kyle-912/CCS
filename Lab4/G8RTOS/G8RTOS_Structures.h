@@ -46,6 +46,13 @@ typedef struct tcb_t
     uint32_t *stackPointer;
     struct tcb_t *nextTCB;
     struct tcb_t *prevTCB;
+    semaphore_t *blocked; // Semaphore the thread is blocked on
+    uint8_t priority;     // Thread priority (0 is highest)
+    bool alive;           // Thread alive status
+    bool asleep;          // Thread asleep status
+    uint32_t wakeup_time; // Time when the thread should wake up
+    char thread_name[16]; // Thread name
+    uint32_t thread_id;   // Unique thread ID
 } tcb_t;
 
 /****************************Data Structure Definitions*****************************/
