@@ -47,7 +47,6 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
     {
         CurrentlyRunningThread->blocked = s; // Set the blocked pointer
         EndCriticalSection(IBit_State);
-        G8RTOS_Yield(); // Yield control to another thread
         IBit_State = StartCriticalSection();
     }
     else
