@@ -46,7 +46,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
     if (*s <= 0)
     {
         CurrentlyRunningThread->blocked = s; // Set the blocked pointer
-        //TODO: yeild
+        // TODO: yield
     }
     else
     {
