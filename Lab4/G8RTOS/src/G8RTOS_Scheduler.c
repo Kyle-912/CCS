@@ -77,7 +77,6 @@ void SysTick_Handler()
 
     // Traverse the linked-list to find which threads should be awake.
     tcb_t *pt = CurrentlyRunningThread; // Start from the currently running thread
-    // Traverse the linked-list to check for sleeping threads
     do
     {
         // If the thread is asleep, check its sleepCount against SystemTime
