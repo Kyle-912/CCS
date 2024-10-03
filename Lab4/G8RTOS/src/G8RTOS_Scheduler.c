@@ -104,7 +104,23 @@ void G8RTOS_Init() {
 // Launches the RTOS.
 // Return: error codes, 0 if none
 int32_t G8RTOS_Launch() {
-    // Replace with code from lab 3
+    // Initialize system tick
+    InitSysTick();
+
+    // Set currently running thread to the first control block
+    CurrentlyRunningThread = &threadControlBlocks[0];
+
+    // Set interrupt priorities
+    // Pendsv
+    IntPrioritySet(FAULT_PENDSV, 0xFF);
+
+    // Systick
+    IntPrioritySet(FAULT_SYSTICK, 0xFF);
+
+    // Call G8RTOS_Start()
+    G8RTOS_Start();
+
+    return 0;
     return 0;
 }
 
