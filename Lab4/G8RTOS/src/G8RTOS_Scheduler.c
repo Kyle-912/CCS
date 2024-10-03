@@ -244,7 +244,7 @@ void sleep(uint32_t durationMS)
     CurrentlyRunningThread->sleepCount = durationMS + SystemTime;
     // Set thread as asleep
     CurrentlyRunningThread->asleep = 1;
-    
+    HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV;
 }
 
 // G8RTOS_GetThreadID
