@@ -44,7 +44,20 @@ static uint32_t threadCounter = 0;
 // Occurs every 1 ms.
 static void InitSysTick(void)
 {
-    // Replace with code from lab 3
+    // Set systick period to overflow every 1 ms.
+    SysTickPeriodSet(SysCtlClockGet() / 1000);
+
+    // Set systick interrupt handler
+    SysTickIntRegister(SysTick_Handler);
+
+    // Set pendsv handler
+    IntRegister(FAULT_PENDSV, PendSV_Handler);
+
+    // Enable systick interrupt
+    SysTickIntEnable();
+
+    // Enable systick
+    SysTickEnable();
 }
 
 
