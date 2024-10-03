@@ -75,13 +75,12 @@ void SysTick_Handler()
 {
     SystemTime++;
 
-    tcb_t *pt = CurrentlyRunningThread; // Start from the currently running thread
+    tcb_t *pt = CurrentlyRunningThread;
     ptcb_t *Ppt = &pthreadControlBlocks[0];
 
     // Traverse the linked-list to find which threads should be awake.
     do
     {
-        // If the thread is asleep, check its sleepCount against SystemTime
         if (pt->asleep)
         {
             // Wake up the thread if sleepCount is equal to SystemTime
