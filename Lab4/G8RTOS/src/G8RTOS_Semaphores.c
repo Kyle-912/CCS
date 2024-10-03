@@ -46,8 +46,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
     if (*s <= 0)
     {
         CurrentlyRunningThread->blocked = s; // Set the blocked pointer
-        // EndCriticalSection(IBit_State);
-        // HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // Yield
+        HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // Yield
     }
     else
     {
