@@ -60,21 +60,19 @@ static void InitSysTick(void)
     SysTickEnable();
 }
 
-
 /********************************Public Variables***********************************/
 
 uint32_t SystemTime;
 
-tcb_t* CurrentlyRunningThread;
-
-
+tcb_t *CurrentlyRunningThread;
 
 /********************************Public Functions***********************************/
 
 // SysTick_Handler
 // Increments system time, sets PendSV flag to start scheduler.
 // Return: void
-void SysTick_Handler() {
+void SysTick_Handler()
+{
     SystemTime++;
 
     // Traverse the linked-list to find which threads should be awake.
@@ -84,12 +82,14 @@ void SysTick_Handler() {
 // G8RTOS_Init
 // Initializes the RTOS by initializing system time.
 // Return: void
-void G8RTOS_Init() {
+void G8RTOS_Init()
+{
     uint32_t newVTORTable = 0x20000000;
-    uint32_t* newTable = (uint32_t*)newVTORTable;
-    uint32_t* oldTable = (uint32_t*) 0;
+    uint32_t *newTable = (uint32_t *)newVTORTable;
+    uint32_t *oldTable = (uint32_t *)0;
 
-    for (int i = 0; i < 155; i++) {
+    for (int i = 0; i < 155; i++)
+    {
         newTable[i] = oldTable[i];
     }
 
@@ -103,7 +103,8 @@ void G8RTOS_Init() {
 // G8RTOS_Launch
 // Launches the RTOS.
 // Return: error codes, 0 if none
-int32_t G8RTOS_Launch() {
+int32_t G8RTOS_Launch()
+{
     // Initialize system tick
     InitSysTick();
 
@@ -127,11 +128,10 @@ int32_t G8RTOS_Launch() {
 // G8RTOS_Scheduler
 // Chooses next thread in the TCB. This time uses priority scheduling.
 // Return: void
-void G8RTOS_Scheduler() {
+void G8RTOS_Scheduler()
+{
     // Using priority, determine the most eligible thread to run that
     // is not blocked or asleep. Set current thread to this thread's TCB.
-
-
 }
 
 // G8RTOS_AddThread
@@ -141,7 +141,8 @@ void G8RTOS_Scheduler() {
 // Param uint8_t "priority": priority from 0, 255.
 // Param char* "name": character array containing the thread name.
 // Return: sched_ErrCode_t
-sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, char *name) {
+sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, char *name)
+{
     // TODO: Your code here, modified from lab 3
 
     // This should be in a critical section!
@@ -151,7 +152,8 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
 // Param void* "AthreadToAdd": pointer to thread function address
 // Param int32_t "IRQn": Interrupt request number that references the vector table. [0..155].
 // Return: sched_ErrCode_t
-sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t priority, int32_t IRQn) {
+sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t priority, int32_t IRQn)
+{
     // Disable interrupts
     // Check if IRQn is valid
     // Check if priority is valid
@@ -159,7 +161,6 @@ sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t pr
     // Set priority.
     // Enable the interrupt.
     // End the critical section.
-
 }
 
 // G8RTOS_Add_PeriodicEvent
@@ -170,16 +171,17 @@ sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t pr
 // Param uint32_t "period": period of P thread to add
 // Param uint32_t "execution": When to execute the periodic thread
 // Return: sched_ErrCode_t
-sched_ErrCode_t G8RTOS_Add_PeriodicEvent(void (*PThreadToAdd)(void), uint32_t period, uint32_t execution) {
+sched_ErrCode_t G8RTOS_Add_PeriodicEvent(void (*PThreadToAdd)(void), uint32_t period, uint32_t execution)
+{
     // your code
     // Make sure that the number of PThreads is not greater than max PThreads.
-        // Check if there is no PThread. Initialize and set the first PThread.
-        // Subsequent PThreads should be added, inserted similarly to a doubly-linked linked list
-            // last PTCB should point to first, last PTCB should point to last.
-        // Set function
-        // Set period
-        // Set execute time
-        // Increment number of PThreads
+    // Check if there is no PThread. Initialize and set the first PThread.
+    // Subsequent PThreads should be added, inserted similarly to a doubly-linked linked list
+    // last PTCB should point to first, last PTCB should point to last.
+    // Set function
+    // Set period
+    // Set execute time
+    // Increment number of PThreads
 
     return NO_ERROR;
 }
@@ -187,47 +189,48 @@ sched_ErrCode_t G8RTOS_Add_PeriodicEvent(void (*PThreadToAdd)(void), uint32_t pe
 // G8RTOS_KillThread
 // Param uint32_t "threadID": ID of thread to kill
 // Return: sched_ErrCode_t
-sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID) {
+sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
+{
     // Start critical section
     // Check if there is only one thread, return if so
     // Traverse linked list, find thread to kill
-        // Update the next tcb and prev tcb pointers if found
-            // mark as not alive, release the semaphore it is blocked on
-        // Otherwise, thread does not exist.
-
-
+    // Update the next tcb and prev tcb pointers if found
+    // mark as not alive, release the semaphore it is blocked on
+    // Otherwise, thread does not exist.
 }
 
 // G8RTOS_KillSelf
 // Kills currently running thread.
 // Return: sched_ErrCode_t
-sched_ErrCode_t G8RTOS_KillSelf() {
+sched_ErrCode_t G8RTOS_KillSelf()
+{
     // your code
 
     // Check if there is only one thread
     // Else, mark this thread as not alive.
-
 }
 
 // sleep
 // Puts current thread to sleep
 // Param uint32_t "durationMS": how many systicks to sleep for
-void sleep(uint32_t durationMS) {
+void sleep(uint32_t durationMS)
+{
     // Update time to sleep to
     // Set thread as asleep
-
 }
 
 // G8RTOS_GetThreadID
 // Gets current thread ID.
 // Return: threadID_t
-threadID_t G8RTOS_GetThreadID(void) {
-    return CurrentlyRunningThread->ThreadID;        //Returns the thread ID
+threadID_t G8RTOS_GetThreadID(void)
+{
+    return CurrentlyRunningThread->ThreadID; // Returns the thread ID
 }
 
 // G8RTOS_GetNumberOfThreads
 // Gets number of threads.
 // Return: uint32_t
-uint32_t G8RTOS_GetNumberOfThreads(void) {
-    return NumberOfThreads;         //Returns the number of threads
+uint32_t G8RTOS_GetNumberOfThreads(void)
+{
+    return NumberOfThreads; // Returns the number of threads
 }
