@@ -47,10 +47,10 @@ typedef struct tcb_t
     struct tcb_t *nextTCB;
     struct tcb_t *prevTCB;
     semaphore_t *blocked;
-    uint32_t sleep;
+    uint32_t sleepCount;
+    bool asleep;
     uint8_t priority;
     bool alive;
-    bool asleep;
     char thread_name[16];
     uint32_t thread_id;
 } tcb_t;
