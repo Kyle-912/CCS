@@ -83,15 +83,14 @@ void SysTick_Handler()
     {
         if (pt->asleep)
         {
-            // Wake up the thread if sleepCount is equal to SystemTime
             if (pt->sleepCount == SystemTime)
             {
-                pt->asleep = false; // Mark the thread as awake
+                pt->asleep = false;
             }
         }
 
-        pt = pt->nextTCB; // Move to the next thread in the linked list
-    } while (pt != CurrentlyRunningThread); // Stop when we've checked all threads
+        pt = pt->nextTCB;
+    } while (pt != CurrentlyRunningThread);
 
     // Traverse the periodic linked list to run which functions need to be run. TODO:
 
