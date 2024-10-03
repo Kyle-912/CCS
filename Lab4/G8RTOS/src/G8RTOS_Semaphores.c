@@ -58,7 +58,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
 
 // G8RTOS_SignalSemaphore
 // Signals that the semaphore has been released by incrementing the value by 1.
-// Unblocks the first thread currently blocked on the semaphore. // TODO: unblock all or unblock first?
+// Unblocks the first thread currently blocked on the semaphore. // FIXME: unblock all or unblock first?
 // Param "s": Pointer to semaphore
 // Return: void
 void G8RTOS_SignalSemaphore(semaphore_t *s)
@@ -76,7 +76,7 @@ void G8RTOS_SignalSemaphore(semaphore_t *s)
         }
 
         pt->blocked = 0;
-    } // TODO: Move unblocked thread to be next thread?
+    } // FIXME: Move unblocked thread to be next thread?
 
     EndCriticalSection(IBit_State);
 }
