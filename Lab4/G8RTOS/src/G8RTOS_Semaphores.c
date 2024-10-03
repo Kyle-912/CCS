@@ -43,14 +43,17 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
 {
     IBit_State = StartCriticalSection();
 
-    while (*s <= 0)
+    if (*s <= 0)
     {
-        // Spin-lock
+        CurrentlyRunningThread->blocked = s; // Set the blocked pointer
         EndCriticalSection(IBit_State);
+        G8RTOS_Yield(); // Yield control to another thread
         IBit_State = StartCriticalSection();
     }
-
-    (*s)--; // Decrement the semaphore
+    else
+    {
+        (*s)--; // Decrement the semaphore
+    }
 
     EndCriticalSection(IBit_State);
 }
