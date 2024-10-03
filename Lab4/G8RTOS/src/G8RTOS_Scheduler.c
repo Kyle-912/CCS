@@ -220,12 +220,12 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
     newTCB->stackPointer[0] = 0x04040404;             // R4
 
     // Initialize thread properties
-    newTCB->priority = priority;        // Set the thread priority
-    newTCB->alive = true;               // Mark the thread as alive
-    newTCB->asleep = false;             // Initialize the thread as not asleep
-    newTCB->blocked = NULL;             // Thread is not blocked initially
-    newTCB->sleepCount = 0;             // No sleep duration initially
-    newTCB->ThreadID = threadCounter++; // Assign a unique thread ID
+    newTCB->priority = priority;
+    newTCB->alive = true;
+    newTCB->asleep = false;
+    newTCB->blocked = NULL;
+    newTCB->sleepCount = 0;
+    newTCB->ThreadID = threadCounter++;
 
     // Copy the thread name (maximum length = MAX_NAME_LENGTH)
     strncpy(newTCB->threadName, name, MAX_NAME_LENGTH - 1);
