@@ -241,7 +241,9 @@ sched_ErrCode_t G8RTOS_KillSelf()
 void sleep(uint32_t durationMS)
 {
     // Update time to sleep to
+    CurrentlyRunningThread->sleepCount = durationMS + SystemTime;
     // Set thread as asleep
+    CurrentlyRunningThread->asleep = 1;
 }
 
 // G8RTOS_GetThreadID
