@@ -50,7 +50,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
     }
     else
     {
-        (*s)--; // Decrement the semaphore
+        (*s)--; // Decrement semaphore
     }
 
     EndCriticalSection(IBit_State);
