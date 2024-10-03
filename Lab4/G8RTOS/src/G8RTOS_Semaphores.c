@@ -76,7 +76,7 @@ void G8RTOS_SignalSemaphore(semaphore_t *s)
         }
 
         pt->blocked = 0;
-    } // TODO: 
+    } // TODO: Move unblocked 
 
     EndCriticalSection(IBit_State);
 }
