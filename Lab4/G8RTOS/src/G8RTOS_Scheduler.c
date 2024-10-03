@@ -249,7 +249,7 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
         firstTCB->prevTCB = newTCB; // First thread's prev points to the new thread
     }
 
-    NumberOfThreads++; // Increment number of threads
+    NumberOfThreads++;
 
     EndCriticalSection(IBit_State);
 
