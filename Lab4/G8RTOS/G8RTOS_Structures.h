@@ -31,29 +31,31 @@ typedef int32_t threadID_t;
 
 /****************************Data Structure Definitions*****************************/
 
-/*
- *  Thread Control Block:
- *      - Every thread has a Thread Control Block
- *      - The Thread Control Block holds information about the Thread Such as
- *        the Stack Pointer, Priority Level, and Blocked Status
- *      - For Lab 3 the TCB will only hold the Stack Pointer, next TCB and the
- *        previous TCB (for Round Robin Scheduling)
- *  Create thread control block structure here
- *      - pay close attention to the order of variables!
- * */
+// Thread Control Block
 typedef struct tcb_t
 {
     uint32_t *stackPointer;
     struct tcb_t *nextTCB;
-    struct tcb_t *prevTCB;
+    struct tcb_t *previousTCB;
     semaphore_t *blocked;
-    uint8_t priority;
-    bool alive;
-    bool asleep;
     uint32_t sleepCount;
-    char thread_name[16];
-    uint32_t thread_id;
+    bool asleep;
+    uint8_t priority;
+    bool isAlive;
+    char threadName[MAX_NAME_LENGTH];
+    threadID_t ThreadID;
 } tcb_t;
+
+// Periodic Thread Control Block
+typedef struct ptcb_t
+{
+    void (*handler)(void);
+    struct ptcb_t *previousPTCB;
+    struct ptcb_t *nextPTCB;
+    uint32_t period;
+    uint32_t executeTime;
+    uint32_t currentTime;
+} ptcb_t;
 
 /****************************Data Structure Definitions*****************************/
 
@@ -69,4 +71,4 @@ typedef struct tcb_t
 /*******************************Private Functions***********************************/
 /*******************************Private Functions***********************************/
 
-#endif /* G8RTOS_STRUCTURES_H_ */
+#endif /* FILENAME_H_ */
