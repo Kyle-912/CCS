@@ -57,7 +57,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
 
 // G8RTOS_SignalSemaphore
 // Signals that the semaphore has been released by incrementing the value by 1.
-// Unblocks all threads currently blocked on the semaphore.
+// Unblocks the first thread currently blocked on the semaphore.
 // Param "s": Pointer to semaphore
 // Return: void
 void G8RTOS_SignalSemaphore(semaphore_t *s)
