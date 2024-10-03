@@ -148,8 +148,6 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
 }
 
 // G8RTOS_Add_APeriodicEvent
-
-
 // Param void* "AthreadToAdd": pointer to thread function address
 // Param int32_t "IRQn": Interrupt request number that references the vector table. [0..155].
 // Return: sched_ErrCode_t
