@@ -45,7 +45,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
 
     if (*s <= 0)
     {
-        CurrentlyRunningThread->blocked = s; // Set the blocked pointer
+        CurrentlyRunningThread->blocked = s;           // Set the blocked pointer
         HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // Yield FIXME: necessary? beneficial?
     }
     else
@@ -58,7 +58,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
 
 // G8RTOS_SignalSemaphore
 // Signals that the semaphore has been released by incrementing the value by 1.
-// Unblocks the first thread currently blocked on the semaphore.
+// Unblocks the first thread currently blocked on the semaphore. //TODO: unblock all or unblock first?
 // Param "s": Pointer to semaphore
 // Return: void
 void G8RTOS_SignalSemaphore(semaphore_t *s)
