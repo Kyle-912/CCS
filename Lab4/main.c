@@ -14,6 +14,8 @@
 
 #include "./threads.h"
 
+semaphore_t testSemaphore;
+
 /************************************MAIN*******************************************/
 int main(void)
 {
@@ -24,8 +26,10 @@ int main(void)
 
     // Add threads, semaphores, here
     G8RTOS_InitFIFO(0);
-    semaphore_t testSemaphore;
     G8RTOS_InitSemaphore(&testSemaphore, 1);
+    G8RTOS_AddThread(&ProducerThread, 0, "Producer"); // Writes to FIFO
+    G8RTOS_AddThread(&ConsumerThread, 1, "Consumer"); // Reads from FIFO
+    G8RTOS_AddThread(&BlockedSemaphoreThread, 2, "BlockedThread");
 
     G8RTOS_Launch();
     while (1)
@@ -34,3 +38,57 @@ int main(void)
 }
 
 /************************************MAIN*******************************************/
+
+/************************************Test Threads***********************************/
+
+/**
+ * Thread: ProducerThread
+ * Description: Writes incrementing values to FIFO at index 0.
+ */
+void ProducerThread(void)
+{
+    uint32_t data = 0;
+    while (1)
+    {
+        if (G8RTOS_WriteFIFO(0, data) == 0) // Write data to FIFO
+        {
+            data++; // Increment data if write is successful
+        }
+        G8RTOS_Sleep(500); // Sleep for 500 ms
+    }
+}
+
+/**
+ * Thread: ConsumerThread
+ * Description: Reads data from FIFO at index 0.
+ */
+void ConsumerThread(void)
+{
+    while (1)
+    {
+        int32_t data = G8RTOS_ReadFIFO(0); // Read data from FIFO
+        if (data != -1)                    // If FIFO is not empty
+        {
+            // Debug/Log: Read data from FIFO (can set a breakpoint here)
+        }
+        G8RTOS_Sleep(200); // Sleep for 200 ms before next read
+    }
+}
+
+/**
+ * Thread: BlockedSemaphoreThread
+ * Description: Tries to access a binary semaphore, blocks if unavailable.
+ */
+void BlockedSemaphoreThread(void)
+{
+    while (1)
+    {
+        G8RTOS_WaitSemaphore(&testSemaphore); // Will block if semaphore value is 0
+        // Do some work while holding the semaphore (e.g., simulate resource access)
+        G8RTOS_Sleep(300);                      // Sleep for 300 ms to simulate work
+        G8RTOS_SignalSemaphore(&testSemaphore); // Release semaphore
+        G8RTOS_Sleep(500);                      // Sleep for a while before trying to acquire again
+    }
+}
+
+/************************************Test Threads***********************************/
