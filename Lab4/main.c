@@ -15,6 +15,8 @@
 #include "./threads.h"
 
 /************************************MAIN*******************************************/
+void ProducerThread(void);
+
 semaphore_t testSemaphore;
 int main(void)
 {
