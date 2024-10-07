@@ -14,9 +14,8 @@
 
 #include "./threads.h"
 
-semaphore_t testSemaphore;
-
 /************************************MAIN*******************************************/
+semaphore_t testSemaphore;
 int main(void)
 {
     // Sets clock speed to 80 MHz. You'll need it!
