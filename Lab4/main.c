@@ -28,10 +28,12 @@ int main(void)
 
     // Add threads, semaphores, here
     G8RTOS_InitFIFO(0);
-    G8RTOS_InitSemaphore(&testSemaphore, 1);
-    G8RTOS_AddThread(&ProducerThread, 0, "Producer"); // Writes to FIFO
-    G8RTOS_AddThread(&ConsumerThread, 1, "Consumer"); // Reads from FIFO
-    G8RTOS_AddThread(&BlockedSemaphoreThread, 2, "BlockedThread");
+    G8RTOS_InitSemaphore(&testSemaphore, 0);                // Semaphore starts with value 0 (blocked)
+    G8RTOS_AddThread(&ProducerThread, 0, "Producer");       // Produces data into FIFO
+    G8RTOS_AddThread(&ConsumerThread, 1, "Consumer");       // Consumes data from FIFO
+    G8RTOS_AddThread(&BlockingThread, 2, "BlockingThread"); // Blocked on semaphore
+    G8RTOS_AddThread(&SignalingThread, 3, "Signaler");      // Signals the blocked thread
+    G8RTOS_AddThread(&SleepingThread, 4, "SleepingThread"); // Demonstrates sleep functionality
 
     G8RTOS_Launch();
     while (1)
@@ -45,7 +47,7 @@ int main(void)
 
 /**
  * Thread: ProducerThread
- * Description: Writes incrementing values to FIFO at index 0.
+ * Description: Writes incrementing values to FIFO at index 0 every second.
  */
 void ProducerThread(void)
 {
@@ -56,13 +58,13 @@ void ProducerThread(void)
         {
             data++; // Increment data if write is successful
         }
-        G8RTOS_Sleep(500); // Sleep for 500 ms
+        G8RTOS_Sleep(1000); // Sleep for 1 second
     }
 }
 
 /**
  * Thread: ConsumerThread
- * Description: Reads data from FIFO at index 0.
+ * Description: Reads data from FIFO at index 0 every 500 ms.
  */
 void ConsumerThread(void)
 {
@@ -71,25 +73,48 @@ void ConsumerThread(void)
         int32_t data = G8RTOS_ReadFIFO(0); // Read data from FIFO
         if (data != -1)                    // If FIFO is not empty
         {
-            // Debug/Log: Read data from FIFO (can set a breakpoint here)
+            // Debug: Use a breakpoint to view consumed data
         }
-        G8RTOS_Sleep(200); // Sleep for 200 ms before next read
+        G8RTOS_Sleep(500); // Sleep for 500 ms
     }
 }
 
 /**
- * Thread: BlockedSemaphoreThread
- * Description: Tries to access a binary semaphore, blocks if unavailable.
+ * Thread: BlockingThread
+ * Description: Waits on a semaphore until it is signaled.
  */
-void BlockedSemaphoreThread(void)
+void BlockingThread(void)
 {
     while (1)
     {
-        G8RTOS_WaitSemaphore(&testSemaphore); // Will block if semaphore value is 0
-        // Do some work while holding the semaphore (e.g., simulate resource access)
-        G8RTOS_Sleep(300);                      // Sleep for 300 ms to simulate work
-        G8RTOS_SignalSemaphore(&testSemaphore); // Release semaphore
-        G8RTOS_Sleep(500);                      // Sleep for a while before trying to acquire again
+        G8RTOS_WaitSemaphore(&testSemaphore); // Block until semaphore is signaled
+        // Perform some work or set a breakpoint here to observe unblocking
+    }
+}
+
+/**
+ * Thread: SignalingThread
+ * Description: Signals the blocked semaphore every 2 seconds.
+ */
+void SignalingThread(void)
+{
+    while (1)
+    {
+        G8RTOS_Sleep(2000);                     // Wait for 2 seconds
+        G8RTOS_SignalSemaphore(&testSemaphore); // Signal to unblock the BlockingThread
+    }
+}
+
+/**
+ * Thread: SleepingThread
+ * Description: Sleeps for 2 seconds and then yields control to other threads.
+ */
+void SleepingThread(void)
+{
+    while (1)
+    {
+        G8RTOS_Sleep(2000); // Sleep for 2 seconds
+        // Debug: Set a breakpoint here to observe when the thread wakes up
     }
 }
 
