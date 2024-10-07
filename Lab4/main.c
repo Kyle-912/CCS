@@ -24,6 +24,8 @@ int main(void)
 
     // Add threads, semaphores, here
     G8RTOS_InitFIFO(0);
+    semaphore_t testSemaphore;
+    G8RTOS_InitSemaphore(&testSemaphore, 1);
 
     G8RTOS_Launch();
     while (1)
