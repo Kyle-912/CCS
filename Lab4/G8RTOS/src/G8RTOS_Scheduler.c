@@ -171,10 +171,10 @@ void G8RTOS_Scheduler()
     } while (pt != CurrentlyRunningThread); // Stop when we loop back to the starting thread
 
     // Set the currently running thread to the highest priority eligible thread found
-    if (highestPriorityThread != 0)
-    {
+    // if (highestPriorityThread != 0)
+    // {
         CurrentlyRunningThread = highestPriorityThread;
-    }
+    // }
 }
 
 // G8RTOS_AddThread
