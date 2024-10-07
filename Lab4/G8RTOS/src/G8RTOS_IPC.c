@@ -39,6 +39,7 @@ int32_t G8RTOS_InitFIFO(uint32_t FIFO_index)
     FIFOs[FIFO_index].tail = FIFOs[FIFO_index].buffer;
 
     // Init the mutex, current size
+    G8RTOS_InitSemaphore(&(FIFOs[FIFO_index].mutex), 1);
     FIFOs[FIFO_index].currentSize = 0;
 
     // Init lost data
