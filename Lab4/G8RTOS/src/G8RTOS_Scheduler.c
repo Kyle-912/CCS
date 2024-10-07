@@ -151,7 +151,7 @@ void G8RTOS_Scheduler()
     // is not blocked or asleep. Set current thread to this thread's TCB.
     tcb_t *pt = CurrentlyRunningThread->nextTCB; // Start from the next thread
 
-    // FIXME: Locks on to 0
+    // FIXME: Sticks with 0
     //  tcb_t *highestPriorityThread = CurrentlyRunningThread;      // Start with the current thread
     //  uint8_t highestPriority = CurrentlyRunningThread->priority; // Initialize with current thread priority
 
