@@ -30,7 +30,9 @@ int32_t G8RTOS_InitFIFO(uint32_t FIFO_index)
 {
     // Check if FIFO index is out of bounds
     if (FIFO_index >= MAX_NUMBER_OF_FIFOS)
+    {
         return -1;
+    }
     // Init head, tail pointers
     // Init the mutex, current size
     // Init lost data
