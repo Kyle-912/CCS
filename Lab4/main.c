@@ -16,7 +16,7 @@
 
 /************************************MAIN*******************************************/
 void ProducerThread(void);
-
+void ConsumerThread(void);
 semaphore_t testSemaphore;
 int main(void)
 {
