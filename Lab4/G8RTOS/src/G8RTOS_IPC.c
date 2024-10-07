@@ -33,8 +33,13 @@ int32_t G8RTOS_InitFIFO(uint32_t FIFO_index)
     {
         return -1;
     }
+
     // Init head, tail pointers
+    FIFOs[FIFO_index].head = FIFOs[FIFO_index].buffer;
+    FIFOs[FIFO_index].tail = FIFOs[FIFO_index].buffer;
+
     // Init the mutex, current size
+
     // Init lost data
 }
 
