@@ -18,6 +18,9 @@
 void ProducerThread(void);
 void ConsumerThread(void);
 void BlockedSemaphoreThread(void);
+void BlockingThread(void);
+void SignalingThread(void);
+void SleepingThread(void);
 semaphore_t testSemaphore;
 int main(void)
 {
@@ -28,8 +31,8 @@ int main(void)
 
     // Add threads, semaphores, here
     G8RTOS_InitFIFO(0);
-    G8RTOS_AddThread(&ProducerThread, 0, "Producer");       // Writes to FIFO
-    G8RTOS_AddThread(&ConsumerThread, 1, "Consumer");       // Reads from FIFO
+    G8RTOS_AddThread(&ProducerThread, 0, "Producer");       // Produces data into FIFO
+    G8RTOS_AddThread(&ConsumerThread, 1, "Consumer");       // Consumes data from FIFO
     G8RTOS_AddThread(&BlockingThread, 2, "BlockingThread"); // Blocks on a semaphore
     G8RTOS_AddThread(&SignalingThread, 3, "Signaler");      // Signals the blocked thread
     G8RTOS_AddThread(&SleepingThread, 4, "SleepingThread"); // Shows sleep and yield behavior
