@@ -28,7 +28,12 @@
 
 typedef struct G8RTOS_FIFO_t
 {
-
+    int32_t buffer[FIFO_SIZE]; // Buffer array for FIFO data
+    int32_t *head;             // Pointer to the head of FIFO
+    int32_t *tail;             // Pointer to the tail of FIFO
+    int32_t lostData;          // Tracks lost data count
+    int32_t currentSize;       // Current size of data in FIFO
+    semaphore_t mutex;         // Mutex for FIFO synchronization
 } G8RTOS_FIFO_t;
 
 /****************************Data Structure Definitions*****************************/
