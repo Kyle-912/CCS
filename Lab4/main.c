@@ -28,12 +28,11 @@ int main(void)
 
     // Add threads, semaphores, here
     G8RTOS_InitFIFO(0);
-    G8RTOS_InitSemaphore(&testSemaphore, 0);                // Semaphore starts with value 0 (blocked)
-    G8RTOS_AddThread(&ProducerThread, 0, "Producer");       // Produces data into FIFO
-    G8RTOS_AddThread(&ConsumerThread, 1, "Consumer");       // Consumes data from FIFO
-    G8RTOS_AddThread(&BlockingThread, 2, "BlockingThread"); // Blocked on semaphore
+    G8RTOS_AddThread(&ProducerThread, 0, "Producer");       // Writes to FIFO
+    G8RTOS_AddThread(&ConsumerThread, 1, "Consumer");       // Reads from FIFO
+    G8RTOS_AddThread(&BlockingThread, 2, "BlockingThread"); // Blocks on a semaphore
     G8RTOS_AddThread(&SignalingThread, 3, "Signaler");      // Signals the blocked thread
-    G8RTOS_AddThread(&SleepingThread, 4, "SleepingThread"); // Demonstrates sleep functionality
+    G8RTOS_AddThread(&SleepingThread, 4, "SleepingThread"); // Shows sleep and yield behavior
 
     G8RTOS_Launch();
     while (1)
