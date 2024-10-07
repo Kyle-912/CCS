@@ -51,8 +51,29 @@ int32_t G8RTOS_InitFIFO(uint32_t FIFO_index)
 // Return: int32_t
 int32_t G8RTOS_ReadFIFO(uint32_t FIFO_index)
 {
-    // Your code
-    // Be mindful of boundary conditions!
+    if (FIFO_index >= MAX_NUMBER_OF_FIFOS)
+        return -1; // Check if index is valid
+
+    G8RTOS_WaitSemaphore(&(FIFOs[FIFO_index].mutex));
+
+    if (FIFOs[FIFO_index].currentSize == 0) // FIFO is empty
+    {
+        G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].mutex));
+        return -1; // Indicate that FIFO is empty
+    }
+
+    // Read data from head and increment head pointer
+    int32_t data = *(FIFOs[FIFO_index].head);
+    FIFOs[FIFO_index].head++;
+
+    // Wrap head pointer if it reaches the end
+    if (FIFOs[FIFO_index].head == FIFOs[FIFO_index].buffer + FIFO_SIZE)
+        FIFOs[FIFO_index].head = FIFOs[FIFO_index].buffer;
+
+    FIFOs[FIFO_index].currentSize--; // Decrement current size
+
+    G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].mutex));
+    return data;
 }
 
 // G8RTOS_WriteFIFO
