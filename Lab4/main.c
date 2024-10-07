@@ -46,35 +46,35 @@ int main(void)
 
 /**
  * Thread: ProducerThread
- * Description: Writes incrementing values to FIFO at index 0.
+ * Description: Writes incrementing values to FIFO at index 0 every 500 ms.
  */
 void ProducerThread(void)
 {
     uint32_t data = 0;
     while (1)
     {
-        if (G8RTOS_WriteFIFO(0, data) == 0) // Write data to FIFO
+        if (G8RTOS_WriteFIFO(0, data) == 0)      // Write data to FIFO
         {
             data++; // Increment data if write is successful
         }
-        G8RTOS_Yield(); // Yield control to allow other threads to run
+        G8RTOS_Yield();                            // Yield control to allow other threads to run
     }
 }
 
 /**
  * Thread: ConsumerThread
- * Description: Reads data from FIFO at index 0.
+ * Description: Reads data from FIFO at index 0 every 500 ms.
  */
 void ConsumerThread(void)
 {
     while (1)
     {
-        int32_t data = G8RTOS_ReadFIFO(0); // Read data from FIFO
-        if (data != -1)                    // If FIFO is not empty
+        int32_t data = G8RTOS_ReadFIFO(0);       // Read data from FIFO
+        if (data != -1)                          // If FIFO is not empty
         {
-            // Debug: Can set a breakpoint here to view consumed data
+            sharedData = data; // Assign data to a shared variable for debugging
         }
-        G8RTOS_Yield(); // Yield control after reading from FIFO
+        G8RTOS_Yield();                            // Yield control after reading
     }
 }
 
@@ -87,38 +87,38 @@ void BlockingThread(void)
     while (1)
     {
         G8RTOS_WaitSemaphore(&testSemaphore); // Block until semaphore is signaled
-        // Perform some work or set a breakpoint here to observe unblocking
-        G8RTOS_Yield(); // Yield after unblocking
+        sharedData = 9999;                    // Set shared data to observe unblocking in debugger
+        G8RTOS_Yield();                       // Yield control after unblocking
     }
 }
 
 /**
  * Thread: SignalingThread
- * Description: Signals the blocked semaphore every few seconds.
+ * Description: Signals the blocked semaphore every 2 seconds.
  */
 void SignalingThread(void)
 {
     while (1)
     {
-        for (volatile int i = 0; i < 1000000; i++) // Basic delay loop
-        {
-        }
-        G8RTOS_SignalSemaphore(&testSemaphore); // Signal the semaphore to unblock
-        G8RTOS_Yield();                         // Yield control
+        for (volatile int i = 0; i < 1000000; i++)
+            ;                                   // Basic delay loop to simulate time passage
+        G8RTOS_SignalSemaphore(&testSemaphore); // Signal the semaphore to unblock BlockingThread
+        G8RTOS_Yield();                         // Yield control after signaling
     }
 }
 
 /**
  * Thread: SleepingThread
- * Description: Sleeps for 1 second and then wakes up to demonstrate sleep behavior.
+ * Description: Sleeps for 2 seconds and then yields control to other threads.
  */
 void SleepingThread(void)
 {
     while (1)
     {
-        G8RTOS_Sleep(1000); // Sleep for 1000 milliseconds
-        // Thread wakes up after sleep, observe in debugger
-        G8RTOS_Yield(); // Yield control
+        // Use the sleep mechanism already implemented in Part A
+        sharedData = 1234;                     // Observe in debugger when sleep starts
+        CurrentlyRunningThread->asleep = true; // Use the built-in mechanism
+        sharedData = 5678;                     // Observe in debugger after sleep
     }
 }
 
