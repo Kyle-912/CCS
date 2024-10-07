@@ -17,7 +17,6 @@
 /************************************MAIN*******************************************/
 void ProducerThread(void);
 void ConsumerThread(void);
-void BlockedSemaphoreThread(void);
 void BlockingThread(void);
 void SignalingThread(void);
 void SleepingThread(void);
