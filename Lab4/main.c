@@ -101,8 +101,9 @@ void SignalingThread(void)
 {
     while (1)
     {
-        for (volatile int i = 0; i < 1000000; i++)
-            ;                                   // Basic delay loop
+        for (volatile int i = 0; i < 1000000; i++) // Basic delay loop
+        {
+        }
         G8RTOS_SignalSemaphore(&testSemaphore); // Signal the semaphore to unblock
         G8RTOS_Yield();                         // Yield control
     }
