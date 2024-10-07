@@ -150,8 +150,10 @@ void G8RTOS_Scheduler()
     // Using priority, determine the most eligible thread to run that
     // is not blocked or asleep. Set current thread to this thread's TCB.
     tcb_t *pt = CurrentlyRunningThread->nextTCB; // Start from the next thread
-    tcb_t *highestPriorityThread = 0;            // Pointer to hold the highest priority thread
-    uint8_t highestPriority = 255;               // Lowest possible priority (255)
+    tcb_t *highestPriorityThread = CurrentlyRunningThread;      // Start with the current thread
+    uint8_t highestPriority = CurrentlyRunningThread->priority; // Initialize with current thread priority
+    // tcb_t *highestPriorityThread = 0;            // Pointer to hold the highest priority thread
+    // uint8_t highestPriority = 255;               // Lowest possible priority (255)
 
     // Traverse the entire list of TCBs to find the highest priority thread that is ready to run
     do
