@@ -153,6 +153,7 @@ void G8RTOS_Scheduler()
     // tcb_t *highestPriorityThread = CurrentlyRunningThread;      // Start with the current thread
     // uint8_t highestPriority = CurrentlyRunningThread->priority; // Initialize with current thread priority
 
+    // FIXME: Alternates between 
     tcb_t *highestPriorityThread = 0; // Pointer to hold the highest priority thread
     uint8_t highestPriority = 255;    // Lowest possible priority (255)
 
