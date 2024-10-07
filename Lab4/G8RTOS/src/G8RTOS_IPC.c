@@ -39,8 +39,10 @@ int32_t G8RTOS_InitFIFO(uint32_t FIFO_index)
     FIFOs[FIFO_index].tail = FIFOs[FIFO_index].buffer;
 
     // Init the mutex, current size
+    FIFOs[FIFO_index].currentSize = 0;
 
     // Init lost data
+    FIFOs[FIFO_index].lostData = 0;
 }
 
 // G8RTOS_ReadFIFO
