@@ -26,7 +26,10 @@
 
 /****************************Data Structure Definitions*****************************/
 
-// TODO:
+typedef struct G8RTOS_FIFO_t
+{
+
+} G8RTOS_FIFO_t;
 
 /****************************Data Structure Definitions*****************************/
 
