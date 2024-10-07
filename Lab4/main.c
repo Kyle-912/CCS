@@ -48,7 +48,7 @@ int main(void)
 
 /**
  * Thread: ProducerThread
- * Description: Writes incrementing values to FIFO at index 0 every 500 ms.
+ * Description: Writes incrementing values to FIFO at index 0 every 1 second.
  */
 void ProducerThread(void)
 {
@@ -59,7 +59,7 @@ void ProducerThread(void)
         {
             data++; // Increment data if write is successful
         }
-        SysCtlDelay(SysCtlClockGet() / 3 / 2); // Sleep for 500 ms
+        SysCtlDelay(SysCtlClockGet() / 3); // 1-second delay using SysCtlDelay
     }
 }
 
@@ -76,7 +76,7 @@ void ConsumerThread(void)
         {
             // Use a breakpoint here to observe the data being consumed
         }
-        SysCtlDelay(SysCtlClockGet() / 3 / 2); // Sleep for 500 ms
+        SysCtlDelay(SysCtlClockGet() / 6); // 500 ms delay using SysCtlDelay
     }
 }
 
@@ -90,7 +90,6 @@ void BlockingThread(void)
     {
         G8RTOS_WaitSemaphore(&testSemaphore); // Block until semaphore is signaled
         // Set a breakpoint here to observe unblocking in the debugger
-        G8RTOS_Yield(); // Yield after unblocking
     }
 }
 
@@ -102,24 +101,22 @@ void SignalingThread(void)
 {
     while (1)
     {
-        SysCtlDelay(SysCtlClockGet() / 3 * 2);  // Wait for 2 seconds using SysCtlDelay
+        SysCtlDelay(SysCtlClockGet() / 1.5);    // 2-second delay using SysCtlDelay
         G8RTOS_SignalSemaphore(&testSemaphore); // Signal the semaphore to unblock BlockingThread
-        G8RTOS_Yield();                         // Yield control after signaling
     }
 }
 
 /**
  * Thread: SleepingThread
- * Description: Sleeps for 1 second and then yields control to other threads.
+ * Description: Sleeps for 2 seconds and then wakes up to demonstrate sleep behavior.
  */
 void SleepingThread(void)
 {
     while (1)
     {
         CurrentlyRunningThread->asleep = true;  // Use the built-in sleep mechanism
-        SysCtlDelay(SysCtlClockGet() / 3);      // Simulate a 1-second sleep using delay
+        SysCtlDelay(SysCtlClockGet() / 1.5);    // Simulate a 2-second sleep using SysCtlDelay
         CurrentlyRunningThread->asleep = false; // Wake up after sleep
-        G8RTOS_Yield();                         // Yield control to allow other threads to run
     }
 }
 
