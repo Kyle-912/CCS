@@ -23,6 +23,7 @@ int main(void)
     multimod_init();
 
     // Add threads, semaphores, here
+    G8RTOS_InitFIFO(0);
 
     G8RTOS_Launch();
     while (1)
