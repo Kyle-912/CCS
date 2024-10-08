@@ -69,16 +69,6 @@ void G8RTOS_SignalSemaphore(semaphore_t *s)
     if (*s <= 0) // Only unblock a thread if semaphore was negative
     {
         tcb_t *pt = CurrentlyRunningThread->nextTCB;
-        // do
-        // {
-        //     // Find the first thread that is blocked on this semaphore
-        //     if (pt->blocked == s)
-        //     {
-        //         pt->blocked = 0; // Unblock the thread
-        //         break;           // Exit after unblocking the first waiting thread
-        //     }
-        //     pt = pt->nextTCB;
-        // } while (pt != CurrentlyRunningThread);
 
         while(pt->blocked != s){
             pt = pt->nextTCB;
