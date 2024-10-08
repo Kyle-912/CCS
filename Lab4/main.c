@@ -114,10 +114,9 @@ void SleepingThread(void)
 {
     while (1)
     {
-        CurrentlyRunningThread->asleep = true;  // Use the built-in sleep mechanism
-        SysCtlDelay(SysCtlClockGet() / 1.5);    // Simulate a 2-second sleep using SysCtlDelay
-        CurrentlyRunningThread->asleep = false; // Wake up after sleep
+        sleep(2000);  // Sleep for 2000 milliseconds (2 seconds)
     }
 }
+
 
 /************************************Test Threads***********************************/
