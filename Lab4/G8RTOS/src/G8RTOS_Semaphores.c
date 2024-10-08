@@ -73,9 +73,10 @@ void G8RTOS_SignalSemaphore(semaphore_t *s)
         while(pt->blocked != s){
             pt = pt->nextTCB;
         }
-        
+
         pt->blocked = 0;
     }
+    
     // FIXME: Move unblocked thread to be next thread executed?
 
     EndCriticalSection(IBit_State);
