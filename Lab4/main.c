@@ -34,7 +34,7 @@ int main(void)
     G8RTOS_InitSemaphore(&uartSemaphore, 1);
     G8RTOS_AddThread(&ProducerThread, 0, "Producer");       // Produces data into FIFO
     G8RTOS_AddThread(&ConsumerThread, 1, "Consumer");       // Consumes data from FIFO and writes using UART
-    G8RTOS_AddThread(&UARTWriter, 2, "UARTWriter1");        // Writes using UART
+    G8RTOS_AddThread(&UARTWriter, 2, "UARTWriter");        // Writes using UART
     G8RTOS_AddThread(&SleepingThread, 4, "SleepingThread"); // Shows sleep and yield behavior
     G8RTOS_AddThread(&IdleThread, 255, "IdleThread");       // Idle thread with the lowest priority
 
