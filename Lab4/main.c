@@ -104,6 +104,7 @@ void SignalingThread(void)
     {
         SysCtlDelay(SysCtlClockGet() / 1.5);    // 2-second delay using SysCtlDelay
         G8RTOS_SignalSemaphore(&testSemaphore); // Signal the semaphore to unblock BlockingThread
+        sleep(2000);
     }
 }
 
