@@ -75,7 +75,7 @@ void ConsumerThread(void)
     {
         G8RTOS_WaitSemaphore(&uartSemaphore);
 
-        int32_t data = G8RTOS_ReadFIFO(0); // Read data from FIFO
+        int32_t data = G8RTOS_ReadFIFO(0);
         if (data != -1)                    // If FIFO is not empty, data was read successfully
         {
             UARTprintf("Data from FIFO: %d\n", data);
@@ -91,7 +91,7 @@ void UARTWriter(void)
     while (1)
     {
         G8RTOS_WaitSemaphore(&uartSemaphore);
-        UARTprintf("UART semaphore test\n");    // Critical section (access to UART)
+        UARTprintf("UART semaphore test\n");
         G8RTOS_SignalSemaphore(&uartSemaphore);
         sleep(5);
     }
