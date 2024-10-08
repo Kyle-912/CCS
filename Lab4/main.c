@@ -59,7 +59,7 @@ void ProducerThread(void)
         {
             data++; // Increment data if write is successful
         }
-        SysCtlDelay(SysCtlClockGet() / 3); // 1-second delay using SysCtlDelay
+        sleep(2000);
     }
 }
 
@@ -76,7 +76,7 @@ void ConsumerThread(void)
         {
             // Use a breakpoint here to observe the data being consumed
         }
-        SysCtlDelay(SysCtlClockGet() / 6); // 500 ms delay using SysCtlDelay
+        sleep(2000);
     }
 }
 
@@ -89,6 +89,7 @@ void BlockingThread(void)
     while (1)
     {
         G8RTOS_WaitSemaphore(&testSemaphore); // Block until semaphore is signaled
+        sleep(2000);
         // Set a breakpoint here to observe unblocking in the debugger
     }
 }
