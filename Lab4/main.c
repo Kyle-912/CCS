@@ -90,9 +90,9 @@ void UARTWriter(void)
 {
     while (1)
     {
-        G8RTOS_WaitSemaphore(&uartSemaphore);   // Acquire UART semaphore
+        G8RTOS_WaitSemaphore(&uartSemaphore);
         UARTprintf("UART semaphore test\n");    // Critical section (access to UART)
-        G8RTOS_SignalSemaphore(&uartSemaphore); // Release UART semaphore
+        G8RTOS_SignalSemaphore(&uartSemaphore);
         sleep(5);
     }
 }
