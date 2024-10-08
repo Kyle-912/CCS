@@ -18,11 +18,10 @@
 /************************************MAIN*******************************************/
 void ProducerThread(void);
 void ConsumerThread(void);
-void BlockingThread(void);
-void SignalingThread(void);
+void UARTWriter(void);
 void SleepingThread(void);
 void IdleThread(void);
-semaphore_t testSemaphore;
+semaphore_t uartSemaphore;
 int main(void)
 {
     // Sets clock speed to 80 MHz. You'll need it!
@@ -32,11 +31,10 @@ int main(void)
 
     // Add threads, semaphores, here
     G8RTOS_InitFIFO(0);
-    G8RTOS_InitSemaphore(&testSemaphore, 0);
+    G8RTOS_InitSemaphore(&uartSemaphore, 1);
     G8RTOS_AddThread(&ProducerThread, 0, "Producer");       // Produces data into FIFO
-    G8RTOS_AddThread(&ConsumerThread, 1, "Consumer");       // Consumes data from FIFO
-    G8RTOS_AddThread(&BlockingThread, 2, "BlockingThread"); // Blocks on a semaphore
-    G8RTOS_AddThread(&SignalingThread, 3, "Signaler");      // Signals the blocked thread
+    G8RTOS_AddThread(&ConsumerThread, 1, "Consumer");       // Consumes data from FIFO and writes using UART
+    G8RTOS_AddThread(&UARTWriter, 2, "UARTWriter1");        // Writes using UART
     G8RTOS_AddThread(&SleepingThread, 4, "SleepingThread"); // Shows sleep and yield behavior
     G8RTOS_AddThread(&IdleThread, 255, "IdleThread");       // Idle thread with the lowest priority
 
@@ -63,7 +61,7 @@ void ProducerThread(void)
         {
             data++; // Increment data if write is successful
         }
-        sleep(20);
+        sleep(5);
     }
 }
 
@@ -75,39 +73,27 @@ void ConsumerThread(void)
 {
     while (1)
     {
+        G8RTOS_WaitSemaphore(&uartSemaphore); // Block until semaphore is signaled
+
         int32_t data = G8RTOS_ReadFIFO(0); // Read data from FIFO
         if (data != -1)                    // If FIFO is not empty, data was read successfully
         {
             UARTprintf("Data from FIFO: %d\n", data);
         }
-        sleep(20);
+
+        G8RTOS_SignalSemaphore(&uartSemaphore); // Signal the semaphore to unblock BlockingThread
+        sleep(5);
     }
 }
 
-/**
- * Thread: BlockingThread
- * Description: Waits on a semaphore until it is signaled.
- */
-void BlockingThread(void)
+void UARTWriter(void)
 {
     while (1)
     {
-        G8RTOS_WaitSemaphore(&testSemaphore); // Block until semaphore is signaled
-        sleep(20);
-        // Set a breakpoint here to observe unblocking in the debugger
-    }
-}
-
-/**
- * Thread: SignalingThread
- * Description: Signals the blocked semaphore every 2 seconds.
- */
-void SignalingThread(void)
-{
-    while (1)
-    {
-        sleep(2000);
-        G8RTOS_SignalSemaphore(&testSemaphore); // Signal the semaphore to unblock BlockingThread
+        G8RTOS_WaitSemaphore(&uartSemaphore);   // Acquire UART semaphore
+        UARTprintf("UART semaphore test\n");    // Critical section (access to UART)
+        G8RTOS_SignalSemaphore(&uartSemaphore); // Release UART semaphore
+        sleep(5);
     }
 }
 
@@ -119,7 +105,7 @@ void SleepingThread(void)
 {
     while (1)
     {
-        sleep(20); // Sleep for 2000 milliseconds (2 seconds)
+        sleep(10);
     }
 }
 

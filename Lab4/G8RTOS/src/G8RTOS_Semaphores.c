@@ -43,17 +43,16 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
 {
     IBit_State = StartCriticalSection();
 
-    if (*s <= 0)
+    if (--(*s) < 0) // Decrement the semaphore; if < 0, thread must block
     {
         CurrentlyRunningThread->blocked = s; // Set the blocked pointer
+        EndCriticalSection(IBit_State);
         HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // Yield
     }
     else
     {
-        (*s)--; // Decrement semaphore
+        EndCriticalSection(IBit_State);
     }
-
-    EndCriticalSection(IBit_State);
 }
 
 // G8RTOS_SignalSemaphore
@@ -67,15 +66,24 @@ void G8RTOS_SignalSemaphore(semaphore_t *s)
 
     (*s)++; // Increment semaphore
 
-    if (*s <= 0)
+    if (*s <= 0) // Only unblock a thread if semaphore was negative
     {
         tcb_t *pt = CurrentlyRunningThread->nextTCB;
-        while (pt->blocked != s)
-        {
+        // do
+        // {
+        //     // Find the first thread that is blocked on this semaphore
+        //     if (pt->blocked == s)
+        //     {
+        //         pt->blocked = 0; // Unblock the thread
+        //         break;           // Exit after unblocking the first waiting thread
+        //     }
+        //     pt = pt->nextTCB;
+        // } while (pt != CurrentlyRunningThread);
+
+        while(pt->blocked != s){
             pt = pt->nextTCB;
         }
-
-        pt->blocked = false;
+        pt->blocked = 0;
     }
     // FIXME: Move unblocked thread to be next thread executed?
 
