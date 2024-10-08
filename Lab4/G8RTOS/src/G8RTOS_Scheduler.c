@@ -130,11 +130,8 @@ int32_t G8RTOS_Launch()
     CurrentlyRunningThread = &threadControlBlocks[0];
 
     // Set interrupt priorities
-    // Pendsv
-    IntPrioritySet(FAULT_PENDSV, 0xFF);
-
-    // Systick
-    IntPrioritySet(FAULT_SYSTICK, 0xFF);
+    IntPrioritySet(FAULT_PENDSV, 0xFF);  // Pendsv
+    IntPrioritySet(FAULT_SYSTICK, 0xFF); // Systick
 
     // Call G8RTOS_Start()
     G8RTOS_Start();
@@ -152,8 +149,8 @@ void G8RTOS_Scheduler()
     tcb_t *pt = CurrentlyRunningThread->nextTCB; // Start from the next thread
 
     // FIXME: Sticks with 0
-    //  tcb_t *highestPriorityThread = CurrentlyRunningThread;      // Start with the current thread
-    //  uint8_t highestPriority = CurrentlyRunningThread->priority; // Initialize with current thread priority
+    // tcb_t *highestPriorityThread = CurrentlyRunningThread;      // Start with the current thread
+    // uint8_t highestPriority = CurrentlyRunningThread->priority; // Initialize with current thread priority
 
     // FIXME: Alternates between 0 and 1
     tcb_t *highestPriorityThread = 0; // Pointer to hold the highest priority thread
@@ -175,6 +172,12 @@ void G8RTOS_Scheduler()
 
         pt = pt->nextTCB; // Move to the next thread in the linked list
     } while (pt != CurrentlyRunningThread); // Stop when we loop back to the starting thread
+
+    // If no eligible thread is found, fallback to the currently running thread
+    if (highestPriorityThread == 0)
+    {
+        highestPriorityThread = CurrentlyRunningThread; // Fallback to the current thread if no eligible thread is found
+    }
 
     // Set the currently running thread to the highest priority eligible thread found
     CurrentlyRunningThread = highestPriorityThread;
@@ -332,7 +335,7 @@ void sleep(uint32_t durationMS)
     // Update time to sleep to
     CurrentlyRunningThread->sleepCount = durationMS + SystemTime;
     // Set thread as asleep
-    CurrentlyRunningThread->asleep = 1;
+    CurrentlyRunningThread->asleep = true;
     HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV;
 }
 

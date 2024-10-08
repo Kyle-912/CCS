@@ -88,8 +88,6 @@ int32_t G8RTOS_WriteFIFO(uint32_t FIFO_index, uint32_t data)
     if (FIFO_index >= MAX_NUMBER_OF_FIFOS)
         return -1; // Check if index is valid
 
-    G8RTOS_WaitSemaphore(&(FIFOs[FIFO_index].mutex));
-
     if (FIFOs[FIFO_index].currentSize == FIFO_SIZE) // FIFO is full
     {
         FIFOs[FIFO_index].lostData++; // Increment lost data
@@ -107,6 +105,5 @@ int32_t G8RTOS_WriteFIFO(uint32_t FIFO_index, uint32_t data)
 
     FIFOs[FIFO_index].currentSize++; // Increment current size
 
-    G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].mutex));
     return 0;
 }

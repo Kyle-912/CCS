@@ -45,8 +45,8 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
 
     if (*s <= 0)
     {
-        CurrentlyRunningThread->blocked = s;           // Set the blocked pointer
-        HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // Yield FIXME: necessary? beneficial? or wait for systick like slide said?
+        CurrentlyRunningThread->blocked = s; // Set the blocked pointer
+        HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // Yield
     }
     else
     {
@@ -58,7 +58,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
 
 // G8RTOS_SignalSemaphore
 // Signals that the semaphore has been released by incrementing the value by 1.
-// Unblocks the first thread currently blocked on the semaphore. // FIXME: unblock all or unblock first?
+// Unblocks the first thread currently blocked on the semaphore.
 // Param "s": Pointer to semaphore
 // Return: void
 void G8RTOS_SignalSemaphore(semaphore_t *s)
@@ -75,7 +75,7 @@ void G8RTOS_SignalSemaphore(semaphore_t *s)
             pt = pt->nextTCB;
         }
 
-        pt->blocked = 0;
+        pt->blocked = false;
     }
     // FIXME: Move unblocked thread to be next thread executed?
 

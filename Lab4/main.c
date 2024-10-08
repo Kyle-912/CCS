@@ -11,6 +11,7 @@
 
 #include "G8RTOS/G8RTOS.h"
 #include "./MultimodDrivers/multimod.h"
+#include <driverlib/uartstdio.h>
 
 #include "./threads.h"
 
@@ -20,6 +21,7 @@ void ConsumerThread(void);
 void BlockingThread(void);
 void SignalingThread(void);
 void SleepingThread(void);
+void IdleThread(void);
 semaphore_t testSemaphore;
 int main(void)
 {
@@ -30,11 +32,13 @@ int main(void)
 
     // Add threads, semaphores, here
     G8RTOS_InitFIFO(0);
+    G8RTOS_InitSemaphore(&testSemaphore, 0);
     G8RTOS_AddThread(&ProducerThread, 0, "Producer");       // Produces data into FIFO
     G8RTOS_AddThread(&ConsumerThread, 1, "Consumer");       // Consumes data from FIFO
     G8RTOS_AddThread(&BlockingThread, 2, "BlockingThread"); // Blocks on a semaphore
     G8RTOS_AddThread(&SignalingThread, 3, "Signaler");      // Signals the blocked thread
     G8RTOS_AddThread(&SleepingThread, 4, "SleepingThread"); // Shows sleep and yield behavior
+    G8RTOS_AddThread(&IdleThread, 255, "IdleThread");       // Idle thread with the lowest priority
 
     G8RTOS_Launch();
     while (1)
@@ -59,7 +63,7 @@ void ProducerThread(void)
         {
             data++; // Increment data if write is successful
         }
-        sleep(2000);
+        sleep(20);
     }
 }
 
@@ -74,9 +78,9 @@ void ConsumerThread(void)
         int32_t data = G8RTOS_ReadFIFO(0); // Read data from FIFO
         if (data != -1)                    // If FIFO is not empty, data was read successfully
         {
-            // Use a breakpoint here to observe the data being consumed
+            UARTprintf("Data from FIFO: %d\n", data);
         }
-        sleep(2000);
+        sleep(20);
     }
 }
 
@@ -89,7 +93,7 @@ void BlockingThread(void)
     while (1)
     {
         G8RTOS_WaitSemaphore(&testSemaphore); // Block until semaphore is signaled
-        sleep(2000);
+        sleep(20);
         // Set a breakpoint here to observe unblocking in the debugger
     }
 }
@@ -102,9 +106,8 @@ void SignalingThread(void)
 {
     while (1)
     {
-        SysCtlDelay(SysCtlClockGet() / 1.5);    // 2-second delay using SysCtlDelay
-        G8RTOS_SignalSemaphore(&testSemaphore); // Signal the semaphore to unblock BlockingThread
         sleep(2000);
+        G8RTOS_SignalSemaphore(&testSemaphore); // Signal the semaphore to unblock BlockingThread
     }
 }
 
@@ -116,9 +119,19 @@ void SleepingThread(void)
 {
     while (1)
     {
-        sleep(2000);  // Sleep for 2000 milliseconds (2 seconds)
+        sleep(20); // Sleep for 2000 milliseconds (2 seconds)
     }
 }
 
+/**
+ * Thread: IdleThread
+ * Description: Idle thread with the lowest priority. Does nothing.
+ */
+void IdleThread(void)
+{
+    while (1)
+    {
+    }
+}
 
 /************************************Test Threads***********************************/
