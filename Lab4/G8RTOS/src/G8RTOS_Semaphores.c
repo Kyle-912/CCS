@@ -13,6 +13,8 @@
 #include "inc/hw_types.h"
 #include "inc/hw_nvic.h"
 
+#define FAULT_PENDSV 14 // PendSV
+
 /******************************Data Type Definitions********************************/
 
 /****************************Data Structure Definitions*****************************/
@@ -48,6 +50,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
         CurrentlyRunningThread->blocked = s; // Set the blocked pointer
         EndCriticalSection(IBit_State);
         HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // FIXME: Yield
+        IntTrigger(FAULT_PENDSV);
     }
     else
     {
