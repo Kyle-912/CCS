@@ -12,6 +12,10 @@
 
 #include "inc/hw_types.h"
 #include "inc/hw_nvic.h"
+#include "inc/hw_ints.h"
+#include "driverlib/interrupt.h"
+
+extern tcb_t *CurrentlyRunningThread;
 
 /******************************Data Type Definitions********************************/
 
@@ -81,4 +85,5 @@ void G8RTOS_SignalSemaphore(semaphore_t *s)
     // FIXME: Move unblocked thread to be next thread executed?
 
     EndCriticalSection(IBit_State);
+    HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // FIXME: Yield
 }

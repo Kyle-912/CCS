@@ -61,7 +61,6 @@ void ProducerThread(void)
         {
             data++; // Increment data if write is successful
         }
-        sleep(5);
     }
 }
 
@@ -82,7 +81,6 @@ void ConsumerThread(void)
         }
 
         G8RTOS_SignalSemaphore(&uartSemaphore);
-        sleep(5);
     }
 }
 
@@ -93,7 +91,6 @@ void UARTWriter(void)
         G8RTOS_WaitSemaphore(&uartSemaphore);
         UARTprintf("UART semaphore test\n");
         G8RTOS_SignalSemaphore(&uartSemaphore);
-        sleep(5);
     }
 }
 

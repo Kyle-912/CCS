@@ -24,7 +24,8 @@
 // JOYSTICK_Init
 // Initializes ports & adc module for joystick
 // Return: void
-void JOYSTICK_Init(void) {
+void JOYSTICK_Init(void)
+{
     // Disable adc
     SysCtlPeripheralDisable(SYSCTL_PERIPH_ADC0);
 
@@ -36,24 +37,27 @@ void JOYSTICK_Init(void) {
     // Configure ADC sequences
 
     // Enable ADC sequence
-
 }
 
 // JOYSTICK_IntEnable
 // Enables interrupts
 // Return: void
-void JOYSTICK_IntEnable() {
+void JOYSTICK_IntEnable()
+{
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
     GPIOPinTypeGPIOInput(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
     GPIOIntTypeSet(JOYSTICK_INT_GPIO_BASE, JOYSTICK_INT_PIN, GPIO_FALLING_EDGE);
-    GPIOIntEnable(JOYSTICK_INT_GPIO_BASE, JOYSTICK_INT_PIN);
+    // GPIOIntEnable(JOYSTICK_INT_GPIO_BASE, JOYSTICK_INT_PIN);
+    // TODO: Include once it no longer locks the NVIC_INT_CTRL_ISR_PEND flag to 1
 }
 
 // JOYSTICK_GetPress
 // Gets button reading
 // Return: bool
-uint8_t JOYSTICK_GetPress() {
-    if (GPIOPinRead(JOYSTICK_INT_GPIO_BASE, GPIO_PIN_0)) {
+uint8_t JOYSTICK_GetPress()
+{
+    if (GPIOPinRead(JOYSTICK_INT_GPIO_BASE, GPIO_PIN_0))
+    {
         return 0;
     }
 
@@ -63,7 +67,8 @@ uint8_t JOYSTICK_GetPress() {
 // JOYSTICK_GetX
 // Gets X adc reading from joystick
 // Return: uint16_t
-uint16_t JOYSTICK_GetX() {
+uint16_t JOYSTICK_GetX()
+{
     uint32_t result = JOYSTICK_GetXY();
 
     return (result >> 16 & 0xFFFF);
@@ -72,24 +77,26 @@ uint16_t JOYSTICK_GetX() {
 // JOYSTICK_GetY
 // Gets Y adc reading from joystick
 // Return: uint16_t
-uint16_t JOYSTICK_GetY() {
+uint16_t JOYSTICK_GetY()
+{
     uint32_t result = JOYSTICK_GetXY();
 
     return (result >> 0 & 0xFFFF);
 }
 
-
 // JOYSTICK_GetXY
 // Gets X and Y adc readings
 // Return: uint32_t, 16-bit packed, upper 16-bit is X and lower 16-bit is Y.
-uint32_t JOYSTICK_GetXY() {
+uint32_t JOYSTICK_GetXY()
+{
     uint32_t results[2];
 
     // Start conversion
     ADCProcessorTrigger(ADC0_BASE, 2);
 
     // Wait until conversion is complete
-    while(!ADCIntStatus(ADC0_BASE, 2, 0));
+    while (!ADCIntStatus(ADC0_BASE, 2, 0))
+        ;
 
     // Clear ADC interrupt flag
     ADCIntClear(ADC0_BASE, 2);
@@ -99,5 +106,3 @@ uint32_t JOYSTICK_GetXY() {
 
     return (results[0] << 16 | results[1]);
 }
-
-

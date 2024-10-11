@@ -40,6 +40,8 @@ int32_t G8RTOS_InitFIFO(uint32_t FIFO_index)
 
     // Init the mutex, current size
     G8RTOS_InitSemaphore(&(FIFOs[FIFO_index].mutex), 1);
+    G8RTOS_InitSemaphore(&(FIFOs[FIFO_index].read), 0);
+    G8RTOS_InitSemaphore(&(FIFOs[FIFO_index].write), FIFO_SIZE);
     FIFOs[FIFO_index].currentSize = 0;
 
     // Init lost data
@@ -56,12 +58,7 @@ int32_t G8RTOS_ReadFIFO(uint32_t FIFO_index)
         return -1; // Check if index is valid
 
     G8RTOS_WaitSemaphore(&(FIFOs[FIFO_index].mutex));
-
-    if (FIFOs[FIFO_index].currentSize == 0) // FIFO is empty
-    {
-        G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].mutex));
-        return -1; // Indicate that FIFO is empty
-    }
+    G8RTOS_WaitSemaphore(&(FIFOs[FIFO_index].read));
 
     // Read data from head and increment head pointer
     int32_t data = *(FIFOs[FIFO_index].head);
@@ -71,8 +68,7 @@ int32_t G8RTOS_ReadFIFO(uint32_t FIFO_index)
     if (FIFOs[FIFO_index].head == FIFOs[FIFO_index].buffer + FIFO_SIZE)
         FIFOs[FIFO_index].head = FIFOs[FIFO_index].buffer;
 
-    FIFOs[FIFO_index].currentSize--; // Decrement current size
-
+    G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].write));
     G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].mutex));
     return data;
 }
@@ -88,12 +84,8 @@ int32_t G8RTOS_WriteFIFO(uint32_t FIFO_index, uint32_t data)
     if (FIFO_index >= MAX_NUMBER_OF_FIFOS)
         return -1; // Check if index is valid
 
-    if (FIFOs[FIFO_index].currentSize == FIFO_SIZE) // FIFO is full
-    {
-        FIFOs[FIFO_index].lostData++; // Increment lost data
-        G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].mutex));
-        return -2; // Indicate that FIFO is full
-    }
+    G8RTOS_WaitSemaphore(&(FIFOs[FIFO_index].mutex));
+    G8RTOS_WaitSemaphore(&(FIFOs[FIFO_index].write));
 
     // Write data to tail and increment tail pointer
     *(FIFOs[FIFO_index].tail) = data;
@@ -104,6 +96,9 @@ int32_t G8RTOS_WriteFIFO(uint32_t FIFO_index, uint32_t data)
         FIFOs[FIFO_index].tail = FIFOs[FIFO_index].buffer;
 
     FIFOs[FIFO_index].currentSize++; // Increment current size
+
+    G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].read));
+    G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].mutex));
 
     return 0;
 }
