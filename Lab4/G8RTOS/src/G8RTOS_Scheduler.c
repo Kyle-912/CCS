@@ -158,7 +158,7 @@ void G8RTOS_Scheduler()
         if (pt->alive && pt->blocked == 0 && pt->asleep == false)
         {
             // If the thread has a higher priority (lower number) than the current highest, update
-            if (pt->priority <= highestPriority) // TODO: Changed to <= from < to fix idle thread issue
+            if (pt->priority <= highestPriority) // TODO: Changed to <= from < to fix idle thread issue, check if thats best practice
             {
                 highestPriority = pt->priority;
                 highestPriorityThread = pt;
