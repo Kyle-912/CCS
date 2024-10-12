@@ -54,9 +54,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
         HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // FIXME: Yield
         while (CurrentlyRunningThread->blocked != 0)
         {
-            /* code */
         }
-        
     }
     else
     {
