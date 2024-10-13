@@ -230,8 +230,18 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
     // Copy the thread name
     for (int i = 0; i < MAX_NAME_LENGTH - 1; i++)
     {
-        newTCB->threadName[i] = name[i];
+        if (name[i] != '\0')
+        {
+            newTCB->threadName[i] = name[i];
+        }
+        else // Fill the rest with 0
+        {
+            newTCB->threadName[i] = 0;
+        }
     }
+
+    // Ensure the last character is set to 0 to terminate the string
+    newTCB->threadName[MAX_NAME_LENGTH - 1] = 0;
 
     // Add the TCB to the round-robin linked list
     if (NumberOfThreads == 0)
