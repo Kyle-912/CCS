@@ -225,7 +225,7 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
     newTCB->asleep = false;
     newTCB->blocked = 0;
     newTCB->sleepCount = 0;
-    newTCB->ThreadID = threadCounter++;
+    newTCB->threadID = threadCounter++;
 
     // Copy the thread name
     int i = 0;
@@ -344,7 +344,7 @@ void sleep(uint32_t durationMS)
 // Return: threadID_t
 threadID_t G8RTOS_GetThreadID(void)
 {
-    return CurrentlyRunningThread->ThreadID; // Returns the thread ID
+    return CurrentlyRunningThread->threadID; // Returns the thread ID
 }
 
 // G8RTOS_GetNumberOfThreads
