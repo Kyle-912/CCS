@@ -47,7 +47,6 @@ int main(void)
 /************************************MAIN*******************************************/
 
 /************************************Test Threads***********************************/
-
 /**
  * Thread: ProducerThread
  * Description: Writes incrementing values to FIFO at index 0 every 1 second.
@@ -116,5 +115,4 @@ void IdleThread(void)
     {
     }
 }
-
 /************************************Test Threads***********************************/
