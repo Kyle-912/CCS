@@ -38,7 +38,7 @@ int32_t G8RTOS_InitFIFO(uint32_t FIFO_index)
     FIFOs[FIFO_index].head = FIFOs[FIFO_index].buffer;
     FIFOs[FIFO_index].tail = FIFOs[FIFO_index].buffer;
 
-    // Init the mutex, current size
+    // Init the mutex and semaphores
     G8RTOS_InitSemaphore(&(FIFOs[FIFO_index].mutex), 1);
     G8RTOS_InitSemaphore(&(FIFOs[FIFO_index].read), 0);
     G8RTOS_InitSemaphore(&(FIFOs[FIFO_index].write), FIFO_SIZE);
@@ -70,7 +70,7 @@ int32_t G8RTOS_ReadFIFO(uint32_t FIFO_index)
 
     G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].mutex));
     G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].write));
-    
+
     return data;
 }
 
