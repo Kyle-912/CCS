@@ -1,6 +1,7 @@
 {
     "cSpell.ignoreWords": [
         "ACCELX",
+        "Athread",
         "CALIB",
         "CFIFO",
         "CSCL",
@@ -8,7 +9,10 @@
         "DEVICEID",
         "DRDY",
         "EEPROM",
+        "FIFOS",
         "GPIOA",
+        "GPIOD",
+        "GPIOE",
         "GPIOF",
         "GYRCONFG",
         "GYROX",
@@ -33,16 +37,22 @@
         "PMUTRIGGER",
         "PORTA",
         "PORTB",
+        "PORTD",
         "PORTF",
         "PWMALL",
         "Pendsv",
         "RREQ",
+        "SPAWNCOOR",
+        "SPIA",
+        "SWRESET",
         "TIMA",
         "TIMB",
         "TREQ",
         "Tiva",
+        "Vect",
         "XLSB",
-        "XTAL"
+        "XTAL",
+        "ptcb"
     ],
     "files.exclude": {
         "**/.git": true,

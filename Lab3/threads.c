@@ -15,6 +15,7 @@
 /*************************************Defines***************************************/
 // Assumes that the system clock is 16 MHz.
 #define delay_0_1_s (1600000 / 3)
+#define doingBonus false
 /*************************************Defines***************************************/
 
 /********************************Public Functions***********************************/
@@ -26,15 +27,22 @@ void Thread0(void)
     {
         G8RTOS_WaitSemaphore(&sem_I2CA);
 
-        int16_t accelX = BMI160_AccelXGetResult();
-
-        float absAccelX = (float)(abs(accelX)) / 16384.0f; // Normalize based on ±1g
-        if (absAccelX > 1.0f)
+        if (!doingBonus)
         {
-            absAccelX = 1.0f; // Cap at 100%
+            int16_t accelX = BMI160_AccelXGetResult();
+
+            float absAccelX = (float)(abs(accelX)) / 16384.0f; // Normalize based on ±1g
+
+            LaunchpadLED_PWMSetDuty(BLUE, absAccelX);
+        } else
+        {
+            int16_t magX = BMI160_MagXGetResult();
+
+            float absMagX = (float)(abs(magX)) / 1300.0f; // Normalize based on ±1300μT
+
+            LaunchpadLED_PWMSetDuty(BLUE, absMagX);
         }
 
-        LaunchpadLED_PWMSetDuty(BLUE, absAccelX);
 
         G8RTOS_SignalSemaphore(&sem_I2CA);
 
@@ -94,7 +102,7 @@ void Thread3(void)
 
         G8RTOS_SignalSemaphore(&sem_UART);
 
-        SysCtlDelay(delay_0_1_s);
+        SysCtlDelay(delay_0_1_s / 10);
     }
 }
 
@@ -112,7 +120,7 @@ void Thread4(void)
 
         G8RTOS_SignalSemaphore(&sem_UART);
 
-        SysCtlDelay(delay_0_1_s);
+        SysCtlDelay(delay_0_1_s / 10);
     }
 }
 

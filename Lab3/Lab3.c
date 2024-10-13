@@ -36,8 +36,13 @@ void task0()
 {
     while (1)
     {
+        G8RTOS_WaitSemaphore(&sem_UART);
+
         counter0++;
         UARTprintf("Counter 0: %d\n", counter0);
+
+        G8RTOS_SignalSemaphore(&sem_UART);
+
         SysCtlDelay(1000);
     }
 }
@@ -46,8 +51,13 @@ void task1()
 {
     while (1)
     {
+        G8RTOS_WaitSemaphore(&sem_UART);
+
         counter1++;
         UARTprintf("Counter 1: %d\n", counter1);
+
+        G8RTOS_SignalSemaphore(&sem_UART);
+
         SysCtlDelay(2000);
     }
 }
@@ -56,9 +66,14 @@ void task2()
 {
     while (1)
     {
+        G8RTOS_WaitSemaphore(&sem_UART);
+
         counter2++;
         UARTprintf("Counter 2: %d\n", counter2);
-        SysCtlDelay(3000);
+
+        G8RTOS_SignalSemaphore(&sem_UART);
+
+        SysCtlDelay(2000);
     }
 }
 
