@@ -228,16 +228,15 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
     newTCB->ThreadID = threadCounter++;
 
     // Copy the thread name
-    for (int i = 0; i < MAX_NAME_LENGTH - 1; i++)
+    for (int i = 0; i < MAX_NAME_LENGTH - 1 && name[i] != '\0'; i++)
     {
-        if (name[i] != '\0')
-        {
-            newTCB->threadName[i] = name[i];
-        }
-        else
-        {
-            newTCB->threadName[i] = 0;
-        }
+        newTCB->threadName[i] = name[i];
+    }
+
+    // Fill the rest of threadName with 0
+    for (int i = 0; i < MAX_NAME_LENGTH; i++)
+    {
+        newTCB->threadName[i] = 0;
     }
 
     // Ensure the last character is set to 0 to terminate the string
