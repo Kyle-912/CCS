@@ -85,5 +85,4 @@ void G8RTOS_SignalSemaphore(semaphore_t *s)
     // TODO: Move unblocked thread to be next thread executed for better performance
 
     EndCriticalSection(IBit_State);
-    HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // Yield
 }
