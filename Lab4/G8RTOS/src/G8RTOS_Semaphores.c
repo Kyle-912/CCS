@@ -22,6 +22,7 @@
 /********************************Public Variables***********************************/
 
 /********************************Public Functions***********************************/
+
 // G8RTOS_InitSemaphore
 // Initializes semaphore to a value.
 // Param "s": Pointer to semaphore
