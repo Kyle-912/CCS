@@ -62,7 +62,9 @@ int32_t G8RTOS_ReadFIFO(uint32_t FIFO_index)
 
     // Wrap head pointer if it reaches the end
     if (FIFOs[FIFO_index].head == FIFOs[FIFO_index].buffer + FIFO_SIZE)
+    {
         FIFOs[FIFO_index].head = FIFOs[FIFO_index].buffer;
+    }
 
     G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].write));
     G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].mutex));
@@ -89,7 +91,9 @@ int32_t G8RTOS_WriteFIFO(uint32_t FIFO_index, uint32_t data)
 
     // Wrap tail pointer if it reaches the end
     if (FIFOs[FIFO_index].tail == FIFOs[FIFO_index].buffer + FIFO_SIZE)
+    {
         FIFOs[FIFO_index].tail = FIFOs[FIFO_index].buffer;
+    }
 
     G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].read));
     G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].mutex));
