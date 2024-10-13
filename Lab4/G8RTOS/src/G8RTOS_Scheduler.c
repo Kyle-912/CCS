@@ -155,7 +155,7 @@ void G8RTOS_Scheduler()
     do
     {
         // Check if the thread is eligible to run (alive, not blocked, and not asleep)
-        if (pt->alive && pt->blocked == 0 && pt->asleep == false)
+        if (pt->alive && !pt->blocked && pt->asleep == false)
         {
             // If the thread has a higher priority (lower number) than the current highest, update
             if (pt->priority < highestPriority)
