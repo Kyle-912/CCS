@@ -154,7 +154,7 @@ void G8RTOS_Scheduler()
     // Traverse the entire list of TCBs to find the highest priority thread that is ready to run
     do
     {
-        // Check if the thread is eligible to run (alive, not blocked, and not asleep)
+        // Check if the thread is eligible to run
         if (pt->alive && !pt->blocked && !pt->asleep)
         {
             // If the thread has a higher priority (lower number) than the current highest, update
