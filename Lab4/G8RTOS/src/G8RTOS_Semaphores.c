@@ -50,7 +50,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
     if (--(*s) < 0) // Decrement the semaphore; if < 0, thread must block
     {
         CurrentlyRunningThread->blocked = s; // Set the blocked pointer
-        // EndCriticalSection(IBit_State);
+        EndCriticalSection(IBit_State);
         HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // FIXME: Yield
         // while (CurrentlyRunningThread->blocked != 0)
         // {
@@ -58,7 +58,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
     }
     else
     {
-        // EndCriticalSection(IBit_State);
+        EndCriticalSection(IBit_State);
     }
 }
 
@@ -69,7 +69,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
 // Return: void
 void G8RTOS_SignalSemaphore(semaphore_t *s)
 {
-    // IBit_State = StartCriticalSection();
+    IBit_State = StartCriticalSection();
 
     (*s)++; // Increment semaphore
 
