@@ -51,10 +51,7 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
     {
         CurrentlyRunningThread->blocked = s; // Set the blocked pointer
         EndCriticalSection(IBit_State);
-        HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // FIXME: Yield
-        // while (CurrentlyRunningThread->blocked != 0)
-        // {
-        // }
+        HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // Yield
     }
     else
     {
@@ -85,8 +82,8 @@ void G8RTOS_SignalSemaphore(semaphore_t *s)
         pt->blocked = 0;
     }
 
-    // FIXME: Move unblocked thread to be next thread executed?
+    // TODO: Move unblocked thread to be next thread executed for better performance
 
     EndCriticalSection(IBit_State);
-    HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // FIXME: Yield
+    HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // Yield
 }

@@ -51,10 +51,12 @@ int32_t G8RTOS_InitFIFO(uint32_t FIFO_index)
 int32_t G8RTOS_ReadFIFO(uint32_t FIFO_index)
 {
     if (FIFO_index >= MAX_NUMBER_OF_FIFOS)
+    {
         return -1; // Check if index is valid
+    }
 
-    G8RTOS_WaitSemaphore(&(FIFOs[FIFO_index].mutex));
     G8RTOS_WaitSemaphore(&(FIFOs[FIFO_index].read));
+    G8RTOS_WaitSemaphore(&(FIFOs[FIFO_index].mutex));
 
     // Read data from head and increment head pointer
     int32_t data = *(FIFOs[FIFO_index].head);
@@ -66,8 +68,8 @@ int32_t G8RTOS_ReadFIFO(uint32_t FIFO_index)
         FIFOs[FIFO_index].head = FIFOs[FIFO_index].buffer;
     }
 
-    G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].write));
     G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].mutex));
+    G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].write));
     return data;
 }
 
@@ -80,10 +82,12 @@ int32_t G8RTOS_ReadFIFO(uint32_t FIFO_index)
 int32_t G8RTOS_WriteFIFO(uint32_t FIFO_index, uint32_t data)
 {
     if (FIFO_index >= MAX_NUMBER_OF_FIFOS)
+    {
         return -1; // Check if index is valid
+    }
 
-    G8RTOS_WaitSemaphore(&(FIFOs[FIFO_index].mutex));
     G8RTOS_WaitSemaphore(&(FIFOs[FIFO_index].write));
+    G8RTOS_WaitSemaphore(&(FIFOs[FIFO_index].mutex));
 
     // Write data to tail and increment tail pointer
     *(FIFOs[FIFO_index].tail) = data;
@@ -95,8 +99,8 @@ int32_t G8RTOS_WriteFIFO(uint32_t FIFO_index, uint32_t data)
         FIFOs[FIFO_index].tail = FIFOs[FIFO_index].buffer;
     }
 
-    G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].read));
     G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].mutex));
+    G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].read));
 
     return 0;
 }
