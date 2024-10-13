@@ -171,7 +171,7 @@ void G8RTOS_Scheduler()
     // If no eligible thread is found, fallback to the currently running thread
     if (highestPriorityThread == 0)
     {
-        highestPriorityThread = CurrentlyRunningThread;
+        highestPriorityThread = CurrentlyRunningThread; // Shouldn't execute unless there is no 
     }
 
     // Set the currently running thread to the highest priority eligible thread found
