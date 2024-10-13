@@ -234,7 +234,7 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
         {
             newTCB->threadName[i] = name[i];
         }
-        else // Fill the rest with 0
+        else
         {
             newTCB->threadName[i] = 0;
         }
