@@ -10,7 +10,7 @@
 #include "../G8RTOS_CriticalSection.h"
 #include "../G8RTOS_Scheduler.h"
 
-// #include "inc/hw_types.h"
+#include "inc/hw_types.h"
 #include "inc/hw_nvic.h"
 // #include "inc/hw_ints.h"
 // #include "driverlib/interrupt.h"
