@@ -12,10 +12,6 @@
 
 #include "inc/hw_types.h"
 #include "inc/hw_nvic.h"
-// #include "inc/hw_ints.h"
-// #include "driverlib/interrupt.h"
-//
-// extern tcb_t *CurrentlyRunningThread;
 
 /******************************Data Type Definitions********************************/
 
