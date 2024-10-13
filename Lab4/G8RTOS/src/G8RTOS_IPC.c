@@ -70,6 +70,7 @@ int32_t G8RTOS_ReadFIFO(uint32_t FIFO_index)
 
     G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].mutex));
     G8RTOS_SignalSemaphore(&(FIFOs[FIFO_index].write));
+    
     return data;
 }
 
