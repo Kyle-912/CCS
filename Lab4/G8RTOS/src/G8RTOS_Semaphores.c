@@ -10,12 +10,12 @@
 #include "../G8RTOS_CriticalSection.h"
 #include "../G8RTOS_Scheduler.h"
 
-#include "inc/hw_types.h"
+// #include "inc/hw_types.h"
 #include "inc/hw_nvic.h"
-#include "inc/hw_ints.h"
-#include "driverlib/interrupt.h"
-
-extern tcb_t *CurrentlyRunningThread;
+// #include "inc/hw_ints.h"
+// #include "driverlib/interrupt.h"
+//
+// extern tcb_t *CurrentlyRunningThread;
 
 /******************************Data Type Definitions********************************/
 
