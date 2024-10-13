@@ -37,6 +37,7 @@
         "PMUTRIGGER",
         "PORTA",
         "PORTB",
+        "PORTD",
         "PORTF",
         "PWMALL",
         "Pendsv",
