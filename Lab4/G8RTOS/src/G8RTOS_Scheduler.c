@@ -239,9 +239,6 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
         newTCB->threadName[i] = 0;
     }
 
-    // Ensure the last character is set to 0 to terminate the string
-    newTCB->threadName[MAX_NAME_LENGTH - 1] = 0;
-
     // Add the TCB to the round-robin linked list
     if (NumberOfThreads == 0)
     {
