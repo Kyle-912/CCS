@@ -343,7 +343,7 @@ sched_ErrCode_t G8RTOS_Add_PeriodicEvent(void (*PThreadToAdd)(void), uint32_t pe
     // Increment number of PThreads
     NumberOfPThreads++;
 
-
+    EndCriticalSection(IBit_State);
     return NO_ERROR;
 }
 
