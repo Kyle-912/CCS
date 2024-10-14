@@ -373,7 +373,7 @@ sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
     // Otherwise, thread does not exist.
     EndCriticalSection(IBit_State);
 
-    
+    return THREAD_DOES_NOT_EXIST;
 }
 
 // G8RTOS_KillSelf
