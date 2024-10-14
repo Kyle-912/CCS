@@ -26,6 +26,7 @@ int main(void)
     // Add threads, semaphores, FIFOs here
 
 
+
     G8RTOS_InitSemaphore(&sem_I2CA, 1);
     G8RTOS_InitSemaphore(&sem_SPIA, 1);
     G8RTOS_InitSemaphore(&sem_PCA9555_Debounce, 1);
