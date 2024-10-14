@@ -77,13 +77,13 @@ void SelfTerminatingThread(void)
 {
     while (1)
     {
-        G8RTOS_WaitSemaphore(&uartSemaphore); // Protect UART access
+        G8RTOS_WaitSemaphore(&uartSemaphore);
         UARTprintf("Self-terminating thread started!\n");
         G8RTOS_SignalSemaphore(&uartSemaphore);
 
         sleep(20); // Simulates some work by sleeping for 2 seconds
 
-        G8RTOS_WaitSemaphore(&uartSemaphore); // Protect UART access
+        G8RTOS_WaitSemaphore(&uartSemaphore);
         UARTprintf("Self-terminating thread ending.\n");
         G8RTOS_SignalSemaphore(&uartSemaphore);
 
@@ -101,7 +101,7 @@ void PeriodicPrinter(void)
 
     while (1)
     {
-        G8RTOS_WaitSemaphore(&uartSemaphore); // Protect UART access
+        G8RTOS_WaitSemaphore(&uartSemaphore);
         UARTprintf("Periodic event triggered, value: %d\n", counter);
         G8RTOS_SignalSemaphore(&uartSemaphore);
 
