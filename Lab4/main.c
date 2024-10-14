@@ -31,6 +31,7 @@ int main(void)
     // Add threads, semaphores, here
     G8RTOS_InitSemaphore(&uartSemaphore, 1);
     G8RTOS_AddThread(&SpawnerThread, 0, "Spawner");   // Spawns other self terminating threads
+    G8RTOS_AddThread(&PeriodicPrinter, 1, "Printer"); // Prints every second
     G8RTOS_AddThread(&IdleThread, 255, "IdleThread"); // Idle thread with the lowest priority
 
     G8RTOS_Launch();
