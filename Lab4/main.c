@@ -43,63 +43,7 @@ int main(void)
 
 /************************************Test Threads***********************************/
 
-/**
- * Thread: ProducerThread
- * Description: Writes incrementing values to FIFO at index 0 every 1 second.
- */
-void ProducerThread(void)
-{
-    uint32_t data = 0;
-    while (1)
-    {
-        if (G8RTOS_WriteFIFO(0, data) == 0) // Write data to FIFO
-        {
-            data++; // Increment data if write is successful
-        }
-    }
-}
 
-/**
- * Thread: ConsumerThread
- * Description: Reads data from FIFO at index 0 every 500 ms.
- */
-void ConsumerThread(void)
-{
-    while (1)
-    {
-        G8RTOS_WaitSemaphore(&uartSemaphore);
-
-        int32_t data = G8RTOS_ReadFIFO(0);
-        if (data != -1) // If FIFO is not empty, data was read successfully
-        {
-            UARTprintf("Data from FIFO: %d\n", data);
-        }
-
-        G8RTOS_SignalSemaphore(&uartSemaphore);
-    }
-}
-
-void UARTWriter(void)
-{
-    while (1)
-    {
-        G8RTOS_WaitSemaphore(&uartSemaphore);
-        UARTprintf("UART semaphore test\n");
-        G8RTOS_SignalSemaphore(&uartSemaphore);
-    }
-}
-
-/**
- * Thread: SleepingThread
- * Description: Sleeps for 2 seconds and then wakes up to demonstrate sleep behavior.
- */
-void SleepingThread(void)
-{
-    while (1)
-    {
-        sleep(10);
-    }
-}
 
 /**
  * Thread: IdleThread
