@@ -347,10 +347,8 @@ sched_ErrCode_t G8RTOS_Add_PeriodicEvent(void (*PThreadToAdd)(void), uint32_t pe
         newPTCB->nextPTCB = firstPTCB; // New PThread's next points to the first PThread
         firstPTCB->prevPTCB = newPTCB; // First PThread's prev points to the new PThread
     }
-
-    // last PTCB should point to first, last PTCB should point to last.
-
     // Set function
+    
 
     // Set period
 
