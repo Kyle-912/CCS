@@ -72,28 +72,36 @@ void SpawnerThread(void)
  */
 void SelfTerminatingThread(void)
 {
-    G8RTOS_WaitSemaphore(&uartSemaphore); // Protect UART access
-    UARTprintf("Self-terminating thread started!\n");
-    G8RTOS_SignalSemaphore(&uartSemaphore);
+    while (1)
+    {
+        G8RTOS_WaitSemaphore(&uartSemaphore); // Protect UART access
+        UARTprintf("Self-terminating thread started!\n");
+        G8RTOS_SignalSemaphore(&uartSemaphore);
 
-    sleep(20); // Simulates some work by sleeping for 2 seconds
+        sleep(20); // Simulates some work by sleeping for 2 seconds
 
-    G8RTOS_WaitSemaphore(&uartSemaphore); // Protect UART access
-    UARTprintf("Self-terminating thread ending.\n");
-    G8RTOS_SignalSemaphore(&uartSemaphore);
+        G8RTOS_WaitSemaphore(&uartSemaphore); // Protect UART access
+        UARTprintf("Self-terminating thread ending.\n");
+        G8RTOS_SignalSemaphore(&uartSemaphore);
 
-    G8RTOS_KillSelf();
+        G8RTOS_KillSelf();
+    }
 }
 
 /**
- * Periodic event: PeriodicPrinter
+ * Thread: PeriodicPrinter
  * Description: Prints a message every second.
  */
 void PeriodicPrinter(void)
 {
-    G8RTOS_WaitSemaphore(&uartSemaphore); // Protect UART access
-    UARTprintf("Periodic event triggered every second.\n");
-    G8RTOS_SignalSemaphore(&uartSemaphore);
+    while (1)
+    {
+        G8RTOS_WaitSemaphore(&uartSemaphore); // Protect UART access
+        UARTprintf("Periodic event triggered every second.\n");
+        G8RTOS_SignalSemaphore(&uartSemaphore);
+
+        sleep(10); // Sleep for 1 second (assuming 1 tick = 100ms)
+    }
 }
 
 /**
