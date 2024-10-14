@@ -371,7 +371,7 @@ sched_ErrCode_t G8RTOS_Add_PeriodicEvent(void (*PThreadToAdd)(void), uint32_t pe
     // Set execute time
     newPTCB->executeTime = execution;
 
-    // TODO: Consider setting currentTime based on number of pthreads and use current time instead of system time in SysTick_Handler
+    // TODO: Consider setting currentTime based on NumberOfPThreads and use current time instead of system time in SysTick_Handler
 
     // Increment number of PThreads
     NumberOfPThreads++;
