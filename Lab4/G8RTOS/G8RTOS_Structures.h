@@ -43,7 +43,7 @@ typedef struct tcb_t
     uint8_t priority;
     bool alive;
     char threadName[MAX_NAME_LENGTH];
-    threadID_t ThreadID;
+    threadID_t threadID;
 } tcb_t;
 
 // Periodic Thread Control Block

@@ -92,7 +92,22 @@ void SysTick_Handler()
         pt = pt->nextTCB;
     } while (pt != CurrentlyRunningThread);
 
-    // TODO: Traverse the periodic linked list to run which functions need to be run.
+    // Traverse the periodic linked list to run which functions need to be run.
+    for (int i = 0; i < NumberOfPThreads; i++)
+    {
+        // Check if the periodic thread's execution time has arrived
+        if (Ppt->executeTime <= SystemTime) // TODO: Consider using currentTime instead of SystemTime
+        {
+            // Run the periodic thread handler
+            (*Ppt->handler)();
+
+            // Update the next execution time for the periodic thread
+            Ppt->executeTime += Ppt->period;
+        }
+
+        // Move to the next periodic thread in the linked list
+        Ppt = Ppt->nextPTCB;
+    }
 
     HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV;
 }
@@ -146,15 +161,15 @@ void G8RTOS_Scheduler()
 {
     // Using priority, determine the most eligible thread to run that
     // is not blocked or asleep. Set current thread to this thread's TCB.
-    tcb_t *pt = CurrentlyRunningThread->nextTCB; // Start from the next thread
-
     tcb_t *highestPriorityThread = 0; // Pointer to hold the highest priority thread
     uint16_t highestPriority = 256;   // Worse than lowest possible priority (255)
 
     // Traverse the entire list of TCBs to find the highest priority thread that is ready to run
-    do
+    for (int i = 0; i < NumberOfThreads; i++)
     {
-        // Check if the thread is eligible to run
+        tcb_t *pt = &threadControlBlocks[i]; // Access each thread from the array
+
+        // Check if the thread is eligible to run (alive, not blocked, not asleep)
         if (pt->alive && !pt->blocked && !pt->asleep)
         {
             // If the thread has a higher priority (lower number) than the current highest, update
@@ -164,14 +179,20 @@ void G8RTOS_Scheduler()
                 highestPriorityThread = pt;
             }
         }
+    }
 
-        pt = pt->nextTCB; // Move to the next thread in the linked list
-    } while (pt != CurrentlyRunningThread); // Stop when we loop back to the starting thread
-
-    // If no eligible thread is found, fallback to the currently running thread
+    // Fallback to idle thread if no eligible thread is found
     if (highestPriorityThread == 0)
     {
-        highestPriorityThread = CurrentlyRunningThread; // Shouldn't execute unless there is no idle thread
+        // Find the idle thread with the lowest priority (assuming it's always alive and never blocked)
+        for (int i = 0; i < NumberOfThreads; i++)
+        {
+            if (threadControlBlocks[i].priority == 255) // Assuming idle thread has priority 255
+            {
+                highestPriorityThread = &threadControlBlocks[i];
+                break;
+            }
+        }
     }
 
     // Set the currently running thread to the highest priority eligible thread found
@@ -225,7 +246,7 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
     newTCB->asleep = false;
     newTCB->blocked = 0;
     newTCB->sleepCount = 0;
-    newTCB->ThreadID = threadCounter++;
+    newTCB->threadID = threadCounter++;
 
     // Copy the thread name
     int i = 0;
@@ -272,12 +293,41 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
 sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t priority, int32_t IRQn)
 {
     // Disable interrupts
+    IBit_State = StartCriticalSection();
+
     // Check if IRQn is valid
+    if (IRQn < 0 || IRQn >= 155)
+    {
+        EndCriticalSection(IBit_State);
+        return IRQn_INVALID; // Invalid IRQ number
+    }
+
     // Check if priority is valid
+    if (priority > 6)
+    {
+        EndCriticalSection(IBit_State);
+        return HWI_PRIORITY_INVALID;
+    }
     // Set corresponding index in interrupt vector table to handler.
+    uint32_t newVTORTable = 0x20000000;
+    uint32_t *newTable = (uint32_t *)newVTORTable;
+    uint32_t *oldTable = (uint32_t *)0;
+    for (int i = 0; i < 155; i++)
+    {
+        newTable[i] = oldTable[i];
+    }
+    newTable[IRQn + 16] = (uint32_t)AthreadToAdd;
+    HWREG(NVIC_VTABLE) = newVTORTable;
+
     // Set priority.
+    IntPrioritySet(IRQn, priority);
+
     // Enable the interrupt.
+    HWREG(NVIC_EN0) |= (1 << IRQn);
+
     // End the critical section.
+    EndCriticalSection(IBit_State);
+    return NO_ERROR;
 }
 
 // G8RTOS_Add_PeriodicEvent
@@ -290,16 +340,49 @@ sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t pr
 // Return: sched_ErrCode_t
 sched_ErrCode_t G8RTOS_Add_PeriodicEvent(void (*PThreadToAdd)(void), uint32_t period, uint32_t execution)
 {
-    // your code
-    // Make sure that the number of PThreads is not greater than max PThreads.
-    // Check if there is no PThread. Initialize and set the first PThread.
-    // Subsequent PThreads should be added, inserted similarly to a doubly-linked linked list
-    // last PTCB should point to first, last PTCB should point to last.
-    // Set function
-    // Set period
-    // Set execute time
-    // Increment number of PThreads
+    IBit_State = StartCriticalSection();
 
+    // Make sure that the number of PThreads is not greater than max PThreads.
+    if (NumberOfPThreads >= MAX_PTHREADS)
+    {
+        EndCriticalSection(IBit_State);
+        return THREAD_LIMIT_REACHED;
+    }
+
+    // Check if there is no PThread. Initialize and set the first PThread.
+    ptcb_t *newPTCB = &pthreadControlBlocks[NumberOfPThreads];
+    if (NumberOfPThreads == 0)
+    {
+        // First periodic thread points to itself
+        newPTCB->nextPTCB = newPTCB;
+        newPTCB->prevPTCB = newPTCB;
+    }
+    else
+    {
+        // Subsequent PThreads should be added, inserted similarly to a doubly-linked linked list
+        ptcb_t *lastPTCB = &pthreadControlBlocks[NumberOfPThreads - 1];
+        ptcb_t *firstPTCB = &pthreadControlBlocks[0];
+
+        lastPTCB->nextPTCB = newPTCB;  // Last PThread points to the new PThread
+        newPTCB->prevPTCB = lastPTCB;  // New PThread's prev points to the last PThread
+        newPTCB->nextPTCB = firstPTCB; // New PThread's next points to the first PThread
+        firstPTCB->prevPTCB = newPTCB; // First PThread's prev points to the new PThread
+    }
+    // Set function
+    newPTCB->handler = PThreadToAdd;
+
+    // Set period
+    newPTCB->period = period;
+
+    // Set execute time
+    newPTCB->executeTime = execution;
+
+    // TODO: Consider setting currentTime based on NumberOfPThreads and use currentTime instead of SystemTime in SysTick_Handler
+
+    // Increment number of PThreads
+    NumberOfPThreads++;
+
+    EndCriticalSection(IBit_State);
     return NO_ERROR;
 }
 
@@ -309,11 +392,45 @@ sched_ErrCode_t G8RTOS_Add_PeriodicEvent(void (*PThreadToAdd)(void), uint32_t pe
 sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
 {
     // Start critical section
+    IBit_State = StartCriticalSection();
+
     // Check if there is only one thread, return if so
+    if (NumberOfThreads == 1)
+    {
+        EndCriticalSection(IBit_State);
+        return CANNOT_KILL_LAST_THREAD;
+    }
+
     // Traverse linked list, find thread to kill
-    // Update the next tcb and prev tcb pointers if found
-    // mark as not alive, release the semaphore it is blocked on
+    tcb_t *pt = CurrentlyRunningThread;
+    do
+    {
+        if (pt->threadID == threadID)
+        {
+            // Update the next tcb and prev tcb pointers if found
+            pt->prevTCB->nextTCB = pt->nextTCB;
+            pt->nextTCB->prevTCB = pt->prevTCB;
+
+            // Mark thread as not alive, release the semaphore it is blocked on
+            pt->alive = false;
+            if (pt->blocked != 0)
+            {
+                G8RTOS_SignalSemaphore(pt->blocked); // Release the semaphore the thread is blocked on
+                pt->blocked = 0;                     // Clear the blocked semaphore
+            }
+
+            NumberOfThreads--;
+
+            EndCriticalSection(IBit_State);
+            return NO_ERROR;
+        }
+
+        pt = pt->nextTCB;
+    } while (pt != CurrentlyRunningThread);
+
     // Otherwise, thread does not exist.
+    EndCriticalSection(IBit_State);
+    return THREAD_DOES_NOT_EXIST;
 }
 
 // G8RTOS_KillSelf
@@ -321,10 +438,27 @@ sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
 // Return: sched_ErrCode_t
 sched_ErrCode_t G8RTOS_KillSelf()
 {
-    // your code
+    IBit_State = StartCriticalSection();
 
     // Check if there is only one thread
+    if (NumberOfThreads == 1)
+    {
+        EndCriticalSection(IBit_State);
+        return CANNOT_KILL_LAST_THREAD;
+    }
     // Else, mark this thread as not alive.
+    CurrentlyRunningThread->alive = false;
+
+    CurrentlyRunningThread->prevTCB->nextTCB = CurrentlyRunningThread->nextTCB;
+    CurrentlyRunningThread->nextTCB->prevTCB = CurrentlyRunningThread->prevTCB;
+
+    NumberOfThreads--;
+
+    EndCriticalSection(IBit_State);
+
+    HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // Yield
+
+    return NO_ERROR;
 }
 
 // sleep
@@ -344,7 +478,7 @@ void sleep(uint32_t durationMS)
 // Return: threadID_t
 threadID_t G8RTOS_GetThreadID(void)
 {
-    return CurrentlyRunningThread->ThreadID; // Returns the thread ID
+    return CurrentlyRunningThread->threadID; // Returns the thread ID
 }
 
 // G8RTOS_GetNumberOfThreads

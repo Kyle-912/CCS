@@ -16,10 +16,9 @@
 #include "./threads.h"
 
 /************************************MAIN*******************************************/
-void ProducerThread(void);
-void ConsumerThread(void);
-void UARTWriter(void);
-void SleepingThread(void);
+void SpawnerThread(void);
+void SelfTerminatingThread(void);
+void PeriodicPrinter(void);
 void IdleThread(void);
 semaphore_t uartSemaphore;
 int main(void)
@@ -30,13 +29,10 @@ int main(void)
     multimod_init();
 
     // Add threads, semaphores, here
-    G8RTOS_InitFIFO(0);
     G8RTOS_InitSemaphore(&uartSemaphore, 1);
-    G8RTOS_AddThread(&ProducerThread, 0, "Producer");       // Produces data into FIFO
-    G8RTOS_AddThread(&ConsumerThread, 1, "Consumer");       // Consumes data from FIFO and writes using UART
-    G8RTOS_AddThread(&UARTWriter, 2, "UARTWriter");         // Writes using UART
-    G8RTOS_AddThread(&SleepingThread, 4, "SleepingThread"); // Shows sleep and yield behavior
-    G8RTOS_AddThread(&IdleThread, 255, "IdleThread");       // Idle thread with the lowest priority
+    G8RTOS_AddThread(&SpawnerThread, 0, "Spawner");      // Spawns other self terminating threads
+    G8RTOS_Add_PeriodicEvent(&PeriodicPrinter, 1000, 0); // Add periodic event that triggers every second (1000 ticks = 1 second)
+    G8RTOS_AddThread(&IdleThread, 255, "IdleThread");    // Idle thread with the lowest priority
 
     G8RTOS_Launch();
     while (1)
@@ -49,61 +45,65 @@ int main(void)
 /************************************Test Threads***********************************/
 
 /**
- * Thread: ProducerThread
- * Description: Writes incrementing values to FIFO at index 0 every 1 second.
+ * Thread: SpawnerThread
+ * Description: Spawns self-terminating threads dynamically.
  */
-void ProducerThread(void)
+void SpawnerThread(void)
 {
-    uint32_t data = 0;
+    static uint8_t threadCounter = 0;
     while (1)
     {
-        if (G8RTOS_WriteFIFO(0, data) == 0) // Write data to FIFO
+        if (threadCounter < 5)
         {
-            data++; // Increment data if write is successful
+            // Create a unique thread name for the new thread
+            char threadName[16] = "TermThread ";
+            threadName[11] = '0' + threadCounter; // Append thread number
+            threadName[12] = '\0';
+
+            // Dynamically add a self-terminating thread
+            G8RTOS_AddThread(&SelfTerminatingThread, 5, threadName); // Medium priority
+            threadCounter++;
         }
+
+        sleep(5000); // Sleep for 5s before spawning another thread
     }
 }
 
 /**
- * Thread: ConsumerThread
- * Description: Reads data from FIFO at index 0 every 500 ms.
+ * Thread: SelfTerminatingThread
+ * Description: Runs for a while and then terminates itself.
  */
-void ConsumerThread(void)
+void SelfTerminatingThread(void)
 {
     while (1)
     {
         G8RTOS_WaitSemaphore(&uartSemaphore);
-
-        int32_t data = G8RTOS_ReadFIFO(0);
-        if (data != -1) // If FIFO is not empty, data was read successfully
-        {
-            UARTprintf("Data from FIFO: %d\n", data);
-        }
-
+        UARTprintf("Self-terminating thread started!\n");
         G8RTOS_SignalSemaphore(&uartSemaphore);
-    }
-}
 
-void UARTWriter(void)
-{
-    while (1)
-    {
+        sleep(2000); // Simulates some work by sleeping for 2s
+
         G8RTOS_WaitSemaphore(&uartSemaphore);
-        UARTprintf("UART semaphore test\n");
+        UARTprintf("Self-terminating thread ending.\n");
         G8RTOS_SignalSemaphore(&uartSemaphore);
+
+        G8RTOS_KillSelf();
     }
 }
 
 /**
- * Thread: SleepingThread
- * Description: Sleeps for 2 seconds and then wakes up to demonstrate sleep behavior.
+ * Thread: PeriodicPrinter
+ * Description: Prints a message every second with an incrementing value.
  */
-void SleepingThread(void)
+void PeriodicPrinter(void)
 {
-    while (1)
-    {
-        sleep(10);
-    }
+    static uint32_t seconds = 0;
+
+    G8RTOS_WaitSemaphore(&uartSemaphore);
+    UARTprintf("Periodic event triggered, value: %d\n", seconds);
+    G8RTOS_SignalSemaphore(&uartSemaphore);
+
+    seconds++;
 }
 
 /**
