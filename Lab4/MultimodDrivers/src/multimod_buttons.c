@@ -22,15 +22,15 @@
 // Initializes buttons on the multimod by configuring the I2C module and
 // relevant interrupt pin.
 // Return: void
-void MultimodButtons_Init() {
+void MultimodButtons_Init()
+{
     // Initialize this function & the relevant interrupt pin
-
 }
 
 // MultimodButtons_Get
 // Gets the input to GPIO bank 1, [0..7].
-// Return: uint8_t 
-uint8_t MultimodButtons_Get() {
+// Return: uint8_t
+uint8_t MultimodButtons_Get()
+{
     // complete this function
 }
-
