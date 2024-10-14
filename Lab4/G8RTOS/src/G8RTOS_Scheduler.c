@@ -391,15 +391,12 @@ sched_ErrCode_t G8RTOS_KillSelf()
         EndCriticalSection(IBit_State);
         return CANNOT_KILL_LAST_THREAD;
     }
-    else // Else, mark this thread as not alive.
-    {
-        CurrentlyRunningThread->alive = false;
+    // Else, mark this thread as not alive.    CurrentlyRunningThread->alive = false;
 
-        CurrentlyRunningThread->prevTCB->nextTCB = CurrentlyRunningThread->nextTCB;
-        CurrentlyRunningThread->nextTCB->prevTCB = CurrentlyRunningThread->prevTCB;
+    CurrentlyRunningThread->prevTCB->nextTCB = CurrentlyRunningThread->nextTCB;
+    CurrentlyRunningThread->nextTCB->prevTCB = CurrentlyRunningThread->prevTCB;
 
-        NumberOfThreads--;
-    }
+    NumberOfThreads--;
 
     EndCriticalSection(IBit_State);
 
