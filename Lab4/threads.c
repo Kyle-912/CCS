@@ -23,8 +23,7 @@
 
 // sizeof(float) * num_lines * (Num_Interpolated_Points + 2) = ?
 
-#define MAX_NUM_CUBES           (MAX_THREADS - 3)
-
+#define MAX_NUM_CUBES (MAX_THREADS - 3)
 
 /*********************************Global Variables**********************************/
 Quat_t world_camera_pos = {0, 0, 0, 50};
@@ -46,18 +45,22 @@ uint8_t kill_cube = 0;
 
 /*************************************Threads***************************************/
 
-void Idle_Thread(void) {
+void Idle_Thread(void)
+{
     time_t t;
-    srand((unsigned) time(&t));
-    while(1);
+    srand((unsigned)time(&t));
+    while (1)
+        ;
 }
 
-void CamMove_Thread(void) {
+void CamMove_Thread(void)
+{
     // Initialize / declare any variables here
 
-    while(1) {
+    while (1)
+    {
         // Get result from joystick
-        
+
         // If joystick axis within deadzone, set to 0. Otherwise normalize it.
 
         // Update world camera position. Update y/z coordinates depending on the joystick toggle.
@@ -66,7 +69,8 @@ void CamMove_Thread(void) {
     }
 }
 
-void Cube_Thread(void) {
+void Cube_Thread(void)
+{
     cube_t cube;
 
     /*************YOUR CODE HERE*************/
@@ -91,7 +95,8 @@ void Cube_Thread(void) {
 
     uint8_t kill = 0;
 
-    while(1) {
+    while (1)
+    {
         /*************YOUR CODE HERE*************/
         // Check if kill ball flag is set.
 
@@ -109,8 +114,10 @@ void Cube_Thread(void) {
         view_rot_inverse.z = world_view_rot_inverse.z;
 
         // Clears cube from screen
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j < m+1; j++) {
+        for (int i = 0; i < 12; i++)
+        {
+            for (int j = 0; j < m + 1; j++)
+            {
                 getViewOnScreen(&projected_point, &camera_frame_offset, &(interpolated_points[i][j]));
                 /*************YOUR CODE HERE*************/
                 // Wait on SPI bus
@@ -119,7 +126,6 @@ void Cube_Thread(void) {
 
                 /*************YOUR CODE HERE*************/
                 // Signal that SPI bus is available
-
             }
         }
 
@@ -127,7 +133,8 @@ void Cube_Thread(void) {
         // If ball marked for termination, kill the thread.
 
         // Calculates view relative to camera position / orientation
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 8; i++)
+        {
             getViewRelative(&(v_relative[i]), &camera_pos, &(v[i]), &view_rot_inverse);
         }
 
@@ -145,11 +152,14 @@ void Cube_Thread(void) {
         interpolatePoints(interpolated_points[10], &v_relative[6], &v_relative[7], m);
         interpolatePoints(interpolated_points[11], &v_relative[7], &v_relative[4], m);
 
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j < m+1; j++) {
+        for (int i = 0; i < 12; i++)
+        {
+            for (int j = 0; j < m + 1; j++)
+            {
                 getViewOnScreen(&projected_point, &camera_frame_offset, &(interpolated_points[i][j]));
 
-                if (interpolated_points[i][j].z < 0) {
+                if (interpolated_points[i][j].z < 0)
+                {
                     /*************YOUR CODE HERE*************/
                     // Wait on SPI bus
 
@@ -163,14 +173,15 @@ void Cube_Thread(void) {
 
         /*************YOUR CODE HERE*************/
         // Sleep
-
     }
 }
 
-void Read_Buttons() {
+void Read_Buttons()
+{
     // Initialize / declare any variables here
-    
-    while(1) {
+
+    while (1)
+    {
         // Wait for a signal to read the buttons on the Multimod board.
 
         // Sleep to debounce
@@ -181,14 +192,15 @@ void Read_Buttons() {
 
         // Clear the interrupt
         // Re-enable the interrupt so it can occur again.
-    
     }
 }
 
-void Read_JoystickPress() {
+void Read_JoystickPress()
+{
     // Initialize / declare any variables here
-    
-    while(1) {
+
+    while (1)
+    {
         // Wait for a signal to read the joystick press
 
         // Sleep to debounce
@@ -199,33 +211,32 @@ void Read_JoystickPress() {
 
         // Clear the interrupt
         // Re-enable the interrupt so it can occur again.
-    
     }
 }
 
-
-
 /********************************Periodic Threads***********************************/
 
-void Print_WorldCoords(void) {
+void Print_WorldCoords(void)
+{
     // Print the camera position through UART to display on console.
 }
 
-void Get_Joystick(void) {
+void Get_Joystick(void)
+{
     // Read the joystick
     // Send through FIFO.
 }
 
-
-
 /*******************************Aperiodic Threads***********************************/
 
-void GPIOE_Handler() {
+void GPIOE_Handler()
+{
     // Disable interrupt
     // Signal relevant semaphore
 }
 
-void GPIOD_Handler() {
+void GPIOD_Handler()
+{
     // Disable interrupt
     // Signal relevant semaphore
 }
