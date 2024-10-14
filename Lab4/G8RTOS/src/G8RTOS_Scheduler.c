@@ -96,7 +96,7 @@ void SysTick_Handler()
     for (int i = 0; i < NumberOfPThreads; i++)
     {
         // Check if the periodic thread's execution time has arrived
-        if (Ppt->executeTime <= SystemTime) // TODO: Consider using current time instead of 
+        if (Ppt->executeTime <= SystemTime) // TODO: Consider using currentTime instead of SystemTime
         {
             // Run the periodic thread handler
             (*Ppt->handler)();
