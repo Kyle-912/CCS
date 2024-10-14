@@ -24,7 +24,6 @@ int main(void)
     multimod_init();
 
     // Add threads, semaphores, FIFOs here
-
     G8RTOS_AddThread(&Idle_Thread, 255, "IdleThread");
     G8RTOS_AddThread(&Cube_Thread, 2, "CubeThread");
     G8RTOS_AddThread(&CamMove_Thread, 1, "CamMoveThread");
