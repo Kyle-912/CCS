@@ -231,7 +231,7 @@ void Read_Buttons()
         button_state = MultimodButtons_Get();
 
         // Process the buttons and determine what actions need to be performed.
-        if (button_state & SW1) // SW1 Pressed
+        if (button_state & SW1)
         {
             // Generate random coordinates for the cube
             x = (rand() % 201) - 100; // Random number between [-100, 100]
