@@ -35,6 +35,9 @@ uint32_t IBit_State;
 // Return: void
 void G8RTOS_InitSemaphore(semaphore_t *s, int32_t value)
 {
+    IBit_State = StartCriticalSection();
+    *s = value;
+    EndCriticalSection(IBit_State);
 }
 
 // G8RTOS_WaitSemaphore
@@ -45,6 +48,18 @@ void G8RTOS_InitSemaphore(semaphore_t *s, int32_t value)
 // Return: void
 void G8RTOS_WaitSemaphore(semaphore_t *s)
 {
+    IBit_State = StartCriticalSection();
+
+    while (*s <= 0)
+    {
+        // Spin-lock
+        EndCriticalSection(IBit_State);
+        IBit_State = StartCriticalSection();
+    }
+
+    (*s)--; // Decrement the semaphore
+
+    EndCriticalSection(IBit_State);
 }
 
 // G8RTOS_SignalSemaphore
@@ -54,6 +69,11 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
 // Return: void
 void G8RTOS_SignalSemaphore(semaphore_t *s)
 {
+    IBit_State = StartCriticalSection();
+
+    (*s)++; // Increment semaphore
+
+    EndCriticalSection(IBit_State);
 }
 
 /********************************Public Functions***********************************/
