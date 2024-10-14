@@ -16,10 +16,7 @@
 #include "./threads.h"
 
 /************************************MAIN*******************************************/
-void ProducerThread(void);
-void ConsumerThread(void);
-void UARTWriter(void);
-void SleepingThread(void);
+
 void IdleThread(void);
 semaphore_t uartSemaphore;
 int main(void)
