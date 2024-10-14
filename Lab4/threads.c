@@ -50,7 +50,8 @@ void Idle_Thread(void)
     time_t t;
     srand((unsigned)time(&t));
     while (1)
-        {}
+    {
+    }
 }
 
 void CamMove_Thread(void)
