@@ -402,6 +402,10 @@ sched_ErrCode_t G8RTOS_KillSelf()
     }
 
     EndCriticalSection(IBit_State);
+
+    
+
+    return NO_ERROR;
 }
 
 // sleep
