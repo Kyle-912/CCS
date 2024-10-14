@@ -332,7 +332,7 @@ sched_ErrCode_t G8RTOS_Add_PeriodicEvent(void (*PThreadToAdd)(void), uint32_t pe
     ptcb_t *newPTCB = &pthreadControlBlocks[NumberOfPThreads];
     if (NumberOfPThreads == 0)
     {
-        // First periodic thread points to itself (circular doubly-linked list)
+        // First periodic thread points to itself
         newPTCB->nextPTCB = newPTCB;
         newPTCB->prevPTCB = newPTCB;
     }
