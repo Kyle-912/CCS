@@ -392,7 +392,7 @@ sched_ErrCode_t G8RTOS_KillSelf()
         return CANNOT_KILL_LAST_THREAD;
     } else
     {
-        /* code */
+        CurrentlyRunningThread->alive = false;
     }
 
 
