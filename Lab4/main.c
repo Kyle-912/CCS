@@ -90,7 +90,7 @@ void SelfTerminatingThread(void)
  */
 void PeriodicPrinter(void)
 {
-    G8RTOS_WaitSemaphore(&uartSemaphore);
+    G8RTOS_WaitSemaphore(&uartSemaphore); // Protect UART access
     UARTprintf("Periodic event triggered every second.\n");
     G8RTOS_SignalSemaphore(&uartSemaphore);
 }
