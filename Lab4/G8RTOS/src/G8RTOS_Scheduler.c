@@ -344,8 +344,29 @@ sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
         EndCriticalSection(IBit_State);
         return CANNOT_KILL_LAST_THREAD;
     }
-    
+
     // Traverse linked list, find thread to kill
+    tcb_t *pt = CurrentlyRunningThread;
+    do
+    {
+        if (pt->threadID == threadID)
+        {
+            // Update the next tcb and prev tcb pointers if found
+            pt->prevTCB->nextTCB = pt->nextTCB;
+            pt->nextTCB->prevTCB = pt->prevTCB;
+
+            // Mark thread as not alive, release the semaphore it is blocked on
+            pt->alive = false;
+
+            NumberOfThreads--;
+
+            EndCriticalSection(IBit_State); // End critical section
+            return NO_ERROR;
+        }
+
+        pt = pt->nextTCB;
+    } while (pt != CurrentlyRunningThread);
+
     // Update the next tcb and prev tcb pointers if found
     // mark as not alive, release the semaphore it is blocked on
     // Otherwise, thread does not exist.
