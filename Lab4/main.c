@@ -16,11 +16,6 @@
 #include "./threads.h"
 
 /************************************MAIN*******************************************/
-void SpawnerThread(void);
-void SelfTerminatingThread(void);
-void PeriodicPrinter(void);
-void IdleThread(void);
-semaphore_t uartSemaphore;
 int main(void)
 {
     // Sets clock speed to 80 MHz. You'll need it!
