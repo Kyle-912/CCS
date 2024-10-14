@@ -3,6 +3,7 @@
         "ACCELX",
         "Athread",
         "CALIB",
+        "CASET",
         "CFIFO",
         "CSCL",
         "CSDA",
@@ -53,7 +54,8 @@
         "Vect",
         "XLSB",
         "XTAL",
-        "ptcb"
+        "ptcb",
+        "ystep"
     ],
     "files.exclude": {
         "**/.git": true,
