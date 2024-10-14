@@ -280,8 +280,13 @@ sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t pr
         EndCriticalSection(IBit_State);
         return IRQn_INVALID; // Invalid IRQ number
     }
-    
+
     // Check if priority is valid
+    if (priority > 6)
+    {
+        EndCriticalSection(IBit_State);
+        return HWI_PRIORITY_INVALID;
+    }
     // Set corresponding index in interrupt vector table to handler.
     // Set priority.
     // Enable the interrupt.
