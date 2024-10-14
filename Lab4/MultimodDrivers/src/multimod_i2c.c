@@ -73,7 +73,7 @@ void I2C_Init(uint32_t mod)
         GPIOPinTypeI2C(GPIO_PORTB_BASE, GPIO_PIN_3);
 
         // Configure I2C0 SCL speed, set as master
-        I2CMasterInitExpClk(mod, SysCtlClockGet(), false); // false for 100Kbps standard mode
+        I2CMasterInitExpClk(mod, SysCtlClockGet(), false);
     }
 }
 
