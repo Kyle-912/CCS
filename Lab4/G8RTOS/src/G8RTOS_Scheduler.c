@@ -296,6 +296,7 @@ sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t pr
     // Enable the interrupt.
 
     // End the critical section.
+    EndCriticalSection(IBit_State);
 }
 
 // G8RTOS_Add_PeriodicEvent
