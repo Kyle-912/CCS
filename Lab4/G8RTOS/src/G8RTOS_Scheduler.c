@@ -397,7 +397,11 @@ sched_ErrCode_t G8RTOS_KillSelf()
 
         CurrentlyRunningThread->prevTCB->nextTCB = CurrentlyRunningThread->nextTCB;
         CurrentlyRunningThread->nextTCB->prevTCB = CurrentlyRunningThread->prevTCB;
+
+        NumberOfThreads--;
     }
+
+    EndCriticalSection(IBit_State);
 }
 
 // sleep
