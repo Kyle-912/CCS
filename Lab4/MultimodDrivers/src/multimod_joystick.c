@@ -34,7 +34,11 @@ void JOYSTICK_Init(void)
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOE))
     {
     }
-    
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOD))
+    {
+    }
+
     // Enable adc module
 
     // Set pins as ADC
