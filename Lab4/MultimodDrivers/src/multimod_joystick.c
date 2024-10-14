@@ -46,6 +46,7 @@ void JOYSTICK_Init(void)
     }
 
     // Set pins as ADC
+    GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_3 | GPIO_PIN_2);
 
     // Configure ADC sequences
 
