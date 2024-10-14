@@ -198,10 +198,7 @@ void G8RTOS_Scheduler()
     }
 
     // Set the currently running thread to the highest priority eligible thread found
-    if (highestPriorityThread != 0)
-    {
-        CurrentlyRunningThread = highestPriorityThread;
-    }
+    CurrentlyRunningThread = highestPriorityThread;
 }
 
 // G8RTOS_AddThread
