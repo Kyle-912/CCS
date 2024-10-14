@@ -103,7 +103,7 @@ uint8_t ST7789_ReadRegister(uint8_t data)
 void ST7789_SetWindow(int16_t x, int16_t y, int16_t w, int16_t h)
 {
     // Check boundary conditions
-    if ((x >= X_MAX) || (y >= Y_MAX))
+    if ((x >= X_MAX) || (y >= Y_MAX)) // Check if starting point is within bounds
     {
         return;
     }
