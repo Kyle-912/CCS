@@ -292,7 +292,9 @@ sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t pr
 
     // Set priority.
     IntPrioritySet(IRQn, priority);
+
     // Enable the interrupt.
+
     // End the critical section.
 }
 
