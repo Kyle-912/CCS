@@ -93,7 +93,21 @@ void SysTick_Handler()
     } while (pt != CurrentlyRunningThread);
 
     // Traverse the periodic linked list to run which functions need to be run.
-    
+    for (int i = 0; i < NumberOfPThreads; i++)
+    {
+        // Check if the periodic thread's execution time has arrived
+        if (Ppt->executeTime <= SystemTime)
+        {
+            // Run the periodic thread handler
+            (*Ppt->handler)();
+
+            // Update the next execution time for the periodic thread
+            Ppt->executeTime += Ppt->period;
+        }
+
+        // Move to the next periodic thread in the linked list
+        Ppt = Ppt->nextPTCB;
+    }
 
     HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV;
 }
