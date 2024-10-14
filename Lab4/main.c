@@ -65,7 +65,7 @@ void SpawnerThread(void)
             threadCounter++;
         }
 
-        sleep(500); // Sleep for 500ms before spawning another thread
+        sleep(5000); // Sleep for 5s before spawning another thread
     }
 }
 
@@ -81,7 +81,7 @@ void SelfTerminatingThread(void)
         UARTprintf("Self-terminating thread started!\n");
         G8RTOS_SignalSemaphore(&uartSemaphore);
 
-        sleep(2000); // Simulates some work by sleeping for 2 seconds
+        sleep(2000); // Simulates some work by sleeping for 2s
 
         G8RTOS_WaitSemaphore(&uartSemaphore);
         UARTprintf("Self-terminating thread ending.\n");
