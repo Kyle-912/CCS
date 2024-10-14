@@ -104,9 +104,13 @@ void ST7789_SetWindow(int16_t x, int16_t y, int16_t w, int16_t h)
 {
     // Check boundary conditions
     if ((x >= X_MAX) || (y >= Y_MAX))
-        return; // Check if starting point is within bounds
+    {
+        return;
+    }
     if ((x + w - 1) >= X_MAX)
+    {
         w = X_MAX - x; // Adjust width if it goes out of bounds
+    }
     if ((y + h - 1) >= Y_MAX)
     {
         h = Y_MAX - y; // Adjust height if it goes out of bounds
