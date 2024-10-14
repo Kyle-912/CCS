@@ -34,7 +34,7 @@ int main(void)
     G8RTOS_AddPeriodicEvent(&Print_WorldCoords, 100, 0);
     G8RTOS_AddPeriodicEvent(&Get_Joystick, 100, 0);
 
-    G8RTOS_Add_APeriodicEvent(GPIOE_Handler, 3, INT_GPIOE); // Aperiodic event for button press (GPIOE)
+    G8RTOS_Add_APeriodicEvent(GPIOE_Handler, 3, INT_GPIOE);
     G8RTOS_Add_APeriodicEvent(GPIOD_Handler, 3, INT_GPIOD);
 
     G8RTOS_InitSemaphore(&sem_I2CA, 1);
