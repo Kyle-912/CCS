@@ -23,7 +23,7 @@ int main(void)
     G8RTOS_Init();
     multimod_init();
 
-    // Add threads, semaphores, here
+    // Add threads, semaphores, FIFOs here
 
     G8RTOS_AddThread(&IdleThread, 255, "IdleThread");    // Idle thread with the lowest priority
 
