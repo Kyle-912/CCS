@@ -63,24 +63,24 @@ uint8_t MultimodButtons_Get()
 {
     uint8_t buttonState = 0;
 
-    // 1. Set the PCA9555 address and specify the input register for buttons (Bank 1)
-    I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, false); // Use PCA9555_BUTTONS_ADDR for buttons
-    I2CMasterDataPut(I2C0_BASE, 0x00);                             // Address of input register for GPIO Bank 1
-    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_SINGLE_SEND);       // Send the command
+    // 1. Set the PCA9555 address to read from the input register for buttons (Bank 1)
+    I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, false); // Use PCA9555_BUTTONS_ADDR for button read
+    I2CMasterDataPut(I2C0_BASE, 0x00);                             // Select Input Register for Port 0 (Bank 1)
+    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_SINGLE_SEND);       // Send the command to select the input register
     while (I2CMasterBusy(I2C0_BASE))
     {
     }
 
     // 2. Switch to read mode to retrieve button states from PCA9555 Bank 1
-    I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, true); // Use PCA9555_BUTTONS_ADDR for reading button state
+    I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, true); // Set to read mode
     I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_SINGLE_RECEIVE);   // Receive the button states
     while (I2CMasterBusy(I2C0_BASE))
     {
     }
 
     // 3. Get the button state from the input register
-    buttonState = I2CMasterDataGet(I2C0_BASE);
+    buttonState = I2CMasterDataGet(I2C0_BASE); // Retrieve the button state
 
-    // Return the states of buttons SW1-SW4
+    // 4. Return the states of buttons SW1-SW4 (masked for the four buttons)
     return buttonState & (SW1 | SW2 | SW3 | SW4);
 }
