@@ -403,7 +403,7 @@ sched_ErrCode_t G8RTOS_KillSelf()
 
     EndCriticalSection(IBit_State);
 
-    HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // Yeilds
+    HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // Yield
 
     return NO_ERROR;
 }
