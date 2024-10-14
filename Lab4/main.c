@@ -99,14 +99,11 @@ void PeriodicPrinter(void)
 {
     static uint32_t counter = 0; // Value to print with each message
 
-    while (1)
-    {
-        G8RTOS_WaitSemaphore(&uartSemaphore);
-        UARTprintf("Periodic event triggered, value: %d\n", counter);
-        G8RTOS_SignalSemaphore(&uartSemaphore);
+    G8RTOS_WaitSemaphore(&uartSemaphore);
+    UARTprintf("Periodic event triggered, value: %d\n", counter);
+    G8RTOS_SignalSemaphore(&uartSemaphore);
 
-        counter++; // Increment the value for the next print
-    }
+    counter++; // Increment the value for the next print
 }
 
 /**
