@@ -43,7 +43,57 @@ int main(void)
 
 /************************************Test Threads***********************************/
 
+/**
+ * Thread: SpawnerThread
+ * Description: Spawns self-terminating threads dynamically.
+ */
+void SpawnerThread(void)
+{
+    static uint8_t threadCounter = 0;
+    while (1)
+    {
+        if (threadCounter < 5)
+        {
+            // Dynamically add a self-terminating thread
+            char threadName[16];
+            snprintf(threadName, 16, "TermThread %d", threadCounter);
+            G8RTOS_AddThread(&SelfTerminatingThread, 5, threadName); // Medium priority
+            threadCounter++;
+        }
 
+        sleep(5); // Sleep for 500ms before spawning another thread
+    }
+}
+
+/**
+ * Thread: SelfTerminatingThread
+ * Description: Runs for a while and then terminates itself.
+ */
+void SelfTerminatingThread(void)
+{
+    G8RTOS_WaitSemaphore(&uartSemaphore); // Protect UART access
+    UARTprintf("Self-terminating thread started!\n");
+    G8RTOS_SignalSemaphore(&uartSemaphore);
+
+    sleep(20); // Simulates some work by sleeping for 2 seconds
+
+    G8RTOS_WaitSemaphore(&uartSemaphore); // Protect UART access
+    UARTprintf("Self-terminating thread ending.\n");
+    G8RTOS_SignalSemaphore(&uartSemaphore);
+
+    G8RTOS_KillSelf();
+}
+
+/**
+ * Periodic event: PeriodicPrinter
+ * Description: Prints a message every second.
+ */
+void PeriodicPrinter(void)
+{
+    G8RTOS_WaitSemaphore(&uartSemaphore);
+    UARTprintf("Periodic event triggered every second.\n");
+    G8RTOS_SignalSemaphore(&uartSemaphore);
+}
 
 /**
  * Thread: IdleThread
