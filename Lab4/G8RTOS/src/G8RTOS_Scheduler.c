@@ -92,7 +92,8 @@ void SysTick_Handler()
         pt = pt->nextTCB;
     } while (pt != CurrentlyRunningThread);
 
-    // TODO: Traverse the periodic linked list to run which functions need to be run.
+    // Traverse the periodic linked list to run which functions need to be run.
+    
 
     HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV;
 }
