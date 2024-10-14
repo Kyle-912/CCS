@@ -44,6 +44,10 @@ void JOYSTICK_Init(void)
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_ADC0))
     {
     }
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC1);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_ADC0))
+    {
+    }
 
     // Set pins as ADC/GPIO
     GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_3 | GPIO_PIN_2);
