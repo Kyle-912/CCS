@@ -95,7 +95,8 @@ uint32_t JOYSTICK_GetXY()
 
     // Wait until conversion is complete
     while (!ADCIntStatus(ADC0_BASE, 2, 0))
-        ;
+    {
+    }
 
     // Clear ADC interrupt flag
     ADCIntClear(ADC0_BASE, 2);
