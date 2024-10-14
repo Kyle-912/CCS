@@ -255,7 +255,9 @@ void Read_JoystickPress()
             joystick_y = !joystick_y; // Toggle the joystick_y flag.
         }
 
-        // TODO: Clear the interrupt
+        // Clear the interrupt
+        GPIOIntEnable(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
+
         // Re-enable the interrupt so it can occur again.
         G8RTOS_SignalSemaphore(&sem_Joystick_Debounce);
     }
