@@ -232,7 +232,7 @@ void Read_Buttons()
         // TODO: Process the buttons and determine what actions need to be performed.
 
         // TODO: Clear the interrupt
-
+        GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
 
         // Re-enable the interrupt so it can occur again.
         G8RTOS_SignalSemaphore(&sem_PCA9555_Debounce);
