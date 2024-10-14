@@ -106,7 +106,6 @@ void PeriodicPrinter(void)
         G8RTOS_SignalSemaphore(&uartSemaphore);
 
         counter++; // Increment the value for the next print
-        sleep(10); // Sleep for 1 second (assuming 1 tick = 100ms)
     }
 }
 
