@@ -258,7 +258,7 @@ void Read_JoystickPress()
         }
 
         // Clear the interrupt
-        GPIOIntEnable(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
+        GPIOIntClear(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
 
         // Re-enable the interrupt so it can occur again.
         G8RTOS_SignalSemaphore(&sem_Joystick_Debounce);
