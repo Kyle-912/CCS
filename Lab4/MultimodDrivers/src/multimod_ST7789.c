@@ -324,6 +324,11 @@ void ST7789_Init()
 void ST7789_DrawPixel(uint16_t x, uint16_t y, uint16_t color)
 {
     // Check boundary conditions
+    if ((x >= X_MAX) || (y >= Y_MAX))
+    {
+        return;
+    }
+
     // Set window
     // Set color
 }
