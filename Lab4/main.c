@@ -103,7 +103,7 @@ void PeriodicPrinter(void)
     UARTprintf("Periodic event triggered, value: %d\n", seconds);
     G8RTOS_SignalSemaphore(&uartSemaphore);
 
-    seconds++; // Increment the value for the next print
+    seconds++;
 }
 
 /**
