@@ -369,7 +369,6 @@ sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
         pt = pt->nextTCB;
     } while (pt != CurrentlyRunningThread);
 
-    // Update the next tcb and prev tcb pointers if found
     // mark as not alive, release the semaphore it is blocked on
     // Otherwise, thread does not exist.
 }
