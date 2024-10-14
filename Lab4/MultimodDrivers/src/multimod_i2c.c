@@ -49,7 +49,7 @@ void I2C_Init(uint32_t mod)
         GPIOPinTypeI2CSCL(GPIO_PORTA_BASE, GPIO_PIN_6);
         GPIOPinTypeI2C(GPIO_PORTA_BASE, GPIO_PIN_7);
 
-        // Configure I2C SCL speed, set as master
+        // Configure I2C1 SCL speed, set as master
         I2CMasterInitExpClk(mod, SysCtlClockGet(), false);
     }
     else if (mod == I2C0_BASE)
@@ -72,7 +72,7 @@ void I2C_Init(uint32_t mod)
         GPIOPinTypeI2CSCL(GPIO_PORTB_BASE, GPIO_PIN_2);
         GPIOPinTypeI2C(GPIO_PORTB_BASE, GPIO_PIN_3);
 
-        // Initialize I2C0 as master
+        // Configure I2C0 SCL speed, set as master
         I2CMasterInitExpClk(mod, SysCtlClockGet(), false); // false for 100Kbps standard mode
     }
 }
