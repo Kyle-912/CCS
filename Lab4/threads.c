@@ -57,10 +57,13 @@ void Idle_Thread(void)
 void CamMove_Thread(void)
 {
     // Initialize / declare any variables here
+    int16_t x_val, y_val;
 
     while (1)
     {
         // Get result from joystick
+        x_val = JOYSTICK_GetX();
+        y_val = JOYSTICK_GetY();
 
         // If joystick axis within deadzone, set to 0. Otherwise normalize it.
 
