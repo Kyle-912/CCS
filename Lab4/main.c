@@ -94,6 +94,7 @@ void SelfTerminatingThread(void)
  */
 void PeriodicPrinter(void)
 {
+    uint8_t seconds = 0;
     while (1)
     {
         G8RTOS_WaitSemaphore(&uartSemaphore); // Protect UART access
