@@ -33,20 +33,20 @@ void MultimodButtons_Init()
     I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_START);       // Send start condition
     while (I2CMasterBusy(I2C0_BASE))
     {
-    } // Wait for transmission to complete
+    }
 
     // Configure all pins in Bank 1 as inputs (0xFF means all input)
     I2CMasterDataPut(I2C0_BASE, 0xFF);                             // Set all bits of Bank 1 as inputs
     I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH); // Send finish condition
     while (I2CMasterBusy(I2C0_BASE))
     {
-    } // Wait for transmission to complete
+    }
 
     // 3. Configure interrupt pin connected to PCA9555 INT pin (PE4)
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE); // Enable clock to Port E
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOE))
     {
-    }                                                                          // Wait for Port E to be ready
+    }
     GPIOPinTypeGPIOInput(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN);              // Set PE4 as input for interrupt
     GPIOIntTypeSet(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN, GPIO_FALLING_EDGE); // Set interrupt to trigger on falling edge
     GPIOIntEnable(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN);                     // Enable GPIO interrupt on PE4
