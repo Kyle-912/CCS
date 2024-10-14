@@ -50,6 +50,8 @@ void JOYSTICK_Init(void)
 
     // Configure ADC sequences
     ADCSequenceConfigure(ADC0_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
+    ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH0);                            // X-axis on AIN0 (PE3)
+    ADCSequenceStepConfigure(ADC0_BASE, 3, 1, ADC_CTL_CH1 | ADC_CTL_IE | ADC_CTL_END); // Y-axis on AIN1 (PE2), with interrupt and end flag
 
     // Enable ADC sequence
 }
