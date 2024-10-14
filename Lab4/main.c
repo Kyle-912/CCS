@@ -55,9 +55,12 @@ void SpawnerThread(void)
     {
         if (threadCounter < 5)
         {
+            // Create a unique thread name for the new thread
+            char threadName[16] = "TermThread ";
+            threadName[11] = '0' + threadCounter; // Append thread number
+            threadName[12] = '\0';
+
             // Dynamically add a self-terminating thread
-            char threadName[16];
-            snprintf(threadName, 16, "TermThread %d", threadCounter);
             G8RTOS_AddThread(&SelfTerminatingThread, 5, threadName); // Medium priority
             threadCounter++;
         }
