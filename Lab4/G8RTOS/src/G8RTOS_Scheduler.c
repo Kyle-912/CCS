@@ -383,7 +383,15 @@ sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
 // Return: sched_ErrCode_t
 sched_ErrCode_t G8RTOS_KillSelf()
 {
+    IBit_State = StartCriticalSection();
+
     // Check if there is only one thread
+    if (NumberOfThreads == 1)
+    {
+        EndCriticalSection(IBit_State);
+        return CANNOT_KILL_LAST_THREAD;
+    }
+    
     // Else, mark this thread as not alive.
 }
 
