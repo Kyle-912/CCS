@@ -24,27 +24,31 @@
 // Return: void
 void MultimodButtons_Init()
 {
-    // 1. Use the common I2C_Init function to initialize I2C0 (PB2 for SCL, PB3 for SDA)
+    // 1. Initialize I2C0 (PB2 for SCL, PB3 for SDA)
     I2C_Init(I2C0_BASE);
 
-    // 2. Set PCA9555 GPIO bank 1 to input mode for buttons
-    I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, false); // Use PCA9555_BUTTONS_ADDR for buttons
-    I2CMasterDataPut(I2C0_BASE, 0x06);                             // Address of configuration register for Bank 1
-    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_START);  // Send start command
+    // 2. Set PCA9555 GPIO bank 1 to input mode for buttons using BUTTONS_PCA9555_GPIO_ADDR for configuration
+    I2CMasterSlaveAddrSet(I2C0_BASE, BUTTONS_PCA9555_GPIO_ADDR, false); // Use BUTTONS_PCA9555_GPIO_ADDR for configuration
+    I2CMasterDataPut(I2C0_BASE, 0x06);                                  // Select Configuration Register for Port 0 (Bank 1)
+    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_START);       // Send start condition
     while (I2CMasterBusy(I2C0_BASE))
     {
-    }
+    } // Wait for transmission to complete
 
-    // Write 0xFF to configure all pins in Bank 1 as inputs
-    I2CMasterDataPut(I2C0_BASE, 0xFF);                             // All input configuration
-    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH); // Send finish command
+    // Configure all pins in Bank 1 as inputs (0xFF means all input)
+    I2CMasterDataPut(I2C0_BASE, 0xFF);                             // Set all bits of Bank 1 as inputs
+    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH); // Send finish condition
     while (I2CMasterBusy(I2C0_BASE))
     {
-    }
+    } // Wait for transmission to complete
 
     // 3. Configure interrupt pin connected to PCA9555 INT pin (PE4)
-    GPIOPinTypeGPIOInput(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN);              // Set PE4 as input
-    GPIOIntTypeSet(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN, GPIO_FALLING_EDGE); // Interrupt on falling edge
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE); // Enable clock to Port E
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOE))
+    {
+    }                                                                          // Wait for Port E to be ready
+    GPIOPinTypeGPIOInput(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN);              // Set PE4 as input for interrupt
+    GPIOIntTypeSet(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN, GPIO_FALLING_EDGE); // Set interrupt to trigger on falling edge
     GPIOIntEnable(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN);                     // Enable GPIO interrupt on PE4
     IntEnable(INT_GPIOE);                                                      // Enable Port E interrupt in NVIC
 
