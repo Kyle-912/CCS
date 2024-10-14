@@ -393,10 +393,10 @@ sched_ErrCode_t G8RTOS_KillSelf()
     } else
     {
         CurrentlyRunningThread->alive = false;
+
+        CurrentlyRunningThread->prevTCB->nextTCB = CurrentlyRunningThread->nextTCB;
+        CurrentlyRunningThread->nextTCB->prevTCB = CurrentlyRunningThread->prevTCB;
     }
-
-
-    // Else, mark this thread as not alive.
 }
 
 // sleep
