@@ -30,6 +30,11 @@ void JOYSTICK_Init(void)
     SysCtlPeripheralDisable(SYSCTL_PERIPH_ADC0);
 
     // Enable gpio port
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOE))
+    {
+    }
+    
     // Enable adc module
 
     // Set pins as ADC
