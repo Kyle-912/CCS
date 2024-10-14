@@ -296,6 +296,7 @@ sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t pr
         newTable[i] = oldTable[i];
     }
     newTable[IRQn + 16] = (uint32_t)AthreadToAdd;
+    HWREG(NVIC_VTABLE) = newVTORTable;
 
     // Set priority.
     IntPrioritySet(IRQn, priority);
