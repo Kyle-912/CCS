@@ -317,7 +317,7 @@ sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t pr
     IntPrioritySet(IRQn, priority);
 
     // Enable the interrupt.
-    NVIC_EnableIRQ(IRQn);
+    HWREG(NVIC_EN0) |= (1 << IRQn);
 
     // End the critical section.
     EndCriticalSection(IBit_State);
