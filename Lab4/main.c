@@ -16,7 +16,9 @@
 #include "./threads.h"
 
 /************************************MAIN*******************************************/
-
+void SpawnerThread(void); // New thread that spawns other threads
+void SelfTerminatingThread(void);
+void PeriodicPrinter(void);
 void IdleThread(void);
 semaphore_t uartSemaphore;
 int main(void)
