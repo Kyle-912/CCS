@@ -29,7 +29,7 @@ int main(void)
     G8RTOS_AddThread(&Cube_Thread, 2, "CubeThread");
     G8RTOS_AddThread(&CamMove_Thread, 1, "CamMoveThread");
     G8RTOS_AddThread(&Read_Buttons, 1, "ReadButtons");
-    G8RTOS_AddThread(&Read_JoystickPress, 1, "ReadJoystickPress");
+    G8RTOS_AddThread(&Read_JoystickPress, 1, "JoystickPress");
 
     G8RTOS_InitSemaphore(&sem_I2CA, 1);
     G8RTOS_InitSemaphore(&sem_SPIA, 1);
