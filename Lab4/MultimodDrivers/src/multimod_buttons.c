@@ -28,21 +28,19 @@ void MultimodButtons_Init()
     I2C_Init(I2C0_BASE);
 
     // 2. Set PCA9555 GPIO bank 1 to input mode for buttons
-    I2CMasterSlaveAddrSet(I2C0_BASE, BUTTONS_PCA9555_GPIO_ADDR, false); // PCA9555 address, write mode
+    I2CMasterSlaveAddrSet(I2C0_BASE, BUTTONS_PCA9555_GPIO_ADDR, false); // PCA9555 address (0x23), write mode
     I2CMasterDataPut(I2C0_BASE, 0x06);                                  // Address of configuration register for Bank 1
     I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_START);       // Send start command
     while (I2CMasterBusy(I2C0_BASE))
-    {
-    }
+        ; // Wait until transmission is complete
 
     // Write 0xFF to configure all pins in Bank 1 as inputs
     I2CMasterDataPut(I2C0_BASE, 0xFF);                             // All input configuration
     I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH); // Send finish command
     while (I2CMasterBusy(I2C0_BASE))
-    {
-    }
+        ; // Wait until transmission is done
 
-    // 3. Configure interrupt pin connected to PCA9555 INT pin (e.g., PE4)
+    // 3. Configure interrupt pin connected to PCA9555 INT pin (PE4)
     GPIOPinTypeGPIOInput(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN);              // Set PE4 as input
     GPIOIntTypeSet(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN, GPIO_FALLING_EDGE); // Interrupt on falling edge
     GPIOIntEnable(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN);                     // Enable GPIO interrupt on PE4
