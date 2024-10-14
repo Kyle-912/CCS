@@ -371,6 +371,9 @@ sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
 
     // mark as not alive, release the semaphore it is blocked on
     // Otherwise, thread does not exist.
+    EndCriticalSection(IBit_State);
+
+    
 }
 
 // G8RTOS_KillSelf
