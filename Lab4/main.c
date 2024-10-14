@@ -16,7 +16,7 @@
 #include "./threads.h"
 
 /************************************MAIN*******************************************/
-void SpawnerThread(void); // New thread that spawns other threads
+void SpawnerThread(void);
 void SelfTerminatingThread(void);
 void PeriodicPrinter(void);
 void IdleThread(void);
@@ -31,7 +31,7 @@ int main(void)
     // Add threads, semaphores, here
     G8RTOS_InitSemaphore(&uartSemaphore, 1);
 
-    G8RTOS_AddThread(&IdleThread, 255, "IdleThread");       // Idle thread with the lowest priority
+    G8RTOS_AddThread(&IdleThread, 255, "IdleThread"); // Idle thread with the lowest priority
 
     G8RTOS_Launch();
     while (1)
