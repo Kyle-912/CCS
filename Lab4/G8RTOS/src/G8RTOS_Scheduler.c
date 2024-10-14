@@ -288,7 +288,18 @@ sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t pr
         return HWI_PRIORITY_INVALID;
     }
     // Set corresponding index in interrupt vector table to handler.
+    uint32_t newVTORTable = 0x20000000;
+    uint32_t *newTable = (uint32_t *)newVTORTable;
+    uint32_t *oldTable = (uint32_t *)0;
 
+    // Copy the existing vector table to SRAM
+    for (int i = 0; i < 155; i++)
+    {
+        newTable[i] = oldTable[i];
+    }
+
+    // Update the vector table to point to the new handler in SRAM
+    newTable[IRQn + 16] = (uint32_t)AthreadToAdd;
 
     // Set priority.
     IntPrioritySet(IRQn, priority);
