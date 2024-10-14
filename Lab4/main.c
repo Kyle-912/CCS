@@ -27,6 +27,8 @@ int main(void)
 
     G8RTOS_AddThread(&IdleThread, 255, "IdleThread");    // Idle thread with the lowest priority
 
+
+
     G8RTOS_Launch();
     while (1)
     {
