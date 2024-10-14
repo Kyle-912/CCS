@@ -60,7 +60,7 @@ void CamMove_Thread(void)
     int16_t x_val, y_val;
     int16_t DEADZONE = 1000;
 
-        while (1)
+    while (1)
     {
         // Get result from joystick
         x_val = JOYSTICK_GetX();
