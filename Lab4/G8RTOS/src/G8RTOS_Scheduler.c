@@ -288,7 +288,10 @@ sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t pr
         return HWI_PRIORITY_INVALID;
     }
     // Set corresponding index in interrupt vector table to handler.
+
+
     // Set priority.
+    IntPrioritySet(IRQn, priority);
     // Enable the interrupt.
     // End the critical section.
 }
