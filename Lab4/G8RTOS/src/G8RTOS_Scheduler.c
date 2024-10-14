@@ -336,6 +336,8 @@ sched_ErrCode_t G8RTOS_Add_PeriodicEvent(void (*PThreadToAdd)(void), uint32_t pe
 sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
 {
     // Start critical section
+    IBit_State = StartCriticalSection();
+    
     // Check if there is only one thread, return if so
     // Traverse linked list, find thread to kill
     // Update the next tcb and prev tcb pointers if found
