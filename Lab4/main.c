@@ -93,17 +93,19 @@ void SelfTerminatingThread(void)
 
 /**
  * Thread: PeriodicPrinter
- * Description: Prints a message every second.
+ * Description: Prints a message every second with an incrementing value.
  */
 void PeriodicPrinter(void)
 {
-    uint8_t seconds = 0;
+    static uint32_t counter = 0; // Value to print with each message
+
     while (1)
     {
         G8RTOS_WaitSemaphore(&uartSemaphore); // Protect UART access
-        UARTprintf("Periodic event triggered every second.\n");
+        UARTprintf("Periodic event triggered, value: %d\n", counter);
         G8RTOS_SignalSemaphore(&uartSemaphore);
 
+        counter++; // Increment the value for the next print
         sleep(10); // Sleep for 1 second (assuming 1 tick = 100ms)
     }
 }
