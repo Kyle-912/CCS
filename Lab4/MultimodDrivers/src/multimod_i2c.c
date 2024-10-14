@@ -52,9 +52,9 @@ void I2C_Init(uint32_t mod)
         // Configure I2C SCL speed, set as master
         I2CMasterInitExpClk(mod, SysCtlClockGet(), false);
     }
-    else if (mod == I2C0_BASE) // Add support for I2C0
+    else if (mod == I2C0_BASE)
     {
-        // Enable clock to relevant I2C0 and GPIO modules (for I2C0)
+        // Enable clock to relevant I2C0 and GPIO modules
         SysCtlPeripheralReset(SYSCTL_PERIPH_I2C0);
         SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C0);
         while (!SysCtlPeripheralReady(SYSCTL_PERIPH_I2C0))
