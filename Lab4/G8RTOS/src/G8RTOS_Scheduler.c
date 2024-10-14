@@ -358,6 +358,11 @@ sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
 
             // Mark thread as not alive, release the semaphore it is blocked on
             pt->alive = false;
+            if (pt->blocked != 0)
+            {
+                G8RTOS_SignalSemaphore(pt->blocked); // Release the semaphore the thread is blocked on
+                pt->blocked = 0;                     // Clear the blocked semaphore
+            }
 
             NumberOfThreads--;
 
