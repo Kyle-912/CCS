@@ -25,7 +25,6 @@ int main(void)
 
     // Add threads, semaphores, FIFOs here
 
-    G8RTOS_AddThread(&IdleThread, 255, "IdleThread"); // Idle thread with the lowest priority
 
     G8RTOS_InitSemaphore(&sem_I2CA, 1);
     G8RTOS_InitSemaphore(&sem_SPIA, 1);
@@ -43,18 +42,3 @@ int main(void)
 }
 
 /************************************MAIN*******************************************/
-
-/************************************Test Threads***********************************/
-
-/**
- * Thread: IdleThread
- * Description: Idle thread with the lowest priority. Does nothing.
- */
-void IdleThread(void)
-{
-    while (1)
-    {
-    }
-}
-
-/************************************Test Threads***********************************/
