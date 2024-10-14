@@ -354,7 +354,7 @@ sched_ErrCode_t G8RTOS_Add_PeriodicEvent(void (*PThreadToAdd)(void), uint32_t pe
     newPTCB->period = period;
 
     // Set execute time
-    newPTCB->executeTime = execution + SystemTime;
+    newPTCB->executeTime = execution;
 
     // Increment number of PThreads
     NumberOfPThreads++;
