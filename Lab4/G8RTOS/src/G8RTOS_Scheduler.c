@@ -390,7 +390,8 @@ sched_ErrCode_t G8RTOS_KillSelf()
     {
         EndCriticalSection(IBit_State);
         return CANNOT_KILL_LAST_THREAD;
-    } else
+    }
+    else // Else, mark this thread as not alive.
     {
         CurrentlyRunningThread->alive = false;
 
