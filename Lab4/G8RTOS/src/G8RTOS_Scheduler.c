@@ -287,6 +287,7 @@ sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t pr
         EndCriticalSection(IBit_State);
         return HWI_PRIORITY_INVALID;
     }
+    // Set corresponding index in interrupt vector table to handler.
     uint32_t newVTORTable = 0x20000000;
     uint32_t *newTable = (uint32_t *)newVTORTable;
     uint32_t *oldTable = (uint32_t *)0;
