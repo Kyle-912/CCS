@@ -40,6 +40,10 @@ void JOYSTICK_Init(void)
     }
 
     // Enable adc module
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_ADC0))
+    {
+    }
 
     // Set pins as ADC
 
