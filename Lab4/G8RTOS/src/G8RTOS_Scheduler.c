@@ -184,7 +184,7 @@ void G8RTOS_Scheduler()
     }
 
     // Fallback to idle thread if no eligible thread is found
-    if (highestPriorityThread == NULL)
+    if (highestPriorityThread == 0)
     {
         // Find the idle thread with the lowest priority (assuming it's always alive and never blocked)
         for (int i = 0; i < NumberOfThreads; i++)
@@ -198,7 +198,7 @@ void G8RTOS_Scheduler()
     }
 
     // Set the currently running thread to the highest priority eligible thread found
-    if (highestPriorityThread != NULL)
+    if (highestPriorityThread != 0)
     {
         CurrentlyRunningThread = highestPriorityThread;
     }
