@@ -337,8 +337,14 @@ sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
 {
     // Start critical section
     IBit_State = StartCriticalSection();
-    
+
     // Check if there is only one thread, return if so
+    if (NumberOfThreads == 1)
+    {
+        EndCriticalSection(IBit_State);
+        return CANNOT_KILL_LAST_THREAD;
+    }
+    
     // Traverse linked list, find thread to kill
     // Update the next tcb and prev tcb pointers if found
     // mark as not alive, release the semaphore it is blocked on
