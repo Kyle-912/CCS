@@ -306,7 +306,6 @@ sched_ErrCode_t G8RTOS_Add_APeriodicEvent(void (*AthreadToAdd)(void), uint8_t pr
 
     // End the critical section.
     EndCriticalSection(IBit_State);
-
     return NO_ERROR;
 }
 
@@ -369,10 +368,8 @@ sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
         pt = pt->nextTCB;
     } while (pt != CurrentlyRunningThread);
 
-    // mark as not alive, release the semaphore it is blocked on
     // Otherwise, thread does not exist.
     EndCriticalSection(IBit_State);
-
     return THREAD_DOES_NOT_EXIST;
 }
 
