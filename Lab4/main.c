@@ -32,9 +32,9 @@ int main(void)
     G8RTOS_AddThread(&Read_JoystickPress, 1, "JoystickPress");
 
     G8RTOS_AddPeriodicEvent(&Print_WorldCoords, 100, 0);
-    G8RTOS_AddPeriodicEvent(&Get_Joystick, 50, 0);
+    G8RTOS_AddPeriodicEvent(&Get_Joystick, 100, 0);
 
-    
+
 
     G8RTOS_InitSemaphore(&sem_I2CA, 1);
     G8RTOS_InitSemaphore(&sem_SPIA, 1);
