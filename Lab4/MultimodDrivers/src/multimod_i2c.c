@@ -66,7 +66,7 @@ void I2C_Init(uint32_t mod)
         {
         }
 
-        // Configure I2C0 pins (PB2 for SCL, PB3 for SDA)
+        // Configure pins for I2C0 module
         GPIOPinConfigure(GPIO_PB2_I2C0SCL);
         GPIOPinConfigure(GPIO_PB3_I2C0SDA);
         GPIOPinTypeI2CSCL(GPIO_PORTB_BASE, GPIO_PIN_2);
