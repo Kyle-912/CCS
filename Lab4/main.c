@@ -25,13 +25,16 @@ int main(void)
 
     // Add threads, semaphores, FIFOs here
 
-    G8RTOS_AddThread(&IdleThread, 255, "IdleThread");    // Idle thread with the lowest priority
+    G8RTOS_AddThread(&IdleThread, 255, "IdleThread"); // Idle thread with the lowest priority
 
-    G8RTOS_InitSemaphore(&sem_I2CA, 1);              // Initialize I2C semaphore
-    G8RTOS_InitSemaphore(&sem_SPIA, 1);              // Initialize SPI semaphore
-    G8RTOS_InitSemaphore(&sem_PCA9555_Debounce, 1);  // PCA9555 button debounce semaphore
-    G8RTOS_InitSemaphore(&sem_Joystick_Debounce, 1); // Joystick press debounce semaphore
+    G8RTOS_InitSemaphore(&sem_I2CA, 1);
+    G8RTOS_InitSemaphore(&sem_SPIA, 1);
+    G8RTOS_InitSemaphore(&sem_PCA9555_Debounce, 1);
+    G8RTOS_InitSemaphore(&sem_Joystick_Debounce, 1);
     G8RTOS_InitSemaphore(&sem_KillCube, 1);
+
+    G8RTOS_InitFIFO(JOYSTICK_FIFO);
+    G8RTOS_InitFIFO(SPAWNCOOR_FIFO);
 
     G8RTOS_Launch();
     while (1)
@@ -42,8 +45,6 @@ int main(void)
 /************************************MAIN*******************************************/
 
 /************************************Test Threads***********************************/
-
-
 
 /**
  * Thread: IdleThread
