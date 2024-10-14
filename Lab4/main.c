@@ -97,13 +97,13 @@ void SelfTerminatingThread(void)
  */
 void PeriodicPrinter(void)
 {
-    static uint32_t counter = 0; // Value to print with each message
+    static uint32_t seconds = 0;
 
     G8RTOS_WaitSemaphore(&uartSemaphore);
-    UARTprintf("Periodic event triggered, value: %d\n", counter);
+    UARTprintf("Periodic event triggered, value: %d\n", seconds);
     G8RTOS_SignalSemaphore(&uartSemaphore);
 
-    counter++; // Increment the value for the next print
+    seconds++; // Increment the value for the next print
 }
 
 /**
