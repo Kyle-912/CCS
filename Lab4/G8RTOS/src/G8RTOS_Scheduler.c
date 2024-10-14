@@ -366,7 +366,7 @@ sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
 
             NumberOfThreads--;
 
-            EndCriticalSection(IBit_State); // End critical section
+            EndCriticalSection(IBit_State);
             return NO_ERROR;
         }
 
