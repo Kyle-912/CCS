@@ -167,9 +167,11 @@ void G8RTOS_Scheduler()
     uint16_t highestPriority = 256;   // Worse than lowest possible priority (255)
 
     // Traverse the entire list of TCBs to find the highest priority thread that is ready to run
-    do
+    for (int i = 0; i < NumberOfThreads; i++)
     {
-        // Check if the thread is eligible to run
+        tcb_t *pt = &threadControlBlocks[i]; // Access each thread from the array
+
+        // Check if the thread is eligible to run (alive, not blocked, not asleep)
         if (pt->alive && !pt->blocked && !pt->asleep)
         {
             // If the thread has a higher priority (lower number) than the current highest, update
@@ -179,18 +181,27 @@ void G8RTOS_Scheduler()
                 highestPriorityThread = pt;
             }
         }
+    }
 
-        pt = pt->nextTCB; // Move to the next thread in the linked list
-    } while (pt != CurrentlyRunningThread); // Stop when we loop back to the starting thread
-
-    // If no eligible thread is found, fallback to the currently running thread
-    if (highestPriorityThread == 0)
+    // Fallback to idle thread if no eligible thread is found
+    if (highestPriorityThread == NULL)
     {
-        highestPriorityThread = CurrentlyRunningThread; // Shouldn't execute unless there is no idle thread
+        // Find the idle thread with the lowest priority (assuming it's always alive and never blocked)
+        for (int i = 0; i < NumberOfThreads; i++)
+        {
+            if (threadControlBlocks[i].priority == 255) // Assuming idle thread has priority 255
+            {
+                highestPriorityThread = &threadControlBlocks[i];
+                break;
+            }
+        }
     }
 
     // Set the currently running thread to the highest priority eligible thread found
-    CurrentlyRunningThread = highestPriorityThread;
+    if (highestPriorityThread != NULL)
+    {
+        CurrentlyRunningThread = highestPriorityThread;
+    }
 }
 
 // G8RTOS_AddThread
