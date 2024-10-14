@@ -329,6 +329,7 @@ sched_ErrCode_t G8RTOS_Add_PeriodicEvent(void (*PThreadToAdd)(void), uint32_t pe
     }
 
     // Check if there is no PThread. Initialize and set the first PThread.
+    ptcb_t *newPTCB = &pthreadControlBlocks[NumberOfPThreads];
 
     // Subsequent PThreads should be added, inserted similarly to a doubly-linked linked list
 
