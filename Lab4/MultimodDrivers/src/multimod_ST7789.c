@@ -117,7 +117,18 @@ void ST7789_SetWindow(int16_t x, int16_t y, int16_t w, int16_t h)
     }
 
     // Set column address
+    ST7789_WriteCommand(ST7789_CASET_ADDR); // Column address set command
+    ST7789_WriteData(0x00);
+    ST7789_WriteData(x); // Starting X coordinate
+    ST7789_WriteData(0x00);
+    ST7789_WriteData(x + w - 1); // Ending X coordinate
+
     // Set row address
+    ST7789_WriteCommand(ST7789_RASET_ADDR); // Row address set command
+    ST7789_WriteData(0x00);
+    ST7789_WriteData(y); // Starting Y coordinate
+    ST7789_WriteData(0x00);
+    ST7789_WriteData(y + h - 1); // Ending Y coordinate
 
     // Set register to write to as memory
     ST7789_WriteCommand(ST7789_RAMWR_ADDR);
