@@ -98,7 +98,11 @@ void Cube_Thread(void)
     cube_t cube;
 
     /*************YOUR CODE HERE*************/
-    // TODO: Get spawn coordinates from FIFO, set cube.x, cube.y, cube.z
+    // Get spawn coordinates from FIFO, set cube.x, cube.y, cube.z
+    uint32_t coordinates = G8RTOS_ReadFIFO(SPAWNCOOR_FIFO);
+    cube.x_pos = (coordinates >> 16) & 0xFFFF; // Extract x coordinate
+    cube.y_pos = coordinates & 0xFFFF;         // Extract y coordinate
+    cube.z_pos = 50;
 
     cube.width = 50;
     cube.height = 50;
