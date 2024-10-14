@@ -54,6 +54,7 @@ void JOYSTICK_Init(void)
     ADCSequenceStepConfigure(ADC0_BASE, 3, 1, ADC_CTL_CH1 | ADC_CTL_IE | ADC_CTL_END); // Y-axis on PE2, with interrupt and end flag
 
     // Enable ADC sequence
+    ADCSequenceEnable(ADC0_BASE, 3);
 }
 
 // JOYSTICK_IntEnable
