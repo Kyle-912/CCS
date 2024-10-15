@@ -34,10 +34,6 @@ void JOYSTICK_Init(void)
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOE))
     {
     }
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
-    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOD))
-    {
-    }
 
     // Enable adc module
     SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0);
@@ -45,17 +41,16 @@ void JOYSTICK_Init(void)
     {
     }
 
-    // Set pins as ADC/GPIO
+    // Set pins as ADC
     GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_3 | GPIO_PIN_2);
-    GPIOPinTypeGPIOInput(GPIO_PORTD_BASE, GPIO_PIN_2);
 
     // Configure ADC sequences
-    ADCSequenceConfigure(ADC0_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
-    ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH0);                            // X-axis on PE3
-    ADCSequenceStepConfigure(ADC0_BASE, 3, 1, ADC_CTL_CH1 | ADC_CTL_IE | ADC_CTL_END); // Y-axis on PE2, with interrupt and end flag
+    ADCSequenceConfigure(ADC0_BASE, 2, ADC_TRIGGER_PROCESSOR, 0);
+    ADCSequenceStepConfigure(ADC0_BASE, 2, 0, ADC_CTL_CH0);                            // X-axis on PE3
+    ADCSequenceStepConfigure(ADC0_BASE, 2, 1, ADC_CTL_CH1 | ADC_CTL_IE | ADC_CTL_END); // Y-axis on PE2, with interrupt and end flag
 
     // Enable ADC sequence
-    ADCSequenceEnable(ADC0_BASE, 3);
+    ADCSequenceEnable(ADC0_BASE, 2);
 }
 
 // JOYSTICK_IntEnable

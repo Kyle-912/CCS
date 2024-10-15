@@ -253,7 +253,7 @@ void Read_Buttons()
         GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
 
         // Re-enable the interrupt so it can occur again.
-        G8RTOS_SignalSemaphore(&sem_PCA9555_Debounce);
+        GPIOIntEnable(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
     }
 }
 
@@ -279,7 +279,7 @@ void Read_JoystickPress()
         GPIOIntClear(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
 
         // Re-enable the interrupt so it can occur again.
-        G8RTOS_SignalSemaphore(&sem_Joystick_Debounce);
+        GPIOIntEnable(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
     }
 }
 
