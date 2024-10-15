@@ -38,8 +38,8 @@ int main(void)
 
     G8RTOS_InitSemaphore(&sem_I2CA, 1);
     G8RTOS_InitSemaphore(&sem_SPIA, 1);
-    G8RTOS_InitSemaphore(&sem_PCA9555_Debounce, 1);
-    G8RTOS_InitSemaphore(&sem_Joystick_Debounce, 1);
+    G8RTOS_InitSemaphore(&sem_PCA9555_Debounce, 0);
+    G8RTOS_InitSemaphore(&sem_Joystick_Debounce, 0);
     G8RTOS_InitSemaphore(&sem_KillCube, 1);
 
     G8RTOS_InitFIFO(JOYSTICK_FIFO);
