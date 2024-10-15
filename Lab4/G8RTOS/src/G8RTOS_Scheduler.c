@@ -269,7 +269,7 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
     }
     else
     {
-        // Add to the end of the list
+        // Add to the end of the list TODO: dont't use NumberOfThreads because killing threads breaks that method
         tcb_t *lastTCB = &threadControlBlocks[NumberOfThreads - 1];
         tcb_t *firstTCB = &threadControlBlocks[0];
 
