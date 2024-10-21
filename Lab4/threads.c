@@ -287,9 +287,15 @@ void Read_JoystickPress()
 
 void Print_WorldCoords(void)
 {
+    int32_t x = (int32_t)(world_camera_pos.x * 100);
+    int32_t y = (int32_t)(world_camera_pos.y * 100);
+    int32_t z = (int32_t)(world_camera_pos.z * 100);
     // Print the camera position through UART to display on console.
     G8RTOS_WaitSemaphore(&sem_I2CA);
-    UARTprintf("Camera Pos: X=%.2f, Y=%.2f, Z=%.2f\n", world_camera_pos.x, world_camera_pos.y, world_camera_pos.z);
+    UARTprintf("Camera Pos: X=%d.%02d, Y=%d.%02d, Z=%d.%02d\n",
+               x / 100, abs(x % 100),
+               y / 100, abs(y % 100),
+               z / 100, abs(z % 100));
     G8RTOS_SignalSemaphore(&sem_I2CA);
 }
 
