@@ -27,27 +27,12 @@ void MultimodButtons_Init()
     // 1. Initialize I2C0 (PB2 for SCL, PB3 for SDA)
     I2C_Init(I2C0_BASE);
 
-    // 2. Configure PCA9555 Ports 0 and 1 as inputs (using 4-byte sequence)
-    I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, false); // Address 0x23 for configuration
+    // 2. Configure PCA9555 Ports 0 and 1 as inputs
+    // Include the 0x06 register address in the I2C_WriteMultiple call
+    uint8_t configData[3] = {0x06, 0xFF, 0xFF}; // 0x06 is the config register, set all pins as inputs
 
-    // Start burst transmission to write 4 bytes
-    I2CMasterDataPut(I2C0_BASE, 0x06);                            // Command byte: Configuration Register 0x06
-    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_START); // Start condition
-    while (I2CMasterBusy(I2C0_BASE))
-    {
-    }
-
-    I2CMasterDataPut(I2C0_BASE, 0xFF);                           // Data byte 1: Set all Port 0 pins as inputs
-    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_CONT); // Continue condition
-    while (I2CMasterBusy(I2C0_BASE))
-    {
-    }
-
-    I2CMasterDataPut(I2C0_BASE, 0xFF);                             // Data byte 2: Set all Port 1 pins as inputs
-    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH); // Finish condition
-    while (I2CMasterBusy(I2C0_BASE))
-    {
-    }
+    // Write the configuration data using I2C_WriteMultiple
+    I2C_WriteMultiple(I2C0_BASE, PCA9555_BUTTONS_ADDR, configData, 3);
 
     // 3. Configure the interrupt pin connected to PCA9555 INT
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE); // Enable clock to Port E
@@ -55,7 +40,6 @@ void MultimodButtons_Init()
     {
     }
 
-    // Use BUTTONS_INT_PIN define instead of GPIO_PIN_4
     GPIOPinTypeGPIOInput(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN);              // Set as input
     GPIOIntTypeSet(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN, GPIO_FALLING_EDGE); // Falling edge trigger
     GPIOIntEnable(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN);                     // Enable interrupt
@@ -72,24 +56,13 @@ uint8_t MultimodButtons_Get()
 {
     uint8_t buttonState = 0;
 
-    // 1. Set the PCA9555 address to select Input Register 0 (Port 0)
-    I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, false); // Address 0x21 for reading input
-    I2CMasterDataPut(I2C0_BASE, 0x00);                             // Command byte: Select Input Register 0
-    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_SINGLE_SEND);       // Send command
-    while (I2CMasterBusy(I2C0_BASE))
-    {
-    }
+    // 1. Write to select Input Register 0 (Port 0) using I2C_WriteSingle
+    uint8_t inputRegister = 0x00; // Command byte for Input Register 0
+    I2C_WriteSingle(I2C0_BASE, PCA9555_BUTTONS_ADDR, inputRegister);
 
-    // 2. Switch to read mode to retrieve button states
-    I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, true); // Set to read mode
-    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_SINGLE_RECEIVE);   // Receive data
-    while (I2CMasterBusy(I2C0_BASE))
-    {
-    }
+    // 2. Read the input register using I2C_ReadSingle
+    buttonState = I2C_ReadSingle(I2C0_BASE, PCA9555_BUTTONS_ADDR);
 
-    // 3. Retrieve the button state from Input Register 0
-    buttonState = I2CMasterDataGet(I2C0_BASE);
-
-    // 4. Mask only the relevant bits for SW1-SW4 (bits 1-4)
+    // 3. Mask only the relevant bits for SW1-SW4 (bits 1-4)
     return buttonState & (SW1 | SW2 | SW3 | SW4);
 }
