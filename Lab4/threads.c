@@ -289,7 +289,7 @@ void Print_WorldCoords(void)
 {
     // Print the camera position through UART to display on console.
     G8RTOS_WaitSemaphore(&sem_I2CA);
-    UARTprintf("Camera Pos: X=%d, Y=%d, Z=%d\n", world_camera_pos.x, world_camera_pos.y, world_camera_pos.z);
+    UARTprintf("Camera Pos: X=%.2f, Y=%.2f, Z=%.2f\n", world_camera_pos.x, world_camera_pos.y, world_camera_pos.z);
     G8RTOS_SignalSemaphore(&sem_I2CA);
 }
 
