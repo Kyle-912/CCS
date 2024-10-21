@@ -34,7 +34,7 @@ int main(void)
     G8RTOS_Add_PeriodicEvent(&Get_Joystick, 100, 0);
 
     G8RTOS_Add_APeriodicEvent(GPIOE_Handler, 1, INT_GPIOE);
-    G8RTOS_Add_APeriodicEvent(GPIOD_Handler, 2, INT_GPIOD);
+    G8RTOS_Add_APeriodicEvent(GPIOD_Handler, 1, INT_GPIOD);
 
     G8RTOS_InitSemaphore(&sem_I2CA, 1);
     G8RTOS_InitSemaphore(&sem_SPIA, 1);
