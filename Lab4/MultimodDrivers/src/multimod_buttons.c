@@ -82,17 +82,13 @@ uint8_t MultimodButtons_Get()
 
     // 2. Switch to read mode to retrieve button states
     I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, true); // Set to read mode
-    // 3. Read data from Input Register 0 (Port 0)
-    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_RECEIVE_START); // Start receiving
+    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_SINGLE_RECEIVE);   // Receive data
     while (I2CMasterBusy(I2C0_BASE))
-        ;                                      // Wait until ready
-    buttonState = I2CMasterDataGet(I2C0_BASE); // Store data from Port 0
+    {
+    }
 
-    // 4. Read data from Input Register 1 (Port 1)
-    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_RECEIVE_FINISH); // Finish receiving
-    while (I2CMasterBusy(I2C0_BASE))
-        ;                                      // Wait until ready
-    buttonState = I2CMasterDataGet(I2C0_BASE); // Store data from Port 1
+    // 3. Retrieve the button state from Input Register 0
+    buttonState = I2CMasterDataGet(I2C0_BASE);
 
     // 4. Mask only the relevant bits for SW1-SW4 (bits 1-4)
     return buttonState & (SW1 | SW2 | SW3 | SW4);
