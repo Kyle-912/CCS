@@ -29,10 +29,10 @@ void MultimodButtons_Init()
 
     // 2. Configure PCA9555 Ports 0 and 1 as inputs
     // Include the 0x06 register address in the I2C_WriteMultiple call
-    uint8_t configData[3] = {0x06, 0xFF, 0xFF}; // 0x06 is the config register, set all pins as inputs
+    uint8_t configData[3] = {0x06, 0xFF}; // 0x06 is the config register, set all pins as inputs
 
     // Write the configuration data using I2C_WriteMultiple
-    I2C_WriteMultiple(I2C0_BASE, PCA9555_BUTTONS_ADDR, configData, 3);
+    I2C_WriteMultiple(I2C0_BASE, PCA9555_BUTTONS_ADDR, configData, 2);
 
     // 3. Configure the interrupt pin connected to PCA9555 INT
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE); // Enable clock to Port E
