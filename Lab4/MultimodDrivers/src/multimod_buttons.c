@@ -28,7 +28,7 @@ void MultimodButtons_Init()
     I2C_Init(I2C0_BASE);
 
     // 2. Configure PCA9555 Port 0 as input using BUTTONS_PCA9555_GPIO_ADDR
-    I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, false);      // Write to configuration register
+    I2CMasterSlaveAddrSet(I2C0_BASE, BUTTONS_PCA9555_GPIO_ADDR, false); // Write to configuration register
     I2CMasterDataPut(I2C0_BASE, 0x06);                                  // Select Configuration Register (0x06) for Port 0
     I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_START);       // Start condition
     while (I2CMasterBusy(I2C0_BASE))
@@ -64,7 +64,7 @@ uint8_t MultimodButtons_Get()
     uint8_t buttonState = 0;
 
     // 1. Select Input Register 0 (Port 0) to read button states
-    I2CMasterSlaveAddrSet(I2C0_BASE, BUTTONS_PCA9555_GPIO_ADDR, false); // Address with write intent
+    I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, false); // Address with write intent
     I2CMasterDataPut(I2C0_BASE, 0x00);                             // Select Input Register 0 (0x00)
     I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_SINGLE_SEND);       // Send command
     while (I2CMasterBusy(I2C0_BASE))
@@ -72,7 +72,7 @@ uint8_t MultimodButtons_Get()
     }
 
     // 2. Switch to read mode to retrieve button states from Input Register 0
-    I2CMasterSlaveAddrSet(I2C0_BASE, BUTTONS_PCA9555_GPIO_ADDR, true); // Address with read intent
+    I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, true); // Address with read intent
     I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_SINGLE_RECEIVE);   // Receive data
     while (I2CMasterBusy(I2C0_BASE))
     {
