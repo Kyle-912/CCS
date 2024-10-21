@@ -68,6 +68,13 @@ uint8_t MultimodButtons_Get()
 
     buttonState = I2CMasterDataGet(I2C0_BASE);
 
+    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT); // Continue receiving
+    while (I2CMasterBusy(I2C0_BASE))
+    {
+    }
+
+    buttonState = I2CMasterDataGet(I2C0_BASE);
+
     I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_RECEIVE_FINISH); // NACK and stop
     while (I2CMasterBusy(I2C0_BASE))
     {
