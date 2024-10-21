@@ -28,7 +28,7 @@ void MultimodButtons_Init()
     I2C_Init(I2C0_BASE);
 
     // 2. Set PCA9555 GPIO bank 1 to input mode for buttons using BUTTONS_PCA9555_GPIO_ADDR for configuration
-    I2CMasterSlaveAddrSet(I2C0_BASE, BUTTONS_PCA9555_GPIO_ADDR, false); // Use BUTTONS_PCA9555_GPIO_ADDR for configuration
+    I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, false);      // Use BUTTONS_PCA9555_GPIO_ADDR for configuration
     I2CMasterDataPut(I2C0_BASE, 0x06);                                  // Select Configuration Register for Port 0 (Bank 1)
     I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_START);       // Send start condition
     while (I2CMasterBusy(I2C0_BASE))
