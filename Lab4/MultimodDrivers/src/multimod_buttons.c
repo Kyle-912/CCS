@@ -28,7 +28,7 @@ void MultimodButtons_Init()
     I2C_Init(I2C0_BASE);
 
     // 2. Configure PCA9555 Ports 0 and 1 as inputs (using 4-byte sequence)
-    I2CMasterSlaveAddrSet(I2C0_BASE, BUTTONS_PCA9555_GPIO_ADDR, false); // Address 0x23 for configuration
+    I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, false); // Address 0x23 for configuration
 
     // Start burst transmission to write 4 bytes
     I2CMasterDataPut(I2C0_BASE, 0x06);                            // Command byte: Configuration Register 0x06
