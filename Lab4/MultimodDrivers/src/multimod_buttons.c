@@ -27,29 +27,38 @@ void MultimodButtons_Init()
     // 1. Initialize I2C0 (PB2 for SCL, PB3 for SDA)
     I2C_Init(I2C0_BASE);
 
-    // 2. Set PCA9555 GPIO bank 1 to input mode for buttons using BUTTONS_PCA9555_GPIO_ADDR for configuration
-    I2CMasterSlaveAddrSet(I2C0_BASE, BUTTONS_PCA9555_GPIO_ADDR, false); // Use BUTTONS_PCA9555_GPIO_ADDR for configuration
-    I2CMasterDataPut(I2C0_BASE, 0x06);                                  // Select Configuration Register for Port 0 (Bank 1)
-    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_START);       // Send start condition
+    // 2. Configure PCA9555 Ports 0 and 1 as inputs (using 4-byte sequence)
+    I2CMasterSlaveAddrSet(I2C0_BASE, BUTTONS_PCA9555_GPIO_ADDR, false); // Address 0x23 for configuration
+
+    // Start burst transmission to write 4 bytes
+    I2CMasterDataPut(I2C0_BASE, 0x06);                            // Command byte: Configuration Register 0x06
+    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_START); // Start condition
     while (I2CMasterBusy(I2C0_BASE))
     {
     }
 
-    // Configure all pins in Bank 1 as inputs (0xFF means all input)
-    I2CMasterDataPut(I2C0_BASE, 0xFF);                             // Set all bits of Bank 1 as inputs
-    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH); // Send finish condition
+    I2CMasterDataPut(I2C0_BASE, 0xFF);                           // Data byte 1: Set all Port 0 pins as inputs
+    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_CONT); // Continue condition
     while (I2CMasterBusy(I2C0_BASE))
     {
     }
 
-    // 3. Configure interrupt pin connected to PCA9555 INT pin (PE4)
+    I2CMasterDataPut(I2C0_BASE, 0xFF);                             // Data byte 2: Set all Port 1 pins as inputs
+    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH); // Finish condition
+    while (I2CMasterBusy(I2C0_BASE))
+    {
+    }
+
+    // 3. Configure the interrupt pin connected to PCA9555 INT
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE); // Enable clock to Port E
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOE))
     {
     }
-    GPIOPinTypeGPIOInput(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN);              // Set PE4 as input for interrupt
-    GPIOIntTypeSet(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN, GPIO_FALLING_EDGE); // Set interrupt to trigger on falling edge
-    GPIOIntEnable(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN);                     // Enable GPIO interrupt on PE4
+
+    // Use BUTTONS_INT_PIN define instead of GPIO_PIN_4
+    GPIOPinTypeGPIOInput(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN);              // Set as input
+    GPIOIntTypeSet(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN, GPIO_FALLING_EDGE); // Falling edge trigger
+    GPIOIntEnable(BUTTONS_INT_GPIO_BASE, BUTTONS_INT_PIN);                     // Enable interrupt
     IntEnable(INT_GPIOE);                                                      // Enable Port E interrupt in NVIC
 
     // 4. Enable global interrupts
@@ -63,24 +72,24 @@ uint8_t MultimodButtons_Get()
 {
     uint8_t buttonState = 0;
 
-    // 1. Set the PCA9555 address to read from the input register for buttons (Bank 1)
-    I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, false); // Use PCA9555_BUTTONS_ADDR for button read
-    I2CMasterDataPut(I2C0_BASE, 0x00);                             // Select Input Register for Port 0 (Bank 1)
-    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_SINGLE_SEND);       // Send the command to select the input register
+    // 1. Set the PCA9555 address to select Input Register 0 (Port 0)
+    I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, false); // Address 0x21 for reading input
+    I2CMasterDataPut(I2C0_BASE, 0x00);                             // Command byte: Select Input Register 0
+    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_SINGLE_SEND);       // Send command
     while (I2CMasterBusy(I2C0_BASE))
     {
     }
 
-    // 2. Switch to read mode to retrieve button states from PCA9555 Bank 1
+    // 2. Switch to read mode to retrieve button states
     I2CMasterSlaveAddrSet(I2C0_BASE, PCA9555_BUTTONS_ADDR, true); // Set to read mode
-    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_SINGLE_RECEIVE);   // Receive the button states
+    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_SINGLE_RECEIVE);   // Receive data
     while (I2CMasterBusy(I2C0_BASE))
     {
     }
 
-    // 3. Get the button state from the input register
-    buttonState = I2CMasterDataGet(I2C0_BASE); // Retrieve the button state
+    // 3. Retrieve the button state from Input Register 0
+    buttonState = I2CMasterDataGet(I2C0_BASE);
 
-    // 4. Return the states of buttons SW1-SW4 (masked for the four buttons)
+    // 4. Mask only the relevant bits for SW1-SW4 (bits 1-4)
     return buttonState & (SW1 | SW2 | SW3 | SW4);
 }
