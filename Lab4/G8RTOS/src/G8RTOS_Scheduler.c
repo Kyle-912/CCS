@@ -154,7 +154,8 @@ int32_t G8RTOS_Launch()
     InitSysTick();
 
     // Set currently running thread to the first control block
-    CurrentlyRunningThread = &threadControlBlocks[0];
+    // CurrentlyRunningThread = &threadControlBlocks[0]; <-OLD
+    CurrentlyRunningThread = headTCB;
 
     // Set interrupt priorities
     IntPrioritySet(FAULT_PENDSV, 0xFF);  // Pendsv
