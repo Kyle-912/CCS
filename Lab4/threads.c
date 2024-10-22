@@ -263,7 +263,7 @@ void Read_JoystickPress()
 
 void Print_WorldCoords(void)
 {
-    // Print the camera position through UART to display on console.
+    // TODO: Print the camera position through UART to display on console.
 }
 
 void Get_Joystick(void)
