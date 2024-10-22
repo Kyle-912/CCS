@@ -30,13 +30,27 @@ void JOYSTICK_Init(void)
     SysCtlPeripheralDisable(SYSCTL_PERIPH_ADC0);
 
     // Enable gpio port
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOE))
+    {
+    }
+
     // Enable adc module
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_ADC0))
+    {
+    }
 
     // Set pins as ADC
+    GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_3 | GPIO_PIN_2);
 
     // Configure ADC sequences
+    ADCSequenceConfigure(ADC0_BASE, 2, ADC_TRIGGER_PROCESSOR, 0);
+    ADCSequenceStepConfigure(ADC0_BASE, 2, 0, ADC_CTL_CH0);                            // X-axis on PE3
+    ADCSequenceStepConfigure(ADC0_BASE, 2, 1, ADC_CTL_CH1 | ADC_CTL_IE | ADC_CTL_END); // Y-axis on PE2, with interrupt and end flag
 
     // Enable ADC sequence
+    ADCSequenceEnable(ADC0_BASE, 2);
 }
 
 // JOYSTICK_IntEnable
@@ -95,7 +109,8 @@ uint32_t JOYSTICK_GetXY()
 
     // Wait until conversion is complete
     while (!ADCIntStatus(ADC0_BASE, 2, 0))
-        ;
+    {
+    }
 
     // Clear ADC interrupt flag
     ADCIntClear(ADC0_BASE, 2);

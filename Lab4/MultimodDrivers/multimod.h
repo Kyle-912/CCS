@@ -13,10 +13,10 @@
 
 static void multimod_init()
 {
-    // ST7789_Init(); // Commented out because of weird debugger behavior in CCS
+    ST7789_Init();
     BMI160_Init();
     OPT3001_Init();
-    PCA9956b_Init();
+    // PCA9956b_Init();
     UART_Init();
 
     MultimodButtons_Init();

@@ -37,11 +37,7 @@ static uint32_t NumberOfThreads;
 // Current Number of Periodic Threads currently in the scheduler
 static uint32_t NumberOfPThreads;
 
-// Counter for assigning unique thread IDs
 static uint32_t threadCounter = 0;
-
-// Pointer to the head of the circular doubly linked list of threads
-tcb_t *headTCB = 0; // TODO: new, test
 
 /*******************************Private Functions***********************************/
 
@@ -135,14 +131,6 @@ void G8RTOS_Init()
     SystemTime = 0;
     NumberOfThreads = 0;
     NumberOfPThreads = 0;
-
-    // TODO: new, test
-    for (int i = 0; i < MAX_THREADS; i++)
-    {
-        threadControlBlocks[i].alive = false;
-    }
-
-    headTCB = 0;
 }
 
 // G8RTOS_Launch
@@ -154,8 +142,7 @@ int32_t G8RTOS_Launch()
     InitSysTick();
 
     // Set currently running thread to the first control block
-    // CurrentlyRunningThread = &threadControlBlocks[0]; // <-OLD
-    CurrentlyRunningThread = headTCB; // TODO: new, test
+    CurrentlyRunningThread = &threadControlBlocks[0];
 
     // Set interrupt priorities
     IntPrioritySet(FAULT_PENDSV, 0xFF);  // Pendsv
@@ -202,7 +189,7 @@ void G8RTOS_Scheduler()
         {
             if (threadControlBlocks[i].priority == 255) // Assuming idle thread has priority 255
             {
-                highestPriorityThread = &threadControlBlocks[i]; // <-OLD
+                highestPriorityThread = &threadControlBlocks[i];
                 break;
             }
         }
@@ -230,22 +217,10 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
     }
 
     // Get the next available thread control block
-    // tcb_t *newTCB = &threadControlBlocks[NumberOfThreads]; //<-OLD
-    tcb_t *newTCB = 0; // TODO: new, test
-    int availableIndex = -1;
-    for (int i = 0; i < MAX_THREADS; i++)
-    {
-        if (!threadControlBlocks[i].alive) // If the thread is not alive, use this slot
-        {
-            newTCB = &threadControlBlocks[i];
-            availableIndex = i; // TODO: new, test
-            break;
-        }
-    }
+    tcb_t *newTCB = &threadControlBlocks[NumberOfThreads];
 
     // Initialize the stack for the new thread
-    // newTCB->stackPointer = &threadStacks[NumberOfThreads][STACKSIZE - 16]; // <-OLD
-    newTCB->stackPointer = &threadStacks[availableIndex][STACKSIZE - 16]; // TODO: new, test
+    newTCB->stackPointer = &threadStacks[NumberOfThreads][STACKSIZE - 16];
 
     // Set up the thread context with initial register values
     newTCB->stackPointer[15] = THUMBBIT;              // xPSR
@@ -286,31 +261,22 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
     }
 
     // Add the TCB to the round-robin linked list
-    // if (NumberOfThreads == 0) // <-OLD
-    if (headTCB == 0) // TODO: new, test
+    if (NumberOfThreads == 0)
     {
         // First thread, point to itself
         newTCB->nextTCB = newTCB;
         newTCB->prevTCB = newTCB;
-        headTCB = newTCB; // TODO: new, test
     }
     else
     {
         // Add to the end of the list TODO: dont't use NumberOfThreads because killing threads breaks that method
-        /* tcb_t *lastTCB = &threadControlBlocks[NumberOfThreads - 1];
-         tcb_t *firstTCB = &threadControlBlocks[0];
+        tcb_t *lastTCB = &threadControlBlocks[NumberOfThreads - 1];
+        tcb_t *firstTCB = &threadControlBlocks[0];
 
-         lastTCB->nextTCB = newTCB;  // Point last thread's next to new thread
-         newTCB->prevTCB = lastTCB;  // New thread's prev points to the last thread
-         newTCB->nextTCB = firstTCB; // New thread's next points to the first thread
-         firstTCB->prevTCB = newTCB; // First thread's prev points to the new thread <-OLD*/
-
-        tcb_t *lastTCB = headTCB->prevTCB; // TODO: new, test
-
-        lastTCB->nextTCB = newTCB;
-        newTCB->prevTCB = lastTCB;
-        newTCB->nextTCB = headTCB;
-        headTCB->prevTCB = newTCB;
+        lastTCB->nextTCB = newTCB;  // Point last thread's next to new thread
+        newTCB->prevTCB = lastTCB;  // New thread's prev points to the last thread
+        newTCB->nextTCB = firstTCB; // New thread's next points to the first thread
+        firstTCB->prevTCB = newTCB; // First thread's prev points to the new thread
     }
 
     NumberOfThreads++;
@@ -430,8 +396,7 @@ sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
     }
 
     // Traverse linked list, find thread to kill
-    // tcb_t *pt = CurrentlyRunningThread; // <-OLD
-    tcb_t *pt = headTCB; // TODO: new, test
+    tcb_t *pt = CurrentlyRunningThread;
     do
     {
         if (pt->threadID == threadID)
@@ -439,11 +404,6 @@ sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
             // Update the next tcb and prev tcb pointers if found
             pt->prevTCB->nextTCB = pt->nextTCB;
             pt->nextTCB->prevTCB = pt->prevTCB;
-
-            // If this is the head thread, update the head pointer TODO : new, test if (pt == headTCB)
-            {
-                headTCB = pt->nextTCB;
-            }
 
             // Mark thread as not alive, release the semaphore it is blocked on
             pt->alive = false;
@@ -460,8 +420,7 @@ sched_ErrCode_t G8RTOS_KillThread(threadID_t threadID)
         }
 
         pt = pt->nextTCB;
-        // } while (pt != CurrentlyRunningThread); // <-OLD
-    } while (pt != headTCB); // TODO: new, test
+    } while (pt != CurrentlyRunningThread);
 
     // Otherwise, thread does not exist.
     EndCriticalSection(IBit_State);
@@ -484,21 +443,8 @@ sched_ErrCode_t G8RTOS_KillSelf()
     // Else, mark this thread as not alive.
     CurrentlyRunningThread->alive = false;
 
-    // CurrentlyRunningThread->prevTCB->nextTCB = CurrentlyRunningThread->nextTCB;
-    // CurrentlyRunningThread->nextTCB->prevTCB = CurrentlyRunningThread->prevTCB; // <-OLD
-
-    // Remove the current thread from the circular linked list TODO: new, test
-    tcb_t *self = CurrentlyRunningThread;
-
-    // Update linked list pointers
-    self->prevTCB->nextTCB = self->nextTCB;
-    self->nextTCB->prevTCB = self->prevTCB;
-
-    // Update headTCB if the current thread is the head
-    if (self == headTCB)
-    {
-        headTCB = self->nextTCB;
-    }
+    CurrentlyRunningThread->prevTCB->nextTCB = CurrentlyRunningThread->nextTCB;
+    CurrentlyRunningThread->nextTCB->prevTCB = CurrentlyRunningThread->prevTCB;
 
     NumberOfThreads--;
 

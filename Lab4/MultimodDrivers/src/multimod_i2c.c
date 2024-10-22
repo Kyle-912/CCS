@@ -43,13 +43,36 @@ void I2C_Init(uint32_t mod)
         {
         }
 
-        // Configure pins for I2C module
+        // Configure pins for I2C1 module
         GPIOPinConfigure(GPIO_PA6_I2C1SCL);
         GPIOPinConfigure(GPIO_PA7_I2C1SDA);
         GPIOPinTypeI2CSCL(GPIO_PORTA_BASE, GPIO_PIN_6);
         GPIOPinTypeI2C(GPIO_PORTA_BASE, GPIO_PIN_7);
 
-        // Configure I2C SCL speed, set as master
+        // Configure I2C1 SCL speed, set as master
+        I2CMasterInitExpClk(mod, SysCtlClockGet(), false);
+    }
+    else if (mod == I2C0_BASE)
+    {
+        // Enable clock to relevant I2C0 and GPIO modules
+        SysCtlPeripheralReset(SYSCTL_PERIPH_I2C0);
+        SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C0);
+        while (!SysCtlPeripheralReady(SYSCTL_PERIPH_I2C0))
+        {
+        }
+
+        SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
+        while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOB))
+        {
+        }
+
+        // Configure pins for I2C0 module
+        GPIOPinConfigure(GPIO_PB2_I2C0SCL);
+        GPIOPinConfigure(GPIO_PB3_I2C0SDA);
+        GPIOPinTypeI2CSCL(GPIO_PORTB_BASE, GPIO_PIN_2);
+        GPIOPinTypeI2C(GPIO_PORTB_BASE, GPIO_PIN_3);
+
+        // Configure I2C0 SCL speed, set as master
         I2CMasterInitExpClk(mod, SysCtlClockGet(), false);
     }
 }
