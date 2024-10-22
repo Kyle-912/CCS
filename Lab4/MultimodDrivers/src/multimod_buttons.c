@@ -26,6 +26,9 @@ void MultimodButtons_Init()
 {
     I2C_Init(I2C1_BASE);
 
+    uint8_t configData[2] = {0x06, 0xFF}; // 0x06 is the config register, set all pins as inputs
+    I2C_WriteMultiple(I2C1_BASE, PCA9555_BUTTONS_ADDR, configData, 2);
+
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOE))
     {
@@ -79,5 +82,6 @@ uint8_t MultimodButtons_Get()
 
     buttonState = I2C_ReadSingle(I2C1_BASE, BUTTONS_PCA9555_GPIO_ADDR);*/
 
-    return -buttonState;
+    // return -buttonState;
+    return buttonState & (SW1 | SW2 | SW3 | SW4);
 }
