@@ -100,6 +100,7 @@ void Cube_Thread(void)
     {
         /*************YOUR CODE HERE*************/
         // Check if kill ball flag is set.
+        
 
         camera_pos.x = world_camera_pos.x;
         camera_pos.y = world_camera_pos.y;
@@ -121,17 +122,22 @@ void Cube_Thread(void)
             {
                 getViewOnScreen(&projected_point, &camera_frame_offset, &(interpolated_points[i][j]));
                 /*************YOUR CODE HERE*************/
-                // Wait on SPI bus
+                G8RTOS_WaitSemaphore(&sem_SPIA); // Wait on SPI bus
 
                 ST7789_DrawPixel(projected_point.x, projected_point.y, ST7789_BLACK);
 
                 /*************YOUR CODE HERE*************/
-                // Signal that SPI bus is available
+                G8RTOS_SignalSemaphore(&sem_SPIA); // Signal that SPI bus is available
             }
         }
 
         /*************YOUR CODE HERE*************/
         // If ball marked for termination, kill the thread.
+        if (kill == 1)
+        {
+            G8RTOS_KillSelf();
+        }
+
 
         // Calculates view relative to camera position / orientation
         for (int i = 0; i < 8; i++)
@@ -162,37 +168,62 @@ void Cube_Thread(void)
                 if (interpolated_points[i][j].z < 0)
                 {
                     /*************YOUR CODE HERE*************/
-                    // Wait on SPI bus
+                    G8RTOS_WaitSemaphore(&sem_SPIA); // Wait on SPI bus
 
                     ST7789_DrawPixel(projected_point.x, projected_point.y, ST7789_BLUE);
 
                     /*************YOUR CODE HERE*************/
-                    // Signal that SPI bus is available
+                    G8RTOS_SignalSemaphore(&sem_SPIA); // Signal that SPI bus is available
                 }
             }
         }
 
         /*************YOUR CODE HERE*************/
-        // Sleep
+        sleep(10); // Sleep
     }
 }
 
 void Read_Buttons()
 {
     // Initialize / declare any variables here
+    uint8_t button_state;
+    int16_t x, y, z;
 
     while (1)
     {
         // Wait for a signal to read the buttons on the Multimod board.
+        G8RTOS_WaitSemaphore(&sem_PCA9555_Debounce);
 
         // Sleep to debounce
+        sleep(10);
 
         // Read the buttons status on the Multimod board.
+        button_state = MultimodButtons_Get();
 
         // Process the buttons and determine what actions need to be performed.
+        if (button_state & SW1)
+        {
+            // Generate random coordinates for the cube
+            x = (rand() % 201) - 100; // Random number between [-100, 100]
+            y = (rand() % 201) - 100; // Random number between [-100, 100]
+            z = (rand() % 101) - 120; // Random number between [-120, -20]
+
+            // Send coordinates to SPAWNCOOR_FIFO
+            uint32_t spawn_coords = ((uint32_t)x << 16) | ((uint32_t)y << 8) | (uint32_t)z;
+            G8RTOS_WriteFIFO(SPAWNCOOR_FIFO, spawn_coords);
+        }
+
+        if (button_state & SW2) // SW2 Pressed
+        {
+            // Signal to terminate a random cube
+            G8RTOS_SignalSemaphore(&sem_KillCube);
+        }
 
         // Clear the interrupt
+        GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
+
         // Re-enable the interrupt so it can occur again.
+        GPIOIntEnable(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
     }
 }
 
@@ -203,15 +234,22 @@ void Read_JoystickPress()
     while (1)
     {
         // Wait for a signal to read the joystick press
+        G8RTOS_WaitSemaphore(&sem_Joystick_Debounce);
 
         // Sleep to debounce
+        sleep(10);
 
         // Read the joystick switch status on the Multimod board.
-
-        // Toggle the joystick_y flag.
+        if (JOYSTICK_GetPress())
+        {
+            joystick_y = !joystick_y; // Toggle the joystick_y flag.
+        }
 
         // Clear the interrupt
+        GPIOIntClear(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
+
         // Re-enable the interrupt so it can occur again.
+        GPIOIntEnable(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
     }
 }
 
@@ -225,7 +263,11 @@ void Print_WorldCoords(void)
 void Get_Joystick(void)
 {
     // Read the joystick
+    uint16_t x = JOYSTICK_GetX();
+    uint16_t y = JOYSTICK_GetY();
+
     // Send through FIFO.
+    G8RTOS_WriteFIFO(JOYSTICK_FIFO, (x << 16) | y);
 }
 
 /*******************************Aperiodic Threads***********************************/
@@ -233,11 +275,17 @@ void Get_Joystick(void)
 void GPIOE_Handler()
 {
     // Disable interrupt
+    GPIOIntDisable(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
+
     // Signal relevant semaphore
+    G8RTOS_SignalSemaphore(&sem_PCA9555_Debounce);
 }
 
 void GPIOD_Handler()
 {
     // Disable interrupt
+    GPIOIntDisable(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
+
     // Signal relevant semaphore
+    G8RTOS_SignalSemaphore(&sem_Joystick_Debounce);
 }
