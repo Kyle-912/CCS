@@ -17,13 +17,14 @@
 
 void Test_Display(void)
 {
-    // Fill the screen with black
-    ST7789_Fill(0x0000);
+    ST7789_SetWindow(0, 0, X_MAX, Y_MAX); // Full-screen window
 
-    // Draw some test pixels
-    ST7789_DrawPixel(10, 10, 0xF800); // Red pixel
-    ST7789_DrawPixel(20, 20, 0x07E0); // Green pixel
-    ST7789_DrawPixel(30, 30, 0x001F); // Blue pixel
+    // Write a single color (Red) across the screen
+    for (int i = 0; i < X_MAX * Y_MAX; i++)
+    {
+        ST7789_WriteData(0xF8); // Red (High byte)
+        ST7789_WriteData(0x00); // Red (Low byte)
+    }
 }
 
 /************************************MAIN*******************************************/
