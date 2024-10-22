@@ -176,9 +176,10 @@ void Cube_Thread(void)
         }
 
         /*************YOUR CODE HERE*************/
-        // If ball marked for termination, kill the thread.
+        // If cube marked for termination, kill the thread.
         if (kill == 1)
         {
+            num_cubes--;
             G8RTOS_KillSelf();
         }
 
