@@ -25,13 +25,13 @@ int main(void)
 
     // Add threads, semaphores, FIFOs here
     G8RTOS_AddThread(&Idle_Thread, 255, "IdleThread");
-    G8RTOS_AddThread(&Cube_Thread, 5, "CubeThread");
-    G8RTOS_AddThread(&CamMove_Thread, 6, "CamMoveThread");
-    G8RTOS_AddThread(&Read_Buttons, 2, "ReadButtons");
-    G8RTOS_AddThread(&Read_JoystickPress, 2, "JoystickPress");
+    G8RTOS_AddThread(&Cube_Thread, 1, "CubeThread");
+    G8RTOS_AddThread(&CamMove_Thread, 1, "CamMoveThread");
+    G8RTOS_AddThread(&Read_Buttons, 1, "ReadButtons");
+    G8RTOS_AddThread(&Read_JoystickPress, 1, "JoystickPress");
 
     G8RTOS_Add_PeriodicEvent(&Print_WorldCoords, 100, 0);
-    G8RTOS_Add_PeriodicEvent(&Get_Joystick, 100, 1);
+    G8RTOS_Add_PeriodicEvent(&Get_Joystick, 100, 50);
 
     G8RTOS_Add_APeriodicEvent(GPIOE_Handler, 1, INT_GPIOE);
     G8RTOS_Add_APeriodicEvent(GPIOD_Handler, 1, INT_GPIOD);
