@@ -281,7 +281,7 @@ void Read_Buttons()
 
                 thread_name[i] = '\0'; // Null-terminate
 
-                G8RTOS_AddThread(&Cube_Thread, 1, thread_name);
+                G8RTOS_AddThread(&Cube_Thread);
             }
         }
 

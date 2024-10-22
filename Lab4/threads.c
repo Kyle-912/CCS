@@ -285,7 +285,6 @@ void Read_Buttons()
             }
         }
 
-        // TODO: uncomment once buttons work
         if (button_state & SW2) // SW2 Pressed
         {
             // Signal to terminate a random cube
