@@ -113,9 +113,9 @@ void Cube_Thread(void)
     // Get spawn coordinates from FIFO, set cube.x, cube.y, cube.z
     uint32_t coordinates = G8RTOS_ReadFIFO(SPAWNCOOR_FIFO);
     // TODO: set cube.
-    cube.x_pos = (coordinates >> 16) & 0xFF;
-    cube.y_pos = (coordinates >> 8) & 0xFF;
-    cube.z_pos = coordinates & 0xFF;
+    cube.x_pos = (int16_t)((coordinates >> 16) & 0xFFFF);
+    cube.y_pos = (int16_t)((coordinates >> 8) & 0xFFFF);
+    cube.z_pos = (int16_t)(coordinates & 0xFFFF);
 
     cube.width = 50;
     cube.height = 50;
@@ -252,9 +252,9 @@ void Read_Buttons()
             z = (rand() % 101) - 120; // Random number between [-120, -20]
 
             // Send coordinates to SPAWNCOOR_FIFO
-            uint32_t spawn_coords = ((uint32_t)((uint8_t)x & 0xFF) << 16) |
-                                    ((uint32_t)((uint8_t)y & 0xFF) << 8) |
-                                    ((uint32_t)((uint8_t)z & 0xFF));
+            uint32_t spawn_coords = ((uint32_t)(x & 0xFFFF) << 16) |
+                                    ((uint32_t)(y & 0xFFFF) << 8) |
+                                    (uint32_t)(z & 0xFFFF);
             num_cubes++;
             G8RTOS_WriteFIFO(SPAWNCOOR_FIFO, spawn_coords);
         }
