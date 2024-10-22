@@ -19,9 +19,9 @@
 /* Status Register with the Thumb-bit Set */
 #define THUMBBIT            0x01000000
 
-#define MAX_THREADS         12
+#define MAX_THREADS         10
 #define MAX_PTHREADS        3
-#define STACKSIZE           512
+#define STACKSIZE           700
 #define OSINT_PRIORITY      7
 
 /*************************************Defines***************************************/

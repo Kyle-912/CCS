@@ -25,6 +25,17 @@
 /******************************Data Type Definitions********************************/
 
 /****************************Data Structure Definitions*****************************/
+
+typedef struct G8RTOS_FIFO_t
+{
+    int32_t buffer[FIFO_SIZE];
+    int32_t *head;
+    int32_t *tail;
+    semaphore_t mutex;
+    semaphore_t read;
+    semaphore_t write;
+} G8RTOS_FIFO_t;
+
 /****************************Data Structure Definitions*****************************/
 
 /********************************Public Variables***********************************/
@@ -39,4 +50,3 @@ int32_t G8RTOS_WriteFIFO(uint32_t FIFO_index, uint32_t data);
 /********************************Public Functions***********************************/
 
 #endif /* G8RTOS_IPC_H_ */
-

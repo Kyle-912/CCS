@@ -20,6 +20,12 @@
 /*********************************Global Variables**********************************/
 // toggle on joystick press
 uint8_t joystick_toggle = 1;
+uint8_t numApples = 0;
+uint8_t snakeLength = 2;
+uint16_t applePos[2] = {0, 0};
+uint16_t headPos[2] = {0, 0};
+uint8_t direction = 0;
+bool gameOver = false;
 
 /*********************************Global Variables**********************************/
 
@@ -36,15 +42,122 @@ void Idle_Thread(void)
 
 void Snake(void)
 {
-    ST7789_DrawRectangle(120, 160, 10, 10, 0xFFFF);
+
+    int32_t joystick_data;
+    float norm_x, norm_y;
+
+    while (1)
+    {
+        // Get result from joystick
+        joystick_data = G8RTOS_ReadFIFO(JOYSTICK_FIFO);
+        int16_t x = (joystick_data >> 16) & 0xFFFF;
+        int16_t y = joystick_data & 0xFFFF;
+
+        x = -x;
+        y = -y;
+
+        // If joystick axis within deadzone, set to 0. Otherwise normalize it.
+        if (abs(x) < 50)
+        {
+            x = 0;
+        }
+        if (abs(y) < 50)
+        {
+            y = 0;
+        }
+
+        norm_x = (x != 0) ? (float)x / 2048.0f : 0.0f;
+        norm_y = (y != 0) ? (float)y / 2048.0f : 0.0f;
+
+        if (norm_x > norm_y || -norm_x > -norm_y)
+        {
+            if (norm_x > 1)
+            {
+                direction = 0;
+            }
+            else
+            {
+                direction = 1;
+            }
+        }
+        else
+        {
+            if (norm_y > 1)
+            {
+                direction = 2;
+            }
+            else
+            {
+                direction = 3;
+            }
+        }
+    }
 }
 
 void Apple(void)
 {
+    uint16_t x = 0;
+    uint16_t y = 0;
+
+    while (1)
+    {
+        if (numApples == 0)
+        {
+            x = (rand() % X_MAX);
+            y = (rand() % Y_MAX);
+
+            applePos[0] = x;
+            applePos[1] = y;
+
+            G8RTOS_WaitSemaphore(&sem_SPIA);
+            ST7789_DrawRectangle(x, y, 10, 10, ST7789_RED);
+            G8RTOS_SignalSemaphore(&sem_SPIA);
+
+            numApples++;
+
+            // sleep(100);
+        }
+
+        if (headPos[0] == applePos[0] && headPos[1] == applePos[1])
+        {
+            G8RTOS_WaitSemaphore(&sem_SPIA);
+            ST7789_DrawRectangle(applePos[0], applePos[1], 10, 10, ST7789_BLACK);
+            G8RTOS_SignalSemaphore(&sem_SPIA);
+
+            snakeLength++;
+        }
+    }
 }
 
 void Board(void)
 {
+    G8RTOS_WaitSemaphore(&sem_SPIA);
+    ST7789_DrawRectangle(120, 160, 10, 10, 0xFFFF);
+    G8RTOS_SignalSemaphore(&sem_SPIA);
+
+    while (1)
+    {
+        if (gameOver == true)
+        {
+            for (uint16_t y = 0; y < Y_MAX; y++)
+            {
+                for (uint16_t x = 0; x < X_MAX; x++)
+                {
+                    ST7789_DrawPixel(x, y, ST7789_RED);
+                }
+            }
+
+            G8RTOS_WaitSemaphore(&sem_I2CA);
+
+            UARTprintf("Game Over!");
+
+            IBit_State = StartCriticalSection();
+
+            while (1)
+            {
+            }
+        }
+    }
 }
 
 void Read_Buttons()
