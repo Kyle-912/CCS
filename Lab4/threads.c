@@ -72,6 +72,15 @@ void CamMove_Thread(void)
         norm_y = (abs(y) < 500) ? 0 : y / 4096.0f;
 
         // TODO: Update world camera position. Update y/z coordinates depending on the joystick toggle.
+        if (joystick_y)
+        {
+            world_camera_pos.y += norm_y * 2;
+        }
+        else
+        {
+            world_camera_pos.z += norm_y * 2;
+        }
+        world_camera_pos.x += norm_x * 2;
 
         sleep(10); // Sleep
     }
@@ -85,6 +94,9 @@ void Cube_Thread(void)
     // Get spawn coordinates from FIFO, set cube.x, cube.y, cube.z
     uint32_t coordinates = G8RTOS_ReadFIFO(SPAWNCOOR_FIFO);
     // TODO: set cube.
+    cube.x_pos = (coordinates >> 16) & 0xFF;
+    cube.y_pos = (coordinates >> 8) & 0xFF;
+    cube.z_pos = coordinates & 0xFF;
 
     cube.width = 50;
     cube.height = 50;
