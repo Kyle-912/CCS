@@ -332,14 +332,19 @@ void ST7789_DrawPixel(uint16_t x, uint16_t y, uint16_t color)
         return;
     }
 
+    // Convert RGB565 to BGR565 (swap red and blue)
+    uint16_t bgr_color = ((color & 0x001F) << 11) | // Move Blue to Red bits
+                         (color & 0x07E0) |         // Green stays the same
+                         ((color & 0xF800) >> 11);  // Move Red to Blue bits
+
     ST7789_Select();
 
     // Set window
     ST7789_SetWindow(x, y, 1, 1);
 
     // Set color
-    ST7789_WriteData(color & 0xFF);        // Low byte of color
-    ST7789_WriteData((color >> 8) & 0xFF); // High byte of color
+    ST7789_WriteData(bgr_color & 0xFF);        // Low byte
+    ST7789_WriteData((bgr_color >> 8) & 0xFF); // High byte
 
     ST7789_Deselect();
 }
