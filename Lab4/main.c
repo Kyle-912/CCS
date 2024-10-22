@@ -15,6 +15,17 @@
 
 #include "./threads.h"
 
+void Test_Display(void)
+{
+    // Fill the screen with black
+    ST7789_Fill(0x0000);
+
+    // Draw some test pixels
+    ST7789_DrawPixel(10, 10, 0xF800); // Red pixel
+    ST7789_DrawPixel(20, 20, 0x07E0); // Green pixel
+    ST7789_DrawPixel(30, 30, 0x001F); // Blue pixel
+}
+
 /************************************MAIN*******************************************/
 int main(void)
 {
@@ -22,6 +33,8 @@ int main(void)
     SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
     G8RTOS_Init();
     multimod_init();
+
+    Test_Display();
 
     // Add threads, semaphores, FIFOs here
     G8RTOS_AddThread(&Idle_Thread, 255, "IdleThread");
