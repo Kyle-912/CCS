@@ -47,12 +47,12 @@ uint8_t MultimodButtons_Get()
 {
     uint8_t buttonState = 0;
 
-    // uint8_t inputRegister[1] = {0x00}; // Command byte for Input Register 0
-    // I2C_WriteMultiple(I2C1_BASE, PCA9555_BUTTONS_ADDR, inputRegister, 1);
+    /*uint8_t inputRegister[1] = {0x00}; // Command byte for Input Register 0
+    I2C_WriteMultiple(I2C1_BASE, PCA9555_BUTTONS_ADDR, inputRegister, 1);
 
-    // buttonState = I2C_ReadSingle(I2C1_BASE, PCA9555_BUTTONS_ADDR);
+    buttonState = I2C_ReadSingle(I2C1_BASE, PCA9555_BUTTONS_ADDR);*/
 
-    I2CMasterSlaveAddrSet(I2C1_BASE, PCA9555_BUTTONS_ADDR, false); // Write mode
+    /*I2CMasterSlaveAddrSet(I2C1_BASE, PCA9555_BUTTONS_ADDR, false); // Write mode
     I2CMasterDataPut(I2C1_BASE, 0x00);                             // Select Input Register 0
 
     I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_SEND_START); // Start (no stop)
@@ -73,15 +73,16 @@ uint8_t MultimodButtons_Get()
     {
     }
 
-    /*I2CMasterSlaveAddrSet(I2C1_BASE, BUTTONS_PCA9555_GPIO_ADDR, false); // Write mode
+    return buttonState & (SW1 | SW2 | SW3 | SW4);*/
+
+    I2CMasterSlaveAddrSet(I2C1_BASE, BUTTONS_PCA9555_GPIO_ADDR, false); // Write mode
     I2CMasterDataPut(I2C1_BASE, 0x00);                                  // Select Input Register 0
     I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_SEND_START);
     while (I2CMasterBusy(I2C1_BASE))
     {
     }
 
-    buttonState = I2C_ReadSingle(I2C1_BASE, BUTTONS_PCA9555_GPIO_ADDR);*/
+    buttonState = I2C_ReadSingle(I2C1_BASE, BUTTONS_PCA9555_GPIO_ADDR);
 
-    // return -buttonState;
-    return buttonState & (SW1 | SW2 | SW3 | SW4);
+    return -buttonState;
 }
