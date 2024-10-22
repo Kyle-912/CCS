@@ -68,19 +68,22 @@ void CamMove_Thread(void)
         int16_t y = joystick_data & 0xFFFF;
 
         // TODO: If joystick axis within deadzone, set to 0. Otherwise normalize it.
-        norm_x = (abs(x) < 800) ? 0 : x / 4096.0f;
-        norm_y = (abs(y) < 800) ? 0 : y / 4096.0f;
+        norm_x = (abs(x) < 100) ? 0.0f : (float)x / 2048.0f;
+        norm_y = (abs(y) < 100) ? 0.0f : (float)y / 2048.0f;
 
         // TODO: Update world camera position. Update y/z coordinates depending on the joystick toggle.
-        if (joystick_y)
+        if (norm_x != 0.0f || norm_y != 0.0f)
         {
-            world_camera_pos.y += norm_y * 2;
+            if (joystick_y)
+            {
+                world_camera_pos.y += norm_y * 2;
+            }
+            else
+            {
+                world_camera_pos.z += norm_y * 2;
+            }
+            world_camera_pos.x += norm_x * 2;
         }
-        else
-        {
-            world_camera_pos.z += norm_y * 2;
-        }
-        world_camera_pos.x += norm_x * 2;
 
         sleep(10); // Sleep
     }
@@ -300,11 +303,14 @@ void Print_WorldCoords(void)
 void Get_Joystick(void)
 {
     // Read the joystick
-    uint16_t x = JOYSTICK_GetX();
-    uint16_t y = JOYSTICK_GetY();
+    uint16_t x_raw = JOYSTICK_GetX();
+    uint16_t y_raw = JOYSTICK_GetY();
+
+    int16_t x = (int16_t)(x_raw - 2048); // Center around 0
+    int16_t y = (int16_t)(y_raw - 2048); // Center around 0
 
     // Send through FIFO.
-    G8RTOS_WriteFIFO(JOYSTICK_FIFO, (x << 16) | y);
+    G8RTOS_WriteFIFO(JOYSTICK_FIFO, ((uint32_t)x << 16) | (uint32_t)y);
 }
 
 /*******************************Aperiodic Threads***********************************/
