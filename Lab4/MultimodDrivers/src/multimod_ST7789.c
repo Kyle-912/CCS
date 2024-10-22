@@ -332,12 +332,16 @@ void ST7789_DrawPixel(uint16_t x, uint16_t y, uint16_t color)
         return;
     }
 
+    ST7789_Select();
+
     // Set window
     ST7789_SetWindow(x, y, 1, 1);
 
     // Set color
     ST7789_WriteData((color >> 8) & 0xFF); // High byte of color
     ST7789_WriteData(color & 0xFF);        // Low byte of color
+
+    ST7789_Deselect();
 }
 
 // ST7789_DrawPixel
