@@ -107,28 +107,31 @@ void ST7789_SetWindow(int16_t x, int16_t y, int16_t w, int16_t h)
     {
         return;
     }
-    if ((x + w - 1) >= X_MAX)
+
+    int16_t x_end = x + w - 1;
+    int16_t y_end = y + h - 1;
+    if (x_end >= X_MAX)
     {
-        w = X_MAX - x; // Adjust width if it goes out of bounds
+        x_end = X_MAX - 1;
     }
-    if ((y + h - 1) >= Y_MAX)
+    if (y_end >= Y_MAX)
     {
-        h = Y_MAX - y; // Adjust height if it goes out of bounds
+        y_end = Y_MAX - 1;
     }
 
     // Set column address
-    ST7789_WriteCommand(ST7789_CASET_ADDR); // Column address set
-    ST7789_WriteData(0x00);                 // High byte (start X)
-    ST7789_WriteData(x & 0xFF);             // Low byte (start X)
-    ST7789_WriteData(0x00);                 // High byte (end X)
-    ST7789_WriteData((x + w - 1) & 0xFF);   // Low byte (end X)
+    ST7789_WriteCommand(0x2A);             // Column address set
+    ST7789_WriteData((x >> 8) & 0xFF);     // Start column high byte
+    ST7789_WriteData(x & 0xFF);            // Start column low byte
+    ST7789_WriteData((x_end >> 8) & 0xFF); // End column high byte
+    ST7789_WriteData(x_end & 0xFF);        // End column low byte
 
     // Set row address
-    ST7789_WriteCommand(ST7789_RASET_ADDR); // Row address set
-    ST7789_WriteData(0x00);                 // High byte (start Y)
-    ST7789_WriteData(y & 0xFF);             // Low byte (start Y)
-    ST7789_WriteData(0x00);                 // High byte (end Y)
-    ST7789_WriteData((y + h - 1) & 0xFF);   // Low byte (end Y)
+    ST7789_WriteCommand(0x2B);             // Row address set
+    ST7789_WriteData((y >> 8) & 0xFF);     // Start row high byte
+    ST7789_WriteData(y & 0xFF);            // Start row low byte
+    ST7789_WriteData((y_end >> 8) & 0xFF); // End row high byte
+    ST7789_WriteData(y_end & 0xFF);        // End row low byte
 
     // Set register to write to as memory
     ST7789_WriteCommand(ST7789_RAMWR_ADDR);
