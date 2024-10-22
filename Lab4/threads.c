@@ -226,54 +226,11 @@ void Cube_Thread(void)
     }
 }
 
-void Read_Buttons()
-{
-    // Initialize / declare any variables here
-    uint8_t button_state;
-    int16_t x, y, z;
-
-    while (1)
-    {
-        // Wait for a signal to read the buttons on the Multimod board.
-        G8RTOS_WaitSemaphore(&sem_PCA9555_Debounce);
-
-        // Sleep to debounce
-        sleep(10);
-
-        // Read the buttons status on the Multimod board.
-        button_state = MultimodButtons_Get();
-
-        // Process the buttons and determine what actions need to be performed.
-        if (button_state & SW1)
-        {
-            // Generate random coordinates for the cube
-            x = (rand() % 201) - 100; // Random number between [-100, 100]
-            y = (rand() % 201) - 100; // Random number between [-100, 100]
-            z = (rand() % 101) - 120; // Random number between [-120, -20]
-
-            // Send coordinates to SPAWNCOOR_FIFO
-            uint32_t spawn_coords = ((uint32_t)(x & 0xFFFF) << 16) |
-                                    ((uint32_t)(y & 0xFFFF) << 8) |
-                                    (uint32_t)(z & 0xFFFF);
-            num_cubes++;
-            G8RTOS_WriteFIFO(SPAWNCOOR_FIFO, spawn_coords);
-        }
-
-        // TODO: uncomment once buttons work
-        if (button_state & SW2) // SW2 Pressed
-        {
-            // Signal to terminate a random cube
-            kill_cube++;
-            G8RTOS_SignalSemaphore(&sem_KillCube); // FIXME: What is this for?
-        }
-
-        // Clear the interrupt
-        GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
-
-        // Re-enable the interrupt so it can occur again.
-        GPIOIntEnable(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
-    }
-}
+uint32_t coordinates = G8RTOS_ReadFIFO(SPAWNCOOR_FIFO);
+// TODO: set cube.
+cube.x_pos = (int16_t)((coordinates >> 16) & 0xFFFF);
+cube.y_pos = (int16_t)((coordinates >> 8) & 0xFFFF);
+cube.z_pos = (int16_t)(coordinates & 0xFFFF);
 
 void Read_JoystickPress()
 {
