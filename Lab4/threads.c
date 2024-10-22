@@ -71,7 +71,7 @@ void CamMove_Thread(void)
         y = -y;
 
         // If joystick axis within deadzone, set to 0. Otherwise normalize it.
-        if (abs(x) < 25)
+        if (abs(x) < 30)
         {
             x = 0;
         }
