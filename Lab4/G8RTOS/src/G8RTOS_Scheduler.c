@@ -25,6 +25,9 @@
 // Thread Control Blocks - array to hold information for each thread
 static tcb_t threadControlBlocks[MAX_THREADS];
 
+// Thread Slot Availability - array which tracks which slots in the tcb array are available
+static bool threadSlotAvailable[MAX_THREADS]; //TODO: new, test
+
 // Thread Stacks - array of arrays for individual stacks of each thread
 static uint32_t threadStacks[MAX_THREADS][STACKSIZE];
 
@@ -131,6 +134,12 @@ void G8RTOS_Init()
     SystemTime = 0;
     NumberOfThreads = 0;
     NumberOfPThreads = 0;
+
+    // Initialize the free list to mark all slots as available TODO: new, test
+    for (int i = 0; i < MAX_THREADS; i++)
+    {
+        threadSlotAvailable[i] = true; // All slots are initially free
+    }
 }
 
 // G8RTOS_Launch
