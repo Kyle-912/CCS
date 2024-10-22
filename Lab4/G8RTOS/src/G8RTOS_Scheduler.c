@@ -232,17 +232,20 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
     // Get the next available thread control block
     // tcb_t *newTCB = &threadControlBlocks[NumberOfThreads]; //<-OLD
     tcb_t *newTCB = 0; // TODO: new, test
+    int availableIndex = -1;
     for (int i = 0; i < MAX_THREADS; i++)
     {
         if (!threadControlBlocks[i].alive) // If the thread is not alive, use this slot
         {
             newTCB = &threadControlBlocks[i];
+            availableIndex = i; // TODO: new, test
             break;
         }
     }
 
     // Initialize the stack for the new thread
-    newTCB->stackPointer = &threadStacks[NumberOfThreads][STACKSIZE - 16];
+    // newTCB->stackPointer = &threadStacks[NumberOfThreads][STACKSIZE - 16]; // <-OLD
+    newTCB->stackPointer = &threadStacks[availableIndex][STACKSIZE - 16]; // TODO: new, test
 
     // Set up the thread context with initial register values
     newTCB->stackPointer[15] = THUMBBIT;              // xPSR
