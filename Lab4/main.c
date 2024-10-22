@@ -17,15 +17,6 @@
 
 void Test_Display(void)
 {
-
-    ST7789_WriteCommand(ST7789_SWRESET_ADDR);  // Software reset
-    delay_ms(150);  // Wait for reset to complete
-    ST7789_WriteCommand(ST7789_SLPOUT_ADDR);   // Sleep out
-    delay_ms(500);  // Wait for sleep out to complete
-    ST7789_WriteCommand(ST7789_DISPON_ADDR);   // Display on
-
-    ST7789_SetWindow(0, 0, X_MAX, Y_MAX); // Full-screen window
-
     // Write a single color (Red) across the screen
     for (int i = 0; i < X_MAX * Y_MAX; i++)
     {
