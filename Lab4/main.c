@@ -37,7 +37,7 @@ int main(void)
     G8RTOS_Init();
     multimod_init();
 
-    // Test_Display();
+    Test_Display();
 
     // Add threads, semaphores, FIFOs here
     G8RTOS_AddThread(&Idle_Thread, 255, "IdleThread");

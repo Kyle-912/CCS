@@ -62,7 +62,7 @@ void CamMove_Thread(void)
 
     while (1)
     {
-        // TODO: Get result from joystick
+        // Get result from joystick
         joystick_data = G8RTOS_ReadFIFO(JOYSTICK_FIFO);
         int16_t x = (joystick_data >> 16) & 0xFFFF;
         int16_t y = joystick_data & 0xFFFF;
@@ -70,7 +70,7 @@ void CamMove_Thread(void)
         x = -x;
         y = -y;
 
-        // TODO: If joystick axis within deadzone, set to 0. Otherwise normalize it.
+        // If joystick axis within deadzone, set to 0. Otherwise normalize it.
         if (abs(x) < 25)
         {
             x = 0;
@@ -83,7 +83,7 @@ void CamMove_Thread(void)
         norm_x = (x != 0) ? (float)x / 2048.0f : 0.0f;
         norm_y = (y != 0) ? (float)y / 2048.0f : 0.0f;
 
-        // TODO: Update world camera position. Update y/z coordinates depending on the joystick toggle.
+        // Update world camera position. Update y/z coordinates depending on the joystick toggle.
         if (norm_x != 0.0f || norm_y != 0.0f)
         {
             float adjusted_y = -norm_y;
@@ -256,12 +256,13 @@ void Read_Buttons()
             G8RTOS_WriteFIFO(SPAWNCOOR_FIFO, spawn_coords);
         }
 
-        //if (button_state & SW2) // SW2 Pressed
+        // TODO: uncomment once buttons work
+        // if (button_state & SW2) // SW2 Pressed
         //{
-        //    // Signal to terminate a random cube
-        //    kill_cube++;
-        //    G8RTOS_SignalSemaphore(&sem_KillCube); // FIXME: What is this for?
-        //}
+        //     // Signal to terminate a random cube
+        //     kill_cube++;
+        //     G8RTOS_SignalSemaphore(&sem_KillCube); // FIXME: What is this for?
+        // }
 
         // Clear the interrupt
         GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
@@ -301,7 +302,7 @@ void Read_JoystickPress()
 
 void Print_WorldCoords(void)
 {
-    // TODO: Print the camera position through UART to display on console.
+    // Print the camera position through UART to display on console.
     G8RTOS_WaitSemaphore(&sem_I2CA);
     // Multiply floats by 100 to simulate two decimal places
     int32_t x = (int32_t)(world_camera_pos.x * 100);
