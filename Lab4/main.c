@@ -26,8 +26,8 @@ void Test_Display(void)
             // Draw a red pixel at the current position
 
             // ST7789_DrawPixel(x, y, 0xF800); // Red color in RGB565 format
-            ST7789_DrawPixel(x, y, 0x07E0); // Green color in RGB565 format
-            // ST7789_DrawPixel(x, y, 0x001F); // Blue color in RGB565 format
+            ST7789_DrawPixel(x, y, 0x001F); // Green color in RGB565 format
+            // ST7789_DrawPixel(x, y, 0x07E0); // Blue color in RGB565 format
         }
     }
 }
