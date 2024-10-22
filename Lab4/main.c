@@ -17,11 +17,15 @@
 
 void Test_Display(void)
 {
-    // Write a single color (Red) across the screen
-    for (int i = 0; i < X_MAX * Y_MAX; i++)
+    // Loop through all rows (Y-axis)
+    for (uint16_t y = 0; y < Y_MAX; y++)
     {
-        ST7789_WriteData(0xF8); // Red (High byte)
-        ST7789_WriteData(0x00); // Red (Low byte)
+        // Loop through all columns (X-axis)
+        for (uint16_t x = 0; x < X_MAX; x++)
+        {
+            // Draw a red pixel at the current position
+            ST7789_DrawPixel(x, y, 0xF800); // Red color in RGB565 format
+        }
     }
 }
 
@@ -33,7 +37,7 @@ int main(void)
     G8RTOS_Init();
     multimod_init();
 
-    // Test_Display();
+    Test_Display();
 
     // Add threads, semaphores, FIFOs here
     G8RTOS_AddThread(&Idle_Thread, 255, "IdleThread");
