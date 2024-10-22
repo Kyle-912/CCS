@@ -481,8 +481,21 @@ sched_ErrCode_t G8RTOS_KillSelf()
     // Else, mark this thread as not alive.
     CurrentlyRunningThread->alive = false;
 
-    CurrentlyRunningThread->prevTCB->nextTCB = CurrentlyRunningThread->nextTCB;
-    CurrentlyRunningThread->nextTCB->prevTCB = CurrentlyRunningThread->prevTCB;
+    // CurrentlyRunningThread->prevTCB->nextTCB = CurrentlyRunningThread->nextTCB;
+    // CurrentlyRunningThread->nextTCB->prevTCB = CurrentlyRunningThread->prevTCB; // <-OLD
+
+    // Remove the current thread from the circular linked list
+    tcb_t *self = CurrentlyRunningThread;
+
+    // Update linked list pointers
+    self->prevTCB->nextTCB = self->nextTCB;
+    self->nextTCB->prevTCB = self->prevTCB;
+
+    // Update headTCB if the current thread is the head
+    if (self == headTCB)
+    {
+        headTCB = self->nextTCB;
+    }
 
     NumberOfThreads--;
 
