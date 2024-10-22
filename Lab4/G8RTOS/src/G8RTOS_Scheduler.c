@@ -202,7 +202,7 @@ void G8RTOS_Scheduler()
         {
             if (threadControlBlocks[i].priority == 255) // Assuming idle thread has priority 255
             {
-                highestPriorityThread = &threadControlBlocks[i];
+                highestPriorityThread = &threadControlBlocks[i]; // <-OLD
                 break;
             }
         }
