@@ -289,8 +289,11 @@ void Read_Buttons()
         if (button_state & SW2) // SW2 Pressed
         {
             // Signal to terminate a random cube
-            kill_cube++;
-            G8RTOS_SignalSemaphore(&sem_KillCube); // FIXME: What is this for?
+            if (num_cubes > 0)
+            {
+                kill_cube++;
+                G8RTOS_SignalSemaphore(&sem_KillCube); // FIXME: What is this for?
+            }
         }
 
         // Clear the interrupt
