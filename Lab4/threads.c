@@ -112,7 +112,6 @@ void Cube_Thread(void)
     /*************YOUR CODE HERE*************/
     // Get spawn coordinates from FIFO, set cube.x, cube.y, cube.z
     uint32_t coordinates = G8RTOS_ReadFIFO(SPAWNCOOR_FIFO);
-    // TODO: set cube.
     cube.x_pos = (int16_t)((int8_t)((coordinates >> 16) & 0xFF));
     cube.y_pos = (int16_t)((int8_t)((coordinates >> 8) & 0xFF));
     cube.z_pos = (int16_t)((int8_t)(coordinates & 0xFF));
@@ -285,7 +284,7 @@ void Read_Buttons()
             }
         }
 
-        if (button_state & SW2) // SW2 Pressed
+        if (button_state & SW2)
         {
             // Signal to terminate a random cube
             if (num_cubes > 0)
@@ -305,8 +304,6 @@ void Read_Buttons()
 
 void Read_JoystickPress()
 {
-    // Initialize / declare any variables here
-
     while (1)
     {
         // Wait for a signal to read the joystick press

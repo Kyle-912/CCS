@@ -56,7 +56,6 @@ PendSV_Handler:
 
 	CPSID I
 
-	vpush {s16 - s31}   ;Maybe delete this if it errors
 	push {R4 - R11}		;Saving registers
 
 	LDR R4, RunningPtr	;Loading R4 with the address of the currently running thread
@@ -78,7 +77,6 @@ PendSV_Handler:
 	LDR SP, [R5]		;Loading the stack pointer with the stack pointer in the TCB
 
 	pop {R4 - R11}		;Restoring registers
-	vpop {s16 - s31}
 
 	CPSIE I
 

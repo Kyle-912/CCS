@@ -83,10 +83,12 @@ int main(void)
     //  Test_Display();
 
     // Add threads, semaphores, FIFOs here
-    G8RTOS_AddThread(&Idle_Thread);
-
-    G8RTOS_AddThread(&Read_Buttons);
-    G8RTOS_AddThread(&Read_JoystickPress);
+    G8RTOS_AddThread(&Idle_Thread, 255, "IdleThread");
+    G8RTOS_AddThread(&Snake, 1, "Snake");
+    G8RTOS_AddThread(&Apple, 1, "Apple");
+    G8RTOS_AddThread(&Board, 1, "Board");
+    G8RTOS_AddThread(&Read_Buttons, 1, "ReadButtons");
+    G8RTOS_AddThread(&Read_JoystickPress, 1, "JoystickPress");
 
     G8RTOS_Add_PeriodicEvent(&Get_Joystick, 100, 50);
 

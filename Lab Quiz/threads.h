@@ -14,7 +14,6 @@
 
 /*************************************Defines***************************************/
 
-#define SPAWNCOOR_FIFO 0
 #define JOYSTICK_FIFO 1
 
 /*************************************Defines***************************************/
@@ -25,7 +24,6 @@ semaphore_t sem_I2CA;
 semaphore_t sem_SPIA;
 semaphore_t sem_PCA9555_Debounce;
 semaphore_t sem_Joystick_Debounce;
-semaphore_t sem_KillCube;
 
 /***********************************Semaphores**************************************/
 
@@ -35,8 +33,9 @@ semaphore_t sem_KillCube;
 /*******************************Background Threads**********************************/
 
 void Idle_Thread(void);
-void Cube_Thread(void);
-void CamMove_Thread(void);
+void Snake(void);
+void Apple(void);
+void Board(void);
 void Read_Buttons(void);
 void Read_JoystickPress(void);
 
@@ -44,7 +43,6 @@ void Read_JoystickPress(void);
 
 /********************************Periodic Threads***********************************/
 
-void Print_WorldCoords(void);
 void Get_Joystick(void);
 
 /********************************Periodic Threads***********************************/
