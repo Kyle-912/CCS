@@ -17,17 +17,32 @@
 
 void Test_Display(void)
 {
-    // Loop through all rows (Y-axis)
-    for (uint16_t y = 0; y < Y_MAX; y++)
+    // Fill the screen with red, green, and blue
+
+    // Red (0xF800)
+    for (uint16_t y = 0; y < Y_MAX / 3; y++)
     {
-        // Loop through all columns (X-axis)
         for (uint16_t x = 0; x < X_MAX; x++)
         {
-            // Draw a red pixel at the current position
+            ST7789_DrawPixel(x, y, 0xF800);
+        }
+    }
 
-            // ST7789_DrawPixel(x, y, 0xF800); // Red color in RGB565 format
-            ST7789_DrawPixel(x, y, 0x001F); // Green color in RGB565 format
-            // ST7789_DrawPixel(x, y, 0x07E0); // Blue color in RGB565 format
+    // Green (0x07E0) actually blue
+    for (uint16_t y = Y_MAX / 3; y < 2 * Y_MAX / 3; y++)
+    {
+        for (uint16_t x = 0; x < X_MAX; x++)
+        {
+            ST7789_DrawPixel(x, y, 0x07E0);
+        }
+    }
+
+    // Blue (0x001F) actually green
+    for (uint16_t y = 2 * Y_MAX / 3; y < Y_MAX; y++)
+    {
+        for (uint16_t x = 0; x < X_MAX; x++)
+        {
+            ST7789_DrawPixel(x, y, 0x001F);
         }
     }
 }
