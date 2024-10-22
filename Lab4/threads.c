@@ -57,12 +57,19 @@ void Idle_Thread(void)
 void CamMove_Thread(void)
 {
     // Initialize / declare any variables here
+    int32_t joystick_data;
+    float norm_x, norm_y;
 
     while (1)
     {
         // TODO: Get result from joystick
+        joystick_data = G8RTOS_ReadFIFO(JOYSTICK_FIFO);
+        int16_t x = (joystick_data >> 16) & 0xFFFF;
+        int16_t y = joystick_data & 0xFFFF;
 
         // TODO: If joystick axis within deadzone, set to 0. Otherwise normalize it.
+        norm_x = (abs(x) < 500) ? 0 : x / 4096.0f;
+        norm_y = (abs(y) < 500) ? 0 : y / 4096.0f;
 
         // TODO: Update world camera position. Update y/z coordinates depending on the joystick toggle.
 
