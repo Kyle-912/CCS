@@ -80,5 +80,7 @@ uint8_t MultimodButtons_Get()
     {
     }
 
+    buttonState = I2C_ReadSingle(I2C1_BASE, BUTTONS_PCA9555_GPIO_ADDR);
+
     return buttonState & (SW1 | SW2 | SW3 | SW4);
 }
