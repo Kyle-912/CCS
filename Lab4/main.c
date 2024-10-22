@@ -17,52 +17,52 @@
 
 void Test_Display(void)
 {
-    // Top 1/6 of the screen: Red (0xF800)
+    // Top 1/6 of the screen: Red (ST7789_RED = 0x001F)
     for (uint16_t y = 0; y < Y_MAX / 6; y++)
     {
         for (uint16_t x = 0; x < X_MAX; x++)
         {
-            ST7789_DrawPixel(x, y, 0xF800); // Red
+            ST7789_DrawPixel(x, y, ST7789_RED); // Red (0x001F in BGR565)
         }
     }
 
-    // Second 1/6 of the screen: Green (0x07E0)
+    // Second 1/6 of the screen: Green (ST7789_GREEN = 0x07E0)
     for (uint16_t y = Y_MAX / 6; y < 2 * Y_MAX / 6; y++)
     {
         for (uint16_t x = 0; x < X_MAX; x++)
         {
-            ST7789_DrawPixel(x, y, 0x07E0); // Green
+            ST7789_DrawPixel(x, y, ST7789_GREEN); // Green (0x07E0 in BGR565)
         }
     }
 
-    // Third 1/6 of the screen: Blue (0x001F)
+    // Third 1/6 of the screen: Blue (ST7789_BLUE = 0xF800)
     for (uint16_t y = 2 * Y_MAX / 6; y < 3 * Y_MAX / 6; y++)
     {
         for (uint16_t x = 0; x < X_MAX; x++)
         {
-            ST7789_DrawPixel(x, y, 0x001F); // Blue
+            ST7789_DrawPixel(x, y, ST7789_BLUE); // Blue (0xF800 in BGR565)
         }
     }
 
-    // Fourth 1/6 of the screen: Yellow (0xFFE0)
+    // Fourth 1/6 of the screen: Yellow (Red + Green = 0x07FF)
     for (uint16_t y = 3 * Y_MAX / 6; y < 4 * Y_MAX / 6; y++)
     {
         for (uint16_t x = 0; x < X_MAX; x++)
         {
-            ST7789_DrawPixel(x, y, 0xFFE0); // Yellow (Red + Green)
+            ST7789_DrawPixel(x, y, 0x07FF); // Yellow (Red + Green)
         }
     }
 
-    // Fifth 1/6 of the screen: Cyan (0x07FF)
+    // Fifth 1/6 of the screen: Cyan (Green + Blue = 0xFFE0)
     for (uint16_t y = 4 * Y_MAX / 6; y < 5 * Y_MAX / 6; y++)
     {
         for (uint16_t x = 0; x < X_MAX; x++)
         {
-            ST7789_DrawPixel(x, y, 0x07FF); // Cyan (Green + Blue)
+            ST7789_DrawPixel(x, y, 0xFFE0); // Cyan (Green + Blue)
         }
     }
 
-    // Sixth 1/6 of the screen: Magenta (0xF81F)
+    // Sixth 1/6 of the screen: Magenta (Red + Blue = 0xF81F)
     for (uint16_t y = 5 * Y_MAX / 6; y < Y_MAX; y++)
     {
         for (uint16_t x = 0; x < X_MAX; x++)
