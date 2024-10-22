@@ -252,7 +252,9 @@ void Read_Buttons()
             z = (rand() % 101) - 120; // Random number between [-120, -20]
 
             // Send coordinates to SPAWNCOOR_FIFO
-            uint32_t spawn_coords = ((uint32_t)x << 16) | ((uint32_t)y << 8) | (uint32_t)z;
+            uint32_t spawn_coords = ((uint32_t)((uint8_t)x & 0xFF) << 16) |
+                                    ((uint32_t)((uint8_t)y & 0xFF) << 8) |
+                                    ((uint32_t)((uint8_t)z & 0xFF));
             num_cubes++;
             G8RTOS_WriteFIFO(SPAWNCOOR_FIFO, spawn_coords);
         }
