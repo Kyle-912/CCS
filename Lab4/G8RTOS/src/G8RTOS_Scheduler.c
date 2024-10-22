@@ -132,11 +132,11 @@ void G8RTOS_Init()
     NumberOfThreads = 0;
     NumberOfPThreads = 0;
 
-    // TODO: test
-    // for (int i = 0; i < MAX_THREADS; i++)
-    // {
-    // threadControlBlocks[i].alive = false;
-    // }
+    // TODO: new, test
+    for (int i = 0; i < MAX_THREADS; i++)
+    {
+        threadControlBlocks[i].alive = false;
+    }
 }
 
 // G8RTOS_Launch
@@ -223,7 +223,16 @@ sched_ErrCode_t G8RTOS_AddThread(void (*threadToAdd)(void), uint8_t priority, ch
     }
 
     // Get the next available thread control block
-    tcb_t *newTCB = &threadControlBlocks[NumberOfThreads];
+    // tcb_t *newTCB = &threadControlBlocks[NumberOfThreads]; <-OLD
+    tcb_t *newTCB = 0; // TODO: new, test
+    for (int i = 0; i < MAX_THREADS; i++)
+    {
+        if (!threadControlBlocks[i].alive) // If the thread is not alive, use this slot
+        {
+            newTCB = &threadControlBlocks[i];
+            break;
+        }
+    }
 
     // Initialize the stack for the new thread
     newTCB->stackPointer = &threadStacks[NumberOfThreads][STACKSIZE - 16];
