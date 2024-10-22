@@ -35,7 +35,7 @@ int main(void)
     G8RTOS_Init();
     multimod_init();
 
-    Test_Display();
+    // Test_Display();
 
     // Add threads, semaphores, FIFOs here
     G8RTOS_AddThread(&Idle_Thread, 255, "IdleThread");
@@ -62,6 +62,14 @@ int main(void)
     G8RTOS_Launch();
     while (1)
     {
+        ST7789_SetWindow(0, 0, X_MAX, Y_MAX); // Full-screen window
+
+        // Write a single color (Red) across the screen
+        for (int i = 0; i < X_MAX * Y_MAX; i++)
+        {
+            ST7789_WriteData(0xF8); // Red (High byte)
+            ST7789_WriteData(0x00); // Red (Low byte)
+        }
     }
 }
 
