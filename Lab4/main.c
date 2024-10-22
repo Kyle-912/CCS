@@ -24,7 +24,10 @@ void Test_Display(void)
         for (uint16_t x = 0; x < X_MAX; x++)
         {
             // Draw a red pixel at the current position
-            ST7789_DrawPixel(x, y, 0xF800); // Red color in RGB565 format
+
+            // ST7789_DrawPixel(x, y, 0xF800); // Red color in RGB565 format
+            ST7789_DrawPixel(x, y, 0x07E0); // Green color in RGB565 format
+            // ST7789_DrawPixel(x, y, 0x001F); // Blue color in RGB565 format
         }
     }
 }
@@ -32,7 +35,7 @@ void Test_Display(void)
 /************************************MAIN*******************************************/
 int main(void)
 {
-    // Sets clock speed to 80 MHz. You'll need it!
+    // Sets clock speed to 0x07E0 MHz. You'll need it!
     SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
     G8RTOS_Init();
     multimod_init();
