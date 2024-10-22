@@ -100,7 +100,11 @@ void Cube_Thread(void)
     {
         /*************YOUR CODE HERE*************/
         // Check if kill ball flag is set.
-        
+        if (kill_cube >= 1)
+        {
+            kill = 1;
+            kill_cube--;
+        }
 
         camera_pos.x = world_camera_pos.x;
         camera_pos.y = world_camera_pos.y;
@@ -216,6 +220,7 @@ void Read_Buttons()
         if (button_state & SW2) // SW2 Pressed
         {
             // Signal to terminate a random cube
+            kill_cube++;
             G8RTOS_SignalSemaphore(&sem_KillCube);
         }
 
