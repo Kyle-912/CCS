@@ -68,8 +68,8 @@ void CamMove_Thread(void)
         int16_t y = joystick_data & 0xFFFF;
 
         // TODO: If joystick axis within deadzone, set to 0. Otherwise normalize it.
-        norm_x = (abs(x) < 500) ? 0 : x / 4096.0f;
-        norm_y = (abs(y) < 500) ? 0 : y / 4096.0f;
+        norm_x = (abs(x) < 800) ? 0 : x / 4096.0f;
+        norm_y = (abs(y) < 800) ? 0 : y / 4096.0f;
 
         // TODO: Update world camera position. Update y/z coordinates depending on the joystick toggle.
         if (joystick_y)
