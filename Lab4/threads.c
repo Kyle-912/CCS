@@ -90,15 +90,15 @@ void CamMove_Thread(void)
 
             if (joystick_y)
             {
-                world_camera_pos.y += adjusted_y * 2; // Y-axis movement
+                world_camera_pos.y += adjusted_y * 4; // Y-axis movement
             }
             else
             {
-                world_camera_pos.z += adjusted_y * 2; // Z-axis movement
+                world_camera_pos.z += adjusted_y * 4; // Z-axis movement
             }
 
             // X-axis movement (left/right)
-            world_camera_pos.x += norm_x * 2;
+            world_camera_pos.x += norm_x * 4;
         }
 
         sleep(10); // Sleep
