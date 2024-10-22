@@ -343,8 +343,8 @@ void ST7789_DrawPixel(uint16_t x, uint16_t y, uint16_t color)
     ST7789_SetWindow(x, y, 1, 1);
 
     // Set color
-    ST7789_WriteData(bgr_color & 0xFF);        // Low byte
     ST7789_WriteData((bgr_color >> 8) & 0xFF); // High byte
+    ST7789_WriteData(bgr_color & 0xFF);        // Low byte
 
     ST7789_Deselect();
 }
