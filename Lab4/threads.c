@@ -67,6 +67,9 @@ void CamMove_Thread(void)
         int16_t x = (joystick_data >> 16) & 0xFFFF;
         int16_t y = joystick_data & 0xFFFF;
 
+        x = -x;
+        y = -y;
+
         // TODO: If joystick axis within deadzone, set to 0. Otherwise normalize it.
         // norm_x = (abs(x) < 100) ? 0.0f : (float)x / 2048.0f;
         // norm_y = (abs(y) < 100) ? 0.0f : (float)y / 2048.0f;
@@ -321,8 +324,8 @@ void Get_Joystick(void)
     uint16_t x_raw = JOYSTICK_GetX();
     uint16_t y_raw = JOYSTICK_GetY();
 
-    int16_t x = -((int16_t)(x_raw - 2048)); // Center around 0
-    int16_t y = -((int16_t)(y_raw - 2048)); // Center around 0
+    int16_t x = (int16_t)(x_raw - 2048); // Center around 0
+    int16_t y = (int16_t)(y_raw - 2048); // Center around 0
 
     // Send through FIFO.
     G8RTOS_WriteFIFO(JOYSTICK_FIFO, ((uint32_t)x << 16) | (uint32_t)y);
