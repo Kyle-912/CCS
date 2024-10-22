@@ -256,12 +256,12 @@ void Read_Buttons()
             G8RTOS_WriteFIFO(SPAWNCOOR_FIFO, spawn_coords);
         }
 
-        //if (button_state & SW2) // SW2 Pressed
-        //{
-        //    // Signal to terminate a random cube
-        //    kill_cube++;
-        //    G8RTOS_SignalSemaphore(&sem_KillCube); // FIXME: What is this for?
-        //}
+        if (button_state & SW2) // SW2 Pressed
+        {
+            // Signal to terminate a random cube
+            kill_cube++;
+            G8RTOS_SignalSemaphore(&sem_KillCube); // FIXME: What is this for?
+        }
 
         // Clear the interrupt
         GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
