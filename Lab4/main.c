@@ -17,32 +17,57 @@
 
 void Test_Display(void)
 {
-    // Fill the screen with red, green, and blue
-
-    // Red (0xF800)
-    for (uint16_t y = 0; y < Y_MAX / 3; y++)
+    // Top 1/6 of the screen: Red (0xF800)
+    for (uint16_t y = 0; y < Y_MAX / 6; y++)
     {
         for (uint16_t x = 0; x < X_MAX; x++)
         {
-            ST7789_DrawPixel(x, y, 0xF800);
+            ST7789_DrawPixel(x, y, 0xF800); // Red
         }
     }
 
-    // Green (0x07E0) actually blue
-    for (uint16_t y = Y_MAX / 3; y < 2 * Y_MAX / 3; y++)
+    // Second 1/6 of the screen: Green (0x07E0)
+    for (uint16_t y = Y_MAX / 6; y < 2 * Y_MAX / 6; y++)
     {
         for (uint16_t x = 0; x < X_MAX; x++)
         {
-            ST7789_DrawPixel(x, y, 0x07E0);
+            ST7789_DrawPixel(x, y, 0x07E0); // Green
         }
     }
 
-    // Blue (0x001F) actually green
-    for (uint16_t y = 2 * Y_MAX / 3; y < Y_MAX; y++)
+    // Third 1/6 of the screen: Blue (0x001F)
+    for (uint16_t y = 2 * Y_MAX / 6; y < 3 * Y_MAX / 6; y++)
     {
         for (uint16_t x = 0; x < X_MAX; x++)
         {
-            ST7789_DrawPixel(x, y, 0x001F);
+            ST7789_DrawPixel(x, y, 0x001F); // Blue
+        }
+    }
+
+    // Fourth 1/6 of the screen: Yellow (0xFFE0)
+    for (uint16_t y = 3 * Y_MAX / 6; y < 4 * Y_MAX / 6; y++)
+    {
+        for (uint16_t x = 0; x < X_MAX; x++)
+        {
+            ST7789_DrawPixel(x, y, 0xFFE0); // Yellow (Red + Green)
+        }
+    }
+
+    // Fifth 1/6 of the screen: Cyan (0x07FF)
+    for (uint16_t y = 4 * Y_MAX / 6; y < 5 * Y_MAX / 6; y++)
+    {
+        for (uint16_t x = 0; x < X_MAX; x++)
+        {
+            ST7789_DrawPixel(x, y, 0x07FF); // Cyan (Green + Blue)
+        }
+    }
+
+    // Sixth 1/6 of the screen: Magenta (0xF81F)
+    for (uint16_t y = 5 * Y_MAX / 6; y < Y_MAX; y++)
+    {
+        for (uint16_t x = 0; x < X_MAX; x++)
+        {
+            ST7789_DrawPixel(x, y, 0xF81F); // Magenta (Red + Blue)
         }
     }
 }
