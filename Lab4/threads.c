@@ -221,7 +221,7 @@ void Read_Buttons()
         {
             // Signal to terminate a random cube
             kill_cube++;
-            G8RTOS_SignalSemaphore(&sem_KillCube);
+            G8RTOS_SignalSemaphore(&sem_KillCube); // FIXME: What is this for?
         }
 
         // Clear the interrupt
