@@ -254,6 +254,7 @@ void Read_Buttons()
             // Send coordinates to SPAWNCOOR_FIFO
             uint32_t spawn_coords = ((uint32_t)x << 16) | ((uint32_t)y << 8) | (uint32_t)z;
             G8RTOS_WriteFIFO(SPAWNCOOR_FIFO, spawn_coords);
+            num_cubes++;
         }
 
         // TODO: uncomment once buttons work
