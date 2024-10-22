@@ -484,7 +484,7 @@ sched_ErrCode_t G8RTOS_KillSelf()
     // CurrentlyRunningThread->prevTCB->nextTCB = CurrentlyRunningThread->nextTCB;
     // CurrentlyRunningThread->nextTCB->prevTCB = CurrentlyRunningThread->prevTCB; // <-OLD
 
-    // Remove the current thread from the circular linked list
+    // Remove the current thread from the circular linked list TODO: new, test
     tcb_t *self = CurrentlyRunningThread;
 
     // Update linked list pointers
