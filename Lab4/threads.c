@@ -246,18 +246,42 @@ void Read_Buttons()
         // Process the buttons and determine what actions need to be performed.
         if (button_state & SW1)
         {
-            // Generate random coordinates for the cube
-            x = (rand() % 201) - 100; // Random number between [-100, 100]
-            y = (rand() % 201) - 100; // Random number between [-100, 100]
-            z = (rand() % 101) - 120; // Random number between [-120, -20]
+            if (num_cubes < MAX_NUM_CUBES)
+            {
+                // Generate random coordinates for the cube
+                x = (rand() % 201) - 100; // Random number between [-100, 100]
+                y = (rand() % 201) - 100; // Random number between [-100, 100]
+                z = (rand() % 101) - 120; // Random number between [-120, -20]
 
-            // Send coordinates to SPAWNCOOR_FIFO
-            uint32_t spawn_coords = ((uint32_t)(x & 0xFF) << 16) |
-                                    ((uint32_t)(y & 0xFF) << 8) |
-                                    (uint32_t)(z & 0xFF);
+                // Send coordinates to SPAWNCOOR_FIFO
+                uint32_t spawn_coords = ((uint32_t)(x & 0xFF) << 16) |
+                                        ((uint32_t)(y & 0xFF) << 8) |
+                                        (uint32_t)(z & 0xFF);
 
-            num_cubes++;
-            G8RTOS_WriteFIFO(SPAWNCOOR_FIFO, spawn_coords);
+                num_cubes++;
+                G8RTOS_WriteFIFO(SPAWNCOOR_FIFO, spawn_coords);
+
+                char thread_name[MAX_NAME_LENGTH] = {0};
+                const char prefix[] = "Cube_";
+                int i = 0;
+
+                // Copy "Cube_" into thread_name
+                while (i < sizeof(prefix) - 1 && i < MAX_NAME_LENGTH - 1)
+                {
+                    thread_name[i] = prefix[i];
+                    i++;
+                }
+
+                // Convert num_cubes to a character and append it to the name
+                if (i < MAX_NAME_LENGTH - 1)
+                {
+                    thread_name[i++] = '0' + num_cubes;
+                }
+
+                thread_name[i] = '\0'; // Null-terminate
+
+                G8RTOS_AddThread(&Cube_Thread, 1, thread_name);
+            }
         }
 
         // TODO: uncomment once buttons work
