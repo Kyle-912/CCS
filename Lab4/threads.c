@@ -60,13 +60,13 @@ void CamMove_Thread(void)
 
     while (1)
     {
-        // Get result from joystick
+        // TODO: Get result from joystick
 
-        // If joystick axis within deadzone, set to 0. Otherwise normalize it.
+        // TODO: If joystick axis within deadzone, set to 0. Otherwise normalize it.
 
-        // Update world camera position. Update y/z coordinates depending on the joystick toggle.
+        // TODO: Update world camera position. Update y/z coordinates depending on the joystick toggle.
 
-        // sleep
+        sleep(10); // Sleep
     }
 }
 
@@ -76,6 +76,8 @@ void Cube_Thread(void)
 
     /*************YOUR CODE HERE*************/
     // Get spawn coordinates from FIFO, set cube.x, cube.y, cube.z
+    uint32_t coordinates = G8RTOS_ReadFIFO(SPAWNCOOR_FIFO);
+    // TODO: set cube.
 
     cube.width = 50;
     cube.height = 50;
@@ -141,7 +143,6 @@ void Cube_Thread(void)
         {
             G8RTOS_KillSelf();
         }
-
 
         // Calculates view relative to camera position / orientation
         for (int i = 0; i < 8; i++)
