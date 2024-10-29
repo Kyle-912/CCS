@@ -22,6 +22,7 @@
         "GYROY",
         "GYROZ",
         "GYRRANGE",
+        "Goertzel",
         "HWREG",
         "I2C_SLAVE_ACT_RREQ_FBR",
         "ICSR",

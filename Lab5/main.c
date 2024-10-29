@@ -23,23 +23,28 @@
 /********************************Public Variables***********************************/
 /********************************Public Variables***********************************/
 
-
 /************************************MAIN*******************************************/
 
 int main(void)
 {
     // Sets clock speed to 80 MHz. You'll need it!
+    SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
 
     // you might want a delay here (~10 ms) to make sure the display has powered up
+    SysCtlDelay(10000);
 
     // initialize the G8RTOS framework
+    G8RTOS_Init();
+    multimod_init();
 
     // Add semaphores, threads, FIFOs here
 
     // add periodic and aperiodic events here (check multimod_mic.h and multimod_buttons.h for defines)
 
-
-    while (1);
+    G8RTOS_Launch();
+    while (1)
+    {
+    }
 }
 
 /************************************MAIN*******************************************/

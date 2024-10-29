@@ -147,7 +147,7 @@ void G8RTOS_Scheduler() {
 
 // G8RTOS_AddThread
 // Adds a thread. This is now in a critical section to support dynamic threads.
-// It also now should initalize priority and account for live or dead threads.
+// It also now should initialize priority and account for live or dead threads.
 // Param void* "threadToAdd": pointer to thread function address
 // Param uint8_t "priority": priority from [0, 255].
 // Param char* "name": character array containing the thread name.
