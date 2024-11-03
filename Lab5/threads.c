@@ -143,22 +143,29 @@ void Display_Thread(void)
         // draw the magnitudes on the display (use sem_SPIA)
         G8RTOS_WaitSemaphore(&sem_SPIA);
 
-        // TODO: limit the magnitude values to the display range
-
-        int display_f1 = magnitude_f1;
-        int display_f2 = magnitude_f2;
+        // limit the magnitude values to the display range
+        if (magnitude_f1 > Y_MAX)
+        {
+            magnitude_f1 = Y_MAX;
+        }
+        if (magnitude_f2 > Y_MAX)
+        {
+            magnitude_f2 = Y_MAX;
+        }
 
         // clear previous rectangle
-        ST7789_DrawRectangle(0, previous_f1, 10, previous_f2, ST7789_BLACK);
+        ST7789_DrawFilledRectangle(0, previous_f1, X_MAX / 2 - 1, Y_MAX, ST7789_BLACK);     // Clear area for FREQ1
+        ST7789_DrawFilledRectangle(X_MAX / 2, previous_f2, X_MAX - 1, Y_MAX, ST7789_BLACK); // Clear area for FREQ2
 
         // draw new rectangle
-        ST7789_DrawRectangle(0, magnitude_f1, 10, magnitude_f2, ST7789_RED);
+        ST7789_DrawFilledRectangle(0, Y_MAX - magnitude_f1, X_MAX / 2 - 1, Y_MAX, ST7789_RED);      // FREQ1
+        ST7789_DrawFilledRectangle(X_MAX / 2, Y_MAX - magnitude_f2, X_MAX - 1, Y_MAX, ST7789_BLUE); // FREQ2
 
         G8RTOS_SignalSemaphore(&sem_SPIA);
 
         // update previous value
-        previous_f1 = display_f1;
-        previous_f2 = display_f2;
+        previous_f1 = magnitude_f1;
+        previous_f2 = magnitude_f2;
     }
 }
 
