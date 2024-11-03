@@ -13,12 +13,18 @@
 #include "inc/hw_types.h"
 #include "inc/hw_nvic.h"
 
+/************************************Includes***************************************/
+
+/******************************Data Type Definitions********************************/
 /******************************Data Type Definitions********************************/
 
 /****************************Data Structure Definitions*****************************/
+/****************************Data Structure Definitions*****************************/
 
 /***********************************Externs*****************************************/
+/***********************************Externs*****************************************/
 
+/********************************Public Variables***********************************/
 /********************************Public Variables***********************************/
 
 /********************************Public Functions***********************************/
@@ -28,27 +34,28 @@
 // Param "s": Pointer to semaphore
 // Param "value": Value to initialize semaphore to
 // Return: void
-void G8RTOS_InitSemaphore(semaphore_t *s, int32_t value)
-{
+void G8RTOS_InitSemaphore(semaphore_t* s, int32_t value) {
     IBit_State = StartCriticalSection();
-    *s = value;
+    (*s) = value;
     EndCriticalSection(IBit_State);
 }
 
 // G8RTOS_WaitSemaphore
 // Waits on the semaphore to become available, decrements value by 1.
 // If the current resource is not available, block the current thread
+// and trigger a context switch.
 // Param "s": Pointer to semaphore
 // Return: void
-void G8RTOS_WaitSemaphore(semaphore_t *s)
-{
+void G8RTOS_WaitSemaphore(semaphore_t* s) {
+    // add your code
     IBit_State = StartCriticalSection();
+    (*s)--;
 
-    if (--(*s) < 0) // Decrement the semaphore; if < 0, thread must block
-    {
-        CurrentlyRunningThread->blocked = s; // Set the blocked pointer
+    if ((*s) < 0) {
+        CurrentlyRunningThread->blocked = s;
         EndCriticalSection(IBit_State);
-        HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // Yield
+        // yield
+        HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV;
     }
 
     EndCriticalSection(IBit_State);
@@ -56,26 +63,23 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
 
 // G8RTOS_SignalSemaphore
 // Signals that the semaphore has been released by incrementing the value by 1.
-// Unblocks the first thread currently blocked on the semaphore.
+// Unblocks all threads currently blocked on the semaphore.
 // Param "s": Pointer to semaphore
 // Return: void
-void G8RTOS_SignalSemaphore(semaphore_t *s)
-{
+void G8RTOS_SignalSemaphore(semaphore_t* s) {
     IBit_State = StartCriticalSection();
+    (*s)++;
 
-    (*s)++; // Increment semaphore
+    if ((*s) <= 0) {
+        tcb_t * CurrentlyConsideredThread = CurrentlyRunningThread->nextTCB;
 
-    if (*s <= 0) // Only unblock a thread if semaphore was negative
-    {
-        tcb_t *pt = CurrentlyRunningThread->nextTCB;
-
-        while (pt->blocked != s)
-        {
-            pt = pt->nextTCB;
+        while (CurrentlyConsideredThread->blocked != s) {
+            CurrentlyConsideredThread = CurrentlyConsideredThread->nextTCB;
         }
 
-        pt->blocked = 0;
+        CurrentlyConsideredThread->blocked = 0;
     }
-
     EndCriticalSection(IBit_State);
 }
+
+/********************************Public Functions***********************************/
