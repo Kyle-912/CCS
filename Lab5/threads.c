@@ -80,7 +80,6 @@ void Mic_Thread(void)
 
 void Speaker_Thread(void)
 {
-
     uint8_t buttons = 0;
 
     while (1)
@@ -107,7 +106,6 @@ void Speaker_Thread(void)
 // TODO:
 void Volume_Thread(void)
 {
-
     // define variables
 
     while (1)
@@ -124,7 +122,6 @@ void Volume_Thread(void)
 // TODO:
 void Display_Thread(void)
 {
-
     // Initialize / declare any variables here
 
     while (1)
@@ -134,7 +131,7 @@ void Display_Thread(void)
 
         // unpack result values
 
-        // draw the magnitudes on the display
+        // draw the magnitudes on the display (use sem_SPIA)
 
         // limit the magnitude values to the display range
 

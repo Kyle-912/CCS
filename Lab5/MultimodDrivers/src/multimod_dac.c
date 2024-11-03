@@ -86,11 +86,13 @@ void MutimodDAC_Write(uint32_t reg_address, uint32_t data)
 
     SSIDataPut(SSI2_BASE, packet >> 12);
     while (SSIBusy(SSI2_BASE))
-        ;
+    {
+    }
 
     SSIDataPut(SSI2_BASE, packet);
     while (SSIBusy(SSI2_BASE))
-        ;
+    {
+    }
 
     GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
 }
@@ -107,11 +109,13 @@ uint32_t MutimodDAC_Read(uint32_t reg_address)
 
     SSIDataPut(SSI2_BASE, packet >> 12);
     while (SSIBusy(SSI2_BASE))
-        ;
+    {
+    }
 
     SSIDataPut(SSI2_BASE, 0); // send 16 dummy bits
     while (SSIBusy(SSI2_BASE))
-        ;
+    {
+    }
 
     GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
 
