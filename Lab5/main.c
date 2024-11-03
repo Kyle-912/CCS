@@ -38,12 +38,30 @@ int main(void)
     multimod_init();
 
     // Add semaphores, threads, FIFOs here
+    G8RTOS_InitSemaphore(&sem_I2CA, 1);
+    G8RTOS_InitSemaphore(&sem_SPIA, 1);
+    G8RTOS_InitSemaphore(&sem_PCA9555_Debounce, 1);
+    G8RTOS_InitSemaphore(&sem_Joystick_Debounce, 1);
+
     G8RTOS_AddThread(&Idle_Thread, 255, "IdleThread");
     G8RTOS_AddThread(&Mic_Thread, 0, "MicThread");
-    G8RTOS_AddThread(&Display_Thread, 1, "DisplayThread");
-    
+    G8RTOS_AddThread(&Speaker_Thread, 0, "SpeakerThread");
+    G8RTOS_AddThread(&Volume_Thread, 0, "VolumeThread");
+    G8RTOS_AddThread(&Display_Thread, 0, "DisplayThread");
+    G8RTOS_AddThread(&Read_Buttons, 0, "ReadButtons");
+
+    G8RTOS_InitFIFO(BUTTONS_FIFO);
+    G8RTOS_InitFIFO(JOYSTICK_FIFO);
+    G8RTOS_InitFIFO(FREQ1_FIFO);
+    G8RTOS_InitFIFO(FREQ2_FIFO);
+    G8RTOS_InitFIFO(DISPLAY_FIFO);
 
     // add periodic and aperiodic events here (check multimod_mic.h and multimod_buttons.h for defines)
+    G8RTOS_Add_PeriodicEvent(&Update_Volume, 100, 0);
+
+    G8RTOS_Add_APeriodicEvent(Mic_Handler, 1, INT_GPIOE);
+    G8RTOS_Add_APeriodicEvent(Button_Handler, 1, INT_GPIOE);
+    G8RTOS_Add_APeriodicEvent(DAC_Timer_Handler, 1, INT_GPIOE);
 
     G8RTOS_Launch();
     while (1)
