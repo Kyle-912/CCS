@@ -57,7 +57,7 @@ int main(void)
     G8RTOS_InitFIFO(DISPLAY_FIFO);
 
     // add periodic and aperiodic events here
-    G8RTOS_Add_PeriodicEvent(&Update_Volume, 100, 0);
+    G8RTOS_Add_PeriodicEvent(&Update_Volume, DAC_SAMPLE_FREQUENCY_HZ, 0);
 
     G8RTOS_Add_APeriodicEvent(Mic_Handler, 1, MIC_INTERRUPT);
     G8RTOS_Add_APeriodicEvent(Button_Handler, 1, BUTTON_INTERRUPT);
