@@ -33,7 +33,10 @@ uint8_t current_buttons = 0;
 int16_t Goertzel_ReadSample(int FIFO_index)
 {
     // read sample from FIFO
+    uint32_t sample = G8RTOS_ReadFIFO(FIFO_index);
+
     // return sample value
+    return goertzel(440.0, 48000.0, MAX_NUM_SAMPLES, G8RTOS_ReadFIFO, FIFO_index);
 }
 
 /*************************************Threads***************************************/
