@@ -17,6 +17,9 @@
 ; (label needs to be close enough to asm code to be reached with PC relative addressing)
 RunningPtr: .field CurrentlyRunningThread, 32
 
+CPAC:
+	.long 0xE000ED88
+
 ; G8RTOS_Start
 ;	Sets the first thread to be the currently running thread
 ;	Starts the currently running thread by setting Link Register to tcb's Program Counter
@@ -24,31 +27,20 @@ G8RTOS_Start:
 
 	.asmfunc
 
-    ; Disable interrupts to prevent context switching during this process
-    CPSID I
+	MOV R0, #0x04
+	MSR CONTROL, R0
+	ISB
 
-	; Load the address of RunningPtr
-    LDR R0, RunningPtr
-
-	; Load the address of the thread control block of the currently running pointer
-    LDR R1, [R0]
-
-	; Load the first thread's stack pointer
-    LDR SP, [R1]
-
-    ; Restore the context of the first thread
-    POP {R4-R11}
-    POP {R0-R3}
-    POP {R12}
-
-	; Load LR with the first thread's PC
-    POP {LR}        ; Skip the dummy LR value
-    POP {LR}        ; Load the PC into LR
-
-    ; Enable interrupts
+	LDR R4, RunningPtr	;Loads the address of RunningPtr into R4
+	LDR R5, [R4]		;Loads the currently running pointer into R5
+	LDR R6, [R5]		;Loads the first thread's stack pointer into R6
+	ADD R6, R6, #200
+	STR R6, [R5]
+	MOV SP, R6
+	LDR LR, [R6, #-80]	;Loads LR with the first thread's PC
 	CPSIE I
 
-    BX LR		    ; Branches to the first thread
+	BX LR				;Branches to the first thread
 
 	.endasmfunc
 
@@ -63,36 +55,38 @@ PendSV_Handler:
 
 	.asmfunc
 
-    ; Disable interrupts to prevent context switching during this process
-    CPSID I
+	CPSID I
 
-    ; Step 1: Save the callee-saved registers (R4-R11) of the current thread onto the stack
-    PUSH {R4-R11}
+	;vpush {s16 - s31}
+	push {R4 - R11}		;Saving registers
 
-    ; Step 2: Save the current stack pointer to the current thread's TCB
-    LDR R0, RunningPtr      ; Load the address of the currently running thread
-    LDR R1, [R0]            ; Get the current thread's TCB
-    STR SP, [R1]            ; Save the current stack pointer into the TCB
+	LDR R4, RunningPtr	;Loading R4 with the address of the currently running thread
 
-    ; Step 3: Call the scheduler to select the next thread to run
-    PUSH{LR}                ; Save LR before calling the scheduler
-    BL  G8RTOS_Scheduler    ; Call the scheduler
-    POP {LR}                ; Restore LR after scheduler call
+	LDR R5, [R4]		;Loading R5 with that TCB of the currently running pointer
 
-    ; Step 4: Load the stack pointer of the new thread from the new TCB
-    LDR R0, RunningPtr      ; Load the updated currently running thread (next thread)
-    LDR R1, [R0]            ; Get the new thread's TCB
-    LDR SP, [R1]            ; Load the new thread's stack pointer
+	STR SP, [R5]		;Storing the stack pointer in the stack pointer of the currently running thread
 
-    ; Step 5: Restore the callee-saved registers (R4-R11) from the new thread's stack
-    POP {R4-R11}            ; Restore R4-R11 for the new thread
+	MOV R7, LR		;Protect LR
 
-    ; Enable interrupts
-    CPSIE I
+	BL G8RTOS_Scheduler	;Calling the scheduler
 
-    BX LR                   ; Branch to the new thread's PC (Link Register holds the PC)
+	MOV LR, R7			;Restore LR
+
+	LDR R4, RunningPtr	;Loading R4 with the address of the currenrly running thread
+
+	LDR R5, [R4]		;Loading R5 with the TCB of the currently running thread
+
+	LDR SP, [R5]		;Loading the stack pointer with the stack pointer in the TCB
+
+	pop {R4 - R11}		;Restoring registers
+	;vpop {s16 - s31}
+
+	CPSIE I
+
+	BX LR				;Branches to new thread
 
 	.endasmfunc
 
+	; end of the asm file
 	.align
 	.end
