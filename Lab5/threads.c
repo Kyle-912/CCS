@@ -29,7 +29,7 @@ uint8_t current_buttons = 0;
 /*********************************Global Variables**********************************/
 
 /********************************Public Functions***********************************/
-// TODO:
+// FIXME:
 int16_t Goertzel_ReadSample(int FIFO_index)
 {
     // read sample from FIFO
@@ -119,7 +119,7 @@ void Volume_Thread(void)
         // limit volume to 0-4095 (12 bit range)
     }
 }
-// TODO:
+// FIXME:
 void Display_Thread(void)
 {
     // Initialize / declare any variables here
@@ -198,7 +198,9 @@ void Mic_Handler()
     // Read ADC Value
     ADCSequenceDataGet(ADC0_BASE, 1, micData);
 
-    // TODO: write new sample to audio FIFOs
+    // FIXME: write new sample to audio FIFOs
+    G8RTOS_WriteFIFO(FREQ1_FIFO, micData[0]);
+    G8RTOS_WriteFIFO(FREQ2_FIFO, micData[0]);
 }
 
 void Button_Handler()
