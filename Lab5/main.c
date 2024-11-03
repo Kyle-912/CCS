@@ -41,6 +41,7 @@ int main(void)
     G8RTOS_AddThread(&Idle_Thread, 255, "IdleThread");
     G8RTOS_AddThread(&Mic_Thread, 0, "MicThread");
     G8RTOS_AddThread(&Display_Thread, 1, "DisplayThread");
+    
 
     // add periodic and aperiodic events here (check multimod_mic.h and multimod_buttons.h for defines)
 
