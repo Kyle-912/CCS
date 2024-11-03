@@ -24,14 +24,14 @@
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t current_volume = 0xFFF;
+uint8_t current_buttons = 0;
 
 /*********************************Global Variables**********************************/
 
 /********************************Public Functions***********************************/
-
+// TODO:
 int16_t Goertzel_ReadSample(int FIFO_index)
 {
-
     // read sample from FIFO
     // return sample value
 }
@@ -40,7 +40,6 @@ int16_t Goertzel_ReadSample(int FIFO_index)
 
 void Idle_Thread(void)
 {
-
     while (1)
     {
     }
@@ -48,7 +47,6 @@ void Idle_Thread(void)
 
 void Mic_Thread(void)
 {
-
     // Input sample rate.
     const double sample_rate_hz = MIC_SAMPLE_RATE_HZ;
 
@@ -74,7 +72,9 @@ void Mic_Thread(void)
 
         // push newly magnitude ratio to display FIFO
         if (packed_result)
+        {
             G8RTOS_WriteFIFO(DISPLAY_FIFO, packed_result);
+        }
     }
 }
 
@@ -86,21 +86,25 @@ void Speaker_Thread(void)
     while (1)
     {
         // wait for button semaphore
+        G8RTOS_WaitSemaphore(&sem_PCA9555_Debounce);
 
         // debounce buttons
+        sleep(15);
 
         // Get buttons
+        buttons = current_buttons;
 
         // clear button interrupt
+        GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
 
-        // check which buttons are pressed
+        // TODO: check which buttons are pressed
 
-        // set DAC output rate to 1000Hz
-        //                        2000Hz
-        //                        etc.
+        // TODO: set DAC output rate to 1000Hz
+        //                              2000Hz
+        //                              etc.
     }
 }
-
+// TODO:
 void Volume_Thread(void)
 {
 
@@ -117,7 +121,7 @@ void Volume_Thread(void)
         // limit volume to 0-4095 (12 bit range)
     }
 }
-
+// TODO:
 void Display_Thread(void)
 {
 
@@ -144,7 +148,6 @@ void Display_Thread(void)
 
 void Read_Buttons(void)
 {
-
     // Initialize / declare any variables here
     uint8_t buttons;
 
@@ -152,15 +155,19 @@ void Read_Buttons(void)
     {
 
         // wait for button semaphore
+        G8RTOS_WaitSemaphore(&sem_PCA9555_Debounce);
 
         // Get buttons
+        buttons = MultimodButtons_Get();
 
         // debounce buttons
         sleep(15);
 
         // clear button interrupt
+        GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
 
         // update current_buttons value
+        current_buttons = buttons;
     }
 }
 
@@ -168,17 +175,21 @@ void Read_Buttons(void)
 
 void Update_Volume(void)
 {
-
     // read joystick values
+    uint16_t x_raw = JOYSTICK_GetX();
+    uint16_t y_raw = JOYSTICK_GetY();
+
+    int16_t x = (int16_t)(x_raw - 2048); // Center around 0
+    int16_t y = (int16_t)(y_raw - 2048); // Center around 0
 
     // push joystick value to fifo
+    G8RTOS_WriteFIFO(JOYSTICK_FIFO, ((uint32_t)x << 16) | (uint32_t)y);
 }
 
 /*******************************Aperiodic Threads***********************************/
 
 void Mic_Handler()
 {
-
     uint32_t micData[4] = {0};
 
     // Clear the ADC interrupt
@@ -187,25 +198,25 @@ void Mic_Handler()
     // Read ADC Value
     ADCSequenceDataGet(ADC0_BASE, 1, micData);
 
-    // write new sample to audio FIFOs
+    // TODO: write new sample to audio FIFOs
 }
 
 void Button_Handler()
 {
-
     // disable interrupt and signal semaphore
+    GPIOIntDisable(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
+    G8RTOS_SignalSemaphore(&sem_PCA9555_Debounce);
 }
 
 void DAC_Timer_Handler()
 {
-
     // clear the timer interrupt
     TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
 
     // read next output sample
     uint32_t output = (current_volume) * (dac_signal[dac_step++ % SIGNAL_STEPS]);
 
-    // BONUS: stream microphone input to DAC output via FIFO
+    // TODO: BONUS: stream microphone input to DAC output via FIFO
 
     // write the output value to the dac
     MutimodDAC_Write(DAC_OUT_REG, output);

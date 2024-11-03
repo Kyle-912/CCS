@@ -59,9 +59,9 @@ int main(void)
     // add periodic and aperiodic events here (check multimod_mic.h and multimod_buttons.h for defines)
     G8RTOS_Add_PeriodicEvent(&Update_Volume, 100, 0);
 
-    G8RTOS_Add_APeriodicEvent(Mic_Handler, 1, INT_GPIOE);
+    G8RTOS_Add_APeriodicEvent(Mic_Handler, 1, INT_ADC0SS1);
     G8RTOS_Add_APeriodicEvent(Button_Handler, 1, INT_GPIOE);
-    G8RTOS_Add_APeriodicEvent(DAC_Timer_Handler, 1, INT_GPIOE);
+    G8RTOS_Add_APeriodicEvent(DAC_Timer_Handler, 1, INT_TIMER1A);
 
     G8RTOS_Launch();
     while (1)
