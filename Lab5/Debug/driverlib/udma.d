@@ -15,9 +15,9 @@ driverlib/udma.obj: C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/inclu
 driverlib/udma.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_sysctl.h
 driverlib/udma.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_types.h
 driverlib/udma.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_udma.h
-driverlib/udma.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/debug.h
-driverlib/udma.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/interrupt.h
-driverlib/udma.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/udma.h
+driverlib/udma.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/debug.h
+driverlib/udma.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/interrupt.h
+driverlib/udma.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/udma.h
 
 ../driverlib/udma.c:
 
@@ -49,9 +49,9 @@ C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ C
 
 C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_udma.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/debug.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/debug.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/interrupt.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/interrupt.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/udma.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/udma.h:
 

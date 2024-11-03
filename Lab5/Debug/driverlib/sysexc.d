@@ -16,8 +16,8 @@ driverlib/sysexc.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texa
 driverlib/sysexc.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_sysctl.h
 driverlib/sysexc.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_sysexc.h
 driverlib/sysexc.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_types.h
-driverlib/sysexc.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/debug.h
-driverlib/sysexc.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/interrupt.h
+driverlib/sysexc.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/debug.h
+driverlib/sysexc.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/interrupt.h
 
 ../driverlib/sysexc.c:
 
@@ -51,7 +51,7 @@ C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ C
 
 C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_types.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/debug.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/debug.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/interrupt.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/interrupt.h:
 

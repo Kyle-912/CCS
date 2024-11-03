@@ -15,9 +15,9 @@ driverlib/systick.obj: C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/in
 driverlib/systick.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_ints.h
 driverlib/systick.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_nvic.h
 driverlib/systick.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_types.h
-driverlib/systick.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/debug.h
-driverlib/systick.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/interrupt.h
-driverlib/systick.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/systick.h
+driverlib/systick.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/debug.h
+driverlib/systick.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/interrupt.h
+driverlib/systick.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/systick.h
 
 ../driverlib/systick.c:
 
@@ -49,9 +49,9 @@ C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ C
 
 C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_types.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/debug.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/debug.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/interrupt.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/interrupt.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/systick.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/systick.h:
 

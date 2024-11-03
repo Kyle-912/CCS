@@ -27,35 +27,33 @@ threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instru
 threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_memmap.h
 threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_i2c.h
 threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_gpio.h
-threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/gpio.h
-threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/sysctl.h
-threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/uart.h
+threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/gpio.h
+threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/sysctl.h
+threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/uart.h
 threads.obj: ../MultimodDrivers/multimod_i2c.h
-threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/i2c.h
+threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/i2c.h
 threads.obj: ../MultimodDrivers/multimod_joystick.h
 threads.obj: ../MultimodDrivers/multimod_OPT3001.h
 threads.obj: ../MultimodDrivers/multimod_PCA9956b.h
 threads.obj: ../MultimodDrivers/multimod_uart.h
-threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/uartstdio.h
+threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/uartstdio.h
 threads.obj: C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdarg.h
 threads.obj: ../MultimodDrivers/multimod_ST7789.h
 threads.obj: ../MultimodDrivers/multimod_spi.h
-threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/ssi.h
+threads.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/ssi.h
 threads.obj: ../MultimodDrivers/multimod_buttons.h
-threads.obj: ../MultimodDrivers/multimod_mic.h
-threads.obj: ../MultimodDrivers/multimod_dac.h
-threads.obj: ../MultimodDrivers/multimod_PCA9555.h
-threads.obj: ../MiscFunctions/Signals/inc/goertzel.h
+threads.obj: ../MiscFunctions/Shapes/inc/cube.h
 threads.obj: C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/math.h
 threads.obj: C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/_defs.h
 threads.obj: C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/machine/_limits.h
+threads.obj: ../MiscFunctions/LinAlg/inc/quaternions.h
+threads.obj: ../MiscFunctions/LinAlg/inc/vect3d.h
+threads.obj: ../MiscFunctions/LinAlg/inc/linalg.h
 threads.obj: C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdio.h
 threads.obj: C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdlib.h
 threads.obj: C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/time.h
 threads.obj: C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/abi_prefix.h
 threads.obj: C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/xlocale/_time.h
-threads.obj: ../driverlib/timer.h
-threads.obj: ../driverlib/adc.h
 
 ../threads.c:
 
@@ -111,15 +109,15 @@ C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ C
 
 C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_gpio.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/gpio.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/gpio.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/sysctl.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/sysctl.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/uart.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/uart.h:
 
 ../MultimodDrivers/multimod_i2c.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/i2c.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/i2c.h:
 
 ../MultimodDrivers/multimod_joystick.h:
 
@@ -129,7 +127,7 @@ C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ C
 
 ../MultimodDrivers/multimod_uart.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/uartstdio.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/uartstdio.h:
 
 C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdarg.h:
 
@@ -137,23 +135,23 @@ C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdarg.h:
 
 ../MultimodDrivers/multimod_spi.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/ssi.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/ssi.h:
 
 ../MultimodDrivers/multimod_buttons.h:
 
-../MultimodDrivers/multimod_mic.h:
-
-../MultimodDrivers/multimod_dac.h:
-
-../MultimodDrivers/multimod_PCA9555.h:
-
-../MiscFunctions/Signals/inc/goertzel.h:
+../MiscFunctions/Shapes/inc/cube.h:
 
 C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/math.h:
 
 C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/_defs.h:
 
 C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/machine/_limits.h:
+
+../MiscFunctions/LinAlg/inc/quaternions.h:
+
+../MiscFunctions/LinAlg/inc/vect3d.h:
+
+../MiscFunctions/LinAlg/inc/linalg.h:
 
 C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdio.h:
 
@@ -164,8 +162,4 @@ C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/time.h:
 C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/abi_prefix.h:
 
 C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/xlocale/_time.h:
-
-../driverlib/timer.h:
-
-../driverlib/adc.h:
 

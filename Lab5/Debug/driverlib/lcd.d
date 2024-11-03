@@ -16,10 +16,10 @@ driverlib/lcd.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ 
 driverlib/lcd.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_types.h
 driverlib/lcd.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_ints.h
 driverlib/lcd.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_lcd.h
-driverlib/lcd.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/interrupt.h
-driverlib/lcd.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/sysctl.h
-driverlib/lcd.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/lcd.h
-driverlib/lcd.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/debug.h
+driverlib/lcd.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/interrupt.h
+driverlib/lcd.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/sysctl.h
+driverlib/lcd.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/lcd.h
+driverlib/lcd.obj: C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/debug.h
 
 ../driverlib/lcd.c:
 
@@ -53,11 +53,11 @@ C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ C
 
 C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/SW-TM4C-2.2.0.295/inc/hw_lcd.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/interrupt.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/interrupt.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/sysctl.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/sysctl.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/lcd.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/lcd.h:
 
-C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab5/driverlib/debug.h:
+C:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Texas\ Instruments/Code\ Composer\ Studio\ 12.8.0/CCS/CCS/Lab4/driverlib/debug.h:
 

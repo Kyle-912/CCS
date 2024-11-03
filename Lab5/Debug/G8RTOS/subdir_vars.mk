@@ -6,21 +6,21 @@ SHELL = cmd.exe
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../MiscFunctions/Signals/src/goertzel.c 
+../G8RTOS/experimental_G8RTOS_Scheduler.c 
 
 C_DEPS += \
-./MiscFunctions/Signals/src/goertzel.d 
+./G8RTOS/experimental_G8RTOS_Scheduler.d 
 
 OBJS += \
-./MiscFunctions/Signals/src/goertzel.obj 
+./G8RTOS/experimental_G8RTOS_Scheduler.obj 
 
 OBJS__QUOTED += \
-"MiscFunctions\Signals\src\goertzel.obj" 
+"G8RTOS\experimental_G8RTOS_Scheduler.obj" 
 
 C_DEPS__QUOTED += \
-"MiscFunctions\Signals\src\goertzel.d" 
+"G8RTOS\experimental_G8RTOS_Scheduler.d" 
 
 C_SRCS__QUOTED += \
-"../MiscFunctions/Signals/src/goertzel.c" 
+"../G8RTOS/experimental_G8RTOS_Scheduler.c" 
 
 
