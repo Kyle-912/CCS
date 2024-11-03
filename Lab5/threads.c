@@ -32,9 +32,8 @@ uint8_t current_buttons = 0;
 // FIXME:
 int16_t Goertzel_ReadSample(int FIFO_index)
 {
-    // read sample from FIFO
-    // return sample value
-    return (int16_t)G8RTOS_ReadFIFO(FIFO_index);
+    // read sample from FIFO and return sample value
+    return G8RTOS_ReadFIFO(FIFO_index);
 }
 
 /*************************************Threads***************************************/
