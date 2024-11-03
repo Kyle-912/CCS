@@ -42,7 +42,8 @@ void Idle_Thread(void)
 {
 
     while (1)
-        ;
+    {
+    }
 }
 
 void Mic_Thread(void)
