@@ -131,18 +131,30 @@ void Display_Thread(void)
     {
 
         // read display FIFO for updated magnitude ratio
+        packed_result = G8RTOS_ReadFIFO(DISPLAY_FIFO);
 
         // unpack result values
+        magnitude_f1 = (int16_t)(packed_result >> 16);
+        magnitude_f2 = (int16_t)(packed_result & 0xFFFF);
+
+        // TODO: limit the magnitude values to the display range
+        int display_f1 = magnitude_f1;
+        int display_f2 = magnitude_f2;
 
         // draw the magnitudes on the display (use sem_SPIA)
+        G8RTOS_WaitSemaphore(&sem_SPIA);
 
-        // limit the magnitude values to the display range
+        G8RTOS_SignalSemaphore(&sem_SPIA);
 
         // clear previous rectangle
+        Display_ClearRectangle(previous_f1, previous_f2);
 
         // draw new rectangle
+        Display_DrawBar(display_f1, display_f2);
 
         // update previous value
+        previous_f1 = display_f1;
+        previous_f2 = display_f2;
     }
 }
 
