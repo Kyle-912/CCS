@@ -123,6 +123,9 @@ void Volume_Thread(void)
 void Display_Thread(void)
 {
     // Initialize / declare any variables here
+    uint32_t packed_result;
+    int16_t magnitude_f1, magnitude_f2;
+    int previous_f1 = 0, previous_f2 = 0;
 
     while (1)
     {
