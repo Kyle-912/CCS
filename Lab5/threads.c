@@ -152,12 +152,12 @@ void Display_Thread(void)
         }
 
         // clear previous rectangle
-        ST7789_DrawFilledRectangle(0, previous_f1, X_MAX / 2 - 1, Y_MAX, ST7789_BLACK);     // Clear area for FREQ1
-        ST7789_DrawFilledRectangle(X_MAX / 2, previous_f2, X_MAX - 1, Y_MAX, ST7789_BLACK); // Clear area for FREQ2
+        ST7789_FillRect(0, previous_f1, X_MAX / 2 - 1, Y_MAX - previous_f1, ST7789_BLACK);         // FREQ1
+        ST7789_FillRect(X_MAX / 2, previous_f2, X_MAX / 2 - 1, Y_MAX - previous_f2, ST7789_BLACK); // FREQ2
 
         // draw new rectangle
-        ST7789_DrawFilledRectangle(0, Y_MAX - magnitude_f1, X_MAX / 2 - 1, Y_MAX, ST7789_RED);      // FREQ1
-        ST7789_DrawFilledRectangle(X_MAX / 2, Y_MAX - magnitude_f2, X_MAX - 1, Y_MAX, ST7789_BLUE); // FREQ2
+        ST7789_FillRect(0, Y_MAX - magnitude_f1, X_MAX / 2 - 1, magnitude_f1, ST7789_RED);          // FREQ1
+        ST7789_FillRect(X_MAX / 2, Y_MAX - magnitude_f2, X_MAX / 2 - 1, magnitude_f2, ST7789_BLUE); // FREQ2
 
         G8RTOS_SignalSemaphore(&sem_SPIA);
 
