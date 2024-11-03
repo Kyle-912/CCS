@@ -23,8 +23,6 @@ static void multimod_init() {
     MultimodButtons_Init();
     JOYSTICK_Init();
     JOYSTICK_IntEnable();
-
-
 }
 
 #endif /* MULTIMOD_H_ */

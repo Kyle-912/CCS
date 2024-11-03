@@ -34,7 +34,8 @@
 // MutimodDAC_Init
 // Initializes ports & modules for the DAC
 // Return: void
-void MutimodDAC_Init(void) {
+void MutimodDAC_Init(void)
+{
     SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C0);
     GPIOPinConfigure(GPIO_PB2_I2C0SCL);
     GPIOPinConfigure(GPIO_PB3_I2C0SDA);
@@ -78,15 +79,18 @@ void MutimodDAC_Init(void) {
 // MutimodDAC_Write
 // Performs a write to a DAC register
 // Return: void
-void MutimodDAC_Write(uint32_t reg_address, uint32_t data) {
+void MutimodDAC_Write(uint32_t reg_address, uint32_t data)
+{
     uint32_t packet = ((reg_address << 19) & 0x1F) | ((DAC_WRITE_CMD << 17) & 0x03) | ((data << 0) & 0xFFFF);
     GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
 
     SSIDataPut(SSI2_BASE, packet >> 12);
-    while (SSIBusy(SSI2_BASE));
+    while (SSIBusy(SSI2_BASE))
+        ;
 
     SSIDataPut(SSI2_BASE, packet);
-    while (SSIBusy(SSI2_BASE));
+    while (SSIBusy(SSI2_BASE))
+        ;
 
     GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
 }
@@ -94,17 +98,20 @@ void MutimodDAC_Write(uint32_t reg_address, uint32_t data) {
 // MutimodDAC_Read
 // Performs a read from a DAC register
 // Return: void
-uint32_t MutimodDAC_Read(uint32_t reg_address) {
+uint32_t MutimodDAC_Read(uint32_t reg_address)
+{
     uint32_t packet = ((reg_address << 19) & 0x1F) | ((DAC_READ_CMD << 17) & 0x03);
     uint32_t data;
 
     GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
 
     SSIDataPut(SSI2_BASE, packet >> 12);
-    while (SSIBusy(SSI2_BASE));
+    while (SSIBusy(SSI2_BASE))
+        ;
 
     SSIDataPut(SSI2_BASE, 0); // send 16 dummy bits
-    while (SSIBusy(SSI2_BASE));
+    while (SSIBusy(SSI2_BASE))
+        ;
 
     GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
 

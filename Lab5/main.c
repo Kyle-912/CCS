@@ -38,6 +38,7 @@ int main(void)
     multimod_init();
 
     // Add semaphores, threads, FIFOs here
+    G8RTOS_AddThread(&Idle_Thread, 255, "IdleThread");
 
     // add periodic and aperiodic events here (check multimod_mic.h and multimod_buttons.h for defines)
 
