@@ -56,12 +56,12 @@ int main(void)
     G8RTOS_InitFIFO(FREQ2_FIFO);
     G8RTOS_InitFIFO(DISPLAY_FIFO);
 
-    // add periodic and aperiodic events here (check multimod_mic.h and multimod_buttons.h for defines)
+    // add periodic and aperiodic events here
     G8RTOS_Add_PeriodicEvent(&Update_Volume, 100, 0);
 
-    G8RTOS_Add_APeriodicEvent(Mic_Handler, 1, INT_ADC0SS1);
-    G8RTOS_Add_APeriodicEvent(Button_Handler, 1, INT_GPIOE);
-    G8RTOS_Add_APeriodicEvent(DAC_Timer_Handler, 1, INT_TIMER1A);
+    G8RTOS_Add_APeriodicEvent(Mic_Handler, 1, MIC_INTERRUPT);
+    G8RTOS_Add_APeriodicEvent(Button_Handler, 1, BUTTON_INTERRUPT);
+    G8RTOS_Add_APeriodicEvent(DAC_Timer_Handler, 1, DAC_INTERRUPT);
 
     G8RTOS_Launch();
     while (1)
