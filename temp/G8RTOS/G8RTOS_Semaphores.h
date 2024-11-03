@@ -1,41 +1,44 @@
-// G8RTOS_IPC.h
+// G8RTOS_Semaphore.h
 // Date Created: 2023-07-26
 // Date Updated: 2023-07-26
-// Interprocess communication code for G8RTOS
+// Semaphores
 
-#ifndef G8RTOS_IPC_H_
-#define G8RTOS_IPC_H_
+#ifndef G8RTOS_SEMAPHORES_H_
+#define G8RTOS_SEMAPHORES_H_
 
 /************************************Includes***************************************/
 
 #include <stdint.h>
 
-#include "./G8RTOS_Semaphores.h"
-
 /************************************Includes***************************************/
 
 /*************************************Defines***************************************/
-
-#define FIFO_SIZE 256
-#define MAX_NUMBER_OF_FIFOS 5
-
 /*************************************Defines***************************************/
 
 /******************************Data Type Definitions********************************/
+
+// Semaphore typedef
+typedef int32_t semaphore_t;
+
 /******************************Data Type Definitions********************************/
 
 /****************************Data Structure Definitions*****************************/
 /****************************Data Structure Definitions*****************************/
 
-/********************************Public Variables***********************************/
-/********************************Public Variables***********************************/
 
 /********************************Public Functions***********************************/
 
-int32_t G8RTOS_InitFIFO(uint32_t FIFO_index);
-int32_t G8RTOS_ReadFIFO(uint32_t FIFO_index);
-int32_t G8RTOS_WriteFIFO(uint32_t FIFO_index, uint32_t data);
+void G8RTOS_InitSemaphore(semaphore_t* s, int32_t value);
+void G8RTOS_WaitSemaphore(semaphore_t* s);
+void G8RTOS_SignalSemaphore(semaphore_t* s);
 
 /********************************Public Functions***********************************/
 
-#endif /* G8RTOS_IPC_H_ */
+/*******************************Private Variables***********************************/
+/*******************************Private Variables***********************************/
+
+/*******************************Private Functions***********************************/
+/*******************************Private Functions***********************************/
+
+#endif /* G8RTOS_SEMAPHORES_H_ */
+

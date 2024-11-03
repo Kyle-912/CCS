@@ -16,8 +16,8 @@
 
 /*************************************Defines***************************************/
 
-#define FIFO_SIZE 256
-#define MAX_NUMBER_OF_FIFOS 5
+#define FIFO_SIZE 16
+#define MAX_NUMBER_OF_FIFOS 4
 
 /*************************************Defines***************************************/
 
@@ -25,6 +25,17 @@
 /******************************Data Type Definitions********************************/
 
 /****************************Data Structure Definitions*****************************/
+
+typedef struct G8RTOS_FIFO_t
+{
+    int32_t buffer[FIFO_SIZE];
+    int32_t *head;
+    int32_t *tail;
+    semaphore_t mutex;
+    semaphore_t read;
+    semaphore_t write;
+} G8RTOS_FIFO_t;
+
 /****************************Data Structure Definitions*****************************/
 
 /********************************Public Variables***********************************/
