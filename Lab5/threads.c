@@ -147,10 +147,8 @@ void Display_Thread(void)
         G8RTOS_SignalSemaphore(&sem_SPIA);
 
         // clear previous rectangle
-        Display_ClearRectangle(previous_f1, previous_f2);
 
         // draw new rectangle
-        Display_DrawBar(display_f1, display_f2);
 
         // update previous value
         previous_f1 = display_f1;
