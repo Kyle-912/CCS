@@ -130,7 +130,6 @@ void Display_Thread(void)
 
     while (1)
     {
-
         // read display FIFO for updated magnitude ratio
         packed_result = G8RTOS_ReadFIFO(DISPLAY_FIFO);
 
@@ -138,7 +137,7 @@ void Display_Thread(void)
         magnitude_f1 = (int16_t)(packed_result >> 16);
         magnitude_f2 = (int16_t)(packed_result & 0xFFFF);
 
-        // draw the magnitudes on the display (use sem_SPIA)
+        // draw the magnitudes on the display
         G8RTOS_WaitSemaphore(&sem_SPIA);
 
         // limit the magnitude values to the display range
