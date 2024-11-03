@@ -161,8 +161,8 @@ void Display_Thread(void)
         G8RTOS_SignalSemaphore(&sem_SPIA);
 
         // update previous value
-        previous_f1 = Y_MAX - magnitude_f1;
-        previous_f2 = Y_MAX - magnitude_f2;
+        previous_f1 = magnitude_f1;
+        previous_f2 = magnitude_f2;
     }
 }
 
