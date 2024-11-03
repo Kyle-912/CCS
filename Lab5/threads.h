@@ -28,7 +28,6 @@ semaphore_t sem_I2CA;
 semaphore_t sem_SPIA;
 semaphore_t sem_PCA9555_Debounce;
 semaphore_t sem_Joystick_Debounce;
-semaphore_t sem_KillCube;
 
 /***********************************Semaphores**************************************/
 
