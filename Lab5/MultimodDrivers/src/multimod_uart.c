@@ -7,14 +7,13 @@
 
 #include "../multimod_uart.h"
 
-
 #include <stdbool.h>
 
 #include <inc/tm4c123gh6pm.h>
 #include <inc/hw_memmap.h>
 #include <inc/hw_gpio.h>
 
-#include <uartstdio.h>
+#include <driverlib/uartstdio.h>
 #include <driverlib/gpio.h>
 #include <driverlib/uart.h>
 #include <driverlib/sysctl.h>
@@ -27,7 +26,8 @@
 // UART_Init
 // Initializes UART serial communication with PC
 // Return: void
-void UART_Init() {
+void UART_Init()
+{
     // Enable port A
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
     // Enable UART0 module
@@ -46,9 +46,6 @@ void UART_Init() {
     // Configure UART baud rate
 
     UARTStdioConfig(0, 115200, 16000000);
-
-
 }
 
 /********************************Public Functions***********************************/
-
