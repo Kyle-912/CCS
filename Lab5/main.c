@@ -45,10 +45,10 @@ int main(void)
 
     G8RTOS_AddThread(&Idle_Thread, 255, "IdleThread");
     G8RTOS_AddThread(&Mic_Thread, 0, "MicThread");
-    // G8RTOS_AddThread(&Speaker_Thread, 1, "SpeakerThread");
-    // G8RTOS_AddThread(&Volume_Thread, 2, "VolumeThread");
-    G8RTOS_AddThread(&Display_Thread, 3, "DisplayThread");
-    // G8RTOS_AddThread(&Read_Buttons, 4, "ReadButtons");
+    // G8RTOS_AddThread(&Speaker_Thread, 0, "SpeakerThread");
+    // G8RTOS_AddThread(&Volume_Thread, 0, "VolumeThread");
+    G8RTOS_AddThread(&Display_Thread, 0, "DisplayThread");
+    // G8RTOS_AddThread(&Read_Buttons, 0, "ReadButtons");
 
     // G8RTOS_InitFIFO(BUTTONS_FIFO);
     // G8RTOS_InitFIFO(JOYSTICK_FIFO);
