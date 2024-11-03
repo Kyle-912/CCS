@@ -50,10 +50,8 @@ void G8RTOS_WaitSemaphore(semaphore_t *s)
         EndCriticalSection(IBit_State);
         HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV; // Yield
     }
-    else
-    {
-        EndCriticalSection(IBit_State);
-    }
+
+    EndCriticalSection(IBit_State);
 }
 
 // G8RTOS_SignalSemaphore
