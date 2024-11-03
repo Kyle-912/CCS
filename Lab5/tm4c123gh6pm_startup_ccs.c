@@ -278,7 +278,6 @@ FaultISR(void)
     //
     while(1)
     {
-        return;
     }
 }
 
