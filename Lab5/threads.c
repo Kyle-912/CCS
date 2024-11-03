@@ -137,18 +137,21 @@ void Display_Thread(void)
         magnitude_f1 = (int16_t)(packed_result >> 16);
         magnitude_f2 = (int16_t)(packed_result & 0xFFFF);
 
-        // TODO: limit the magnitude values to the display range
-        int display_f1 = magnitude_f1;
-        int display_f2 = magnitude_f2;
-
         // draw the magnitudes on the display (use sem_SPIA)
         G8RTOS_WaitSemaphore(&sem_SPIA);
 
-        G8RTOS_SignalSemaphore(&sem_SPIA);
+        // TODO: limit the magnitude values to the display range
+
+        int display_f1 = magnitude_f1;
+        int display_f2 = magnitude_f2;
 
         // clear previous rectangle
+        ST7789_DrawRectangle(0, previous_f1, 10, previous_f2, ST7789_BLACK);
 
         // draw new rectangle
+        ST7789_DrawRectangle(0, magnitude_f1, 10, magnitude_f2, ST7789_RED);
+
+        G8RTOS_SignalSemaphore(&sem_SPIA);
 
         // update previous value
         previous_f1 = display_f1;
