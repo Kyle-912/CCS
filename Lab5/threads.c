@@ -196,6 +196,8 @@ void Mic_Handler()
     ADCSequenceDataGet(ADC0_BASE, 1, micData);
 
     // TODO: write new sample to audio FIFOs
+    G8RTOS_WriteFIFO(FREQ1_FIFO, micData);
+    G8RTOS_WriteFIFO(FREQ2_FIFO, micData);
 }
 
 void Button_Handler()
