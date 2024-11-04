@@ -29,7 +29,7 @@ uint8_t current_buttons = 0;
 /*********************************Global Variables**********************************/
 
 /********************************Public Functions***********************************/
-// FIXME:
+
 int16_t Goertzel_ReadSample(int FIFO_index)
 {
     // read sample from FIFO and return sample value
@@ -150,12 +150,12 @@ void Display_Thread(void)
         }
 
         // clear previous rectangle
-        ST7789_DrawRectangle(20, 0, 20, previous_f1, ST7789_BLACK); // Clear FREQ1
-        ST7789_DrawRectangle(60, 0, 20, previous_f2, ST7789_BLACK); // Clear FREQ2
+        ST7789_DrawRectangle((X_MAX / 2) - 30, 0, 30, previous_f1, ST7789_BLACK); // Clear FREQ1
+        ST7789_DrawRectangle((X_MAX / 2), 0, 30, previous_f2, ST7789_BLACK);      // Clear FREQ2
 
         // draw new rectangle
-        ST7789_DrawRectangle(20, 0, 20, magnitude_f1, ST7789_RED);  // FREQ1 bar
-        ST7789_DrawRectangle(60, 0, 20, magnitude_f2, ST7789_BLUE); // FREQ2 bar
+        ST7789_DrawRectangle((X_MAX / 2) - 30, 0, 30, magnitude_f1, ST7789_RED); // FREQ1 bar
+        ST7789_DrawRectangle((X_MAX / 2), 0, 30, magnitude_f2, ST7789_BLUE);     // FREQ2 bar
 
         G8RTOS_SignalSemaphore(&sem_SPIA);
 
@@ -217,7 +217,7 @@ void Mic_Handler()
     // Read ADC Value
     ADCSequenceDataGet(ADC0_BASE, 1, micData);
 
-    // FIXME: write new sample to audio FIFOs
+    // write new sample to audio FIFOs
     G8RTOS_WriteFIFO(FREQ1_FIFO, micData[0]);
     G8RTOS_WriteFIFO(FREQ2_FIFO, micData[0]);
 }
