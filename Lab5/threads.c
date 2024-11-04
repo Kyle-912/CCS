@@ -254,7 +254,7 @@ void Mic_Handler()
     // write new sample to audio FIFOs
     G8RTOS_WriteFIFO(FREQ1_FIFO, micData[0]);
     G8RTOS_WriteFIFO(FREQ2_FIFO, micData[0]);
-    G8RTOS_WriteFIFO(OUTPUT_FIFO, micData[0]);
+    // G8RTOS_WriteFIFO(OUTPUT_FIFO, micData[0]);
 }
 
 void Button_Handler()
@@ -273,7 +273,7 @@ void DAC_Timer_Handler()
     uint32_t output = (current_volume) * (dac_signal[dac_step++ % SIGNAL_STEPS]);
 
     // TODO: BONUS: stream microphone input to DAC output via FIFO
-    int16_t dac_data = G8RTOS_ReadFIFO(OUTPUT_FIFO);
+    // int16_t dac_data = G8RTOS_ReadFIFO(OUTPUT_FIFO);
 
     // write the output value to the dac
     MutimodDAC_Write(DAC_OUT_REG, output);
