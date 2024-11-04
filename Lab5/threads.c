@@ -212,7 +212,7 @@ void Update_Volume(void)
     int16_t y = (int16_t)(y_raw - 2048); // Center around 0
 
     // push joystick value to fifo
-    G8RTOS_WriteFIFO(JOYSTICK_FIFO, (uint32_t)y);
+    G8RTOS_WriteFIFO(JOYSTICK_FIFO, y);
 }
 
 /*******************************Aperiodic Threads***********************************/
