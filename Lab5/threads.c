@@ -107,31 +107,23 @@ void Speaker_Thread(void)
 void Volume_Thread(void)
 {
     // define variables
-    int32_t joystick_data;
+    int16_t y;
     float norm_x, norm_y;
 
     while (1)
     {
         // read joystick values
-        joystick_data = G8RTOS_ReadFIFO(JOYSTICK_FIFO);
-        int16_t x = (joystick_data >> 16) & 0xFFFF;
-        int16_t y = joystick_data & 0xFFFF;
+        y = G8RTOS_ReadFIFO(JOYSTICK_FIFO);
 
-        x = -x;
         y = -y;
 
         // If joystick axis within deadzone, set to 0
-        if (abs(x) < 30)
-        {
-            x = 0;
-        }
         if (abs(y) < 50)
         {
             y = 0;
         }
 
         // normalize the joystick values
-        norm_x = (x != 0) ? (float)x / 2048.0f : 0.0f;
         norm_y = (y != 0) ? (float)y / 2048.0f : 0.0f;
 
         // TODO: update volume based on joystickY_norm
@@ -215,14 +207,12 @@ void Read_Buttons(void)
 void Update_Volume(void)
 {
     // read joystick values
-    uint16_t x_raw = JOYSTICK_GetX();
     uint16_t y_raw = JOYSTICK_GetY();
 
-    int16_t x = (int16_t)(x_raw - 2048); // Center around 0
     int16_t y = (int16_t)(y_raw - 2048); // Center around 0
 
     // push joystick value to fifo
-    G8RTOS_WriteFIFO(JOYSTICK_FIFO, ((uint32_t)x << 16) | (uint32_t)y);
+    G8RTOS_WriteFIFO(JOYSTICK_FIFO, (uint32_t)y);
 }
 
 /*******************************Aperiodic Threads***********************************/
