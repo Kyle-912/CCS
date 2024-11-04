@@ -96,7 +96,7 @@ void Speaker_Thread(void)
         // clear button interrupt
         GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
 
-        // TODO: check which buttons are pressed
+        // check which buttons are pressed and set DAC output rate to 1000Hz, 2000Hz, etc TODO: test
         if (current_buttons & SW1) // Button for 1000 Hz
         {
             TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / 1000) - 1);
@@ -111,15 +111,8 @@ void Speaker_Thread(void)
         }
         else if (current_buttons & SW4) // Button to stop DAC output
         {
-            // Disable DAC output by setting the output to zero or disabling the timer
-            MutimodDAC_Write(DAC_OUT_REG, 0);
-            TimerDisable(TIMER1_BASE, TIMER_A);
-            continue; // Skip the rest of the loop if output is disabled
+            TimerLoadSet(TIMER1_BASE, TIMER_A, 0);
         }
-
-        // TODO: set DAC output rate to 1000Hz
-        //                              2000Hz
-        //                              etc.
     }
 }
 
