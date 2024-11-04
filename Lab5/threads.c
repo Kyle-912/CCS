@@ -113,7 +113,7 @@ void Volume_Thread(void)
     while (1)
     {
         // read joystick values
-        y = G8RTOS_ReadFIFO(JOYSTICK_FIFO);
+        y = (int16_t)G8RTOS_ReadFIFO(JOYSTICK_FIFO);
 
         y = -y;
 
