@@ -103,20 +103,40 @@ void Speaker_Thread(void)
         //                              etc.
     }
 }
-// TODO:
+
 void Volume_Thread(void)
 {
     // define variables
+    int32_t joystick_data;
+    float norm_x, norm_y;
 
     while (1)
     {
         // read joystick values
+        joystick_data = G8RTOS_ReadFIFO(JOYSTICK_FIFO);
+        int16_t x = (joystick_data >> 16) & 0xFFFF;
+        int16_t y = joystick_data & 0xFFFF;
+
+        x = -x;
+        y = -y;
+
+        // If joystick axis within deadzone, set to 0
+        if (abs(x) < 30)
+        {
+            x = 0;
+        }
+        if (abs(y) < 50)
+        {
+            y = 0;
+        }
 
         // normalize the joystick values
+        norm_x = (x != 0) ? (float)x / 2048.0f : 0.0f;
+        norm_y = (y != 0) ? (float)y / 2048.0f : 0.0f;
 
-        // update volume based on joystickY_norm
+        // TODO: update volume based on joystickY_norm
 
-        // limit volume to 0-4095 (12 bit range)
+        // TODO: limit volume to 0-4095 (12 bit range)
     }
 }
 
