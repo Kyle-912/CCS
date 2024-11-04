@@ -131,14 +131,16 @@ void Volume_Thread(void)
         volume = (int16_t)(2047 * (1 + norm_y));
 
         // limit volume to 0-4095 (12 bit range) TODO: test
-        if (current_volume < 0)
+        if (volume < 0)
         {
-            current_volume = 0;
+            volume = 0;
         }
-        if (current_volume > 4095)
+        if (volume > 4095)
         {
-            current_volume = 4095;
+            volume = 4095;
         }
+
+        current_volume = volume;
     }
 }
 
