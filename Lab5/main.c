@@ -55,6 +55,7 @@ int main(void)
     G8RTOS_InitFIFO(FREQ1_FIFO);
     G8RTOS_InitFIFO(FREQ2_FIFO);
     G8RTOS_InitFIFO(DISPLAY_FIFO);
+    G8RTOS_InitFIFO(OUTPUT_FIFO);
 
     // add periodic and aperiodic events here
     // G8RTOS_Add_PeriodicEvent(&Update_Volume, DAC_SAMPLE_FREQUENCY_HZ, 0);
