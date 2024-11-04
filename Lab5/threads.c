@@ -97,19 +97,19 @@ void Speaker_Thread(void)
         GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
 
         // check which buttons are pressed and set DAC output rate to 1000Hz, 2000Hz, etc TODO: test
-        if (current_buttons & SW1) // Button for 1000 Hz
+        if (buttons & SW1) // Button for 1000 Hz
         {
             TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / 1000) - 1);
         }
-        else if (current_buttons & SW2) // Button for 2000 Hz
+        else if (buttons & SW2) // Button for 2000 Hz
         {
             TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / 2000) - 1);
         }
-        else if (current_buttons & SW3) // Button for 3000 Hz
+        else if (buttons & SW3) // Button for 3000 Hz
         {
             TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / 3000) - 1);
         }
-        else if (current_buttons & SW4) // Button to stop DAC output
+        else if (buttons & SW4) // Button to stop DAC output
         {
             TimerLoadSet(TIMER1_BASE, TIMER_A, 0);
         }
@@ -120,7 +120,7 @@ void Volume_Thread(void)
 {
     // define variables
     int16_t y;
-    float norm_x, norm_y;
+    float norm_y;
     int16_t volume;
 
     while (1)
