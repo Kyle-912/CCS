@@ -259,6 +259,7 @@ void DAC_Timer_Handler()
     uint32_t output = (current_volume) * (dac_signal[dac_step++ % SIGNAL_STEPS]);
 
     // TODO: BONUS: stream microphone input to DAC output via FIFO
+    int16_t ouput = G8RTOS_ReadFIFO(OUTPUT_FIFO);
 
     // write the output value to the dac
     MutimodDAC_Write(DAC_OUT_REG, output);
