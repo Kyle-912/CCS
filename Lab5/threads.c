@@ -109,6 +109,7 @@ void Volume_Thread(void)
     // define variables
     int16_t y;
     float norm_x, norm_y;
+    int16_t volume;
 
     while (1)
     {
@@ -126,9 +127,18 @@ void Volume_Thread(void)
         // normalize the joystick values
         norm_y = (y != 0) ? (float)y / 2048.0f : 0.0f;
 
-        // TODO: update volume based on joystickY_norm
+        // update volume based on joystickY_norm TODO: test
+        volume = (int16_t)(2047 * (1 + norm_y));
 
-        // TODO: limit volume to 0-4095 (12 bit range)
+        // limit volume to 0-4095 (12 bit range) TODO: test
+        if (current_volume < 0)
+        {
+            current_volume = 0;
+        }
+        if (current_volume > 4095)
+        {
+            current_volume = 4095;
+        }
     }
 }
 
