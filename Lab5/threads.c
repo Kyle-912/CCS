@@ -85,10 +85,10 @@ void Speaker_Thread(void)
     while (1)
     {
         // wait for button semaphore
-        // G8RTOS_WaitSemaphore(&sem_PCA9555_Debounce);
+        G8RTOS_WaitSemaphore(&sem_PCA9555_Debounce);
 
         // debounce buttons
-        // sleep(15);
+        sleep(15);
 
         // Get buttons
         buttons = current_buttons;
