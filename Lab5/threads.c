@@ -240,6 +240,7 @@ void Mic_Handler()
     // write new sample to audio FIFOs
     G8RTOS_WriteFIFO(FREQ1_FIFO, micData[0]);
     G8RTOS_WriteFIFO(FREQ2_FIFO, micData[0]);
+    G8RTOS_WriteFIFO(OUTPUT_FIFO, micData[0]);
 }
 
 void Button_Handler()
