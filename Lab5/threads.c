@@ -119,7 +119,7 @@ void Volume_Thread(void)
         // limit volume to 0-4095 (12 bit range)
     }
 }
-// FIXME:
+
 void Display_Thread(void)
 {
     // Initialize / declare any variables here
