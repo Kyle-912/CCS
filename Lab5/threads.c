@@ -94,7 +94,7 @@ void Speaker_Thread(void)
         buttons = current_buttons;
 
         // clear button interrupt
-        GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
+        // GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
 
         // check which buttons are pressed and set DAC output rate to 1000Hz, 2000Hz, etc TODO: test
         if (buttons & SW1) // Button for 1000 Hz
