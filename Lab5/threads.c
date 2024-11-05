@@ -24,7 +24,6 @@
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t current_volume = 0xFFF;
-uint8_t current_buttons = 0;
 
 /*********************************Global Variables**********************************/
 
@@ -80,39 +79,50 @@ void Mic_Thread(void)
 
 void Speaker_Thread(void)
 {
-    uint8_t buttons = 0;
+    uint8_t buttons;
 
     while (1)
     {
         // wait for button semaphore
-        // G8RTOS_WaitSemaphore(&sem_PCA9555_Debounce);
+        G8RTOS_WaitSemaphore(&sem_PCA9555_Debounce);
 
         // debounce buttons
-        // sleep(15);
+        sleep(10);
 
         // Get buttons
-        buttons = current_buttons;
-
-        // clear button interrupt
-        // GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
+        buttons = -MultimodButtons_Get();
 
         // check which buttons are pressed and set DAC output rate to 1000Hz, 2000Hz, etc TODO: test
         if (buttons & SW1) // Button for 1000 Hz
         {
+            TimerDisable(TIMER1_BASE, TIMER_A);
             TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / 1000) - 1);
+            TimerEnable(TIMER1_BASE, TIMER_A);
         }
         else if (buttons & SW2) // Button for 2000 Hz
         {
+            TimerDisable(TIMER1_BASE, TIMER_A);
             TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / 2000) - 1);
+            TimerEnable(TIMER1_BASE, TIMER_A);
         }
         else if (buttons & SW3) // Button for 3000 Hz
         {
+            TimerDisable(TIMER1_BASE, TIMER_A);
             TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / 3000) - 1);
+            TimerEnable(TIMER1_BASE, TIMER_A);
         }
         else if (buttons & SW4) // Button to stop DAC output
         {
+            TimerDisable(TIMER1_BASE, TIMER_A);
             TimerLoadSet(TIMER1_BASE, TIMER_A, 0);
+            TimerEnable(TIMER1_BASE, TIMER_A);
         }
+
+        // clear button interrupt
+        GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
+
+        // re-enable the interrupt so it can occur again.
+        GPIOIntEnable(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
     }
 }
 
@@ -120,15 +130,12 @@ void Volume_Thread(void)
 {
     // define variables
     int16_t y;
-    float norm_y;
-    int16_t volume;
+    // int16_t volume_step = 10;
 
     while (1)
     {
         // read joystick values
         y = (int16_t)G8RTOS_ReadFIFO(JOYSTICK_FIFO);
-
-        y = -y;
 
         // If joystick axis within deadzone, set to 0
         if (abs(y) < 50)
@@ -136,23 +143,24 @@ void Volume_Thread(void)
             y = 0;
         }
 
-        // normalize the joystick values
-        norm_y = (y != 0) ? (float)y / 2048.0f : 0.0f;
-
-        // update volume based on joystickY_norm TODO: test
-        volume = (int16_t)(2047 * (1 + norm_y));
-
-        // limit volume to 0-4095 (12 bit range) TODO: test
-        if (volume < 0)
+        // Update current volume
+        if (y >= 0)
         {
-            volume = 0;
-        }
-        if (volume > 4095)
+            current_volume += 100;
+        } else
         {
-            volume = 4095;
+            current_volume -= 100;
         }
 
-        current_volume = volume;
+        // limit volume to 0-4095 (12 bit range)
+        if (current_volume < 0)
+        {
+            current_volume = 0;
+        }
+        if (current_volume > 4095)
+        {
+            current_volume = 4095;
+        }
     }
 }
 
@@ -198,31 +206,6 @@ void Display_Thread(void)
         // update previous value
         previous_f1 = magnitude_f1;
         previous_f2 = magnitude_f2;
-    }
-}
-
-void Read_Buttons(void)
-{
-    // Initialize / declare any variables here
-    uint8_t buttons;
-
-    while (1)
-    {
-
-        // wait for button semaphore
-        G8RTOS_WaitSemaphore(&sem_PCA9555_Debounce);
-
-        // Get buttons
-        buttons = MultimodButtons_Get();
-
-        // debounce buttons
-        sleep(15);
-
-        // clear button interrupt
-        GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
-
-        // update current_buttons value
-        current_buttons = buttons;
     }
 }
 
