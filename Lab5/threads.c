@@ -92,7 +92,7 @@ void Speaker_Thread(void)
         // Get buttons
         buttons = -MultimodButtons_Get();
 
-        // check which buttons are pressed and set DAC output rate to 1000Hz, 2000Hz, etc TODO: test
+        // check which buttons are pressed and set DAC output rate to 1000Hz, 2000Hz, etc
         if (buttons & SW1) // Button for 1000 Hz
         {
             TimerDisable(TIMER1_BASE, TIMER_A);
@@ -143,7 +143,7 @@ void Volume_Thread(void)
             y = 0;
         }
 
-        // Update current volume
+        // Update current volume FIXME:
         if (y >= 0)
         {
             current_volume += 100;
