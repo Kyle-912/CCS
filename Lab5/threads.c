@@ -23,11 +23,10 @@
 #define doingBonus true
 
 /*********************************Global Variables**********************************/
+
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t current_volume = 0xFFF;
-
-int16_t prev_dac_data = 0;
 
 /*********************************Global Variables**********************************/
 
@@ -143,7 +142,6 @@ void Volume_Thread(void)
 {
     // define variables
     int16_t y;
-    // int16_t volume_step = 10;
 
     while (1)
     {
@@ -275,8 +273,6 @@ void DAC_Timer_Handler()
     // write the output value to the dac
     if (doingBonus)
     {
-        dac_data = (dac_data + prev_dac_data) / 2;
-        prev_dac_data = dac_data;
         MutimodDAC_Write(DAC_OUT_REG, dac_data);
     }
     else
