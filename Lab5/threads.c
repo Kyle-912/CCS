@@ -176,12 +176,60 @@ void Volume_Thread(void)
     }
 }
 
+// void Display_Thread(void)
+// {
+//     // Initialize / declare any variables here
+//     uint32_t packed_result;
+//     int16_t magnitude_f1, magnitude_f2;
+//     int previous_f1 = 0, previous_f2 = 0;
+
+//     while (1)
+//     {
+//         // read display FIFO for updated magnitude ratio
+//         packed_result = G8RTOS_ReadFIFO(DISPLAY_FIFO);
+
+//         // unpack result values
+//         magnitude_f1 = (int16_t)(packed_result >> 16);
+//         magnitude_f2 = (int16_t)(packed_result & 0xFFFF);
+
+//         // draw the magnitudes on the display
+//         G8RTOS_WaitSemaphore(&sem_SPIA);
+
+//         // limit the magnitude values to the display range
+//         if (magnitude_f1 > Y_MAX)
+//         {
+//             magnitude_f1 = Y_MAX;
+//         }
+//         if (magnitude_f2 > Y_MAX)
+//         {
+//             magnitude_f2 = Y_MAX;
+//         }
+
+//         // clear previous rectangle
+//         ST7789_DrawRectangle((X_MAX / 2) - 30, 0, 30, previous_f1, ST7789_BLACK);
+//         ST7789_DrawRectangle((X_MAX / 2), 0, 30, previous_f2, ST7789_BLACK);
+
+//         // draw new rectangle
+//         ST7789_DrawRectangle((X_MAX / 2) - 30, 0, 30, magnitude_f1, ST7789_RED);
+//         ST7789_DrawRectangle((X_MAX / 2), 0, 30, magnitude_f2, ST7789_BLUE);
+
+//         G8RTOS_SignalSemaphore(&sem_SPIA);
+
+//         // update previous value
+//         previous_f1 = magnitude_f1;
+//         previous_f2 = magnitude_f2;
+//     }
+// }
+
 void Display_Thread(void)
 {
     // Initialize / declare any variables here
     uint32_t packed_result;
     int16_t magnitude_f1, magnitude_f2;
     int previous_f1 = 0, previous_f2 = 0;
+    static int16_t smoothed_f1 = 0;
+    static int16_t smoothed_f2 = 0;
+    float SMOOTHING_FACTOR = 0.8;
 
     while (1)
     {
@@ -192,32 +240,35 @@ void Display_Thread(void)
         magnitude_f1 = (int16_t)(packed_result >> 16);
         magnitude_f2 = (int16_t)(packed_result & 0xFFFF);
 
-        // draw the magnitudes on the display
+        // Apply smoothing to stabilize the bar heights
+        smoothed_f1 = (int16_t)(SMOOTHING_FACTOR * smoothed_f1 + (1.0 - SMOOTHING_FACTOR) * magnitude_f1);
+        smoothed_f2 = (int16_t)(SMOOTHING_FACTOR * smoothed_f2 + (1.0 - SMOOTHING_FACTOR) * magnitude_f2);
+
+        // limit the smoothed magnitude values to the display range
+        if (smoothed_f1 > Y_MAX)
+        {
+            smoothed_f1 = Y_MAX;
+        }
+        if (smoothed_f2 > Y_MAX)
+        {
+            smoothed_f2 = Y_MAX;
+        }
+
         G8RTOS_WaitSemaphore(&sem_SPIA);
 
-        // limit the magnitude values to the display range
-        if (magnitude_f1 > Y_MAX)
-        {
-            magnitude_f1 = Y_MAX;
-        }
-        if (magnitude_f2 > Y_MAX)
-        {
-            magnitude_f2 = Y_MAX;
-        }
-
-        // clear previous rectangle
+        // clear previous rectangles
         ST7789_DrawRectangle((X_MAX / 2) - 30, 0, 30, previous_f1, ST7789_BLACK);
         ST7789_DrawRectangle((X_MAX / 2), 0, 30, previous_f2, ST7789_BLACK);
 
-        // draw new rectangle
-        ST7789_DrawRectangle((X_MAX / 2) - 30, 0, 30, magnitude_f1, ST7789_RED);
-        ST7789_DrawRectangle((X_MAX / 2), 0, 30, magnitude_f2, ST7789_BLUE);
+        // draw new rectangles using smoothed values
+        ST7789_DrawRectangle((X_MAX / 2) - 30, 0, 30, smoothed_f1, ST7789_RED);
+        ST7789_DrawRectangle((X_MAX / 2), 0, 30, smoothed_f2, ST7789_BLUE);
 
         G8RTOS_SignalSemaphore(&sem_SPIA);
 
-        // update previous value
-        previous_f1 = magnitude_f1;
-        previous_f2 = magnitude_f2;
+        // update previous values with the smoothed values for the next iteration
+        previous_f1 = smoothed_f1;
+        previous_f2 = smoothed_f2;
     }
 }
 
