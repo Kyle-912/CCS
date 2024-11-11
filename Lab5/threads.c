@@ -262,5 +262,11 @@ void DAC_Timer_Handler()
     int16_t dac_data = G8RTOS_ReadFIFO(OUTPUT_FIFO);
 
     // write the output value to the dac
-    MutimodDAC_Write(DAC_OUT_REG, output);
+    if (doingBonus)
+    {
+        /* code */
+    } else
+    {
+        MutimodDAC_Write(DAC_OUT_REG, output);
+    }
 }
