@@ -27,6 +27,8 @@ uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t current_volume = 0xFFF;
 
+int16_t prev_dac_data = 0;
+
 /*********************************Global Variables**********************************/
 
 /********************************Public Functions***********************************/
@@ -154,7 +156,7 @@ void Volume_Thread(void)
             y = 0;
         }
 
-        // Update current volume FIXME:
+        // Update current volume
         if (y >= 0)
         {
             current_volume += 500;
@@ -267,12 +269,14 @@ void DAC_Timer_Handler()
     // read next output sample
     uint32_t output = (current_volume) * (dac_signal[dac_step++ % SIGNAL_STEPS]);
 
-    // TODO: BONUS: stream microphone input to DAC output via FIFO
+    // BONUS: stream microphone input to DAC output via FIFO
     int16_t dac_data = G8RTOS_ReadFIFO(OUTPUT_FIFO);
 
     // write the output value to the dac
     if (doingBonus)
     {
+        dac_data = (dac_data + prev_dac_data) / 2;
+        prev_dac_data = dac_data;
         MutimodDAC_Write(DAC_OUT_REG, dac_data);
     }
     else
