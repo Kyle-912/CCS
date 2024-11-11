@@ -96,19 +96,19 @@ void Speaker_Thread(void)
         if (buttons & SW1) // Button for 1000 Hz
         {
             TimerDisable(TIMER1_BASE, TIMER_A);
-            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / 1000 * 2) - 1);
+            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (1000 * 2)) - 1);
             TimerEnable(TIMER1_BASE, TIMER_A);
         }
         else if (buttons & SW2) // Button for 2000 Hz
         {
             TimerDisable(TIMER1_BASE, TIMER_A);
-            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / 2000 * 2) - 1);
+            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (2000 * 2)) - 1);
             TimerEnable(TIMER1_BASE, TIMER_A);
         }
         else if (buttons & SW3) // Button for 3000 Hz
         {
             TimerDisable(TIMER1_BASE, TIMER_A);
-            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / 3000 * 2) - 1);
+            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (3000 * 2)) - 1);
             TimerEnable(TIMER1_BASE, TIMER_A);
         }
         else if (buttons & SW4) // Button to stop DAC output
