@@ -146,10 +146,10 @@ void Volume_Thread(void)
         // Update current volume FIXME:
         if (y >= 0)
         {
-            current_volume += 100;
+            current_volume += 500;
         } else
         {
-            current_volume -= 100;
+            current_volume -= 500;
         }
 
         // limit volume to 0-4095 (12 bit range)
