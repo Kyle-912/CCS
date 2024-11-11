@@ -97,7 +97,7 @@ void Speaker_Thread(void)
         if (doingBonus)
         {
             TimerDisable(TIMER1_BASE, TIMER_A);
-            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / MIC_SAMPLE_RATE_HZ) - 1);
+            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (MIC_SAMPLE_RATE_HZ * 2)) - 1);
             TimerEnable(TIMER1_BASE, TIMER_A);
         }
         else
