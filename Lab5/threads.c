@@ -20,6 +20,8 @@
 #define MAX_NUM_SAMPLES (200)
 #define SIGNAL_STEPS (2)
 
+#define doingBonus true
+
 /*********************************Global Variables**********************************/
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
