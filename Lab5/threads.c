@@ -20,7 +20,10 @@
 #define MAX_NUM_SAMPLES (200)
 #define SIGNAL_STEPS (2)
 
+#define doingBonus false
+
 /*********************************Global Variables**********************************/
+
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t current_volume = 0xFFF;
@@ -92,30 +95,39 @@ void Speaker_Thread(void)
         // Get buttons
         buttons = -MultimodButtons_Get();
 
-        // check which buttons are pressed and set DAC output rate to 1000Hz, 2000Hz, etc
-        if (buttons & SW1) // Button for 1000 Hz
+        if (doingBonus)
         {
             TimerDisable(TIMER1_BASE, TIMER_A);
-            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (1000 * 2)) - 1);
+            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / MIC_SAMPLE_RATE_HZ) - 1);
             TimerEnable(TIMER1_BASE, TIMER_A);
         }
-        else if (buttons & SW2) // Button for 2000 Hz
+        else
         {
-            TimerDisable(TIMER1_BASE, TIMER_A);
-            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (2000 * 2)) - 1);
-            TimerEnable(TIMER1_BASE, TIMER_A);
-        }
-        else if (buttons & SW3) // Button for 3000 Hz
-        {
-            TimerDisable(TIMER1_BASE, TIMER_A);
-            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (3000 * 2)) - 1);
-            TimerEnable(TIMER1_BASE, TIMER_A);
-        }
-        else if (buttons & SW4) // Button to stop DAC output
-        {
-            TimerDisable(TIMER1_BASE, TIMER_A);
-            TimerLoadSet(TIMER1_BASE, TIMER_A, 0);
-            TimerEnable(TIMER1_BASE, TIMER_A);
+            // check which buttons are pressed and set DAC output rate to 1000Hz, 2000Hz, etc
+            if (buttons & SW1) // Button for 1000 Hz
+            {
+                TimerDisable(TIMER1_BASE, TIMER_A);
+                TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (1000 * 2)) - 1);
+                TimerEnable(TIMER1_BASE, TIMER_A);
+            }
+            else if (buttons & SW2) // Button for 2000 Hz
+            {
+                TimerDisable(TIMER1_BASE, TIMER_A);
+                TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (2000 * 2)) - 1);
+                TimerEnable(TIMER1_BASE, TIMER_A);
+            }
+            else if (buttons & SW3) // Button for 3000 Hz
+            {
+                TimerDisable(TIMER1_BASE, TIMER_A);
+                TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (3000 * 2)) - 1);
+                TimerEnable(TIMER1_BASE, TIMER_A);
+            }
+            else if (buttons & SW4) // Button to stop DAC output
+            {
+                TimerDisable(TIMER1_BASE, TIMER_A);
+                TimerLoadSet(TIMER1_BASE, TIMER_A, 0);
+                TimerEnable(TIMER1_BASE, TIMER_A);
+            }
         }
 
         // clear button interrupt
@@ -130,7 +142,6 @@ void Volume_Thread(void)
 {
     // define variables
     int16_t y;
-    // int16_t volume_step = 10;
 
     while (1)
     {
@@ -143,7 +154,7 @@ void Volume_Thread(void)
             y = 0;
         }
 
-        // Update current volume FIXME:
+        // Update current volume
         if (y >= 0)
         {
             current_volume += 500;
@@ -256,9 +267,16 @@ void DAC_Timer_Handler()
     // read next output sample
     uint32_t output = (current_volume) * (dac_signal[dac_step++ % SIGNAL_STEPS]);
 
-    // TODO: BONUS: stream microphone input to DAC output via FIFO
+    // BONUS: stream microphone input to DAC output via FIFO
     int16_t dac_data = G8RTOS_ReadFIFO(OUTPUT_FIFO);
 
     // write the output value to the dac
-    MutimodDAC_Write(DAC_OUT_REG, output);
+    if (doingBonus)
+    {
+        MutimodDAC_Write(DAC_OUT_REG, dac_data);
+    }
+    else
+    {
+        MutimodDAC_Write(DAC_OUT_REG, output);
+    }
 }
