@@ -273,7 +273,14 @@ void DAC_Timer_Handler()
     // write the output value to the dac
     if (doingBonus)
     {
-        MutimodDAC_Write(DAC_OUT_REG, dac_data);
+        if (dac_data != INT32_MAX)
+        {
+            MutimodDAC_Write(DAC_OUT_REG, dac_data);
+        }
+        else
+        {
+            MutimodDAC_Write(DAC_OUT_REG, 0);
+        }
     }
     else
     {
