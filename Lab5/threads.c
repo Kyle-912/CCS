@@ -94,30 +94,39 @@ void Speaker_Thread(void)
         // Get buttons
         buttons = -MultimodButtons_Get();
 
-        // check which buttons are pressed and set DAC output rate to 1000Hz, 2000Hz, etc
-        if (buttons & SW1) // Button for 1000 Hz
+        if (doingBonus)
         {
             TimerDisable(TIMER1_BASE, TIMER_A);
-            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (1000 * 2)) - 1);
+            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / MIC_SAMPLE_RATE_HZ) - 1);
             TimerEnable(TIMER1_BASE, TIMER_A);
         }
-        else if (buttons & SW2) // Button for 2000 Hz
+        else
         {
-            TimerDisable(TIMER1_BASE, TIMER_A);
-            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (2000 * 2)) - 1);
-            TimerEnable(TIMER1_BASE, TIMER_A);
-        }
-        else if (buttons & SW3) // Button for 3000 Hz
-        {
-            TimerDisable(TIMER1_BASE, TIMER_A);
-            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (3000 * 2)) - 1);
-            TimerEnable(TIMER1_BASE, TIMER_A);
-        }
-        else if (buttons & SW4) // Button to stop DAC output
-        {
-            TimerDisable(TIMER1_BASE, TIMER_A);
-            TimerLoadSet(TIMER1_BASE, TIMER_A, 0);
-            TimerEnable(TIMER1_BASE, TIMER_A);
+            // check which buttons are pressed and set DAC output rate to 1000Hz, 2000Hz, etc
+            if (buttons & SW1) // Button for 1000 Hz
+            {
+                TimerDisable(TIMER1_BASE, TIMER_A);
+                TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (1000 * 2)) - 1);
+                TimerEnable(TIMER1_BASE, TIMER_A);
+            }
+            else if (buttons & SW2) // Button for 2000 Hz
+            {
+                TimerDisable(TIMER1_BASE, TIMER_A);
+                TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (2000 * 2)) - 1);
+                TimerEnable(TIMER1_BASE, TIMER_A);
+            }
+            else if (buttons & SW3) // Button for 3000 Hz
+            {
+                TimerDisable(TIMER1_BASE, TIMER_A);
+                TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (3000 * 2)) - 1);
+                TimerEnable(TIMER1_BASE, TIMER_A);
+            }
+            else if (buttons & SW4) // Button to stop DAC output
+            {
+                TimerDisable(TIMER1_BASE, TIMER_A);
+                TimerLoadSet(TIMER1_BASE, TIMER_A, 0);
+                TimerEnable(TIMER1_BASE, TIMER_A);
+            }
         }
 
         // clear button interrupt
@@ -265,7 +274,8 @@ void DAC_Timer_Handler()
     if (doingBonus)
     {
         MutimodDAC_Write(DAC_OUT_REG, dac_data);
-    } else
+    }
+    else
     {
         MutimodDAC_Write(DAC_OUT_REG, output);
     }
