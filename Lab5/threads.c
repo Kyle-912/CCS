@@ -149,7 +149,7 @@ void Volume_Thread(void)
         y = (int16_t)G8RTOS_ReadFIFO(JOYSTICK_FIFO);
 
         // If joystick axis within deadzone, set to 0
-        if (abs(y) < 50)
+        if (abs(y) < 1000)
         {
             y = 0;
         }
