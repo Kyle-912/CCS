@@ -20,7 +20,7 @@
 #define MAX_NUM_SAMPLES (200)
 #define SIGNAL_STEPS (2)
 
-#define doingBonus true
+#define doingBonus false
 
 /*********************************Global Variables**********************************/
 
