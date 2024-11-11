@@ -148,20 +148,14 @@ void Volume_Thread(void)
         // read joystick values
         y = (int16_t)G8RTOS_ReadFIFO(JOYSTICK_FIFO);
 
-        // If joystick axis within deadzone, set to 0
-        // if (abs(y) < 50)
-        // {
-        //     y = 0;
-        // }
-
         // Update current volume
         if (y > 50)
         {
-            current_volume += 500;
+            current_volume += 250;
         }
         else if (y < -50)
         {
-            current_volume -= 500;
+            current_volume -= 250;
         }
 
         // limit volume to 0-4095 (12 bit range)
