@@ -14,11 +14,11 @@
 
 /*************************************Defines***************************************/
 
-#define BUTTONS_FIFO        0
-#define JOYSTICK_FIFO       1
-#define FREQ1_FIFO          2
-#define FREQ2_FIFO          3
-#define DISPLAY_FIFO        4
+#define JOYSTICK_FIFO       0
+#define FREQ1_FIFO          1
+#define FREQ2_FIFO          2
+#define DISPLAY_FIFO        3
+#define OUTPUT_FIFO         4
 
 /*************************************Defines***************************************/
 
@@ -34,7 +34,6 @@ semaphore_t sem_Joystick_Debounce;
 /***********************************Structures**************************************/
 /***********************************Structures**************************************/
 
-
 /*******************************Background Threads**********************************/
 
 void Idle_Thread(void);
@@ -42,7 +41,6 @@ void Mic_Thread(void);
 void Speaker_Thread(void);
 void Volume_Thread(void);
 void Display_Thread(void);
-void Read_Buttons(void);
 
 /*******************************Background Threads**********************************/
 
@@ -60,6 +58,4 @@ void DAC_Timer_Handler(void);
 
 /*******************************Aperiodic Threads***********************************/
 
-
 #endif /* THREADS_H_ */
-
