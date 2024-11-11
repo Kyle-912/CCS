@@ -264,7 +264,7 @@ void DAC_Timer_Handler()
     // write the output value to the dac
     if (doingBonus)
     {
-        /* code */
+        MutimodDAC_Write(DAC_OUT_REG, dac_data);
     } else
     {
         MutimodDAC_Write(DAC_OUT_REG, output);
