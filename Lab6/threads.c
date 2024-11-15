@@ -43,22 +43,37 @@ void DrawBox_Thread(void)
     SysCtlDelay(1);
 
     // Declare variables
-    int x, y, width, height, color; // FIXME:
+    uint16_t x, y, width, height, color;
 
     while (1)
     {
         // Wait for data
-        G8RTOS_WaitSemaphore(sem_UART4_Data);
+        G8RTOS_WaitSemaphore(&sem_UART4_Data);
 
         // Read in data
-        if (UART4_BufferTail != UART4_BufferHead) // Check if data is available
+        while (((UART4_BufferHead + UART_BUFFER_SIZE) - UART4_BufferTail) % UART_BUFFER_SIZE >= 10)
         {
-            // Extract data from the buffer
-            char data = UART4_DataBuffer[UART4_BufferTail];
-            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
-        }
+            // Extract rectangle data from the buffer
+            x = (UART4_DataBuffer[UART4_BufferTail] << 8) | UART4_DataBuffer[UART4_BufferTail + 1];
+            UART4_BufferTail = (UART4_BufferTail + 2) % UART_BUFFER_SIZE;
 
-        // Draw rectangle
+            y = (UART4_DataBuffer[UART4_BufferTail] << 8) | UART4_DataBuffer[UART4_BufferTail + 1];
+            UART4_BufferTail = (UART4_BufferTail + 2) % UART_BUFFER_SIZE;
+
+            width = (UART4_DataBuffer[UART4_BufferTail] << 8) | UART4_DataBuffer[UART4_BufferTail + 1];
+            UART4_BufferTail = (UART4_BufferTail + 2) % UART_BUFFER_SIZE;
+
+            height = (UART4_DataBuffer[UART4_BufferTail] << 8) | UART4_DataBuffer[UART4_BufferTail + 1];
+            UART4_BufferTail = (UART4_BufferTail + 2) % UART_BUFFER_SIZE;
+
+            color = (UART4_DataBuffer[UART4_BufferTail] << 8) | UART4_DataBuffer[UART4_BufferTail + 1];
+            UART4_BufferTail = (UART4_BufferTail + 2) % UART_BUFFER_SIZE;
+
+            // Draw rectangle
+            G8RTOS_WaitSemaphore(&sem_SPIA);
+            ST7789_DrawRectangle(x, y, width, height, color);
+            G8RTOS_SignalSemaphore(&sem_SPIA);
+        }
     }
 }
 
@@ -93,7 +108,7 @@ void UART4_Handler()
     }
 
     // Signal data ready
-    G8RTOS_SignalSemaphore(sem_UART4_Data);
+    G8RTOS_SignalSemaphore(&sem_UART4_Data);
 
     // Clear the asserted interrupts
     UARTIntClear(UART4_BASE, ui32Status);

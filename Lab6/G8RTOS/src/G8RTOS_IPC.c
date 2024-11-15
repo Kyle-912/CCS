@@ -13,8 +13,6 @@
 
 /******************************Data Type Definitions********************************/
 
-#define FIFO_SIZE 16
-#define MAX_NUMBER_OF_FIFOS 4
 
 /******************************Data Type Definitions********************************/
 
@@ -36,7 +34,7 @@ typedef struct G8RTOS_FIFO_t {
 
 /********************************Public Variables***********************************/
 
-static G8RTOS_FIFO_t FIFOs[MAX_NUMBER_OF_FIFOS];
+static G8RTOS_FIFO_t FIFOs[MAX_NUMBER_OF_FIFOS] = {0};
 
 /********************************Public Variables***********************************/
 
@@ -81,7 +79,7 @@ int32_t G8RTOS_ReadFIFO(uint32_t FIFO_index) {
         FIFOs[FIFO_index].head++;
 
         // Wrap around if needed
-        if (FIFOs[FIFO_index].head > &(FIFOs[FIFO_index].buffer[0]) + (FIFO_SIZE-1)) {
+        if (FIFOs[FIFO_index].head > &(FIFOs[FIFO_index].buffer[FIFO_SIZE-1])) {
             FIFOs[FIFO_index].head = &(FIFOs[FIFO_index].buffer[0]);
         }
 
@@ -105,7 +103,6 @@ int32_t G8RTOS_WriteFIFO(uint32_t FIFO_index, uint32_t data) {
     // If the current size of the FIFO is greater than the max FIFO
     // size, the data is lost and return -2.
     if (FIFOs[FIFO_index].currentSize >= FIFO_SIZE) {
-        *FIFOs[FIFO_index].tail = data;
         FIFOs[FIFO_index].lost_data++;
         return -2;
     }

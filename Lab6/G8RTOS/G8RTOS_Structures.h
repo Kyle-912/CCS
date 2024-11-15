@@ -18,7 +18,7 @@
 
 /*************************************Defines***************************************/
 
-#define MAX_NAME_LENGTH             16
+#define MAX_NAME_LENGTH 16
 
 /*************************************Defines***************************************/
 
@@ -32,23 +32,25 @@ typedef int32_t threadID_t;
 /****************************Data Structure Definitions*****************************/
 
 // Thread Control Block
-typedef struct tcb_t {
+typedef struct tcb_t
+{
     uint32_t *stackPointer;
     struct tcb_t *nextTCB;
-    struct tcb_t *previousTCB;
+    struct tcb_t *prevTCB;
     semaphore_t *blocked;
     uint32_t sleepCount;
     bool asleep;
     uint8_t priority;
-    bool isAlive;
+    bool alive;
     char threadName[MAX_NAME_LENGTH];
-    threadID_t ThreadID;
+    threadID_t threadID;
 } tcb_t;
 
 // Periodic Thread Control Block
-typedef struct ptcb_t {
+typedef struct ptcb_t
+{
     void (*handler)(void);
-    struct ptcb_t *previousPTCB;
+    struct ptcb_t *prevPTCB;
     struct ptcb_t *nextPTCB;
     uint32_t period;
     uint32_t executeTime;
