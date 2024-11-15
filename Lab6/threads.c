@@ -43,7 +43,7 @@ void DrawBox_Thread(void)
     SysCtlDelay(1);
 
     // Declare variables
-    int x, y, width, height, color;
+    int x, y, width, height, color; // FIXME:
 
     while (1)
     {
@@ -51,6 +51,12 @@ void DrawBox_Thread(void)
         G8RTOS_WaitSemaphore(sem_UART4_Data);
 
         // Read in data
+        if (UART4_BufferTail != UART4_BufferHead) // Check if data is available
+        {
+            // Extract data from the buffer
+            char data = UART4_DataBuffer[UART4_BufferTail];
+            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+        }
 
         // Draw rectangle
     }
