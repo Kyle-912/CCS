@@ -71,12 +71,12 @@ void DrawBox_Thread(void)
             UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
             color |= UART4_DataBuffer[UART4_BufferTail]; // Low byte
             UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
-        }
 
-        // Draw rectangle
-        G8RTOS_WaitSemaphore(&sem_SPIA);
-        ST7789_DrawRectangle(x, y, width, height, color);
-        G8RTOS_SignalSemaphore(&sem_SPIA);
+            // Draw rectangle
+            G8RTOS_WaitSemaphore(&sem_SPIA);
+            ST7789_DrawRectangle(x, y, width, height, color);
+            G8RTOS_SignalSemaphore(&sem_SPIA);
+        }
     }
 }
 
