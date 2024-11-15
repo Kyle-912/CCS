@@ -22,6 +22,10 @@
 /*********************************Global Variables**********************************/
 
 // Global data structure for keeping track of data
+#define UART_BUFFER_SIZE 128
+volatile char UART4_DataBuffer[UART_BUFFER_SIZE];
+volatile uint32_t UART4_BufferHead = 0;
+volatile uint32_t UART4_BufferTail = 0;
 
 /*********************************Global Variables**********************************/
 
@@ -39,6 +43,7 @@ void DrawBox_Thread(void)
     SysCtlDelay(1);
 
     // Declare variables
+    int x, y, width, height, color;
 
     while (1)
     {
@@ -69,6 +74,16 @@ void UART4_Handler()
     {
         // Store current data value
         char data = UARTCharGetNonBlocking(UART4_BASE);
+
+        // Add data to the buffer and handle buffer overflow (circular buffer)
+        UART4_DataBuffer[UART4_BufferHead] = data;
+        UART4_BufferHead = (UART4_BufferHead + 1) % UART_BUFFER_SIZE;
+
+        // Handle buffer overflow by advancing the tail if needed
+        if (UART4_BufferHead == UART4_BufferTail)
+        {
+            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+        }
     }
 
     // Signal data ready
