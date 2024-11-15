@@ -61,4 +61,4 @@ if __name__=="__main__":
         print(f"Rectangle data sent over UART: x={x}, y={y}, width={width}, height={height}, color=0x{color:04X}")
 
         # Add delay if needed
-        sleep(5)
+        sleep(1)
