@@ -43,22 +43,20 @@ if __name__=="__main__":
         # Create random set of values for packaging
         x = randint(0, 240)  # Adjust to display resolution (e.g., 240x240)
         y = randint(0, 280)
-        width = randint(5, 10)  # Random width
-        height = randint(5, 10)  # Random height
+
+        # Limit width and height to ensure the rectangle fits on the screen
+        max_width = 240 - x  # Remaining width on the screen
+        max_height = 280 - y  # Remaining height on the screen
+        width = randint(10, min(30, max_width))  # Width between 10 and remaining width
+        height = randint(10, min(30, max_height))  # Height between 10 and remaining height
+
         blue = randint(0, 31) << 11  # Blue (5 bits in MSB)
         green = randint(0, 63) << 5  # Green (6 bits in the middle)
         red = randint(0, 31)         # Red (5 bits in LSB)
-        color = blue | green | red
+        color = (blue | green | red)  & 0xFFFF
 
         # Package and send data
-        rectangle_data = {
-            "x": x,
-            "y": y,
-            "width": width,
-            "height": height,
-            "color": color,
-        }
-        rectangle_data = struct.pack('BHBHH', x, y, width, height, color)
+        rectangle_data = struct.pack('HHHHH', x, y, width, height, color)
         ser.write(rectangle_data)  # Send serialized data over UART
         print(f"Rectangle data sent over UART: x={x}, y={y}, width={width}, height={height}, color={hex(color)}")
 
