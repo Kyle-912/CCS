@@ -7,7 +7,6 @@
 
 #include "../multimod_uart.h"
 
-
 #include <stdbool.h>
 
 #include <inc/tm4c123gh6pm.h>
@@ -27,7 +26,8 @@
 // UART_Init
 // Initializes UART serial communication with PC
 // Return: void
-void UART_Init() {
+void UART_Init()
+{
     // Enable port A
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
     // Enable UART0 module
@@ -46,16 +46,27 @@ void UART_Init() {
     // Configure UART baud rate
 
     UARTStdioConfig(0, 115200, SysCtlClockGet());
-
 }
 
 // UART_BeagleBone_Init
 // Initializes UART serial communication with Beaglebone
 // Return: void
-void UART_BeagleBone_Init(void) {
+void UART_BeagleBone_Init(void)
+{
     // Enable peripherals
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOC))
+    {
+    }
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART4);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_UART4))
+    {
+    }
 
     // Configure UART4 pins
+    GPIOPinConfigure(GPIO_PC4_U4RX);
+    GPIOPinConfigure(GPIO_PC5_U4TX);
+    GPIOPinTypeUART(GPIO_PORTC_BASE, GPIO_PIN_4 | GPIO_PIN_5);
 
     // Configure UART4 settings
 
@@ -63,4 +74,3 @@ void UART_BeagleBone_Init(void) {
 }
 
 /********************************Public Functions***********************************/
-
