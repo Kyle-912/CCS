@@ -49,7 +49,7 @@ void DrawBox_Thread(void)
     while (1)
     {
         // Wait for data
-        G8RTOS_WaitSemaphore(sem_UART4_Data);
+        G8RTOS_WaitSemaphore(&sem_UART4_Data);
 
         // Read in data
         while (((UART4_BufferHead + UART_BUFFER_SIZE) - UART4_BufferTail) % UART_BUFFER_SIZE >= 6)
@@ -111,7 +111,7 @@ void UART4_Handler()
     }
 
     // Signal data ready
-    G8RTOS_SignalSemaphore(sem_UART4_Data);
+    G8RTOS_SignalSemaphore(&sem_UART4_Data);
 
     // Clear the asserted interrupts
     UARTIntClear(UART4_BASE, ui32Status);
