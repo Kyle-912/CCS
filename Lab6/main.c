@@ -23,10 +23,13 @@ int main(void)
     // Initialize Semaphores
 
     // Add background threads
+    G8RTOS_AddThread(&Idle_Thread, 255, "IdleThread");
+    G8RTOS_AddThread(&DrawBox_Thread, 0, "DrawBoxThread");
 
     // Add periodic threads
 
     // Add aperiodic threads
+    G8RTOS_Add_APeriodicEvent(UART4_Handler, 0, INT_UART4);
 
     G8RTOS_Launch();
     while (1)
