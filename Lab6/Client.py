@@ -24,8 +24,6 @@ if __name__=="__main__":
         client_socket.connect((HOST, PORT))
         print("Connected to server")
 
-        client_socket.settimeout(30.0)  # Timeout set to 30 seconds
-
         # Receive message from server
         def receive_data(conn):
             raw_msglen = conn.recv(4)  # Receive message length
