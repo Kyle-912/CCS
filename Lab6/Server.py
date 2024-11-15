@@ -24,7 +24,7 @@ if __name__=="__main__":
             print("Connected by", addr)
 
             # Send a random message to the client
-            message = "Testing"  # Static message
+            message = "Start Drawing"  # Static message
             data = pickle.dumps(message)  # Serialize the message
             conn.sendall(struct.pack('>I', len(data)) + data)  # Prefix with 4-byte length
             print("Message sent to client:", message)
