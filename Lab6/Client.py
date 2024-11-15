@@ -41,18 +41,14 @@ if __name__=="__main__":
         pass
 
         # Create random set of values for packaging
-        x = randint(0, 230)  # Adjust to display resolution (e.g., 240x240)
-        y = randint(0, 270)
+        width = randint(10, 30)
+        height = randint(10, 30)
+        x = randint(0, 240 - width)  # x ensures rectangle stays within width
+        y = randint(0, 280 - height)  # y ensures rectangle stays within height
 
-        # Limit width and height to ensure the rectangle fits on the screen
-        max_width = 240 - x  # Remaining width on the screen
-        max_height = 280 - y  # Remaining height on the screen
-        width = randint(10, min(30, max_width))  # Width between 10 and remaining width
-        height = randint(10, min(30, max_height))  # Height between 10 and remaining height
-
-        blue = randint(0, 31) << 11  # Blue (5 bits in MSB)
-        green = randint(0, 63) << 5  # Green (6 bits in the middle)
-        red = randint(0, 31)         # Red (5 bits in LSB)
+        blue = randint(0, 31) << 11
+        green = randint(0, 63) << 5
+        red = randint(0, 31)
         color = (blue | green | red)  & 0xFFFF
 
         # Package and send data
