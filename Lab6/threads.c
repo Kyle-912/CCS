@@ -74,6 +74,9 @@ void DrawBox_Thread(void)
         }
 
         // Draw rectangle
+        G8RTOS_WaitSemaphore(&sem_SPIA);
+        ST7789_DrawRectangle(x, y, width, height, color);
+        G8RTOS_SignalSemaphore(&sem_SPIA);
     }
 }
 
