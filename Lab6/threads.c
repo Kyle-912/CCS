@@ -43,8 +43,7 @@ void DrawBox_Thread(void)
     SysCtlDelay(1);
 
     // Declare variables
-    uint8_t x, width, height;
-    uint16_t y, color;
+    uint16_t x, y, width, height, color;
 
     while (1)
     {
@@ -52,10 +51,12 @@ void DrawBox_Thread(void)
         G8RTOS_WaitSemaphore(&sem_UART4_Data);
 
         // Read in data
-        while (((UART4_BufferHead + UART_BUFFER_SIZE) - UART4_BufferTail) % UART_BUFFER_SIZE >= 6)
+        while (((UART4_BufferHead + UART_BUFFER_SIZE) - UART4_BufferTail) % UART_BUFFER_SIZE >= 10)
         {
             // Extract rectangle data from the buffer
-            x = UART4_DataBuffer[UART4_BufferTail];
+            x = (UART4_DataBuffer[UART4_BufferTail] << 8); // High byte of x
+            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+            x |= UART4_DataBuffer[UART4_BufferTail]; // Low byte of x
             UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
 
             y = (UART4_DataBuffer[UART4_BufferTail] << 8); // High byte of y
@@ -63,10 +64,14 @@ void DrawBox_Thread(void)
             y |= UART4_DataBuffer[UART4_BufferTail]; // Low byte of y
             UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
 
-            width = UART4_DataBuffer[UART4_BufferTail];
+            width = (UART4_DataBuffer[UART4_BufferTail] << 8); // High byte of width
+            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+            width |= UART4_DataBuffer[UART4_BufferTail]; // Low byte of width
             UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
 
-            height = UART4_DataBuffer[UART4_BufferTail];
+            height = (UART4_DataBuffer[UART4_BufferTail] << 8); // High byte of height
+            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+            height |= UART4_DataBuffer[UART4_BufferTail]; // Low byte of height
             UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
 
             color = (UART4_DataBuffer[UART4_BufferTail] << 8); // High byte of color
