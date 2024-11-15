@@ -43,6 +43,7 @@ void DrawBox_Thread(void)
     while (1)
     {
         // Wait for data
+        G8RTOS_WaitSemaphore(sem_UART4_Data);
 
         // Read in data
 
@@ -61,14 +62,20 @@ void UART4_Handler()
     // Prepare to read data
 
     // Get interrupt status
+    uint32_t ui32Status = UARTIntStatus(UART4_BASE, true);
 
     // Continue reading if there is still data
-
-    // Store current data value
+    while (UARTCharsAvail(UART4_BASE))
+    {
+        // Store current data value
+        char data = UARTCharGetNonBlocking(UART4_BASE);
+    }
 
     // Signal data ready
+    G8RTOS_SignalSemaphore(sem_UART4_Data);
 
     // Clear the asserted interrupts
+    UARTIntClear(UART4_BASE, ui32Status);
 }
 
 /*******************************Aperiodic Threads***********************************/

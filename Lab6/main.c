@@ -21,6 +21,7 @@ int main(void)
     G8RTOS_Init();
 
     // Initialize Semaphores
+    G8RTOS_InitSemaphore(&sem_UART4_Data, 0);
 
     // Add background threads
     G8RTOS_AddThread(&Idle_Thread, 255, "IdleThread");
