@@ -15,9 +15,9 @@ if __name__=="__main__":
     PORT = 12345
 
     # UART port and serial communication
-    # UART_PORT = "/dev/ttyO4" # UART4 device on BeagleBone
-    # BAUD_RATE = 115200
-    # ser = serial.Serial(UART_PORT, BAUD_RATE)
+    UART_PORT = "/dev/ttyO4" # UART4 device on BeagleBone
+    BAUD_RATE = 115200
+    ser = serial.Serial(UART_PORT, BAUD_RATE)
 
     # Connect to socket
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
@@ -43,12 +43,27 @@ if __name__=="__main__":
         pass
 
         # Create random set of values for packaging
-        # random_data = {"random_value": randint(0, 100)} FIXME:
+        x = randint(0, 240)  # Adjust to display resolution (e.g., 240x240)
+        y = randint(0, 280)
+        width = randint(10, 50)  # Random width
+        height = randint(10, 50)  # Random height
+        color = {
+            "red": randint(0, 255),
+            "green": randint(0, 255),
+            "blue": randint(0, 255),
+        }
 
         # Package and send data
-        # serialized_data = pickle.dumps(random_data)
-        # ser.write(serialized_data)  # Send serialized data over UART
-        # print("Random data sent to Tiva Launchpad:", random_data)
+        rectangle_data = {
+            "x": x,
+            "y": y,
+            "width": width,
+            "height": height,
+            "color": color,
+        }
+        serialized_data = pickle.dumps(rectangle_data)
+        ser.write(serialized_data)  # Send serialized data over UART
+        print("Random data sent to Tiva Launchpad:", rectangle_data)
 
         # Add delay if needed
-        # sleep(1)
+        sleep(1)
