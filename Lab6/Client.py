@@ -41,8 +41,8 @@ if __name__=="__main__":
         pass
 
         # Create random set of values for packaging
-        x = randint(0, 240)  # Adjust to display resolution (e.g., 240x240)
-        y = randint(0, 280)
+        x = randint(0, 230)  # Adjust to display resolution (e.g., 240x240)
+        y = randint(0, 270)
 
         # Limit width and height to ensure the rectangle fits on the screen
         max_width = 240 - x  # Remaining width on the screen
