@@ -43,7 +43,8 @@ void DrawBox_Thread(void)
     SysCtlDelay(1);
 
     // Declare variables
-    int x, y, width, height, color;
+    uint8_t x, y, width, height;
+    uint16_t color;
 
     while (1)
     {
@@ -51,10 +52,24 @@ void DrawBox_Thread(void)
         G8RTOS_WaitSemaphore(sem_UART4_Data);
 
         // Read in data
-        if (UART4_BufferTail != UART4_BufferHead) // Check if data is available
+        while (((UART4_BufferHead + UART_BUFFER_SIZE) - UART4_BufferTail) % UART_BUFFER_SIZE >= 6)
         {
-            // Extract data from the buffer
-            char data = UART4_DataBuffer[UART4_BufferTail];
+            // Extract rectangle data from the buffer
+            x = UART4_DataBuffer[UART4_BufferTail];
+            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+
+            y = UART4_DataBuffer[UART4_BufferTail];
+            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+
+            width = UART4_DataBuffer[UART4_BufferTail];
+            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+
+            height = UART4_DataBuffer[UART4_BufferTail];
+            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+
+            color = (UART4_DataBuffer[UART4_BufferTail] << 8); // High byte
+            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+            color |= UART4_DataBuffer[UART4_BufferTail]; // Low byte
             UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
         }
 
