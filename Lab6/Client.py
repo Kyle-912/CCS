@@ -48,9 +48,9 @@ if __name__=="__main__":
         width = randint(10, 50)  # Random width
         height = randint(10, 50)  # Random height
         color = {
-            "red": randint(0, 255),
-            "green": randint(0, 255),
-            "blue": randint(0, 255),
+            "red": randint(0, 65535),
+            "green": randint(0, 65535),
+            "blue": randint(0, 65535),
         }
 
         # Package and send data

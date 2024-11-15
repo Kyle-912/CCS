@@ -43,7 +43,7 @@ void DrawBox_Thread(void)
     SysCtlDelay(1);
 
     // Declare variables
-    int x, y, width, height, color; // FIXME:
+    int x, y, width, height, color;
 
     while (1)
     {
