@@ -62,6 +62,7 @@
         "TIMB",
         "TREQ",
         "Tiva",
+        "UART",
         "Vect",
         "XLSB",
         "XTAL",

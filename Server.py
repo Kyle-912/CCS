@@ -5,7 +5,7 @@ import struct
 if __name__=="__main__":
     pass
     # Specify IP Host and Port
-    HOST = '0.0.0.0'  # Listen on all interfaces
+    HOST = '127.0.0.1' # Testing
     # HOST = '192.168.7.1'
     PORT = 12345
 
@@ -13,7 +13,7 @@ if __name__=="__main__":
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
 
         # Specify timeout period
-        server_socket.settimeout(10.0) # Timeout set to 10 seconds
+        server_socket.settimeout(30.0) # Timeout set to 30 seconds
 
         # Bind port and begin listening for a connection
         server_socket.bind((HOST, PORT))
