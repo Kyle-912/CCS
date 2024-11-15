@@ -44,7 +44,7 @@ if __name__=="__main__":
         pass
 
         # Create random set of values for packaging
-        random_data = {"random_value": randint(0, 100)}
+        # random_data = {"random_value": randint(0, 100)} FIXME:
 
         # Package and send data
         serialized_data = pickle.dumps(random_data)
