@@ -18,7 +18,7 @@ if __name__=="__main__":
     # UART port and serial communication
     UART_PORT = "/dev/ttyO4" # UART4 device on BeagleBone
     BAUD_RATE = 115200
-    # ser = serial.Serial(UART_PORT, BAUD_RATE)
+    ser = serial.Serial(UART_PORT, BAUD_RATE)
 
     # Connect to socket
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
