@@ -60,7 +60,7 @@ if __name__=="__main__":
             "height": height,
             "color": color,
         }
-        rectangle_data = struct.pack('BBBBH', x, y, width, height, color)
+        rectangle_data = struct.pack('BHHBH', x, y, width, height, color)
         ser.write(rectangle_data)  # Send serialized data over UART
         print(f"Rectangle data sent over UART: x={x}, y={y}, width={width}, height={height}, color={hex(color)}")
 
