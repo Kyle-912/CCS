@@ -54,30 +54,20 @@ void DrawBox_Thread(void)
         while (((UART4_BufferHead + UART_BUFFER_SIZE) - UART4_BufferTail) % UART_BUFFER_SIZE >= 10)
         {
             // Extract rectangle data from the buffer
-            x = (UART4_DataBuffer[UART4_BufferTail] << 8); // High byte of x
-            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
-            x |= UART4_DataBuffer[UART4_BufferTail]; // Low byte of x
-            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+            x = (UART4_DataBuffer[UART4_BufferTail] << 8) | UART4_DataBuffer[UART4_BufferTail + 1];
+            UART4_BufferTail = (UART4_BufferTail + 2) % UART_BUFFER_SIZE;
 
-            y = (UART4_DataBuffer[UART4_BufferTail] << 8); // High byte of y
-            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
-            y |= UART4_DataBuffer[UART4_BufferTail]; // Low byte of y
-            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+            y = (UART4_DataBuffer[UART4_BufferTail] << 8) | UART4_DataBuffer[UART4_BufferTail + 1];
+            UART4_BufferTail = (UART4_BufferTail + 2) % UART_BUFFER_SIZE;
 
-            width = (UART4_DataBuffer[UART4_BufferTail] << 8); // High byte of width
-            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
-            width |= UART4_DataBuffer[UART4_BufferTail]; // Low byte of width
-            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+            width = (UART4_DataBuffer[UART4_BufferTail] << 8) | UART4_DataBuffer[UART4_BufferTail + 1];
+            UART4_BufferTail = (UART4_BufferTail + 2) % UART_BUFFER_SIZE;
 
-            height = (UART4_DataBuffer[UART4_BufferTail] << 8); // High byte of height
-            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
-            height |= UART4_DataBuffer[UART4_BufferTail]; // Low byte of height
-            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+            height = (UART4_DataBuffer[UART4_BufferTail] << 8) | UART4_DataBuffer[UART4_BufferTail + 1];
+            UART4_BufferTail = (UART4_BufferTail + 2) % UART_BUFFER_SIZE;
 
-            color = (UART4_DataBuffer[UART4_BufferTail] << 8); // High byte of color
-            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
-            color |= UART4_DataBuffer[UART4_BufferTail]; // Low byte of color
-            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+            color = (UART4_DataBuffer[UART4_BufferTail] << 8) | UART4_DataBuffer[UART4_BufferTail + 1];
+            UART4_BufferTail = (UART4_BufferTail + 2) % UART_BUFFER_SIZE;
 
             // Draw rectangle
             G8RTOS_WaitSemaphore(&sem_SPIA);
