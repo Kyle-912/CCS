@@ -47,11 +47,10 @@ if __name__=="__main__":
         y = randint(0, 280)
         width = randint(10, 50)  # Random width
         height = randint(10, 50)  # Random height
-        color = {
-            "red": randint(0, 65535),
-            "green": randint(0, 65535),
-            "blue": randint(0, 65535),
-        }
+        blue = randint(0, 31) << 11  # Blue (5 bits in MSB)
+        green = randint(0, 63) << 5  # Green (6 bits in the middle)
+        red = randint(0, 31)         # Red (5 bits in LSB)
+        color = blue | green | red
 
         # Package and send data
         rectangle_data = {
@@ -61,9 +60,9 @@ if __name__=="__main__":
             "height": height,
             "color": color,
         }
-        serialized_data = pickle.dumps(rectangle_data)
-        ser.write(serialized_data)  # Send serialized data over UART
-        print("Random data sent to Tiva Launchpad:", rectangle_data)
+        rectangle_data = struct.pack('BBBBH', x, y, width, height, color)
+        ser.write(rectangle_data)  # Send serialized data over UART
+        print(f"Rectangle data sent over UART: x={x}, y={y}, width={width}, height={height}, color={hex(color)}")
 
         # Add delay if needed
         sleep(1)
