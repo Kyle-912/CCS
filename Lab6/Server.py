@@ -5,7 +5,6 @@ import struct
 if __name__=="__main__":
     pass
     # Specify IP Host and Port
-    # HOST = '127.0.0.1' # Testing
     HOST = '192.168.7.1'
     PORT = 12345
 
