@@ -43,8 +43,8 @@ if __name__=="__main__":
         # Create random set of values for packaging
         x = randint(0, 240)  # Adjust to display resolution (e.g., 240x240)
         y = randint(0, 280)
-        width = randint(10, 50)  # Random width
-        height = randint(10, 50)  # Random height
+        width = randint(5, 10)  # Random width
+        height = randint(5, 10)  # Random height
         blue = randint(0, 31) << 11  # Blue (5 bits in MSB)
         green = randint(0, 63) << 5  # Green (6 bits in the middle)
         red = randint(0, 31)         # Red (5 bits in LSB)
