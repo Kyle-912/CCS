@@ -58,7 +58,6 @@ void DrawBox_Thread(void)
 
 void UART4_Handler()
 {
-
     // Prepare to read data
 
     // Get interrupt status
