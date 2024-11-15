@@ -47,10 +47,9 @@ if __name__=="__main__":
         # random_data = {"random_value": randint(0, 100)} FIXME:
 
         # Package and send data
-        serialized_data = pickle.dumps(random_data)
+        # serialized_data = pickle.dumps(random_data)
         # ser.write(serialized_data)  # Send serialized data over UART
-        print("Mock UART Output:", serialized_data.decode()) # Testing
-        print("Random data sent to Tiva Launchpad:", random_data)
+        # print("Random data sent to Tiva Launchpad:", random_data)
 
         # Add delay if needed
-        sleep(1)
+        # sleep(1)
