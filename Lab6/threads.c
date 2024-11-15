@@ -13,11 +13,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-
 /************************************Includes***************************************/
 
 /*************************************Defines***************************************/
-
 
 /*************************************Defines***************************************/
 
@@ -29,37 +27,36 @@
 
 /*************************************Threads***************************************/
 
-void Idle_Thread(void) {
-    while(1);
+void Idle_Thread(void)
+{
+    while (1)
+        ;
 }
 
-void DrawBox_Thread(void) {
+void DrawBox_Thread(void)
+{
     SysCtlDelay(1);
-
 
     // Declare variables
 
-
-    while(1) {
+    while (1)
+    {
         // Wait for data
 
         // Read in data
 
         // Draw rectangle
-
-
     }
 }
 
 /********************************Periodic Threads***********************************/
 
-
 /********************************Periodic Threads***********************************/
-
 
 /*******************************Aperiodic Threads***********************************/
 
-void UART4_Handler() {
+void UART4_Handler()
+{
 
     // Prepare to read data
 
@@ -67,15 +64,11 @@ void UART4_Handler() {
 
     // Continue reading if there is still data
 
-        // Store current data value
-
+    // Store current data value
 
     // Signal data ready
 
-
     // Clear the asserted interrupts
-
 }
-
 
 /*******************************Aperiodic Threads***********************************/

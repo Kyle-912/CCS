@@ -13,7 +13,8 @@
 
 /************************************MAIN*******************************************/
 
-int main(void) {
+int main(void)
+{
     SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
 
     multimod_init();
@@ -27,9 +28,10 @@ int main(void) {
 
     // Add aperiodic threads
 
-    
     G8RTOS_Launch();
-    while(1);
+    while (1)
+    {
+    }
 }
 
 /************************************MAIN*******************************************/
