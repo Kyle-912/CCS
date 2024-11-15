@@ -69,8 +69,13 @@ void UART_BeagleBone_Init(void)
     GPIOPinTypeUART(GPIO_PORTC_BASE, GPIO_PIN_4 | GPIO_PIN_5);
 
     // Configure UART4 settings
+    UARTClockSourceSet(UART4_BASE, UART_CLOCK_SYSTEM);
+    UARTConfigSetExpClk(UART4_BASE, SysCtlClockGet(), 115200, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
 
     // Enable UART4 RX interrupts
+    IntPrioritySet(INT_UART4, 0x20);                      // Set priority as needed
+    IntEnable(INT_UART4);                                 // Enable the interrupt in the NVIC
+    UARTIntEnable(UART4_BASE, UART_INT_RX | UART_INT_RT); // Enable RX and RX timeout interrupts
 }
 
 /********************************Public Functions***********************************/
