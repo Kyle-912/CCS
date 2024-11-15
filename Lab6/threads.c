@@ -43,8 +43,8 @@ void DrawBox_Thread(void)
     SysCtlDelay(1);
 
     // Declare variables
-    uint8_t x, y, width, height;
-    uint16_t color;
+    uint8_t x, width, height;
+    uint16_t y, color;
 
     while (1)
     {
@@ -58,7 +58,9 @@ void DrawBox_Thread(void)
             x = UART4_DataBuffer[UART4_BufferTail];
             UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
 
-            y = UART4_DataBuffer[UART4_BufferTail];
+            y = (UART4_DataBuffer[UART4_BufferTail] << 8); // High byte of y
+            UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
+            y |= UART4_DataBuffer[UART4_BufferTail]; // Low byte of y
             UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
 
             width = UART4_DataBuffer[UART4_BufferTail];
@@ -67,9 +69,9 @@ void DrawBox_Thread(void)
             height = UART4_DataBuffer[UART4_BufferTail];
             UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
 
-            color = (UART4_DataBuffer[UART4_BufferTail] << 8); // High byte
+            color = (UART4_DataBuffer[UART4_BufferTail] << 8); // High byte of color
             UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
-            color |= UART4_DataBuffer[UART4_BufferTail]; // Low byte
+            color |= UART4_DataBuffer[UART4_BufferTail]; // Low byte of color
             UART4_BufferTail = (UART4_BufferTail + 1) % UART_BUFFER_SIZE;
 
             // Draw rectangle
