@@ -30,7 +30,8 @@
 void Idle_Thread(void)
 {
     while (1)
-        ;
+    {
+    }
 }
 
 void DrawBox_Thread(void)
