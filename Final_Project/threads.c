@@ -240,8 +240,8 @@ void Display_Thread(void)
                     ST7789_DrawRectangle(
                         col * cell_width + 1,
                         row * cell_height + 1,
-                        (col + 1) * cell_width - 1,
-                        (row + 1) * cell_height - 1,
+                        cell_width - 1,
+                        cell_height - 1,
                         color);
 
                     prev_grid[col][row] = grid[col][row]; // Update previous state
