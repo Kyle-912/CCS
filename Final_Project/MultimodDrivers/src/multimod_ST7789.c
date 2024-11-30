@@ -20,47 +20,46 @@
 #include <driverlib/uart.h>
 #include <driverlib/pin_map.h>
 
+/************************************Includes***************************************/
+
 /***********************************Macro Defines***********************************/
 #ifndef _swap_int16_t
 #define _swap_int16_t(a, b) \
-    {                       \
-        int16_t t = a;      \
-        a = b;              \
-        b = t;              \
-    }
+{  \
+    int16_t t = a; \
+    a = b; \
+    b = t; \
+}
 #endif
+/***********************************Macro Defines***********************************/
 
 /********************************Private Functions**********************************/
 
 // ST7789_Select
 // Selects the ST7789 for SPI transmission.
 // Return: void
-void ST7789_Select(void)
-{
+void ST7789_Select(void) {
     GPIOPinWrite(ST7789_PIN_PORT_BASE, ST7789_CS_PIN, 0x00);
 }
 
 // ST7789_Deselect
 // Deselects the ST7789 for SPI transmission.
 // Return: void
-void ST7789_Deselect(void)
-{
+void ST7789_Deselect(void) {
     GPIOPinWrite(ST7789_PIN_PORT_BASE, ST7789_CS_PIN, 0xFF);
 }
 
 // ST7789_SetData
 // Sets the Data/Command pin to data.
 // Return: void
-void ST7789_SetData(void)
-{
+void ST7789_SetData(void) {
     GPIOPinWrite(ST7789_PIN_PORT_BASE, ST7789_DC_PIN, 0xFF);
 }
 
 // ST7789_SetCommand
 // Sets the Data/Command pin to command.
 // Return: void
-void ST7789_SetCommand(void)
-{
+void ST7789_SetCommand(void) {
     GPIOPinWrite(ST7789_PIN_PORT_BASE, ST7789_DC_PIN, 0x00);
 }
 
@@ -69,8 +68,7 @@ void ST7789_SetCommand(void)
 // will be sent to.
 // Param uint8_t "cmd": command register to send data to.
 // Return: void
-void ST7789_WriteCommand(uint8_t cmd)
-{
+void ST7789_WriteCommand(uint8_t cmd) {
     ST7789_SetCommand();
     SPI_WriteSingle(SPI_A_BASE, cmd);
     ST7789_SetData();
@@ -80,16 +78,14 @@ void ST7789_WriteCommand(uint8_t cmd)
 // Sends data to register specified by CMD.
 // Param uint8_t "data": data to be sent.
 // Return: void
-void ST7789_WriteData(uint8_t data)
-{
+void ST7789_WriteData(uint8_t data) {
     SPI_WriteSingle(SPI_A_BASE, data);
 }
 
 // ST7789_ReadRegister
 // Reads from SPI bus.
 // Return: uint8_t
-uint8_t ST7789_ReadRegister(uint8_t data)
-{
+uint8_t ST7789_ReadRegister(uint8_t data) {
     return SPI_ReadSingle(SPI_A_BASE);
 }
 
@@ -100,40 +96,30 @@ uint8_t ST7789_ReadRegister(uint8_t data)
 // Param int16_t w: width of window.
 // Param int16_t h: height of window.
 // Return: void
-void ST7789_SetWindow(int16_t x, int16_t y, int16_t w, int16_t h)
-{
-    // Check boundary conditions
-    if ((x >= X_MAX) || (y >= Y_MAX)) // Check if starting point is within bounds
-    {
-        return;
+void ST7789_SetWindow(int16_t x, int16_t y, int16_t w, int16_t h) {
+    if (x < 0) {
+        x = 0;
     }
 
-    int16_t x_end = x + w - 1;
-    int16_t y_end = y + h - 1;
-    if (x_end >= X_MAX)
-    {
-        x_end = X_MAX - 1;
-    }
-    if (y_end >= Y_MAX)
-    {
-        y_end = Y_MAX - 1;
+    if (y < 0) {
+        y = 0;
     }
 
-    // Set column address
-    ST7789_WriteCommand(0x2A);             // Column address set
-    ST7789_WriteData((x >> 8) & 0xFF);     // Start column high byte
-    ST7789_WriteData(x & 0xFF);            // Start column low byte
-    ST7789_WriteData((x_end >> 8) & 0xFF); // End column high byte
-    ST7789_WriteData(x_end & 0xFF);        // End column low byte
+    // offset y by 20
+    y += 20;
 
-    // Set row address
-    ST7789_WriteCommand(0x2B);             // Row address set
-    ST7789_WriteData((y >> 8) & 0xFF);     // Start row high byte
-    ST7789_WriteData(y & 0xFF);            // Start row low byte
-    ST7789_WriteData((y_end >> 8) & 0xFF); // End row high byte
-    ST7789_WriteData(y_end & 0xFF);        // End row low byte
+    ST7789_WriteCommand(ST7789_CASET_ADDR);
+    ST7789_WriteData((x >> 8) & 0xFF);
+    ST7789_WriteData((x >> 0) & 0xFF);
+    ST7789_WriteData(((x + w - 1) >> 8) & 0xFF);
+    ST7789_WriteData(((x + w - 1) >> 0) & 0xFF);
 
-    // Set register to write to as memory
+    ST7789_WriteCommand(ST7789_RASET_ADDR);
+    ST7789_WriteData((y >> 8) & 0xFF);
+    ST7789_WriteData((y >> 0) & 0xFF);
+    ST7789_WriteData(((y + h - 1) >> 8) & 0xFF);
+    ST7789_WriteData(((y + h - 1) >> 0) & 0xFF);
+
     ST7789_WriteCommand(ST7789_RAMWR_ADDR);
 }
 
@@ -170,8 +156,7 @@ void ST7789_DrawVLine(uint16_t x, uint16_t y, uint16_t h, uint16_t color)
 // Param uint16_t w: width of line.
 // Param uint16_t color: color of line.
 // Return: void
-void ST7789_DrawHLine(uint16_t x, uint16_t y, uint16_t w, uint16_t color)
-{
+void ST7789_DrawHLine(uint16_t x, uint16_t y, uint16_t w, uint16_t color) {
     if ((x < X_MAX) && (y < Y_MAX) && w)
     {
         uint8_t color_hi = color >> 8, color_lo = color;
@@ -255,18 +240,18 @@ void ST7789_Line(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t co
 // Software delay.
 // Param: uint32_t "ms": number of milliseconds to delay.
 // Return: void
-void delay_ms(uint32_t ms)
-{
+void delay_ms(uint32_t ms) {
     SysCtlDelay((SysCtlClockGet() / (3 * 1000)) * ms + 1);
 }
+
+/********************************Private Functions**********************************/
 
 /********************************Public Functions***********************************/
 
 // ST7789_Init
 // Initializes the TFT display to begin being able to be drawn to.
 // Return: void
-void ST7789_Init()
-{
+void ST7789_Init() {
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
     GPIOPinTypeGPIOOutput(ST7789_PIN_PORT_BASE, ST7789_CS_PIN);
     GPIOPinTypeGPIOOutput(ST7789_PIN_PORT_BASE, ST7789_DC_PIN);
@@ -324,32 +309,21 @@ void ST7789_Init()
 // Param uint16_t "y": y-axis of pixel.
 // Param uint16_t "color": color of pixel.
 // Return: void
-void ST7789_DrawPixel(uint16_t x, uint16_t y, uint16_t color)
-{
-    // Check boundary conditions
-    if ((x >= X_MAX) || (y >= Y_MAX))
-    {
-        return;
+void ST7789_DrawPixel(uint16_t x, uint16_t y, uint16_t color) {
+    if (x < X_MAX && y < Y_MAX) {
+        ST7789_Select();
+        ST7789_SetWindow(x, y, 1, 1);
+        ST7789_WriteData(color >> 8);
+        ST7789_WriteData(color & 0xFF);
+        ST7789_Deselect();
     }
-
-    ST7789_Select();
-
-    // Set window
-    ST7789_SetWindow(x, y, 1, 1);
-
-    // Set color
-    ST7789_WriteData((color >> 8) & 0xFF); // High byte
-    ST7789_WriteData(color & 0xFF);        // Low byte
-
-    ST7789_Deselect();
 }
 
 // ST7789_DrawPixel
 // Fills screen with color.
 // Param uint16_t "color": color of fill.
 // Return: void
-void ST7789_Fill(uint16_t color)
-{
+void ST7789_Fill(uint16_t color) {
     ST7789_DrawRectangle(0, 0, X_MAX, Y_MAX, color);
 }
 
@@ -361,23 +335,15 @@ void ST7789_Fill(uint16_t color)
 // Param uint16_t y1: y-coord of second point.
 // Param uint16_t color: color of line.
 // Return: void
-void ST7789_DrawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t color)
-{
+void ST7789_DrawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t color) {
     // Update in subclasses if desired!
-    if (x0 == x1)
-    {
-        if (y0 > y1)
-            _swap_int16_t(y0, y1);
+    if (x0 == x1) {
+        if (y0 > y1) _swap_int16_t(y0, y1);
         ST7789_DrawVLine(x0, y0, y1 - y0 + 1, color);
-    }
-    else if (y0 == y1)
-    {
-        if (x0 > x1)
-            _swap_int16_t(x0, x1);
+    } else if (y0 == y1) {
+        if (x0 > x1) _swap_int16_t(x0, x1);
         ST7789_DrawHLine(x0, y0, x1 - x0 + 1, color);
-    }
-    else
-    {
+    } else {
         ST7789_Line(x0, y0, x1, y1, color);
     }
 }
@@ -390,20 +356,38 @@ void ST7789_DrawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_
 // Param uint16_t h: height of retangle.
 // Param uint16_t color: color of line.
 // Return: void
-void ST7789_DrawRectangle(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color)
-{
+void ST7789_DrawRectangle(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color) {
     uint8_t color_hi, color_lo;
     ST7789_Select();
+
+    if (x < 0) {
+        w += x;
+    }
+
+    if (x + w > X_MAX) {
+        w -= x + w - X_MAX;
+    }
+
+    if (y < 0) {
+        h += y;
+    }
+
+    if (y + h > Y_MAX) {
+        h -= y + h - Y_MAX;
+    }
+
     ST7789_SetWindow(x, y, w, h);
 
     color_hi = color >> 8;
     color_lo = color & 0xFF;
 
     uint32_t num_p = (uint32_t)w * (uint32_t)h;
-    while (num_p--)
-    {
+    while (num_p--) {
         ST7789_WriteData(color_hi);
         ST7789_WriteData(color_lo);
     }
     ST7789_Deselect();
 }
+
+/********************************Public Functions***********************************/
+
