@@ -172,7 +172,9 @@ void Display_Thread(void)
             for (uint8_t col = 0; col < 8; col++)
             {
                 uint16_t color = (grid[row][col] == 1) ? GetRainbowColor(row) : ST7789_BLACK;
-                ST7789_DrawRectangle(col * cell_width + 1, row * cell_height + 1, cell_width - 2, cell_height - 2, color); // Fill the rectangle
+
+                // Draw the note or clear the cell
+                ST7789_DrawRectangle(col * cell_width + 1, row * cell_height + 1, col * cell_width + cell_width - 2, row * cell_height + cell_height - 2, color);
             }
         }
 
