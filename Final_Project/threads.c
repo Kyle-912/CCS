@@ -91,7 +91,7 @@ void Speaker_Thread(void)
         }
         else
         {
-            // sleep(10); // Sleep briefly when not playing
+            sleep(10); // Sleep briefly when not playing
         }
     }
 }
