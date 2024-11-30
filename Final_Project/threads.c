@@ -145,6 +145,15 @@ void Volume_Thread(void)
             current_volume = 4095;
         }
 
+        if (tempo < 0)
+        {
+            tempo = 0;
+        }
+        if (tempo > 4095)
+        {
+            tempo = 4095;
+        }
+
         sleep(10);
     }
 }
