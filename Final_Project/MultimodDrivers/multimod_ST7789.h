@@ -87,8 +87,8 @@
 #define ST7789_YELLOW               0x07FF
 #define ST7789_GREEN                0x07E0
 #define ST7789_BLUE                 0xF800
-#define ST7789_INDIGO               0xF81F
-#define ST7789_VIOLET               0x781F
+#define ST7789_VIOLET               0xF81F
+#define ST7789_PINK                 0x781F
 
 /*************************************Defines***************************************/
 

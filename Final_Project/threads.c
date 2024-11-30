@@ -48,15 +48,15 @@ void InitializeGridDisplay()
     }
 
     // Highlight the initial top-left rectangle
-    ST7789_DrawLine(0, 0, cell_width, 0, ST7789_VIOLET);                     // Top
-    ST7789_DrawLine(0, 0, 0, cell_height, ST7789_VIOLET);                    // Left
-    ST7789_DrawLine(cell_width, 0, cell_width, cell_height, ST7789_VIOLET);  // Right
-    ST7789_DrawLine(0, cell_height, cell_width, cell_height, ST7789_VIOLET); // Bottom
+    // ST7789_DrawLine(0, 0, cell_width, 0, ST7789_YELLOW);                     // Top
+    // ST7789_DrawLine(0, 0, 0, cell_height, ST7789_YELLOW);                    // Left
+    // ST7789_DrawLine(cell_width, 0, cell_width, cell_height, ST7789_YELLOW);  // Right
+    // ST7789_DrawLine(0, cell_height, cell_width, cell_height, ST7789_YELLOW); // Bottom
 }
 
 uint16_t GetRainbowColor(uint8_t row)
 {
-    uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_INDIGO, ST7789_VIOLET, ST7789_RED};
+    uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
     return colors[row];
 }
 
