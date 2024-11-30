@@ -56,6 +56,17 @@ int main(void)
     G8RTOS_Add_APeriodicEvent(TivaButton_Handler, 0, INT_GPIOF);
     G8RTOS_Add_APeriodicEvent(DAC_Timer_Handler, 0, DAC_INTERRUPT);
 
+    uint16_t cell_width = X_MAX / 8;
+    uint16_t cell_height = Y_MAX / 8;
+    for (int y = 0; y <= 8; y++)
+    {
+        ST7789_DrawLine(0, y * cell_height, X_MAX, y * cell_height, ST7789_WHITE); // Horizontal lines
+    }
+    for (int x = 0; x <= 8; x++)
+    {
+        ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE); // Vertical lines
+    }
+
     G8RTOS_Launch();
     while (1)
     {
