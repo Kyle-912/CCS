@@ -244,17 +244,8 @@ void NotePlacement_Thread(void)
         // Wait for the semaphore
         G8RTOS_WaitSemaphore(&sem_Tiva_Button);
 
-        // Sleep to debounce
-        sleep(10);
-
         // Toggle the note in the grid
         grid[highlight_y][highlight_x] ^= 1;
-
-        // Clear the interrupt
-        GPIOIntClear(GPIO_PORTF_BASE, GPIO_PIN_4);
-
-        // Re-enable the interrupt
-        GPIOIntEnable(GPIO_PORTF_BASE, GPIO_PIN_4);
     }
 }
 
@@ -295,7 +286,11 @@ void TivaButton_Handler(void)
     GPIOIntDisable(GPIO_PORTF_BASE, GPIO_PIN_4);
     G8RTOS_SignalSemaphore(&sem_Tiva_Button);
 
+    // Clear the interrupt
+    GPIOIntClear(GPIO_PORTF_BASE, GPIO_PIN_4);
 
+    // Re-enable the interrupt
+    GPIOIntEnable(GPIO_PORTF_BASE, GPIO_PIN_4);
 }
 
 void DAC_Timer_Handler()
