@@ -40,6 +40,14 @@ void InitializeGridDisplay()
 {
     G8RTOS_WaitSemaphore(&sem_SPIA);
 
+    for (uint16_t y = 0; y < Y_MAX; y++)
+    {
+        for (uint16_t x = 0; x < X_MAX; x++)
+        {
+            ST7789_DrawPixel(x, y, ST7789_RED); // Red (0x001F in BGR565)
+        }
+    }
+
     for (int y = 0; y <= 8; y++)
     {
         ST7789_DrawLine(0, y * cell_height, X_MAX, y * cell_height, ST7789_WHITE); // Horizontal lines
