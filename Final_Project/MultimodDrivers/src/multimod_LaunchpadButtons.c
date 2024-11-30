@@ -40,7 +40,7 @@ void LaunchpadButtons_Init()
     GPIO_PORTF_PUR_R |= 0x11;
 
     GPIOIntTypeSet(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_FALLING_EDGE);
-    GPIOIntClear(GPIO_PORTF_BASE, GPIO_PIN_4);
+    // GPIOIntClear(GPIO_PORTF_BASE, GPIO_PIN_4);
     GPIOIntEnable(GPIO_PORTF_BASE, GPIO_PIN_4);
 
     return;
