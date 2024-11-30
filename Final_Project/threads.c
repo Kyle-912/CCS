@@ -32,6 +32,7 @@ uint8_t playing = 0;                      // Playback state (0 = stopped, 1 = pl
 uint8_t playback_column = 0;
 uint16_t cell_width = X_MAX / 8;
 uint16_t cell_height = Y_MAX / 8;
+uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
 
 /********************************Public Functions***********************************/
 
@@ -45,12 +46,6 @@ void InitializeGridDisplay()
     {
         ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE); // Vertical lines
     }
-}
-
-uint16_t GetRainbowColor(uint8_t row)
-{
-    uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
-    return colors[row];
 }
 
 void PlayNoteAtRow(uint8_t row)
@@ -175,7 +170,7 @@ void Display_Thread(void)
 
                 if (grid[col][row] != prev_grid[col][row]) // Update only if the state changes
                 {
-                    uint16_t color = (grid[col][row] == 1) ? GetRainbowColor(row) : ST7789_BLACK;
+                    uint16_t color = (grid[col][row] == 1) ? colors[row] : ST7789_BLACK;
 
                     // Correct rectangle size for a single grid cell
                     ST7789_DrawRectangle(col * cell_width + 1, row * cell_height + 1, cell_width - 1, cell_height - 1, color);
