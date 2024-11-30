@@ -1,6 +1,6 @@
 // G8RTOS_Threads.c
-// Date Created: 2023-07-25
-// Date Updated: 2023-07-27
+// Date Created: 2024-11-30
+// Date Updated: 2024-11-30
 // Defines for thread functions.
 
 /************************************Includes***************************************/
@@ -8,7 +8,6 @@
 #include "./threads.h"
 
 #include "./MultimodDrivers/multimod.h"
-#include "./MiscFunctions/Signals/inc/goertzel.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,22 +19,32 @@
 #define MAX_NUM_SAMPLES (200)
 #define SIGNAL_STEPS (2)
 
-#define doingBonus false
-
 /*********************************Global Variables**********************************/
 
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t current_volume = 0xFFF;
 
-/*********************************Global Variables**********************************/
+uint8_t playing = 0;
+uint8_t grid[8][8] = {0};                 // 8x8 grid for note placement
+uint8_t highlight_x = 0, highlight_y = 0; // Highlighted box position
+uint16_t tempo = 120;                     // Initial tempo (BPM)
+uint8_t playing = 0;                      // Playback state (0 = stopped, 1 = playing)
 
 /********************************Public Functions***********************************/
 
-int16_t Goertzel_ReadSample(int FIFO_index)
+uint16_t GetRainbowColor(uint8_t row)
 {
-    // read sample from FIFO and return sample value
-    return G8RTOS_ReadFIFO(FIFO_index);
+    uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_INDIGO, ST7789_VIOLET, ST7789_RED};
+    return colors[row];
+}
+
+void PlayNoteAtRow(uint8_t row, uint16_t volume)
+{
+    uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
+    uint16_t period = SysCtlClockGet() / (frequencies[row] * 2);
+    TimerLoadSet(TIMER1_BASE, TIMER_A, period - 1);
+    TimerEnable(TIMER1_BASE, TIMER_A);
 }
 
 /*************************************Threads***************************************/
@@ -47,108 +56,46 @@ void Idle_Thread(void)
     }
 }
 
-void Mic_Thread(void)
-{
-    // Input sample rate.
-    const double sample_rate_hz = MIC_SAMPLE_RATE_HZ;
-
-    // Frequency of DFT bins to calculate.
-    const double detect_hz[2] = {1000.0, 2000.0};
-
-    // Number of samples for detection
-    const int N = MAX_NUM_SAMPLES;
-
-    while (1)
-    {
-        // use goertzel function to calculate magnitudes for FREQ_1 and FREQ_2
-        // NOTE: make sure you have implemented the FIFO read function in Goertzel_ReadSample
-        float magnitude_f1 = (float)(goertzel(detect_hz[0], sample_rate_hz, N, Goertzel_ReadSample, FREQ1_FIFO));
-        float magnitude_f2 = (float)(goertzel(detect_hz[1], sample_rate_hz, N, Goertzel_ReadSample, FREQ2_FIFO));
-
-        // calculate magnitudes of FREQ_1 and FREQ_2
-        magnitude_f1 = fabs(2.0 * Y_MAX * (magnitude_f1 / N));
-        magnitude_f2 = fabs(2.0 * Y_MAX * (magnitude_f2 / N));
-
-        // pack magnitude into 32-bit integer
-        uint32_t packed_result = (int16_t)(magnitude_f1) << 16 | (int16_t)(magnitude_f2);
-
-        // push newly magnitude ratio to display FIFO
-        if (packed_result)
-        {
-            G8RTOS_WriteFIFO(DISPLAY_FIFO, packed_result);
-        }
-    }
-}
-
 void Speaker_Thread(void)
 {
     uint8_t buttons;
 
     while (1)
     {
-        // wait for button semaphore
-        G8RTOS_WaitSemaphore(&sem_PCA9555_Debounce);
-
-        // debounce buttons
-        sleep(10);
-
-        // Get buttons
-        buttons = -MultimodButtons_Get();
-
-        if (doingBonus)
+        if (playing)
         {
-            TimerDisable(TIMER1_BASE, TIMER_A);
-            TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / MIC_SAMPLE_RATE_HZ) - 1);
-            TimerEnable(TIMER1_BASE, TIMER_A);
+            for (int col = 0; col < 8; col++)
+            {
+                for (int row = 0; row < 8; row++)
+                {
+                    if (grid[row][col] == 1)
+                    {
+                        PlayNoteAtRow(row, current_volume);
+                    }
+                }
+                sleep(60000 / (tempo * 8)); // Tempo-based delay (8 beats per bar)
+            }
         }
         else
         {
-            // check which buttons are pressed and set DAC output rate to 1000Hz, 2000Hz, etc
-            if (buttons & SW1) // Button for 1000 Hz
-            {
-                TimerDisable(TIMER1_BASE, TIMER_A);
-                TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (1000 * 2)) - 1);
-                TimerEnable(TIMER1_BASE, TIMER_A);
-            }
-            else if (buttons & SW2) // Button for 2000 Hz
-            {
-                TimerDisable(TIMER1_BASE, TIMER_A);
-                TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (2000 * 2)) - 1);
-                TimerEnable(TIMER1_BASE, TIMER_A);
-            }
-            else if (buttons & SW3) // Button for 3000 Hz
-            {
-                TimerDisable(TIMER1_BASE, TIMER_A);
-                TimerLoadSet(TIMER1_BASE, TIMER_A, (SysCtlClockGet() / (3000 * 2)) - 1);
-                TimerEnable(TIMER1_BASE, TIMER_A);
-            }
-            else if (buttons & SW4) // Button to stop DAC output
-            {
-                TimerDisable(TIMER1_BASE, TIMER_A);
-                TimerLoadSet(TIMER1_BASE, TIMER_A, 0);
-                TimerEnable(TIMER1_BASE, TIMER_A);
-            }
+            sleep(10); // Sleep briefly when not playing
         }
-
-        // clear button interrupt
-        GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
-
-        // re-enable the interrupt so it can occur again.
-        GPIOIntEnable(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
     }
 }
 
 void Volume_Thread(void)
 {
-    // define variables
-    int16_t y;
+    // Initialize / declare any variables here
+    int32_t joystick_data;
 
     while (1)
     {
-        // read joystick values
-        y = (int16_t)G8RTOS_ReadFIFO(JOYSTICK_FIFO);
+        // Read joystick values
+        joystick_data = G8RTOS_ReadFIFO(JOYSTICK_FIFO);
+        int16_t x = (joystick_data >> 16) & 0xFFFF;
+        int16_t y = joystick_data & 0xFFFF;
 
-        // Update current volume
+        // Adjust volume
         if (y > 50)
         {
             current_volume += 250;
@@ -158,7 +105,17 @@ void Volume_Thread(void)
             current_volume -= 250;
         }
 
-        // limit volume to 0-4095 (12 bit range)
+        // Adjust tempo
+        if (x > 50)
+        {
+            tempo = (tempo < 240) ? tempo + 1 : 240;
+        }
+        else if (x < -50)
+        {
+            tempo = (tempo > 40) ? tempo - 1 : 40;
+        }
+
+        // Limit volume to 0-4095 (12 bit range)
         if (current_volume < 0)
         {
             current_volume = 0;
@@ -167,110 +124,178 @@ void Volume_Thread(void)
         {
             current_volume = 4095;
         }
+
+        sleep(10);
     }
 }
 
 void Display_Thread(void)
 {
     // Initialize / declare any variables here
-    uint32_t packed_result;
-    int16_t magnitude_f1, magnitude_f2;
-    int previous_f1 = 0, previous_f2 = 0;
+    static uint8_t playback_column = 0;
 
     while (1)
     {
-        // read display FIFO for updated magnitude ratio
-        packed_result = G8RTOS_ReadFIFO(DISPLAY_FIFO);
-
-        // unpack result values
-        magnitude_f1 = (int16_t)(packed_result >> 16);
-        magnitude_f2 = (int16_t)(packed_result & 0xFFFF);
-
-        // draw the magnitudes on the display
         G8RTOS_WaitSemaphore(&sem_SPIA);
 
-        // limit the magnitude values to the display range
-        if (magnitude_f1 > Y_MAX)
+        for (int y = 0; y < 8; y++)
         {
-            magnitude_f1 = Y_MAX;
-        }
-        if (magnitude_f2 > Y_MAX)
-        {
-            magnitude_f2 = Y_MAX;
+            for (int x = 0; x < 8; x++)
+            {
+                uint16_t color = (grid[y][x] == 1) ? GetRainbowColor(y) : ST7789_BLACK;
+                if (x == highlight_x && y == highlight_y)
+                {
+                    // Draw highlight box in yellow
+                    ST7789_DrawRectangle(x * 20, y * 20, 20, 20, ST7789_YELLOW);
+                }
+                else
+                {
+                    // Draw note color or empty box
+                    ST7789_DrawRectangle(x * 20, y * 20, 20, 20, color);
+                }
+            }
         }
 
-        // clear previous rectangle
-        ST7789_DrawRectangle((X_MAX / 2) - 30, 0, 30, previous_f1, ST7789_BLACK);
-        ST7789_DrawRectangle((X_MAX / 2), 0, 30, previous_f2, ST7789_BLACK);
-
-        // draw new rectangle
-        ST7789_DrawRectangle((X_MAX / 2) - 30, 0, 30, magnitude_f1, ST7789_RED);
-        ST7789_DrawRectangle((X_MAX / 2), 0, 30, magnitude_f2, ST7789_BLUE);
+        // Draw playback indicator if playing
+        if (playing)
+        {
+            ST7789_DrawRectangle(playback_column * 20, 160, 20, 10, ST7789_WHITE);
+            playback_column = (playback_column + 1) % 8; // Move to next column
+        }
+        else
+        {
+            // Clear playback indicator
+            ST7789_DrawRectangle(playback_column * 20, 160, 20, 10, ST7789_BLACK);
+        }
 
         G8RTOS_SignalSemaphore(&sem_SPIA);
+        sleep(10);
+    }
+}
 
-        // update previous value
-        previous_f1 = magnitude_f1;
-        previous_f2 = magnitude_f2;
+void JoystickPress_Thread()
+{
+    while (1)
+    {
+        // Wait for a signal to read the joystick press
+        G8RTOS_WaitSemaphore(&sem_Joystick_Debounce);
+
+        // Sleep to debounce
+        sleep(10);
+
+        // Read the joystick switch status on the Multimod board.
+        if (JOYSTICK_GetPress())
+        {
+            playing = !playing; // Toggle the playing flag.
+        }
+
+        // Clear the interrupt
+        GPIOIntClear(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
+
+        // Re-enable the interrupt so it can occur again.
+        GPIOIntEnable(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
+    }
+}
+void Navigation_Thread(void)
+{
+    while (1)
+    {
+        // Wait for the semaphore
+        G8RTOS_WaitSemaphore(&sem_PCA9555_Debounce);
+
+        // Read buttons
+        uint8_t buttons = -MultimodButtons_Get();
+
+        // Move highlight box
+        if (buttons & SW1)
+        {
+            highlight_y = (highlight_y > 0) ? highlight_y - 1 : 7; // Up
+        }
+        if (buttons & SW2)
+        {
+            highlight_y = (highlight_y < 7) ? highlight_y + 1 : 0; // Down
+        }
+        if (buttons & SW3)
+        {
+            highlight_x = (highlight_x > 0) ? highlight_x - 1 : 7; // Left
+        }
+        if (buttons & SW4)
+        {
+            highlight_x = (highlight_x < 7) ? highlight_x + 1 : 0; // Right
+        }
+    }
+
+    // Clear button interrupt
+    GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
+
+    // Re-enable the interrupt so it can occur again.
+    GPIOIntEnable(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
+}
+
+void NotePlacement_Thread(void)
+{
+    while (1)
+    {
+        // Wait for the semaphore
+        G8RTOS_WaitSemaphore(&sem_Tiva_Button);
+
+        // Toggle the note in the grid
+        grid[highlight_y][highlight_x] ^= 1;
+
+        // Clear the interrupt
+        GPIOIntClear(GPIO_PORTF_BASE, GPIO_PIN_4);
+
+        // Re-enable the interrupt
+        GPIOIntEnable(GPIO_PORTF_BASE, GPIO_PIN_4);
     }
 }
 
 /********************************Periodic Threads***********************************/
 
-void Update_Volume(void)
+void Get_Joystick(void)
 {
-    // read joystick values
+    // Read the joystick
+    uint16_t x_raw = JOYSTICK_GetX();
     uint16_t y_raw = JOYSTICK_GetY();
 
+    int16_t x = (int16_t)(x_raw - 2048); // Center around 0
     int16_t y = (int16_t)(y_raw - 2048); // Center around 0
 
-    // push joystick value to fifo
-    G8RTOS_WriteFIFO(JOYSTICK_FIFO, y);
+    // Send through FIFO.
+    G8RTOS_WriteFIFO(JOYSTICK_FIFO, ((uint32_t)x << 16) | (uint32_t)y);
 }
 
 /*******************************Aperiodic Threads***********************************/
 
-void Mic_Handler()
-{
-    uint32_t micData[4] = {0};
-
-    // Clear the ADC interrupt
-    ADCIntClear(ADC0_BASE, 1);
-
-    // Read ADC Value
-    ADCSequenceDataGet(ADC0_BASE, 1, micData);
-
-    // write new sample to audio FIFOs
-    G8RTOS_WriteFIFO(FREQ1_FIFO, micData[0]);
-    G8RTOS_WriteFIFO(FREQ2_FIFO, micData[0]);
-    G8RTOS_WriteFIFO(OUTPUT_FIFO, micData[0]);
-}
-
 void Button_Handler()
 {
-    // disable interrupt and signal semaphore
+    // Disable interrupt and signal semaphore
     GPIOIntDisable(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
     G8RTOS_SignalSemaphore(&sem_PCA9555_Debounce);
 }
 
+void Joystick_Button_Handler()
+{
+    // Disable interrupt and signal semaphore
+    GPIOIntDisable(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
+    G8RTOS_SignalSemaphore(&sem_Joystick_Debounce);
+}
+
+void TivaButton_Handler(void)
+{
+    // Disable further interrupts to debounce
+    GPIOIntDisable(GPIO_PORTF_BASE, GPIO_PIN_4);
+    G8RTOS_SignalSemaphore(&sem_Tiva_Button);
+}
+
 void DAC_Timer_Handler()
 {
-    // clear the timer interrupt
+    // Clear the timer interrupt
     TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
 
-    // read next output sample
+    // Read next output sample
     uint32_t output = (current_volume) * (dac_signal[dac_step++ % SIGNAL_STEPS]);
 
-    // BONUS: stream microphone input to DAC output via FIFO
-    int16_t dac_data = G8RTOS_ReadFIFO(OUTPUT_FIFO);
-
-    // write the output value to the dac
-    if (doingBonus)
-    {
-        MutimodDAC_Write(DAC_OUT_REG, dac_data);
-    }
-    else
-    {
-        MutimodDAC_Write(DAC_OUT_REG, output);
-    }
+    // Write the output value to the dac
+    MutimodDAC_Write(DAC_OUT_REG, output);
 }
