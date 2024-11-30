@@ -102,7 +102,7 @@ int main(void)
     G8RTOS_AddThread(&Display_Thread, 1, "Display");
     G8RTOS_AddThread(&JoystickPress_Thread, 1, "JoystickPress");
     G8RTOS_AddThread(&Navigation_Thread, 1, "Navigation");
-    G8RTOS_AddThread(&NotePlacement_Thread, 1, "NotePlacement");
+    // G8RTOS_AddThread(&NotePlacement_Thread, 1, "NotePlacement");
 
     G8RTOS_InitFIFO(JOYSTICK_FIFO);
 
