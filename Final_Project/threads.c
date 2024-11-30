@@ -160,25 +160,13 @@ void Display_Thread(void)
     {
         G8RTOS_WaitSemaphore(&sem_SPIA);
 
-        // Clear the previous yellow highlight by restoring white grid lines
+        // Reset previous highlight to white
         ST7789_DrawLine(prev_x * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, prev_y * cell_height, ST7789_WHITE);             // Top
         ST7789_DrawLine(prev_x * cell_width, prev_y * cell_height, prev_x * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE);             // Left
         ST7789_DrawLine((prev_x + 1) * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Right
         ST7789_DrawLine(prev_x * cell_width, (prev_y + 1) * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Bottom
 
-        // Update grid contents based on note placement
-        for (uint8_t row = 0; row < 8; row++)
-        {
-            for (uint8_t col = 0; col < 8; col++)
-            {
-                uint16_t color = (grid[row][col] == 1) ? GetRainbowColor(row) : ST7789_BLACK;
-
-                // Draw the note or clear the cell
-                ST7789_DrawRectangle(col * cell_width + 1, row * cell_height + 1, col * cell_width + cell_width - 2, row * cell_height + cell_height - 2, color);
-            }
-        }
-
-        // Draw new yellow highlight for the currently selected rectangle
+        // Set new highlight to yellow
         ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, highlight_y * cell_height, ST7789_YELLOW);             // Top
         ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, highlight_x * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW);             // Left
         ST7789_DrawLine((highlight_x + 1) * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Right
@@ -190,6 +178,39 @@ void Display_Thread(void)
 
         G8RTOS_SignalSemaphore(&sem_SPIA);
         sleep(10);
+
+        /* G8RTOS_WaitSemaphore(&sem_SPIA);
+
+         // Clear the previous yellow highlight by restoring white grid lines
+         ST7789_DrawLine(prev_x * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, prev_y * cell_height, ST7789_WHITE);             // Top
+         ST7789_DrawLine(prev_x * cell_width, prev_y * cell_height, prev_x * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE);             // Left
+         ST7789_DrawLine((prev_x + 1) * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Right
+         ST7789_DrawLine(prev_x * cell_width, (prev_y + 1) * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Bottom
+
+         // Update grid contents based on note placement
+         for (uint8_t row = 0; row < 8; row++)
+         {
+             for (uint8_t col = 0; col < 8; col++)
+             {
+                 uint16_t color = (grid[row][col] == 1) ? GetRainbowColor(row) : ST7789_BLACK;
+
+                 // Draw the note or clear the cell
+                 ST7789_DrawRectangle(col * cell_width + 1, row * cell_height + 1, col * cell_width + cell_width - 2, row * cell_height + cell_height - 2, color);
+             }
+         }
+
+         // Draw new yellow highlight for the currently selected rectangle
+         ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, highlight_y * cell_height, ST7789_YELLOW);             // Top
+         ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, highlight_x * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW);             // Left
+         ST7789_DrawLine((highlight_x + 1) * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Right
+         ST7789_DrawLine(highlight_x * cell_width, (highlight_y + 1) * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Bottom
+
+         // Update previous highlight position
+         prev_x = highlight_x;
+         prev_y = highlight_y;
+
+         G8RTOS_SignalSemaphore(&sem_SPIA);
+         sleep(10); */
     }
 }
 
