@@ -47,12 +47,12 @@ int main(void)
     G8RTOS_AddThread(&Display_Thread, 0, "Display");
     G8RTOS_AddThread(&JoystickPress_Thread, 0, "JoystickPress");
     G8RTOS_AddThread(&Navigation_Thread, 0, "Navigation");
-    // G8RTOS_AddThread(&NotePlacement_Thread, 0, "NotePlacement");
+    G8RTOS_AddThread(&NotePlacement_Thread, 0, "NotePlacement");
 
     G8RTOS_InitFIFO(JOYSTICK_FIFO);
 
     // Add periodic and aperiodic events
-    G8RTOS_Add_PeriodicEvent(&Get_Joystick, DAC_SAMPLE_FREQUENCY_HZ, 0);
+    // G8RTOS_Add_PeriodicEvent(&Get_Joystick, DAC_SAMPLE_FREQUENCY_HZ, 0);
 
     G8RTOS_Add_APeriodicEvent(Button_Handler, 0, BUTTON_INTERRUPT);
     G8RTOS_Add_APeriodicEvent(Joystick_Button_Handler, 0, JOYSTICK_INTERRUPT);
