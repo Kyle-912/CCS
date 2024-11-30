@@ -192,7 +192,10 @@ void JoystickPress_Thread()
         sleep(10);
 
         // Switch status on the Multimod board.
-        playing = !playing; // Toggle the playing flag.
+        if (JOYSTICK_GetPress())
+        {
+            playing = !playing; // Toggle the playing flag.
+        }
 
         // Clear the interrupt
         GPIOIntClear(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
