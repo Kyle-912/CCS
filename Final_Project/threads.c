@@ -91,7 +91,7 @@ void Speaker_Thread(void)
         }
         else
         {
-            sleep(10); // Sleep briefly when not playing
+            // sleep(10); // Sleep briefly when not playing
         }
     }
 }
@@ -138,13 +138,13 @@ void Volume_Thread(void)
             volume = 4095;
         }
 
-        if (tempo < 0)
+        if (tempo < 40)
         {
-            tempo = 0;
+            tempo = 40;
         }
-        if (tempo > 4095)
+        if (tempo > 240)
         {
-            tempo = 4095;
+            tempo = 240;
         }
 
         sleep(10);
@@ -177,7 +177,7 @@ void Display_Thread(void)
         prev_y = highlight_y;
 
         G8RTOS_SignalSemaphore(&sem_SPIA);
-        sleep(10);
+        // sleep(10);
     }
 }
 
