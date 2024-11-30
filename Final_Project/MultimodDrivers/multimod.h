@@ -13,6 +13,7 @@
 #include "multimod_mic.h"
 #include "multimod_dac.h"
 #include "multimod_PCA9555.h"
+#include "multimod_LaunchpadButtons.h"
 
 static void multimod_init() {
     ST7789_Init();
