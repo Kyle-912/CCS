@@ -188,11 +188,11 @@ void Display_Thread(void)
         ST7789_DrawLine(prev_x * cell_width, (prev_y + 1) * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Bottom
 
         // Update grid contents based on note placement
-        for (uint8_t row = 0; row < 8; row++)
+        for (uint8_t col = 0; col < 8; col++) // Iterate over columns (x)
         {
-            for (uint8_t col = 0; col < 8; col++)
+            for (uint8_t row = 0; row < 8; row++) // Iterate over rows (y)
             {
-                uint16_t color = (grid[row][col] == 1) ? GetRainbowColor(row) : ST7789_BLACK;
+                uint16_t color = (grid[col][row] == 1) ? GetRainbowColor(row) : ST7789_BLACK;
 
                 // Draw the note or clear the cell
                 ST7789_DrawRectangle(col * cell_width + 1, row * cell_height + 1, col * cell_width + cell_width - 2, row * cell_height + cell_height - 2, color);
