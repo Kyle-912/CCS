@@ -28,7 +28,8 @@
 // Initializes the GPIO port & pins necessary for the button switches on the
 // launchpad.
 // Return: void
-void LaunchpadButtons_Init() {
+void LaunchpadButtons_Init()
+{
     // Enable port F for switches
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 
@@ -48,10 +49,14 @@ void LaunchpadButtons_Init() {
 // LaunchpadButtons_ReadSW1
 // Checks to see if button 1 is pressed. If it is, return 1; else return 0.
 // Return: uint8_t
-uint8_t LaunchpadButtons_ReadSW1() {
-    if (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4)) {
+uint8_t LaunchpadButtons_ReadSW1()
+{
+    if (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4))
+    {
         return 0;
-    } else {
+    }
+    else
+    {
         return 1;
     }
 }
@@ -59,14 +64,16 @@ uint8_t LaunchpadButtons_ReadSW1() {
 // LaunchpadButtons_ReadSW2
 // Checks to see if button 1 is pressed. If it is, return 1; else return 0.
 // Return: uint8_t
-uint8_t LaunchpadButtons_ReadSW2() {
-    if (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0)) {
+uint8_t LaunchpadButtons_ReadSW2()
+{
+    if (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0))
+    {
         return 0;
-    } else {
+    }
+    else
+    {
         return 1;
     }
 }
-
-
 
 /********************************Public Functions***********************************/
