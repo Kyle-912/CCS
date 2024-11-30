@@ -35,11 +35,14 @@ uint8_t playback_column = 0;
 
 void InitializeGridDisplay()
 {
+    uint16_t cell_width = X_MAX / 8;  // Calculate cell width
+    uint16_t cell_height = Y_MAX / 8; // Calculate cell height
+
     for (int y = 0; y < 8; y++)
     {
         for (int x = 0; x < 8; x++)
         {
-            ST7789_DrawRectangle(x * 20, y * 20, 20, 20, ST7789_WHITE); // Draw grid lines
+            ST7789_DrawRectangle(x * cell_width, y * cell_height, cell_width, cell_height, ST7789_WHITE); // Draw grid lines
         }
     }
 }
@@ -142,6 +145,8 @@ void Volume_Thread(void)
 void Display_Thread(void)
 {
     // Initialize / declare any variables here
+    uint16_t cell_width = X_MAX / 8;
+    uint16_t cell_height = Y_MAX / 8;
     static uint8_t previous_playback_column = 0;
 
     while (1)
@@ -157,23 +162,23 @@ void Display_Thread(void)
                 if (x == highlight_x && y == highlight_y)
                 {
                     // Draw highlight box
-                    ST7789_DrawRectangle(x * 20, y * 20, 20, 20, ST7789_YELLOW);
+                    ST7789_DrawRectangle(x * cell_width, y * cell_height, cell_width, cell_height, ST7789_YELLOW);
                 }
                 else
                 {
                     // Draw note color or empty box
-                    ST7789_DrawRectangle(x * 20, y * 20, 20, 20, color);
+                    ST7789_DrawRectangle(x * cell_width, y * cell_height, cell_width, cell_height, color);
                 }
             }
         }
 
         // Clear previous playback indicator
-        ST7789_DrawRectangle(previous_playback_column * 20, 160, 20, 10, ST7789_BLACK);
+        ST7789_DrawRectangle(previous_playback_column * cell_width, Y_MAX - 10, cell_width, 10, ST7789_BLACK);
 
         // Draw current playback indicator
         if (playing)
         {
-            ST7789_DrawRectangle(playback_column * 20, 160, 20, 10, ST7789_WHITE);
+            ST7789_DrawRectangle(playback_column * cell_width, Y_MAX - 10, cell_width, 10, ST7789_WHITE);
             previous_playback_column = playback_column;
         }
 
@@ -232,7 +237,7 @@ void Navigation_Thread(void)
         {
             highlight_x = (highlight_x < 7) ? highlight_x + 1 : 0; // Right
         }
-        
+
         // Clear button interrupt
         GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
 
