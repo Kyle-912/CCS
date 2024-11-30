@@ -206,6 +206,8 @@ void JoystickPress_Thread()
 }
 void Navigation_Thread(void)
 {
+    uint8_t buttons;
+
     while (1)
     {
         // Wait for the semaphore
@@ -215,24 +217,24 @@ void Navigation_Thread(void)
         sleep(10);
 
         // Read buttons
-        uint8_t buttons = -MultimodButtons_Get();
+        buttons = -MultimodButtons_Get();
 
         // Move highlight box
-        if (buttons & SW1)
+        if (buttons & SW1) // Up
         {
-            highlight_y = (highlight_y > 0) ? highlight_y - 1 : 7; // Up
+            highlight_y = (highlight_y > 0) ? highlight_y - 1 : 7;
         }
-        if (buttons & SW2)
+        else if (buttons & SW2) // Down
         {
-            highlight_y = (highlight_y < 7) ? highlight_y + 1 : 0; // Down
+            highlight_y = (highlight_y < 7) ? highlight_y + 1 : 0;
         }
-        if (buttons & SW3)
+        else if (buttons & SW3) // Left
         {
-            highlight_x = (highlight_x > 0) ? highlight_x - 1 : 7; // Left
+            highlight_x = (highlight_x > 0) ? highlight_x - 1 : 7;
         }
-        if (buttons & SW4)
+        else if (buttons & SW4) // Right
         {
-            highlight_x = (highlight_x < 7) ? highlight_x + 1 : 0; // Right
+            highlight_x = (highlight_x < 7) ? highlight_x + 1 : 0;
         }
 
         // Clear button interrupt
