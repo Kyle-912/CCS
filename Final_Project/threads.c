@@ -177,7 +177,7 @@ void Display_Thread(void)
         prev_y = highlight_y;
 
         G8RTOS_SignalSemaphore(&sem_SPIA);
-        // sleep(10);
+        sleep(10);
     }
 }
 
