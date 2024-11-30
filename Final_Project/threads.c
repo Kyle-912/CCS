@@ -38,7 +38,7 @@ uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST
 
 void InitializeGridDisplay()
 {
-    G8RTOS_WaitSemaphore(&sem_SPIA);
+    /*G8RTOS_WaitSemaphore(&sem_SPIA);
 
     for (int y = 0; y <= 8; y++)
     {
@@ -49,6 +49,11 @@ void InitializeGridDisplay()
         ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE); // Vertical lines
     }
 
+    G8RTOS_SignalSemaphore(&sem_SPIA);*/
+    G8RTOS_WaitSemaphore(&sem_SPIA);
+    ST7789_DrawLine(0, 0, X_MAX, 0, ST7789_WHITE);                 // Top line
+    ST7789_DrawLine(0, Y_MAX / 2, X_MAX, Y_MAX / 2, ST7789_WHITE); // Middle horizontal line
+    ST7789_DrawLine(X_MAX / 2, 0, X_MAX / 2, Y_MAX, ST7789_WHITE); // Middle vertical line
     G8RTOS_SignalSemaphore(&sem_SPIA);
 }
 
