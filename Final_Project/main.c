@@ -26,7 +26,7 @@ int main(void)
     SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
 
     // you might want a delay here (~10 ms) to make sure the display has powered up
-    SysCtlDelay(10000);
+    // SysCtlDelay(10000);
 
     // Initialize the G8RTOS framework
     G8RTOS_Init();
