@@ -192,10 +192,7 @@ void JoystickPress_Thread()
         sleep(10);
 
         // Read the joystick switch status on the Multimod board.
-        if (JOYSTICK_GetPress())
-        {
-            playing = !playing; // Toggle the playing flag.
-        }
+        playing = !playing; // Toggle the playing flag.
 
         // Clear the interrupt
         GPIOIntClear(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
@@ -249,6 +246,12 @@ void NotePlacement_Thread(void)
 
         // Toggle the note in the grid
         grid[highlight_y][highlight_x] ^= 1;
+
+        // Clear the interrupt
+        GPIOIntClear(GPIO_PORTF_BASE, GPIO_PIN_4);
+
+        // Re-enable the interrupt
+        GPIOIntEnable(GPIO_PORTF_BASE, GPIO_PIN_4);
     }
 }
 
@@ -288,11 +291,8 @@ void TivaButton_Handler(void)
     // Disable further interrupts to debounce
     GPIOIntDisable(GPIO_PORTF_BASE, GPIO_PIN_4);
     G8RTOS_SignalSemaphore(&sem_Tiva_Button);
-    // Clear the interrupt
-    GPIOIntClear(GPIO_PORTF_BASE, GPIO_PIN_4);
 
-    // Re-enable the interrupt
-    GPIOIntEnable(GPIO_PORTF_BASE, GPIO_PIN_4);
+
 }
 
 void DAC_Timer_Handler()
