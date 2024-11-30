@@ -30,21 +30,28 @@ uint8_t highlight_x = 0, highlight_y = 0; // Highlighted box position
 uint16_t tempo = 120;                     // Initial tempo (BPM)
 uint8_t playing = 0;                      // Playback state (0 = stopped, 1 = playing)
 uint8_t playback_column = 0;
+uint16_t cell_width = X_MAX / 8;
+uint16_t cell_height = Y_MAX / 8;
 
 /********************************Public Functions***********************************/
 
 void InitializeGridDisplay()
 {
-    uint16_t cell_width = X_MAX / 8;  // Calculate cell width
-    uint16_t cell_height = Y_MAX / 8; // Calculate cell height
-
-    for (int y = 0; y < 8; y++)
+    // Draw the white grid lines
+    for (int y = 0; y <= 8; y++)
     {
-        for (int x = 0; x < 8; x++)
-        {
-            ST7789_DrawRectangle(x * cell_width, y * cell_height, cell_width, cell_height, ST7789_WHITE); // Draw grid lines
-        }
+        ST7789_DrawLine(0, y * cell_height, X_MAX, y * cell_height, ST7789_WHITE); // Horizontal lines
     }
+    for (int x = 0; x <= 8; x++)
+    {
+        ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE); // Vertical lines
+    }
+
+    // Highlight the initial top-left rectangle
+    ST7789_DrawLine(0, 0, cell_width, 0, ST7789_YELLOW);                     // Top
+    ST7789_DrawLine(0, 0, 0, cell_height, ST7789_YELLOW);                    // Left
+    ST7789_DrawLine(cell_width, 0, cell_width, cell_height, ST7789_YELLOW);  // Right
+    ST7789_DrawLine(0, cell_height, cell_width, cell_height, ST7789_YELLOW); // Bottom
 }
 
 uint16_t GetRainbowColor(uint8_t row)
@@ -145,42 +152,28 @@ void Volume_Thread(void)
 void Display_Thread(void)
 {
     // Initialize / declare any variables here
-    uint16_t cell_width = X_MAX / 8;
-    uint16_t cell_height = Y_MAX / 8;
-    static uint8_t previous_playback_column = 0;
+    // static uint8_t previous_playback_column = 0;
+    static uint8_t prev_x = 0, prev_y = 0;
 
     while (1)
     {
         G8RTOS_WaitSemaphore(&sem_SPIA);
 
-        for (int y = 0; y < 8; y++)
-        {
-            for (int x = 0; x < 8; x++)
-            {
-                uint16_t color = (grid[y][x] == 1) ? GetRainbowColor(y) : ST7789_BLACK;
+        // Reset previous highlight to white
+        ST7789_DrawLine(prev_x * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, prev_y * cell_height, ST7789_WHITE);             // Top
+        ST7789_DrawLine(prev_x * cell_width, prev_y * cell_height, prev_x * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE);             // Left
+        ST7789_DrawLine((prev_x + 1) * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Right
+        ST7789_DrawLine(prev_x * cell_width, (prev_y + 1) * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Bottom
 
-                if (x == highlight_x && y == highlight_y)
-                {
-                    // Draw highlight box
-                    ST7789_DrawRectangle(x * cell_width, y * cell_height, cell_width, cell_height, ST7789_YELLOW);
-                }
-                else
-                {
-                    // Draw note color or empty box
-                    ST7789_DrawRectangle(x * cell_width, y * cell_height, cell_width, cell_height, color);
-                }
-            }
-        }
+        // Set new highlight to yellow
+        ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, highlight_y * cell_height, ST7789_YELLOW);             // Top
+        ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, highlight_x * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW);             // Left
+        ST7789_DrawLine((highlight_x + 1) * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Right
+        ST7789_DrawLine(highlight_x * cell_width, (highlight_y + 1) * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Bottom
 
-        // Clear previous playback indicator
-        ST7789_DrawRectangle(previous_playback_column * cell_width, Y_MAX - 10, cell_width, 10, ST7789_BLACK);
-
-        // Draw current playback indicator
-        if (playing)
-        {
-            ST7789_DrawRectangle(playback_column * cell_width, Y_MAX - 10, cell_width, 10, ST7789_WHITE);
-            previous_playback_column = playback_column;
-        }
+        // Update previous highlight position
+        prev_x = highlight_x;
+        prev_y = highlight_y;
 
         G8RTOS_SignalSemaphore(&sem_SPIA);
         sleep(10);
