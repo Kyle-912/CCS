@@ -32,6 +32,9 @@ int main(void)
     G8RTOS_Init();
     multimod_init();
 
+    // Initialize grid
+    InitializeGridDisplay();
+
     // Add semaphores, threads, FIFOs
     G8RTOS_InitSemaphore(&sem_SPIA, 1);
     G8RTOS_InitSemaphore(&sem_PCA9555_Debounce, 0);

@@ -33,6 +33,21 @@ uint8_t playing = 0;                      // Playback state (0 = stopped, 1 = pl
 
 /********************************Public Functions***********************************/
 
+void InitializeGridDisplay()
+{
+    G8RTOS_WaitSemaphore(&sem_SPIA);
+
+    for (int y = 0; y < 8; y++)
+    {
+        for (int x = 0; x < 8; x++)
+        {
+            ST7789_DrawRectangle(x * 20, y * 20, 20, 20, ST7789_WHITE); // Draw grid lines
+        }
+    }
+
+    G8RTOS_SignalSemaphore(&sem_SPIA);
+}
+
 uint16_t GetRainbowColor(uint8_t row)
 {
     uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_INDIGO, ST7789_VIOLET, ST7789_RED};
@@ -58,7 +73,7 @@ void Idle_Thread(void)
 
 void Speaker_Thread(void)
 {
-    uint8_t buttons;
+    static uint8_t playback_column = 0;
 
     while (1)
     {
@@ -66,6 +81,7 @@ void Speaker_Thread(void)
         {
             for (int col = 0; col < 8; col++)
             {
+                playback_column = col; // Update playback column
                 for (int row = 0; row < 8; row++)
                 {
                     if (grid[row][col] == 1)
@@ -73,7 +89,7 @@ void Speaker_Thread(void)
                         PlayNoteAtRow(row, current_volume);
                     }
                 }
-                sleep(60000 / (tempo * 8)); // Tempo-based delay (8 beats per bar)
+                sleep(60000 / (tempo * 8)); // Tempo-based delay
             }
         }
         else
@@ -133,6 +149,7 @@ void Display_Thread(void)
 {
     // Initialize / declare any variables here
     static uint8_t playback_column = 0;
+    static uint8_t previous_playback_column = 0;
 
     while (1)
     {
@@ -143,9 +160,10 @@ void Display_Thread(void)
             for (int x = 0; x < 8; x++)
             {
                 uint16_t color = (grid[y][x] == 1) ? GetRainbowColor(y) : ST7789_BLACK;
+
                 if (x == highlight_x && y == highlight_y)
                 {
-                    // Draw highlight box in yellow
+                    // Draw highlight box
                     ST7789_DrawRectangle(x * 20, y * 20, 20, 20, ST7789_YELLOW);
                 }
                 else
@@ -156,16 +174,14 @@ void Display_Thread(void)
             }
         }
 
-        // Draw playback indicator if playing
+        // Clear previous playback indicator
+        ST7789_DrawRectangle(previous_playback_column * 20, 160, 20, 10, ST7789_BLACK);
+
+        // Draw current playback indicator
         if (playing)
         {
             ST7789_DrawRectangle(playback_column * 20, 160, 20, 10, ST7789_WHITE);
-            playback_column = (playback_column + 1) % 8; // Move to next column
-        }
-        else
-        {
-            // Clear playback indicator
-            ST7789_DrawRectangle(playback_column * 20, 160, 20, 10, ST7789_BLACK);
+            previous_playback_column = playback_column;
         }
 
         G8RTOS_SignalSemaphore(&sem_SPIA);
