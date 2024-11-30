@@ -48,7 +48,7 @@ void InitializeGridDisplay()
     }
 
     // Highlight the initial top-left rectangle
-    ST7789_DrawLine(0, 0, cell_width, 0, ST7789_YELLOW);                     // Top
+    ST7789_DrawLine(0, 0, cell_width, 0, ST7789_RED);                     // Top
     ST7789_DrawLine(0, 0, 0, cell_height, ST7789_YELLOW);                    // Left
     ST7789_DrawLine(cell_width, 0, cell_width, cell_height, ST7789_YELLOW);  // Right
     ST7789_DrawLine(0, cell_height, cell_width, cell_height, ST7789_YELLOW); // Bottom
