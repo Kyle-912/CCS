@@ -232,13 +232,13 @@ void Navigation_Thread(void)
         {
             highlight_x = (highlight_x < 7) ? highlight_x + 1 : 0; // Right
         }
+        
+        // Clear button interrupt
+        GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
+
+        // Re-enable the interrupt so it can occur again.
+        GPIOIntEnable(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
     }
-
-    // Clear button interrupt
-    GPIOIntClear(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
-
-    // Re-enable the interrupt so it can occur again.
-    GPIOIntEnable(GPIO_PORTE_BASE, BUTTONS_INT_PIN);
 }
 
 void NotePlacement_Thread(void)
