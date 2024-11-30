@@ -25,11 +25,11 @@ uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t current_volume = 0xFFF;
 
-uint8_t playing = 0;
 uint8_t grid[8][8] = {0};                 // 8x8 grid for note placement
 uint8_t highlight_x = 0, highlight_y = 0; // Highlighted box position
 uint16_t tempo = 120;                     // Initial tempo (BPM)
 uint8_t playing = 0;                      // Playback state (0 = stopped, 1 = playing)
+uint8_t playback_column = 0;
 
 /********************************Public Functions***********************************/
 
@@ -73,8 +73,6 @@ void Idle_Thread(void)
 
 void Speaker_Thread(void)
 {
-    static uint8_t playback_column = 0;
-
     while (1)
     {
         if (playing)
