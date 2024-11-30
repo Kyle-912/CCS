@@ -191,7 +191,7 @@ void JoystickPress_Thread()
         // Sleep to debounce
         sleep(10);
 
-        // Read the joystick switch status on the Multimod board.
+        // Switch status on the Multimod board.
         playing = !playing; // Toggle the playing flag.
 
         // Clear the interrupt
@@ -207,6 +207,9 @@ void Navigation_Thread(void)
     {
         // Wait for the semaphore
         G8RTOS_WaitSemaphore(&sem_PCA9555_Debounce);
+
+        // Sleep to debounce
+        sleep(10);
 
         // Read buttons
         uint8_t buttons = -MultimodButtons_Get();
