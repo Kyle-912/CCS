@@ -25,9 +25,6 @@ int main(void)
     // Sets clock speed to 80 MHz. You'll need it!
     SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
 
-    // you might want a delay here (~10 ms) to make sure the display has powered up
-    // SysCtlDelay(10000);
-
     // Initialize the G8RTOS framework
     G8RTOS_Init();
     multimod_init();
