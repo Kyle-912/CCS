@@ -45,8 +45,8 @@ int main(void)
     G8RTOS_AddThread(&Speaker_Thread, 0, "Speaker");
     G8RTOS_AddThread(&Volume_Thread, 0, "Volume");
     G8RTOS_AddThread(&Display_Thread, 0, "Display");
-    // G8RTOS_AddThread(&JoystickPress_Thread, 0, "JoystickPress");
-    G8RTOS_AddThread(&Navigation_Thread, 0, "Navigation");
+    G8RTOS_AddThread(&JoystickPress_Thread, 0, "JoystickPress");
+    // G8RTOS_AddThread(&Navigation_Thread, 0, "Navigation");
     G8RTOS_AddThread(&NotePlacement_Thread, 0, "NotePlacement");
 
     G8RTOS_InitFIFO(JOYSTICK_FIFO);
