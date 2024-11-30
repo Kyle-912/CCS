@@ -142,7 +142,6 @@ void Volume_Thread(void)
 void Display_Thread(void)
 {
     // Initialize / declare any variables here
-    static uint8_t playback_column = 0;
     static uint8_t previous_playback_column = 0;
 
     while (1)
