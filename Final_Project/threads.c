@@ -23,7 +23,7 @@
 
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
-int16_t current_volume = 0xFFF;
+int16_t volume = 0xFFF;
 
 uint8_t grid[8][8] = {0};                 // 8x8 grid for note placement
 uint8_t highlight_x = 0, highlight_y = 0; // Highlighted box position
@@ -37,7 +37,6 @@ uint16_t cell_height = Y_MAX / 8;
 
 void InitializeGridDisplay()
 {
-    // Draw the white grid lines
     for (int y = 0; y <= 8; y++)
     {
         ST7789_DrawLine(0, y * cell_height, X_MAX, y * cell_height, ST7789_WHITE); // Horizontal lines
@@ -46,12 +45,6 @@ void InitializeGridDisplay()
     {
         ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE); // Vertical lines
     }
-
-    // Highlight the initial top-left rectangle
-    // ST7789_DrawLine(0, 0, cell_width, 0, ST7789_YELLOW);                     // Top
-    // ST7789_DrawLine(0, 0, 0, cell_height, ST7789_YELLOW);                    // Left
-    // ST7789_DrawLine(cell_width, 0, cell_width, cell_height, ST7789_YELLOW);  // Right
-    // ST7789_DrawLine(0, cell_height, cell_width, cell_height, ST7789_YELLOW); // Bottom
 }
 
 uint16_t GetRainbowColor(uint8_t row)
@@ -60,7 +53,7 @@ uint16_t GetRainbowColor(uint8_t row)
     return colors[row];
 }
 
-void PlayNoteAtRow(uint8_t row, uint16_t volume)
+void PlayNoteAtRow(uint8_t row)
 {
     uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
     uint16_t period = SysCtlClockGet() / (frequencies[row] * 2);
@@ -90,7 +83,7 @@ void Speaker_Thread(void)
                 {
                     if (grid[row][col] == 1)
                     {
-                        PlayNoteAtRow(row, current_volume);
+                        PlayNoteAtRow(row);
                     }
                 }
                 sleep(60000 / (tempo * 8)); // Tempo-based delay
@@ -118,11 +111,11 @@ void Volume_Thread(void)
         // Adjust volume
         if (y > 50)
         {
-            current_volume += 250;
+            volume += 250;
         }
         else if (y < -50)
         {
-            current_volume -= 250;
+            volume -= 250;
         }
 
         // Adjust tempo
@@ -136,13 +129,13 @@ void Volume_Thread(void)
         }
 
         // Limit volume to 0-4095 (12 bit range)
-        if (current_volume < 0)
+        if (volume < 0)
         {
-            current_volume = 0;
+            volume = 0;
         }
-        if (current_volume > 4095)
+        if (volume > 4095)
         {
-            current_volume = 4095;
+            volume = 4095;
         }
 
         if (tempo < 0)
@@ -161,7 +154,6 @@ void Volume_Thread(void)
 void Display_Thread(void)
 {
     // Initialize / declare any variables here
-    // static uint8_t previous_playback_column = 0;
     static uint8_t prev_x = 0, prev_y = 0;
 
     while (1)
@@ -310,7 +302,7 @@ void DAC_Timer_Handler()
     TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
 
     // Read next output sample
-    uint32_t output = (current_volume) * (dac_signal[dac_step++ % SIGNAL_STEPS]);
+    uint32_t output = (volume) * (dac_signal[dac_step++ % SIGNAL_STEPS]);
 
     // Write the output value to the dac
     MutimodDAC_Write(DAC_OUT_REG, output);
