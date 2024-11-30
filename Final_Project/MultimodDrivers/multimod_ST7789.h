@@ -83,11 +83,11 @@
 #define ST7789_BLACK                0x0000
 #define ST7789_WHITE                0xFFFF
 #define ST7789_RED                  0x001F
-#define ST7789_ORANGE               0xFD20
+#define ST7789_ORANGE               0x03FF
 #define ST7789_YELLOW               0x07FF
 #define ST7789_GREEN                0x07E0
 #define ST7789_BLUE                 0xF800
-#define ST7789_INDIGO               0x4810
+#define ST7789_INDIGO               0xF81F
 #define ST7789_VIOLET               0x781F
 
 /*************************************Defines***************************************/
