@@ -38,15 +38,6 @@ uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST
 
 void InitializeGridDisplay()
 {
-    /*for (int y = 0; y <= 8; y++)
-    {
-        ST7789_DrawLine(0, y * cell_height, X_MAX, y * cell_height, ST7789_WHITE); // Horizontal lines
-    }
-    for (int x = 0; x <= 8; x++)
-    {
-        ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE); // Vertical lines
-    }*/
-    // Draw the white grid lines
     for (int y = 0; y <= 8; y++)
     {
         ST7789_DrawLine(0, y * cell_height, X_MAX, y * cell_height, ST7789_WHITE); // Horizontal lines
@@ -55,12 +46,6 @@ void InitializeGridDisplay()
     {
         ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE); // Vertical lines
     }
-
-    // Highlight the initial top-left rectangle
-    ST7789_DrawLine(0, 0, cell_width, 0, ST7789_YELLOW);                     // Top
-    ST7789_DrawLine(0, 0, 0, cell_height, ST7789_YELLOW);                    // Left
-    ST7789_DrawLine(cell_width, 0, cell_width, cell_height, ST7789_YELLOW);  // Right
-    ST7789_DrawLine(0, cell_height, cell_width, cell_height, ST7789_YELLOW); // Bottom
 }
 
 void PlayNoteAtRow(uint8_t row)
