@@ -170,7 +170,7 @@ void Display_Thread(void)
 
                 if (grid[col][row] != prev_grid[col][row]) // Update only if the state changes
                 {
-                    uint16_t color = (grid[col][row] == 1) ? colors[row] : ST7789_BLACK;
+                    uint16_t color = (grid[col][row] == 1) ? GetRainbowColor(row) : ST7789_BLACK;
 
                     // Correct rectangle size for a single grid cell
                     ST7789_DrawRectangle(col * cell_width + 1, row * cell_height + 1, cell_width - 1, cell_height - 1, color);
