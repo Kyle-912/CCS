@@ -38,6 +38,8 @@ uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST
 
 void InitializeGridDisplay()
 {
+    G8RTOS_WaitSemaphore(&sem_SPIA);
+
     for (int y = 0; y <= 8; y++)
     {
         ST7789_DrawLine(0, y * cell_height, X_MAX, y * cell_height, ST7789_WHITE); // Horizontal lines
@@ -46,6 +48,8 @@ void InitializeGridDisplay()
     {
         ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE); // Vertical lines
     }
+
+    G8RTOS_SignalSemaphore(&sem_SPIA);
 }
 
 void PlayNoteAtRow(uint8_t row)
@@ -150,6 +154,8 @@ void Display_Thread(void)
 {
     // Initialize / declare any variables here
     static uint8_t prev_x = 0, prev_y = 0;
+
+    InitializeGridDisplay();
 
     while (1)
     {
