@@ -35,8 +35,6 @@ uint8_t playback_column = 0;
 
 void InitializeGridDisplay()
 {
-    G8RTOS_WaitSemaphore(&sem_SPIA);
-
     for (int y = 0; y < 8; y++)
     {
         for (int x = 0; x < 8; x++)
@@ -44,8 +42,6 @@ void InitializeGridDisplay()
             ST7789_DrawRectangle(x * 20, y * 20, 20, 20, ST7789_WHITE); // Draw grid lines
         }
     }
-
-    G8RTOS_SignalSemaphore(&sem_SPIA);
 }
 
 uint16_t GetRainbowColor(uint8_t row)
