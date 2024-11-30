@@ -222,11 +222,11 @@ void Navigation_Thread(void)
         // Move highlight box
         if (buttons & SW1) // Up
         {
-            highlight_y = (highlight_y > 0) ? highlight_y - 1 : 7;
+            highlight_y = (highlight_y < 7) ? highlight_y + 1 : 0;
         }
         else if (buttons & SW2) // Down
         {
-            highlight_y = (highlight_y < 7) ? highlight_y + 1 : 0;
+            highlight_y = (highlight_y > 0) ? highlight_y - 1 : 7;
         }
         else if (buttons & SW3) // Left
         {
@@ -256,7 +256,7 @@ void NotePlacement_Thread(void)
         sleep(10);
 
         // Toggle the note in the grid
-        grid[highlight_y][highlight_x] ^= 1;
+        grid[highlight_x][highlight_y] ^= 1;
 
         // Clear the interrupt
         GPIOIntClear(GPIO_PORTF_BASE, GPIO_PIN_4);
