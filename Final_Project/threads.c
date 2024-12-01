@@ -314,7 +314,7 @@ void Joystick_Button_Handler()
 void TivaButton_Handler(void)
 {
     // Disable further interrupts to debounce
-    GPIOIntDisable(GPIO_PORTF_BASE, GPIO_PIN_4);
+    GPIOIntDisable(GPIO_PORTF_BASE, GPIO_PIN_0);
     G8RTOS_SignalSemaphore(&sem_Tiva_Button);
 }
 

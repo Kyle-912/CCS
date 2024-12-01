@@ -24,7 +24,7 @@ static void multimod_init() {
     MultimodButtons_Init();
     JOYSTICK_Init();
     JOYSTICK_IntEnable();
-    LaunchpadButtons_Init();
+    LaunchpadSW2_Init();
 }
 
 #endif /* MULTIMOD_H_ */

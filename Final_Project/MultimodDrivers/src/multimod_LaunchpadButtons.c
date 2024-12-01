@@ -45,6 +45,23 @@ void LaunchpadButtons_Init()
     return;
 }
 
+void LaunchpadSW2_Init()
+{
+    // Enable port F for switches
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+
+    // Use SW1 & SW2, configure as inputs.
+    // Pay attention to the pin connected to SW2!!!
+    GPIOUnlockPin(GPIO_PORTF_BASE, GPIO_PIN_0);
+    GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_0);
+    GPIO_PORTF_PUR_R |= 0x01;
+
+    GPIOIntTypeSet(GPIO_PORTF_BASE, GPIO_PIN_0, GPIO_FALLING_EDGE);
+    GPIOIntEnable(GPIO_PORTF_BASE, GPIO_PIN_0);
+
+    return;
+}
+
 // LaunchpadButtons_ReadSW1
 // Checks to see if button 1 is pressed. If it is, return 1; else return 0.
 // Return: uint8_t
