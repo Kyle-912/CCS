@@ -38,11 +38,11 @@ void InitializeGridDisplay()
 {
     for (int y = 0; y <= 8; y++)
     {
-        ST7789_DrawLine(0, y * cell_height, X_MAX, y * cell_height, ST7789_WHITE); // Vertical lines
+        ST7789_DrawLine(0, y * cell_height, X_MAX, y * cell_height, ST7789_WHITE); // Horizontal lines
     }
     for (int x = 0; x <= 8; x++)
     {
-        ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE); // Horizontal lines
+        ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE); // Vertical lines
     }
 }
 
