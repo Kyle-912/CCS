@@ -74,7 +74,7 @@ void Speaker_Thread(void)
         {
             for (int col = 0; col < 8; col++)
             {
-                playback_column = col; // Update playback column
+                playback_column = col;
 
                 // Flag to indicate if a note is currently playing
                 uint8_t note_playing = 0;
@@ -93,11 +93,11 @@ void Speaker_Thread(void)
                     TimerDisable(TIMER1_BASE, TIMER_A);
                 }
 
-                // Correct sleep for column duration
-                sleep(60000 / (tempo * 4)); // One column equals a quarter of a beat
+                // Wait for the duration of a quarter note
+                sleep(60000 / (tempo * 8)); // Convert tempo to milliseconds per column
             }
         }
-        else // If music is not playing, ensure silence
+        else
         {
             TimerDisable(TIMER1_BASE, TIMER_A); // Stop the timer
             sleep(10);                          // Short sleep to reduce CPU usage
