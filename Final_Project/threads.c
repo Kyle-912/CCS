@@ -118,8 +118,25 @@ void Speaker_Thread(void)
                     if (grid[col][row] == 1 && note_index < NUM_FREQUENCIES)
                     {
                         uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
-                        active_frequencies[note_index] = frequencies[row];
-                        note_index++;
+                        int duplicate = 0;
+
+                        // Check for duplicate frequencies
+                        for (int i = 0; i < note_index; i++)
+                        {
+                            if (active_frequencies[i] == frequencies[row])
+                            {
+                                amplitudes[i] += 1.0 / 8.0; // Increase amplitude for the duplicate
+                                duplicate = 1;
+                                break;
+                            }
+                        }
+
+                        if (!duplicate)
+                        {
+                            active_frequencies[note_index] = frequencies[row];
+                            amplitudes[note_index] = 1.0 / 8.0; // Initial amplitude
+                            note_index++;
+                        }
                         note_playing = 1;
                     }
                 }
@@ -130,7 +147,7 @@ void Speaker_Thread(void)
                     float amplitude_scale = 1.0 / note_index;
                     for (int i = 0; i < note_index; i++)
                     {
-                        amplitudes[i] = amplitude_scale;
+                        amplitudes[i] *= amplitude_scale;
                     }
                 }
 
@@ -149,16 +166,6 @@ void Speaker_Thread(void)
         }
         else
         {
-            // Clear remaining highlights when playback stops
-            if (prev_col != -1)
-            {
-                G8RTOS_WaitSemaphore(&sem_SPIA);
-                ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
-                ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
-                G8RTOS_SignalSemaphore(&sem_SPIA);
-                prev_col = -1;
-            }
-
             sleep(10); // Prevent tight looping
         }
     }
@@ -420,6 +427,12 @@ void DAC_Timer_Handler()
     {
         composite_sample = 0; // Silence
     }
+
+    // Clamp composite sample
+    if (composite_sample > 1.0)
+        composite_sample = 1.0;
+    else if (composite_sample < -1.0)
+        composite_sample = -1.0;
 
     sample_index++;
 
