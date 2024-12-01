@@ -94,7 +94,7 @@ void Speaker_Thread(void)
                 }
 
                 // Wait for the duration of a quarter note
-                sleep(60000 / (tempo * 4)); // Correct tempo calculation (quarter notes)
+                sleep(60000 / (tempo * 2));
             }
         }
         else // If music is not playing, ensure silence
