@@ -130,7 +130,7 @@ void Speaker_Thread(void)
                 {
                     uint16_t sample = GenerateCombinedWaveform(col);
                     MutimodDAC_Write(DAC_OUT_REG, sample);
-                    sleep_us(1000000 / DAC_SAMPLE_FREQUENCY_HZ); // Sleep for 1/SAMPLE_RATE seconds
+                    sleep(1000000 / DAC_SAMPLE_FREQUENCY_HZ); // Sleep for 1/SAMPLE_RATE seconds
                 }
 
                 sleep(60000 / (tempo * 2)); // Sleep for the duration of a half note
