@@ -24,12 +24,10 @@
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t volume = 0xFFF;
-
-uint8_t grid[8][8] = {0};                 // 8x8 grid for note placement
-uint8_t highlight_x = 0, highlight_y = 0; // Highlighted box position
-int16_t tempo = 120;                      // Initial tempo (BPM)
-uint8_t playing = 0;                      // Playback state (0 = stopped, 1 = playing)
-uint8_t playback_column = 0;
+int16_t tempo = 120;
+uint8_t grid[8][8] = {0};
+uint8_t highlight_x = 0, highlight_y = 0;
+uint8_t playing = 0;
 uint16_t cell_width = X_MAX / 8;
 uint16_t cell_height = Y_MAX / 8;
 uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
@@ -46,12 +44,18 @@ void InitializeGridDisplay()
     {
         ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE); // Vertical lines
     }
+
+    // Extra horizontal line one pixel in from the top edge
+    ST7789_DrawLine(0, Y_MAX - 1, X_MAX, Y_MAX - 1, ST7789_WHITE);
+
+    // Extra vertical line one pixel in from the right edge
+    ST7789_DrawLine(X_MAX - 1, 0, X_MAX - 1, Y_MAX, ST7789_WHITE);
 }
 
 void PlayNoteAtRow(uint8_t row)
 {
     uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
-    uint16_t period = SysCtlClockGet() / (frequencies[row] * 2);
+    uint32_t period = SysCtlClockGet() / (frequencies[row] * 2);
     TimerDisable(TIMER1_BASE, TIMER_A);
     TimerLoadSet(TIMER1_BASE, TIMER_A, period - 1);
     TimerEnable(TIMER1_BASE, TIMER_A);
@@ -68,29 +72,75 @@ void Idle_Thread(void)
 
 void Speaker_Thread(void)
 {
+    int prev_col = -1;
+
     while (1)
     {
         if (playing)
         {
             for (int col = 0; col < 8; col++)
             {
-                playback_column = col; // Update playback column
-                for (int row = 0; row < 8; row++)
+                G8RTOS_WaitSemaphore(&sem_SPIA);
+
+                // Highlight the current column with yellow
+                ST7789_DrawLine((col * cell_width) + 1, 0, (col * cell_width) + 1, Y_MAX - 1, ST7789_RED);                     // Left vertical line
+                ST7789_DrawLine(((col + 1) * cell_width - 1) + 1, 0, ((col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_RED); // Right vertical line
+
+                // Clear the previous column highlight (if applicable)
+                if (prev_col != -1 && prev_col != col)
                 {
-                    if (grid[row][col] == 1)
+                    ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
+                    ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
+                }
+
+                G8RTOS_SignalSemaphore(&sem_SPIA);
+
+                prev_col = col;
+
+                uint8_t note_playing = 0;
+
+                for (int row = 0; row < 8; row++) // Check each note in the column
+                {
+                    if (grid[col][row] == 1)
                     {
                         PlayNoteAtRow(row);
+                        note_playing = 1;
                     }
                 }
-                sleep(60000 / (tempo * 8)); // Tempo-based delay
+
+                if (!note_playing) // Silence if no notes are selected in the column
+                {
+                    TimerDisable(TIMER1_BASE, TIMER_A);
+                }
+
+                sleep(60000 / (tempo * 2)); // Half-note duration
+            }
+
+            // Clear the final column highlight after playback
+            if (prev_col != -1)
+            {
+                G8RTOS_WaitSemaphore(&sem_SPIA);
+                ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
+                ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
+                G8RTOS_SignalSemaphore(&sem_SPIA);
+                prev_col = -1;
             }
         }
         else
         {
             TimerDisable(TIMER1_BASE, TIMER_A);
-            TimerLoadSet(TIMER1_BASE, TIMER_A, 0);
-            TimerEnable(TIMER1_BASE, TIMER_A);
-            sleep(10); // Sleep briefly when not playing
+
+            // Clear any remaining highlights when playback stops
+            if (prev_col != -1)
+            {
+                G8RTOS_WaitSemaphore(&sem_SPIA);
+                ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
+                ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
+                G8RTOS_SignalSemaphore(&sem_SPIA);
+                prev_col = -1;
+            }
+
+            sleep(10); // Prevent tight looping
         }
     }
 }
@@ -102,7 +152,6 @@ void Volume_Thread(void)
 
     while (1)
     {
-        // Read joystick values
         joystick_data = G8RTOS_ReadFIFO(JOYSTICK_FIFO);
         int16_t x = (joystick_data >> 16) & 0xFFFF;
         int16_t y = joystick_data & 0xFFFF;
@@ -153,7 +202,8 @@ void Volume_Thread(void)
 void Display_Thread(void)
 {
     // Initialize / declare any variables here
-    static uint8_t prev_x = 0, prev_y = 0;
+    uint8_t prev_x = 0, prev_y = 0;
+    uint8_t prev_grid[8][8] = {0};
 
     while (1)
     {
@@ -166,20 +216,17 @@ void Display_Thread(void)
         ST7789_DrawLine(prev_x * cell_width, (prev_y + 1) * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Bottom
 
         // Update grid contents based on note placement
-        for (uint8_t col = 0; col < 8; col++) // Iterate over columns (x)
+        for (uint8_t col = 0; col < 8; col++)
         {
-            for (uint8_t row = 0; row < 8; row++) // Iterate over rows (y)
+            for (uint8_t row = 0; row < 8; row++)
             {
-                static uint8_t prev_grid[8][8] = {0}; // Track previous grid state
-
-                if (grid[col][row] != prev_grid[col][row]) // Update only if the state changes
+                if (grid[col][row] != prev_grid[col][row])
                 {
                     uint16_t color = (grid[col][row] == 1) ? colors[row] : ST7789_BLACK;
 
-                    // Correct rectangle size for a single grid cell
                     ST7789_DrawRectangle(col * cell_width + 1, row * cell_height + 1, cell_width - 1, cell_height - 1, color);
 
-                    prev_grid[col][row] = grid[col][row]; // Update previous state
+                    prev_grid[col][row] = grid[col][row];
                 }
             }
         }
@@ -190,7 +237,6 @@ void Display_Thread(void)
         ST7789_DrawLine((highlight_x + 1) * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Right
         ST7789_DrawLine(highlight_x * cell_width, (highlight_y + 1) * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Bottom
 
-        // Update previous highlight position
         prev_x = highlight_x;
         prev_y = highlight_y;
 
@@ -212,7 +258,7 @@ void JoystickPress_Thread()
         // Switch status on the Multimod board.
         if (JOYSTICK_GetPress())
         {
-            playing = !playing; // Toggle the playing flag.
+            playing = !playing;
         }
 
         // Clear the interrupt
@@ -271,7 +317,7 @@ void NotePlacement_Thread(void)
         G8RTOS_WaitSemaphore(&sem_Tiva_Button);
 
         // Sleep to debounce
-        sleep(20);
+        sleep(100);
 
         // Toggle the note in the grid
         grid[highlight_x][highlight_y] ^= 1;

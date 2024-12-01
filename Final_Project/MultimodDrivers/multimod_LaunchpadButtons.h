@@ -32,6 +32,7 @@
 /********************************Public Functions***********************************/
 
 void LaunchpadButtons_Init();
+void LaunchpadSW2_Init();
 uint8_t LaunchpadButtons_ReadSW1();
 uint8_t LaunchpadButtons_ReadSW2();
 
