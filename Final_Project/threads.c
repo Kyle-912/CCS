@@ -24,7 +24,7 @@
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t volume = 0xFFF;
-int16_t tempo = 40; //FIXME: make 120
+int16_t tempo = 40; // FIXME: make 120
 uint8_t grid[8][8] = {0};
 uint8_t highlight_x = 0, highlight_y = 0;
 uint8_t playing = 0;
@@ -38,11 +38,11 @@ void InitializeGridDisplay()
 {
     for (int y = 0; y <= 8; y++)
     {
-        ST7789_DrawLine(0, y * cell_height, X_MAX, y * cell_height, ST7789_WHITE);
+        ST7789_DrawLine(0, y * cell_height, X_MAX, y * cell_height, ST7789_WHITE); // Vertical lines
     }
     for (int x = 0; x <= 8; x++)
     {
-        ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE);
+        ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE); // Horizontal lines
     }
 }
 
@@ -77,8 +77,8 @@ void Speaker_Thread(void)
                 G8RTOS_WaitSemaphore(&sem_SPIA);
 
                 // Highlight the current column with yellow
-                ST7789_DrawLine((col * cell_width) + 1, 0, (col * cell_width) + 1, Y_MAX - 1, ST7789_YELLOW);                     // Left vertical line
-                ST7789_DrawLine(((col + 1) * cell_width - 1) + 1, 0, ((col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_YELLOW); // Right vertical line
+                ST7789_DrawLine((col * cell_width) + 1, 0, (col * cell_width) + 1, Y_MAX - 1, ST7789_BLUE);                     // Left vertical line
+                ST7789_DrawLine(((col + 1) * cell_width - 1) + 1, 0, ((col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_BLUE); // Right vertical line
 
                 // Clear the previous column highlight (if applicable)
                 if (prev_col != -1 && prev_col != col)
@@ -226,10 +226,10 @@ void Display_Thread(void)
         }
 
         // Draw new yellow highlight for the currently selected rectangle
-        ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, highlight_y * cell_height, ST7789_YELLOW);             // Top
-        ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, highlight_x * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW);             // Left
-        ST7789_DrawLine((highlight_x + 1) * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Right
-        ST7789_DrawLine(highlight_x * cell_width, (highlight_y + 1) * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Bottom
+        ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, highlight_y * cell_height, ST7789_BLUE);             // Top
+        ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, highlight_x * cell_width, (highlight_y + 1) * cell_height, ST7789_BLUE);             // Left
+        ST7789_DrawLine((highlight_x + 1) * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_BLUE); // Right
+        ST7789_DrawLine(highlight_x * cell_width, (highlight_y + 1) * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_BLUE); // Bottom
 
         prev_x = highlight_x;
         prev_y = highlight_y;
