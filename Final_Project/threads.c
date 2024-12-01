@@ -52,6 +52,7 @@ void PlayNoteAtRow(uint8_t row)
 {
     uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
     uint16_t period = SysCtlClockGet() / (frequencies[row] * 2);
+    TimerDisable(TIMER1_BASE, TIMER_A);
     TimerLoadSet(TIMER1_BASE, TIMER_A, period - 1);
     TimerEnable(TIMER1_BASE, TIMER_A);
 }
@@ -86,6 +87,9 @@ void Speaker_Thread(void)
         }
         else
         {
+            TimerDisable(TIMER1_BASE, TIMER_A);
+            TimerLoadSet(TIMER1_BASE, TIMER_A, 0);
+            TimerEnable(TIMER1_BASE, TIMER_A);
             sleep(10); // Sleep briefly when not playing
         }
     }
