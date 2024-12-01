@@ -32,6 +32,10 @@ uint16_t cell_width = X_MAX / 8;
 uint16_t cell_height = Y_MAX / 8;
 uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
 
+#define NUM_FREQUENCIES 8
+float active_frequencies[NUM_FREQUENCIES] = {0}; // Active frequencies in Hz
+float amplitudes[NUM_FREQUENCIES] = {0};         // Amplitudes (0.0 to 1.0)
+
 /********************************Public Functions***********************************/
 
 void InitializeGridDisplay()
@@ -374,13 +378,8 @@ void DAC_Timer_Handler()
     TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
 
     // Constants
-    const int NUM_FREQUENCIES = 8;     // Maximum number of frequencies
     const float SAMPLE_RATE = 44100.0; // Sample rate in Hz
     const float PI = 3.14159265359;
-
-    // Active frequencies and amplitudes (global or shared structure in practice)
-    extern float active_frequencies[NUM_FREQUENCIES]; // Frequencies in Hz
-    extern float amplitudes[NUM_FREQUENCIES];         // Amplitudes (0.0 to 1.0)
 
     // Calculate composite waveform sample
     static uint32_t sample_index = 0;
