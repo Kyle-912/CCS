@@ -273,10 +273,10 @@ void NotePlacement_Thread(void)
         grid[highlight_x][highlight_y] ^= 1;
 
         // Clear the interrupt
-        GPIOIntClear(GPIO_PORTF_BASE, GPIO_PIN_4);
+        GPIOIntClear(GPIO_PORTF_BASE, GPIO_PIN_0);
 
         // Re-enable the interrupt
-        GPIOIntEnable(GPIO_PORTF_BASE, GPIO_PIN_4);
+        GPIOIntEnable(GPIO_PORTF_BASE, GPIO_PIN_0);
     }
 }
 
