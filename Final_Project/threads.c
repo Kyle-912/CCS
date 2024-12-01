@@ -27,7 +27,7 @@ int16_t volume = 0xFFF;
 
 uint8_t grid[8][8] = {0};                 // 8x8 grid for note placement
 uint8_t highlight_x = 0, highlight_y = 0; // Highlighted box position
-int16_t tempo = 120;                      // Initial tempo (BPM)
+int16_t tempo = 80;                      // Initial tempo (BPM)
 uint8_t playing = 0;                      // Playback state (0 = stopped, 1 = playing)
 uint8_t playback_column = 0;
 uint16_t cell_width = X_MAX / 8;
