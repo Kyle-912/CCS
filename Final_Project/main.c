@@ -36,7 +36,7 @@ int main(void)
     G8RTOS_InitSemaphore(&sem_PCA9555_Debounce, 0);
     G8RTOS_InitSemaphore(&sem_Joystick_Debounce, 0);
     G8RTOS_InitSemaphore(&sem_Tiva_Button, 0);
-    G8RTOS_InitSemaphore(&sem_Phases, 0);
+    G8RTOS_InitSemaphore(&sem_Phases, 1);
 
     G8RTOS_AddThread(&Idle_Thread, 255, "IdleThread");
     G8RTOS_AddThread(&Speaker_Thread, 0, "Speaker");
