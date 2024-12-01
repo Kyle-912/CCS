@@ -38,17 +38,17 @@ int main(void)
     G8RTOS_InitSemaphore(&sem_Tiva_Button, 0);
 
     G8RTOS_AddThread(&Idle_Thread, 255, "IdleThread");
-    G8RTOS_AddThread(&Speaker_Thread, 1, "Speaker");
+    G8RTOS_AddThread(&Speaker_Thread, 0, "Speaker");
     G8RTOS_AddThread(&Volume_Thread, 0, "Volume");
-    G8RTOS_AddThread(&Display_Thread, 1, "Display");
-    G8RTOS_AddThread(&JoystickPress_Thread, 1, "JoystickPress");
-    G8RTOS_AddThread(&Navigation_Thread, 1, "Navigation");
-    G8RTOS_AddThread(&NotePlacement_Thread, 1, "NotePlacement");
+    G8RTOS_AddThread(&Display_Thread, 0, "Display");
+    G8RTOS_AddThread(&JoystickPress_Thread, 0, "JoystickPress");
+    G8RTOS_AddThread(&Navigation_Thread, 0, "Navigation");
+    G8RTOS_AddThread(&NotePlacement_Thread, 0, "NotePlacement");
 
     G8RTOS_InitFIFO(JOYSTICK_FIFO);
 
     // Add periodic and aperiodic events
-    // G8RTOS_Add_PeriodicEvent(&Get_Joystick, 1000, 0);
+    G8RTOS_Add_PeriodicEvent(&Get_Joystick, 1000, 0);
 
     G8RTOS_Add_APeriodicEvent(Button_Handler, 0, BUTTON_INTERRUPT);
     G8RTOS_Add_APeriodicEvent(Joystick_Button_Handler, 0, JOYSTICK_INTERRUPT);
