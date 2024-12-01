@@ -71,6 +71,7 @@ uint16_t GenerateCombinedWaveform(uint8_t column)
     uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
 
     // Combine active notes in the column
+    uint8_t active_notes = 0;
     for (int row = 0; row < 8; row++)
     {
         if (grid[column][row] == 1) // If note is active
@@ -82,12 +83,18 @@ uint16_t GenerateCombinedWaveform(uint8_t column)
                 phases[row] -= 1.0f;
 
             sample += sinf(2.0f * 3.14159265358979323846 * phases[row]); // Add sine wave
+            active_notes++;
         }
     }
 
-    // Scale and shift to fit the DAC range
-    sample = (sample / 8.0f) * (0xFFF / 2) + (0xFFF / 2);
+    if (active_notes == 0)
+    {
+        // Silence if no active notes
+        return 0;
+    }
 
+    // Scale and shift to fit the DAC range
+    sample = (sample / active_notes) * (0xFFF / 2) + (0xFFF / 2);
     return (uint16_t)sample;
 }
 
