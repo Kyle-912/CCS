@@ -97,7 +97,7 @@ void Speaker_Thread(void)
                 sleep(60000 / (tempo * 8)); // Convert tempo to milliseconds per column
             }
         }
-        else // If music is not playing, ensure silence
+        else
         {
             TimerDisable(TIMER1_BASE, TIMER_A); // Stop the timer
             sleep(10);                          // Short sleep to reduce CPU usage
