@@ -93,7 +93,7 @@ void Speaker_Thread(void)
 
                 uint8_t note_playing = 0;
 
-                for (int row = 0; row < 8; row++)
+                for (int row = 0; row < 8; row++) // Check each note in the column
                 {
                     if (grid[col][row] == 1)
                     {
@@ -102,12 +102,12 @@ void Speaker_Thread(void)
                     }
                 }
 
-                if (!note_playing)
+                if (!note_playing) // Silence if no notes are selected in the column
                 {
                     TimerDisable(TIMER1_BASE, TIMER_A);
                 }
 
-                sleep(60000 / (tempo * 2)); // Sleep for 16th note duration
+                sleep(60000 / (tempo * 2)); // Half-note duration
             }
 
             // Clear the final column highlight after playback
@@ -134,7 +134,7 @@ void Speaker_Thread(void)
                 prev_col = -1;
             }
 
-            sleep(10);
+            sleep(10); // Prevent tight looping
         }
     }
 }
