@@ -127,7 +127,7 @@ void Speaker_Thread(void)
             {
                 G8RTOS_WaitSemaphore(&sem_SPIA);
 
-                // Highlight the current column with yellow
+                // Highlight the current column with red
                 ST7789_DrawLine((col * cell_width) + 1, 0, (col * cell_width) + 1, Y_MAX - 1, ST7789_RED);                     // Left vertical line
                 ST7789_DrawLine(((col + 1) * cell_width - 1) + 1, 0, ((col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_RED); // Right vertical line
 
@@ -141,15 +141,14 @@ void Speaker_Thread(void)
                 G8RTOS_SignalSemaphore(&sem_SPIA);
                 prev_col = col;
 
-                // Generate combined waveform
-                for (int i = 0; i < DAC_SAMPLE_FREQUENCY_HZ / tempo; i++) // Adjust samples for tempo
+                // Generate combined waveform and write to DAC
+                int num_samples = DAC_SAMPLE_FREQUENCY_HZ / tempo; // Samples for the duration of the column
+                for (int i = 0; i < num_samples; i++)
                 {
-                    uint16_t sample = GenerateCombinedWaveform(col);
-                    MutimodDAC_Write(DAC_OUT_REG, sample);
-                    sleep(1000000 / DAC_SAMPLE_FREQUENCY_HZ); // Sleep for 1/SAMPLE_RATE seconds
+                    uint16_t sample = GenerateCombinedWaveform(col); // Generate the waveform
+                    MutimodDAC_Write(DAC_OUT_REG, sample);           // Write to DAC
+                    sleep(5);                                        // Sleep for 5 ms (200 Hz sampling rate)
                 }
-
-                sleep(60000 / (tempo * 2)); // Sleep for the duration of a half note
             }
 
             // Clear final column highlight
