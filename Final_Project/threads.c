@@ -69,6 +69,8 @@ void Idle_Thread(void)
 
 void Speaker_Thread(void)
 {
+    int prev_col = -1;
+
     while (1)
     {
         if (playing)
@@ -161,7 +163,8 @@ void Volume_Thread(void)
 void Display_Thread(void)
 {
     // Initialize / declare any variables here
-    static uint8_t prev_x = 0, prev_y = 0;
+    uint8_t prev_x = 0, prev_y = 0;
+    uint8_t prev_grid[8][8] = {0};
 
     while (1)
     {
@@ -178,8 +181,6 @@ void Display_Thread(void)
         {
             for (uint8_t row = 0; row < 8; row++)
             {
-                static uint8_t prev_grid[8][8] = {0};
-
                 if (grid[col][row] != prev_grid[col][row])
                 {
                     uint16_t color = (grid[col][row] == 1) ? colors[row] : ST7789_BLACK;
