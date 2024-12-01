@@ -77,14 +77,14 @@ void Speaker_Thread(void)
                 G8RTOS_WaitSemaphore(&sem_SPIA);
 
                 // Highlight the current column with yellow
-                ST7789_DrawLine(col * cell_width, 0, col * cell_width, Y_MAX - 1, ST7789_BLUE);                     // Left vertical line
-                ST7789_DrawLine((col + 1) * cell_width - 1, 0, (col + 1) * cell_width - 1, Y_MAX - 1, ST7789_BLUE); // Right vertical line
+                ST7789_DrawLine((col * cell_width) + 1, 0, (col * cell_width) + 1, Y_MAX - 1, ST7789_YELLOW);                     // Left vertical line
+                ST7789_DrawLine(((col + 1) * cell_width - 1) + 1, 0, ((col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_YELLOW); // Right vertical line
 
                 // Clear the previous column highlight (if applicable)
                 if (prev_col != -1 && prev_col != col)
                 {
-                    ST7789_DrawLine(prev_col * cell_width, 0, prev_col * cell_width, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
-                    ST7789_DrawLine((prev_col + 1) * cell_width - 1, 0, (prev_col + 1) * cell_width - 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
+                    ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
+                    ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
                 }
 
                 G8RTOS_SignalSemaphore(&sem_SPIA);
@@ -114,8 +114,8 @@ void Speaker_Thread(void)
             if (prev_col != -1)
             {
                 G8RTOS_WaitSemaphore(&sem_SPIA);
-                ST7789_DrawLine(prev_col * cell_width, 0, prev_col * cell_width, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
-                ST7789_DrawLine((prev_col + 1) * cell_width - 1, 0, (prev_col + 1) * cell_width - 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
+                ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
+                ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
                 G8RTOS_SignalSemaphore(&sem_SPIA);
                 prev_col = -1;
             }
@@ -128,8 +128,8 @@ void Speaker_Thread(void)
             if (prev_col != -1)
             {
                 G8RTOS_WaitSemaphore(&sem_SPIA);
-                ST7789_DrawLine(prev_col * cell_width, 0, prev_col * cell_width, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
-                ST7789_DrawLine((prev_col + 1) * cell_width - 1, 0, (prev_col + 1) * cell_width - 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
+                ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
+                ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
                 G8RTOS_SignalSemaphore(&sem_SPIA);
                 prev_col = -1;
             }
