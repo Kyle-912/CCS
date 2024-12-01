@@ -56,14 +56,14 @@ void InitializeGridDisplay()
     ST7789_DrawLine(X_MAX - 1, 0, X_MAX - 1, Y_MAX, ST7789_WHITE);
 }
 
-void PlayNoteAtRow(uint8_t row)
+/*void PlayNoteAtRow(uint8_t row)
 {
     uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
     uint32_t period = SysCtlClockGet() / (frequencies[row] * 2);
     TimerDisable(TIMER1_BASE, TIMER_A);
     TimerLoadSet(TIMER1_BASE, TIMER_A, period - 1);
     TimerEnable(TIMER1_BASE, TIMER_A);
-}
+}*/
 
 /*************************************Threads***************************************/
 
@@ -394,13 +394,27 @@ void DAC_Timer_Handler()
     // Calculate composite waveform sample
     static uint32_t sample_index = 0;
     float composite_sample = 0.0;
+    int active_notes = 0;
+
     for (int i = 0; i < NUM_FREQUENCIES; i++)
     {
         if (active_frequencies[i] > 0.0)
         {
             composite_sample += amplitudes[i] * sinf(2.0f * PI * active_frequencies[i] * sample_index / SAMPLE_RATE);
+            active_notes++;
         }
     }
+
+    // Normalize or silence
+    if (active_notes > 0)
+    {
+        composite_sample /= active_notes; // Normalize for active notes
+    }
+    else
+    {
+        composite_sample = 0; // Silence
+    }
+
     sample_index++;
 
     // Scale composite sample to DAC range (e.g., 0 to 4095)
