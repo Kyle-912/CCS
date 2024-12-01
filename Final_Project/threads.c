@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <limits.h> // For UINT_MAX
 
 #include "driverlib/timer.h"
 #include "driverlib/adc.h"
@@ -31,6 +32,8 @@ uint8_t playing = 0;
 uint16_t cell_width = X_MAX / 8;
 uint16_t cell_height = Y_MAX / 8;
 uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
+
+uint32_t current_period = 0; // Timer period for the combined waveform
 
 /********************************Public Functions***********************************/
 
@@ -52,13 +55,41 @@ void InitializeGridDisplay()
     ST7789_DrawLine(X_MAX - 1, 0, X_MAX - 1, Y_MAX, ST7789_WHITE);
 }
 
-void PlayNoteAtRow(uint8_t row)
+/*void PlayNoteAtRow(uint8_t row)
 {
     uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
     uint32_t period = SysCtlClockGet() / (frequencies[row] * 2);
     TimerDisable(TIMER1_BASE, TIMER_A);
     TimerLoadSet(TIMER1_BASE, TIMER_A, period - 1);
     TimerEnable(TIMER1_BASE, TIMER_A);
+}*/
+
+uint32_t GCD(uint32_t a, uint32_t b)
+{
+    return b == 0 ? a : GCD(b, a % b);
+}
+
+uint32_t LCM(uint32_t a, uint32_t b)
+{
+    return (a / GCD(a, b)) * b;
+}
+
+uint32_t CalculateCombinedPeriod(uint8_t column)
+{
+    uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
+    uint32_t clock_frequency = SysCtlClockGet();
+    uint32_t combined_period = UINT_MAX;
+
+    for (int row = 0; row < 8; row++)
+    {
+        if (grid[column][row] == 1) // If the note is active
+        {
+            uint32_t period = clock_frequency / (frequencies[row] * 2);
+            combined_period = (combined_period == UINT_MAX) ? period : LCM(combined_period, period);
+        }
+    }
+
+    return (combined_period == UINT_MAX) ? 0 : combined_period; // Return 0 if no notes are active
 }
 
 /*************************************Threads***************************************/
@@ -97,18 +128,16 @@ void Speaker_Thread(void)
 
                 prev_col = col;
 
-                uint8_t note_playing = 0;
+                // Calculate the combined period for the current column
+                current_period = CalculateCombinedPeriod(col);
 
-                for (int row = 0; row < 8; row++) // Check each note in the column
+                if (current_period > 0) // If notes are active
                 {
-                    if (grid[col][row] == 1)
-                    {
-                        PlayNoteAtRow(row);
-                        note_playing = 1;
-                    }
+                    TimerDisable(TIMER1_BASE, TIMER_A);
+                    TimerLoadSet(TIMER1_BASE, TIMER_A, current_period - 1);
+                    TimerEnable(TIMER1_BASE, TIMER_A);
                 }
-
-                if (!note_playing) // Silence if no notes are selected in the column
+                else // No notes are active
                 {
                     TimerDisable(TIMER1_BASE, TIMER_A);
                 }
@@ -129,6 +158,7 @@ void Speaker_Thread(void)
         else
         {
             TimerDisable(TIMER1_BASE, TIMER_A);
+            current_period = 0;
 
             // Clear any remaining highlights when playback stops
             if (prev_col != -1)
@@ -317,7 +347,7 @@ void NotePlacement_Thread(void)
         G8RTOS_WaitSemaphore(&sem_Tiva_Button);
 
         // Sleep to debounce
-        sleep(100);
+        sleep(500);
 
         // Toggle the note in the grid
         grid[highlight_x][highlight_y] ^= 1;
