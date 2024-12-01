@@ -51,19 +51,18 @@ void InitializeGridDisplay()
 void PlayNoteAtRow(uint8_t row)
 {
     uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260}; // Correct frequencies in Hz
-    uint32_t sys_clock = SysCtlClockGet();                              // Retrieve the current system clock frequency
 
-    if (row < 8) // Ensure the row is within bounds
-    {
-        uint32_t period = sys_clock / (frequencies[row] * 2); // Calculate timer period
+    // if (row < 8) // Ensure the row is within bounds
+    // {
+        uint32_t period = SysCtlClockGet() / (frequencies[row] * 2); // Calculate timer period
         TimerDisable(TIMER1_BASE, TIMER_A);                   // Disable timer before configuration
         TimerLoadSet(TIMER1_BASE, TIMER_A, period - 1);       // Load calculated period into timer
         TimerEnable(TIMER1_BASE, TIMER_A);                    // Enable the timer
-    }
-    else
-    {
-        TimerDisable(TIMER1_BASE, TIMER_A); // Disable timer if row is out of bounds
-    }
+    // }
+    // else
+    // {
+        // TimerDisable(TIMER1_BASE, TIMER_A); // Disable timer if row is out of bounds
+    // }
 }
 
 /*************************************Threads***************************************/
