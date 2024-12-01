@@ -24,12 +24,10 @@
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t volume = 0xFFF;
-
+int16_t tempo = 40; //FIXME: make 120
 uint8_t grid[8][8] = {0};
 uint8_t highlight_x = 0, highlight_y = 0;
-int16_t tempo = 60; //FIXME: make 120
 uint8_t playing = 0;
-uint8_t playback_column = 0;
 uint16_t cell_width = X_MAX / 8;
 uint16_t cell_height = Y_MAX / 8;
 uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
@@ -51,7 +49,6 @@ void InitializeGridDisplay()
 void PlayNoteAtRow(uint8_t row)
 {
     uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
-
     uint32_t period = SysCtlClockGet() / (frequencies[row] * 2);
     TimerDisable(TIMER1_BASE, TIMER_A);
     TimerLoadSet(TIMER1_BASE, TIMER_A, period - 1);
