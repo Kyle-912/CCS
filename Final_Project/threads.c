@@ -27,7 +27,7 @@ int16_t volume = 0xFFF;
 
 uint8_t grid[8][8] = {0};
 uint8_t highlight_x = 0, highlight_y = 0;
-int16_t tempo = 120;
+int16_t tempo = 60; //FIXME: make 120
 uint8_t playing = 0;
 uint8_t playback_column = 0;
 uint16_t cell_width = X_MAX / 8;
@@ -108,7 +108,7 @@ void Speaker_Thread(void)
                     TimerDisable(TIMER1_BASE, TIMER_A);
                 }
 
-                sleep(60000 / (tempo * 4));
+                sleep(60000 / (tempo * 2));
             }
 
             if (prev_col != -1)
