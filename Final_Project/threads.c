@@ -368,14 +368,35 @@ void TivaButton_Handler(void)
     G8RTOS_SignalSemaphore(&sem_Tiva_Button);
 }
 
-/*void DAC_Timer_Handler()
+void DAC_Timer_Handler()
 {
     // Clear the timer interrupt
     TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
 
-    // Read next output sample
-    uint32_t output = (volume) * (dac_signal[dac_step++ % SIGNAL_STEPS]);
+    // Constants
+    const int NUM_FREQUENCIES = 8;     // Maximum number of frequencies
+    const float SAMPLE_RATE = 44100.0; // Sample rate in Hz
+    const float PI = 3.14159265359;
 
-    // Write the output value to the dac
-    MutimodDAC_Write(DAC_OUT_REG, output);
-}*/
+    // Active frequencies and amplitudes (global or shared structure in practice)
+    extern float active_frequencies[NUM_FREQUENCIES]; // Frequencies in Hz
+    extern float amplitudes[NUM_FREQUENCIES];         // Amplitudes (0.0 to 1.0)
+
+    // Calculate composite waveform sample
+    static uint32_t sample_index = 0;
+    float composite_sample = 0.0;
+    for (int i = 0; i < NUM_FREQUENCIES; i++)
+    {
+        if (active_frequencies[i] > 0.0)
+        {
+            composite_sample += amplitudes[i] * sinf(2.0f * PI * active_frequencies[i] * sample_index / SAMPLE_RATE);
+        }
+    }
+    sample_index++;
+
+    // Scale composite sample to DAC range (e.g., 0 to 4095)
+    uint32_t dac_output = (uint32_t)((composite_sample + 1.0) * (2047.5 * volume));
+
+    // Write the output value to the DAC
+    MutimodDAC_Write(DAC_OUT_REG, dac_output);
+}
