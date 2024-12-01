@@ -347,7 +347,7 @@ void NotePlacement_Thread(void)
         G8RTOS_WaitSemaphore(&sem_Tiva_Button);
 
         // Sleep to debounce
-        sleep(500);
+        sleep(100);
 
         // Toggle the note in the grid
         grid[highlight_x][highlight_y] ^= 1;
