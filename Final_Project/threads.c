@@ -72,19 +72,18 @@ void Speaker_Thread(void)
     {
         if (playing)
         {
-            for (int col = 0; col < 8; col++)
+            for (int col = 0; col < 8; col++) // Iterate over columns (time steps)
             {
                 playback_column = col; // Update playback column
 
-                // Flag to indicate if a note is currently playing
-                uint8_t note_playing = 0;
+                uint8_t note_playing = 0; // Flag to indicate if a note is currently playing
 
                 for (int row = 0; row < 8; row++) // Iterate over rows (notes)
                 {
-                    if (grid[row][col] == 1) // If a note is selected in this block
+                    if (grid[row][col] == 1) // If a note is selected in this column
                     {
-                        PlayNoteAtRow(row);
-                        note_playing = 1; // Mark that a note is playing
+                        PlayNoteAtRow(row); // Play the note corresponding to this row
+                        note_playing = 1;   // Mark that a note is playing
                     }
                 }
 
@@ -93,8 +92,8 @@ void Speaker_Thread(void)
                     TimerDisable(TIMER1_BASE, TIMER_A);
                 }
 
-                // Correct sleep for column duration
-                sleep(60000 / (tempo * 4)); // One column equals a quarter of a beat
+                // Wait for the duration of a quarter note
+                sleep(60000 / (tempo * 4)); // Correct tempo calculation
             }
         }
         else // If music is not playing, ensure silence
