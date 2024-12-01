@@ -1,6 +1,6 @@
 // multimod_OPT3001.c
 // Date Created: 2023-07-25
-// Date Updated: 2023-07-27
+// Date Updated: 2024-11-30
 // Defines for OPT3001 functions
 
 /************************************Includes***************************************/
