@@ -20,7 +20,7 @@
 #define SIGNAL_STEPS (2)
 
 /*********************************Global Variables**********************************/
-
+// DAC_SAMPLE_FREQUENCY_HZ
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t volume = 0xFFF;
@@ -317,7 +317,7 @@ void NotePlacement_Thread(void)
         G8RTOS_WaitSemaphore(&sem_Tiva_Button);
 
         // Sleep to debounce
-        sleep(200);
+        sleep(100);
 
         // Toggle the note in the grid
         grid[highlight_x][highlight_y] ^= 1;
