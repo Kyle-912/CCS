@@ -86,11 +86,11 @@ void Speaker_Thread(void)
             {
                 G8RTOS_WaitSemaphore(&sem_SPIA);
 
-                // Highlight the current column with yellow
+                // Highlight the current column with red
                 ST7789_DrawLine((col * cell_width) + 1, 0, (col * cell_width) + 1, Y_MAX - 1, ST7789_RED);                     // Left vertical line
                 ST7789_DrawLine(((col + 1) * cell_width - 1) + 1, 0, ((col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_RED); // Right vertical line
 
-                // Clear the previous column highlight (if applicable)
+                // Clear the previous column highlight
                 if (prev_col != -1 && prev_col != col)
                 {
                     ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
@@ -101,36 +101,42 @@ void Speaker_Thread(void)
 
                 prev_col = col;
 
-                uint8_t note_playing = 0;
-
+                // Clear active frequencies and amplitudes
                 for (int i = 0; i < NUM_FREQUENCIES; i++)
                 {
                     active_frequencies[i] = 0;
                     amplitudes[i] = 0;
                 }
 
+                uint8_t note_playing = 0;
                 int note_index = 0;
-                for (int row = 0; row < 8; row++) // Check each note in the column
+
+                // Check for active notes in the column
+                for (int row = 0; row < 8; row++)
                 {
                     if (grid[col][row] == 1 && note_index < NUM_FREQUENCIES)
                     {
                         uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
                         active_frequencies[note_index] = frequencies[row];
-                        amplitudes[note_index] = 1.0 / 8.0; // Scale amplitude for each note
                         note_index++;
                         note_playing = 1;
                     }
                 }
 
-                if (!note_playing) // Silence if no notes are selected in the column
+                // Dynamically scale amplitudes
+                if (note_playing)
                 {
-                    TimerDisable(TIMER1_BASE, TIMER_A);
+                    float amplitude_scale = 1.0 / note_index;
+                    for (int i = 0; i < note_index; i++)
+                    {
+                        amplitudes[i] = amplitude_scale;
+                    }
                 }
 
                 sleep(60000 / (tempo * 2)); // Half-note duration
             }
 
-            // Clear the final column highlight after playback
+            // Clear the final column highlight
             if (prev_col != -1)
             {
                 G8RTOS_WaitSemaphore(&sem_SPIA);
@@ -142,9 +148,7 @@ void Speaker_Thread(void)
         }
         else
         {
-            TimerDisable(TIMER1_BASE, TIMER_A);
-
-            // Clear any remaining highlights when playback stops
+            // Clear remaining highlights when playback stops
             if (prev_col != -1)
             {
                 G8RTOS_WaitSemaphore(&sem_SPIA);
