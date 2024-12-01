@@ -69,9 +69,11 @@ uint16_t GenerateCombinedWaveform(uint8_t column)
 {
     float sample = 0.0f;
     uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
+    uint8_t active_notes = 0;
+
+    G8RTOS_WaitSemaphore(&sem_Phases); // Protect shared `phases` and `phase_increments`
 
     // Combine active notes in the column
-    uint8_t active_notes = 0;
     for (int row = 0; row < 8; row++)
     {
         if (grid[column][row] == 1) // If note is active
@@ -87,6 +89,8 @@ uint16_t GenerateCombinedWaveform(uint8_t column)
         }
     }
 
+    G8RTOS_SignalSemaphore(&sem_Phases);
+
     if (active_notes == 0)
     {
         // Silence if no active notes
@@ -94,7 +98,11 @@ uint16_t GenerateCombinedWaveform(uint8_t column)
     }
 
     // Scale and shift to fit the DAC range
-    sample = (sample / active_notes) * (0xFFF / 2) + (0xFFF / 2);
+    sample = (sample / active_notes) * (volume / 2.0f) + (volume / 2.0f);
+    if (sample < 0)
+        sample = 0;
+    if (sample > 0xFFF)
+        sample = 0xFFF;
     return (uint16_t)sample;
 }
 

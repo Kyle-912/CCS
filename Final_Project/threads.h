@@ -31,6 +31,7 @@ semaphore_t sem_SPIA;
 semaphore_t sem_PCA9555_Debounce;
 semaphore_t sem_Joystick_Debounce;
 semaphore_t sem_Tiva_Button;
+semaphore_t sem_Phases;
 
 /***********************************Semaphores**************************************/
 
