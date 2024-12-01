@@ -44,6 +44,12 @@ void InitializeGridDisplay()
     {
         ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE); // Vertical lines
     }
+
+    // Extra horizontal line one pixel in from the top edge
+    ST7789_DrawLine(0, Y_MAX - 1, X_MAX, Y_MAX - 1, ST7789_WHITE);
+
+    // Extra vertical line one pixel in from the right edge
+    ST7789_DrawLine(X_MAX - 1, 0, X_MAX - 1, Y_MAX, ST7789_WHITE);
 }
 
 void PlayNoteAtRow(uint8_t row)
