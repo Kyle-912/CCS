@@ -25,10 +25,10 @@ uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t volume = 0xFFF;
 
-uint8_t grid[8][8] = {0};                 // 8x8 grid for note placement
-uint8_t highlight_x = 0, highlight_y = 0; // Highlighted box position
-int16_t tempo = 120;                      // Initial tempo (BPM)
-uint8_t playing = 0;                      // Playback state (0 = stopped, 1 = playing)
+uint8_t grid[8][8] = {0};
+uint8_t highlight_x = 0, highlight_y = 0;
+int16_t tempo = 120;
+uint8_t playing = 0;
 uint8_t playback_column = 0;
 uint16_t cell_width = X_MAX / 8;
 uint16_t cell_height = Y_MAX / 8;
@@ -40,29 +40,22 @@ void InitializeGridDisplay()
 {
     for (int y = 0; y <= 8; y++)
     {
-        ST7789_DrawLine(0, y * cell_height, X_MAX, y * cell_height, ST7789_WHITE); // Horizontal lines
+        ST7789_DrawLine(0, y * cell_height, X_MAX, y * cell_height, ST7789_WHITE);
     }
     for (int x = 0; x <= 8; x++)
     {
-        ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE); // Vertical lines
+        ST7789_DrawLine(x * cell_width, 0, x * cell_width, Y_MAX, ST7789_WHITE);
     }
 }
 
 void PlayNoteAtRow(uint8_t row)
 {
-    uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260}; // Correct frequencies in Hz
+    uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
 
-    // if (row < 8) // Ensure the row is within bounds
-    // {
-        uint32_t period = SysCtlClockGet() / (frequencies[row] * 2); // Calculate timer period
-        TimerDisable(TIMER1_BASE, TIMER_A);                   // Disable timer before configuration
-        TimerLoadSet(TIMER1_BASE, TIMER_A, period - 1);       // Load calculated period into timer
-        TimerEnable(TIMER1_BASE, TIMER_A);                    // Enable the timer
-    // }
-    // else
-    // {
-        // TimerDisable(TIMER1_BASE, TIMER_A); // Disable timer if row is out of bounds
-    // }
+    uint32_t period = SysCtlClockGet() / (frequencies[row] * 2);
+    TimerDisable(TIMER1_BASE, TIMER_A);
+    TimerLoadSet(TIMER1_BASE, TIMER_A, period - 1);
+    TimerEnable(TIMER1_BASE, TIMER_A);
 }
 
 /*************************************Threads***************************************/
@@ -80,35 +73,33 @@ void Speaker_Thread(void)
     {
         if (playing)
         {
-            for (int col = 0; col < 8; col++) // Iterate over columns (beats)
+            for (int col = 0; col < 8; col++)
             {
-                playback_column = col; // Update playback column
+                playback_column = col; // TODO: delete maybe
 
-                // Flag to indicate if a note is currently playing
                 uint8_t note_playing = 0;
 
-                for (int row = 0; row < 8; row++) // Iterate over rows (notes)
+                for (int row = 0; row < 8; row++)
                 {
-                    if (grid[col][row] == 1) // If a note is selected in this column
+                    if (grid[col][row] == 1)
                     {
-                        PlayNoteAtRow(row); // Play the note corresponding to this row
-                        note_playing = 1;   // Mark that a note is playing
+                        PlayNoteAtRow(row);
+                        note_playing = 1;
                     }
                 }
 
-                if (!note_playing) // If no note is selected, silence the output
+                if (!note_playing)
                 {
                     TimerDisable(TIMER1_BASE, TIMER_A);
                 }
 
-                // Wait for the duration of a quarter note
                 sleep(60000 / (tempo * 2));
             }
         }
-        else // If music is not playing, ensure silence
+        else
         {
-            TimerDisable(TIMER1_BASE, TIMER_A); // Stop the timer
-            sleep(10);                          // Short sleep to reduce CPU usage
+            TimerDisable(TIMER1_BASE, TIMER_A);
+            sleep(10);
         }
     }
 }
@@ -120,7 +111,6 @@ void Volume_Thread(void)
 
     while (1)
     {
-        // Read joystick values
         joystick_data = G8RTOS_ReadFIFO(JOYSTICK_FIFO);
         int16_t x = (joystick_data >> 16) & 0xFFFF;
         int16_t y = joystick_data & 0xFFFF;
@@ -184,20 +174,19 @@ void Display_Thread(void)
         ST7789_DrawLine(prev_x * cell_width, (prev_y + 1) * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Bottom
 
         // Update grid contents based on note placement
-        for (uint8_t col = 0; col < 8; col++) // Iterate over columns (x)
+        for (uint8_t col = 0; col < 8; col++)
         {
-            for (uint8_t row = 0; row < 8; row++) // Iterate over rows (y)
+            for (uint8_t row = 0; row < 8; row++)
             {
-                static uint8_t prev_grid[8][8] = {0}; // Track previous grid state
+                static uint8_t prev_grid[8][8] = {0};
 
-                if (grid[col][row] != prev_grid[col][row]) // Update only if the state changes
+                if (grid[col][row] != prev_grid[col][row])
                 {
                     uint16_t color = (grid[col][row] == 1) ? colors[row] : ST7789_BLACK;
 
-                    // Correct rectangle size for a single grid cell
                     ST7789_DrawRectangle(col * cell_width + 1, row * cell_height + 1, cell_width - 1, cell_height - 1, color);
 
-                    prev_grid[col][row] = grid[col][row]; // Update previous state
+                    prev_grid[col][row] = grid[col][row];
                 }
             }
         }
@@ -208,7 +197,6 @@ void Display_Thread(void)
         ST7789_DrawLine((highlight_x + 1) * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Right
         ST7789_DrawLine(highlight_x * cell_width, (highlight_y + 1) * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Bottom
 
-        // Update previous highlight position
         prev_x = highlight_x;
         prev_y = highlight_y;
 
@@ -230,7 +218,7 @@ void JoystickPress_Thread()
         // Switch status on the Multimod board.
         if (JOYSTICK_GetPress())
         {
-            playing = !playing; // Toggle the playing flag.
+            playing = !playing;
         }
 
         // Clear the interrupt
