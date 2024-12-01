@@ -103,11 +103,21 @@ void Speaker_Thread(void)
 
                 uint8_t note_playing = 0;
 
+                for (int i = 0; i < NUM_FREQUENCIES; i++)
+                {
+                    active_frequencies[i] = 0;
+                    amplitudes[i] = 0;
+                }
+
+                int note_index = 0;
                 for (int row = 0; row < 8; row++) // Check each note in the column
                 {
-                    if (grid[col][row] == 1)
+                    if (grid[col][row] == 1 && note_index < NUM_FREQUENCIES)
                     {
-                        PlayNoteAtRow(row);
+                        uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
+                        active_frequencies[note_index] = frequencies[row];
+                        amplitudes[note_index] = 1.0 / 8.0; // Scale amplitude for each note
+                        note_index++;
                         note_playing = 1;
                     }
                 }
