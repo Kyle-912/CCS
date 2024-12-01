@@ -20,7 +20,7 @@
 #define SIGNAL_STEPS (2)
 
 /*********************************Global Variables**********************************/
-// DAC_SAMPLE_FREQUENCY_HZ
+
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t volume = 0xFFF;
@@ -31,6 +31,9 @@ uint8_t playing = 0;
 uint16_t cell_width = X_MAX / 8;
 uint16_t cell_height = Y_MAX / 8;
 uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
+
+float phases[8] = {0};     // Phase accumulators for active frequencies
+float phase_increments[8]; // Phase increments based on frequencies
 
 /********************************Public Functions***********************************/
 
@@ -61,6 +64,32 @@ void PlayNoteAtRow(uint8_t row)
     TimerEnable(TIMER1_BASE, TIMER_A);
 }
 
+uint16_t GenerateCombinedWaveform(uint8_t column)
+{
+    float sample = 0.0f;
+    uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
+
+    // Combine active notes in the column
+    for (int row = 0; row < 8; row++)
+    {
+        if (grid[column][row] == 1) // If note is active
+        {
+            phase_increments[row] = (float)frequencies[row] / DAC_SAMPLE_FREQUENCY_HZ;
+            phases[row] += phase_increments[row];
+
+            if (phases[row] >= 1.0f)
+                phases[row] -= 1.0f;
+
+            sample += sinf(2.0f * 3.14159265358979323846 * phases[row]); // Add sine wave
+        }
+    }
+
+    // Scale and shift to fit the DAC range
+    sample = (sample / 8.0f) * (0xFFF / 2) + (0xFFF / 2);
+
+    return (uint16_t)sample;
+}
+
 /*************************************Threads***************************************/
 
 void Idle_Thread(void)
@@ -86,7 +115,7 @@ void Speaker_Thread(void)
                 ST7789_DrawLine((col * cell_width) + 1, 0, (col * cell_width) + 1, Y_MAX - 1, ST7789_RED);                     // Left vertical line
                 ST7789_DrawLine(((col + 1) * cell_width - 1) + 1, 0, ((col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_RED); // Right vertical line
 
-                // Clear the previous column highlight (if applicable)
+                // Clear the previous column highlight
                 if (prev_col != -1 && prev_col != col)
                 {
                     ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
@@ -94,29 +123,20 @@ void Speaker_Thread(void)
                 }
 
                 G8RTOS_SignalSemaphore(&sem_SPIA);
-
                 prev_col = col;
 
-                uint8_t note_playing = 0;
-
-                for (int row = 0; row < 8; row++) // Check each note in the column
+                // Generate combined waveform
+                for (int i = 0; i < DAC_SAMPLE_FREQUENCY_HZ / tempo; i++) // Adjust samples for tempo
                 {
-                    if (grid[col][row] == 1)
-                    {
-                        PlayNoteAtRow(row);
-                        note_playing = 1;
-                    }
+                    uint16_t sample = GenerateCombinedWaveform(col);
+                    MutimodDAC_Write(DAC_OUT_REG, sample);
+                    sleep_us(1000000 / DAC_SAMPLE_FREQUENCY_HZ); // Sleep for 1/SAMPLE_RATE seconds
                 }
 
-                if (!note_playing) // Silence if no notes are selected in the column
-                {
-                    TimerDisable(TIMER1_BASE, TIMER_A);
-                }
-
-                sleep(60000 / (tempo * 2)); // Half-note duration
+                sleep(60000 / (tempo * 2)); // Sleep for the duration of a half note
             }
 
-            // Clear the final column highlight after playback
+            // Clear final column highlight
             if (prev_col != -1)
             {
                 G8RTOS_WaitSemaphore(&sem_SPIA);
@@ -128,9 +148,10 @@ void Speaker_Thread(void)
         }
         else
         {
-            TimerDisable(TIMER1_BASE, TIMER_A);
+            // Silence the DAC when not playing
+            MutimodDAC_Write(DAC_OUT_REG, 0);
 
-            // Clear any remaining highlights when playback stops
+            // Clear any remaining highlights
             if (prev_col != -1)
             {
                 G8RTOS_WaitSemaphore(&sem_SPIA);
