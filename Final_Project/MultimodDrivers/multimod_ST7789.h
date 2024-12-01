@@ -76,8 +76,8 @@
 
 
 // ST7789 Boundaries
-#define X_MAX                       239
-#define Y_MAX                       279
+#define X_MAX                       240
+#define Y_MAX                       280
 
 // COLORS
 #define ST7789_BLACK                0x0000
