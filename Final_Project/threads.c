@@ -77,7 +77,20 @@ void Speaker_Thread(void)
         {
             for (int col = 0; col < 8; col++)
             {
-                playback_column = col; // TODO: delete maybe
+                G8RTOS_WaitSemaphore(&sem_SPIA);
+                ST7789_DrawLine(col * cell_width, 0, col * cell_width, Y_MAX, ST7789_YELLOW);
+                ST7789_DrawLine((col + 1) * cell_width, 0, (col + 1) * cell_width, Y_MAX, ST7789_YELLOW);
+                G8RTOS_SignalSemaphore(&sem_SPIA);
+
+                if (prev_col != -1 && prev_col != col)
+                {
+                    G8RTOS_WaitSemaphore(&sem_SPIA);
+                    ST7789_DrawLine(prev_col * cell_width, 0, prev_col * cell_width, Y_MAX, ST7789_WHITE);
+                    ST7789_DrawLine((prev_col + 1) * cell_width, 0, (prev_col + 1) * cell_width, Y_MAX, ST7789_WHITE);
+                    G8RTOS_SignalSemaphore(&sem_SPIA);
+                }
+
+                prev_col = col;
 
                 uint8_t note_playing = 0;
 
@@ -95,12 +108,31 @@ void Speaker_Thread(void)
                     TimerDisable(TIMER1_BASE, TIMER_A);
                 }
 
-                sleep(60000 / (tempo * 2));
+                sleep(60000 / (tempo * 4));
+            }
+
+            if (prev_col != -1)
+            {
+                G8RTOS_WaitSemaphore(&sem_SPIA);
+                ST7789_DrawLine(prev_col * cell_width, 0, prev_col * cell_width, Y_MAX, ST7789_WHITE);
+                ST7789_DrawLine((prev_col + 1) * cell_width, 0, (prev_col + 1) * cell_width, Y_MAX, ST7789_WHITE);
+                G8RTOS_SignalSemaphore(&sem_SPIA);
+                prev_col = -1;
             }
         }
         else
         {
             TimerDisable(TIMER1_BASE, TIMER_A);
+
+            if (prev_col != -1)
+            {
+                G8RTOS_WaitSemaphore(&sem_SPIA);
+                ST7789_DrawLine(prev_col * cell_width, 0, prev_col * cell_width, Y_MAX, ST7789_WHITE);
+                ST7789_DrawLine((prev_col + 1) * cell_width, 0, (prev_col + 1) * cell_width, Y_MAX, ST7789_WHITE);
+                G8RTOS_SignalSemaphore(&sem_SPIA);
+                prev_col = -1;
+            }
+
             sleep(10);
         }
     }
