@@ -226,10 +226,10 @@ void Display_Thread(void)
         }
 
         // Draw new yellow highlight for the currently selected rectangle
-        ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, highlight_y * cell_height, ST7789_BLUE);             // Top
-        ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, highlight_x * cell_width, (highlight_y + 1) * cell_height, ST7789_BLUE);             // Left
-        ST7789_DrawLine((highlight_x + 1) * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_BLUE); // Right
-        ST7789_DrawLine(highlight_x * cell_width, (highlight_y + 1) * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_BLUE); // Bottom
+        ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, highlight_y * cell_height, ST7789_YELLOW);             // Top
+        ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, highlight_x * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW);             // Left
+        ST7789_DrawLine((highlight_x + 1) * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Right
+        ST7789_DrawLine(highlight_x * cell_width, (highlight_y + 1) * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Bottom
 
         prev_x = highlight_x;
         prev_y = highlight_y;
