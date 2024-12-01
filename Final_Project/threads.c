@@ -53,7 +53,7 @@ void PlayNoteAtRow(uint8_t row)
     uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
     uint16_t period = SysCtlClockGet() / (frequencies[row] * 2);
     TimerDisable(TIMER1_BASE, TIMER_A);
-    TimerLoadSet(TIMER1_BASE, TIMER_A, period - 1);
+    TimerLoadSet(TIMER1_BASE, TIMER_A, period);
     TimerEnable(TIMER1_BASE, TIMER_A);
 }
 
@@ -74,7 +74,7 @@ void Speaker_Thread(void)
         {
             for (int col = 0; col < 8; col++)
             {
-                playback_column = col; // Update playback column
+                playback_column = col;
 
                 // Flag to indicate if a note is currently playing
                 uint8_t note_playing = 0;
