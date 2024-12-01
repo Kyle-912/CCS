@@ -70,27 +70,37 @@ void Speaker_Thread(void)
 {
     while (1)
     {
-        if (playing)
+        if (playing) // If music is playing
         {
-            for (int col = 0; col < 8; col++)
+            for (int col = 0; col < 8; col++) // Iterate over each column (time step)
             {
                 playback_column = col; // Update playback column
-                for (int row = 0; row < 8; row++)
+
+                // Flag to indicate if a note is currently playing
+                uint8_t note_playing = 0;
+
+                for (int row = 0; row < 8; row++) // Iterate over rows (notes)
                 {
-                    if (grid[row][col] == 1)
+                    if (grid[row][col] == 1) // If a note is selected in this block
                     {
                         PlayNoteAtRow(row);
+                        note_playing = 1; // Mark that a note is playing
                     }
                 }
-                sleep(60000 / (tempo * 8)); // Tempo-based delay
+
+                if (!note_playing) // If no note is selected, silence the output
+                {
+                    TimerDisable(TIMER1_BASE, TIMER_A);
+                }
+
+                // Wait for the duration of a quarter note
+                sleep(60000 / (tempo * 8)); // Convert tempo to milliseconds per column
             }
         }
-        else
+        else // If music is not playing, ensure silence
         {
-            TimerDisable(TIMER1_BASE, TIMER_A);
-            TimerLoadSet(TIMER1_BASE, TIMER_A, 0);
-            TimerEnable(TIMER1_BASE, TIMER_A);
-            sleep(10); // Sleep briefly when not playing
+            TimerDisable(TIMER1_BASE, TIMER_A); // Stop the timer
+            sleep(10);                          // Short sleep to reduce CPU usage
         }
     }
 }
