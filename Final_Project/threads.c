@@ -12,7 +12,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <math.h>
 
 #include "driverlib/timer.h"
 #include "driverlib/adc.h"
@@ -32,10 +31,6 @@ uint8_t playing = 0;
 uint16_t cell_width = X_MAX / 8;
 uint16_t cell_height = Y_MAX / 8;
 uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
-
-#define NUM_FREQUENCIES 8
-float active_frequencies[NUM_FREQUENCIES] = {0}; // Active frequencies in Hz
-float amplitudes[NUM_FREQUENCIES] = {0};         // Amplitudes (0.0 to 1.0)
 
 /********************************Public Functions***********************************/
 
@@ -57,14 +52,14 @@ void InitializeGridDisplay()
     ST7789_DrawLine(X_MAX - 1, 0, X_MAX - 1, Y_MAX, ST7789_WHITE);
 }
 
-/*void PlayNoteAtRow(uint8_t row)
+void PlayNoteAtRow(uint8_t row)
 {
     uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
     uint32_t period = SysCtlClockGet() / (frequencies[row] * 2);
     TimerDisable(TIMER1_BASE, TIMER_A);
     TimerLoadSet(TIMER1_BASE, TIMER_A, period - 1);
     TimerEnable(TIMER1_BASE, TIMER_A);
-}*/
+}
 
 /*************************************Threads***************************************/
 
@@ -87,11 +82,11 @@ void Speaker_Thread(void)
             {
                 G8RTOS_WaitSemaphore(&sem_SPIA);
 
-                // Highlight the current column with red
+                // Highlight the current column with yellow
                 ST7789_DrawLine((col * cell_width) + 1, 0, (col * cell_width) + 1, Y_MAX - 1, ST7789_RED);                     // Left vertical line
                 ST7789_DrawLine(((col + 1) * cell_width - 1) + 1, 0, ((col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_RED); // Right vertical line
 
-                // Clear the previous column highlight
+                // Clear the previous column highlight (if applicable)
                 if (prev_col != -1 && prev_col != col)
                 {
                     ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
@@ -102,59 +97,26 @@ void Speaker_Thread(void)
 
                 prev_col = col;
 
-                // Clear active frequencies and amplitudes
-                for (int i = 0; i < NUM_FREQUENCIES; i++)
-                {
-                    active_frequencies[i] = 0;
-                    amplitudes[i] = 0;
-                }
-
                 uint8_t note_playing = 0;
-                int note_index = 0;
 
-                // Check for active notes in the column
-                for (int row = 0; row < 8; row++)
+                for (int row = 0; row < 8; row++) // Check each note in the column
                 {
-                    if (grid[col][row] == 1 && note_index < NUM_FREQUENCIES)
+                    if (grid[col][row] == 1)
                     {
-                        uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
-                        int duplicate = 0;
-
-                        // Check for duplicate frequencies
-                        for (int i = 0; i < note_index; i++)
-                        {
-                            if (active_frequencies[i] == frequencies[row])
-                            {
-                                amplitudes[i] += 1.0 / 8.0; // Increase amplitude for the duplicate
-                                duplicate = 1;
-                                break;
-                            }
-                        }
-
-                        if (!duplicate)
-                        {
-                            active_frequencies[note_index] = frequencies[row];
-                            amplitudes[note_index] = 1.0 / 8.0; // Initial amplitude
-                            note_index++;
-                        }
+                        PlayNoteAtRow(row);
                         note_playing = 1;
                     }
                 }
 
-                // Dynamically scale amplitudes
-                if (note_playing)
+                if (!note_playing) // Silence if no notes are selected in the column
                 {
-                    float amplitude_scale = 1.0 / note_index;
-                    for (int i = 0; i < note_index; i++)
-                    {
-                        amplitudes[i] *= amplitude_scale;
-                    }
+                    TimerDisable(TIMER1_BASE, TIMER_A);
                 }
 
                 sleep(60000 / (tempo * 2)); // Half-note duration
             }
 
-            // Clear the final column highlight
+            // Clear the final column highlight after playback
             if (prev_col != -1)
             {
                 G8RTOS_WaitSemaphore(&sem_SPIA);
@@ -166,6 +128,18 @@ void Speaker_Thread(void)
         }
         else
         {
+            TimerDisable(TIMER1_BASE, TIMER_A);
+
+            // Clear any remaining highlights when playback stops
+            if (prev_col != -1)
+            {
+                G8RTOS_WaitSemaphore(&sem_SPIA);
+                ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
+                ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
+                G8RTOS_SignalSemaphore(&sem_SPIA);
+                prev_col = -1;
+            }
+
             sleep(10); // Prevent tight looping
         }
     }
@@ -294,7 +268,6 @@ void JoystickPress_Thread()
         GPIOIntEnable(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
     }
 }
-
 void Navigation_Thread(void)
 {
     uint8_t buttons;
@@ -400,45 +373,9 @@ void DAC_Timer_Handler()
     // Clear the timer interrupt
     TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
 
-    // Constants
-    const float SAMPLE_RATE = 44100.0; // Sample rate in Hz
-    const float PI = 3.14159265359;
+    // Read next output sample
+    uint32_t output = (volume) * (dac_signal[dac_step++ % SIGNAL_STEPS]);
 
-    // Calculate composite waveform sample
-    static uint32_t sample_index = 0;
-    float composite_sample = 0.0;
-    int active_notes = 0;
-
-    for (int i = 0; i < NUM_FREQUENCIES; i++)
-    {
-        if (active_frequencies[i] > 0.0)
-        {
-            composite_sample += amplitudes[i] * sinf(2.0f * PI * active_frequencies[i] * sample_index / SAMPLE_RATE);
-            active_notes++;
-        }
-    }
-
-    // Normalize or silence
-    if (active_notes > 0)
-    {
-        composite_sample /= active_notes; // Normalize for active notes
-    }
-    else
-    {
-        composite_sample = 0; // Silence
-    }
-
-    // Clamp composite sample
-    if (composite_sample > 1.0)
-        composite_sample = 1.0;
-    else if (composite_sample < -1.0)
-        composite_sample = -1.0;
-
-    sample_index++;
-
-    // Scale composite sample to DAC range (e.g., 0 to 4095)
-    uint32_t dac_output = (uint32_t)((composite_sample + 1.0) * (2047.5 * volume));
-
-    // Write the output value to the DAC
-    MutimodDAC_Write(DAC_OUT_REG, dac_output);
+    // Write the output value to the dac
+    MutimodDAC_Write(DAC_OUT_REG, output);
 }
