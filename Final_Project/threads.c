@@ -16,16 +16,19 @@
 #include "driverlib/timer.h"
 #include "driverlib/adc.h"
 
-#define MAX_NUM_SAMPLES (200)
+#include "GFX_Library.h"
+
 #define SIGNAL_STEPS (2)
+#define MAX_PAGES 4
 
 /*********************************Global Variables**********************************/
-// DAC_SAMPLE_FREQUENCY_HZ
+
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t volume = 0xFFF;
 int16_t tempo = 120;
-uint8_t grid[8][8] = {0};
+uint8_t grid[MAX_PAGES][8][8] = {0};
+uint8_t current_page = 0;
 uint8_t highlight_x = 0, highlight_y = 0;
 uint8_t playing = 0;
 uint16_t cell_width = X_MAX / 8;
@@ -33,6 +36,12 @@ uint16_t cell_height = Y_MAX / 8;
 uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
 
 /********************************Public Functions***********************************/
+void DisplayPageNumber()
+{
+    display_drawChar(5, 260, current_page, ST7789_WHITE, ST7789_WHITE, 1);
+    // display_drawChar(7, 260, '/', ST7789_WHITE, ST7789_WHITE, 1);
+    // display_drawChar(20, 260, MAX_PAGES, ST7789_WHITE, ST7789_WHITE, 1);
+}
 
 void InitializeGridDisplay()
 {
@@ -50,6 +59,8 @@ void InitializeGridDisplay()
 
     // Extra vertical line one pixel in from the right edge
     ST7789_DrawLine(X_MAX - 1, 0, X_MAX - 1, Y_MAX, ST7789_WHITE);
+
+    DisplayPageNumber();
 }
 
 void PlayNoteAtRow(uint8_t row)
@@ -78,53 +89,64 @@ void Speaker_Thread(void)
     {
         if (playing)
         {
-            for (int col = 0; col < 8; col++)
+            for (int page = 0; page < MAX_PAGES; page++) // Iterate through all pages
             {
-                G8RTOS_WaitSemaphore(&sem_SPIA);
+                current_page = page;
 
-                // Highlight the current column with yellow
-                ST7789_DrawLine((col * cell_width) + 1, 0, (col * cell_width) + 1, Y_MAX - 1, ST7789_RED);                     // Left vertical line
-                ST7789_DrawLine(((col + 1) * cell_width - 1) + 1, 0, ((col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_RED); // Right vertical line
-
-                // Clear the previous column highlight (if applicable)
-                if (prev_col != -1 && prev_col != col)
+                for (int col = 0; col < 8; col++)
                 {
+                    G8RTOS_WaitSemaphore(&sem_SPIA);
+
+                    // Highlight the current playing column with red
+                    ST7789_DrawLine((col * cell_width) + 1, 0, (col * cell_width) + 1, Y_MAX - 1, ST7789_RED);                     // Left vertical line
+                    ST7789_DrawLine(((col + 1) * cell_width - 1) + 1, 0, ((col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_RED); // Right vertical line
+
+                    // Clear the previous column highlight
+                    if (prev_col != -1 && prev_col != col)
+                    {
+                        ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
+                        ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
+                    }
+
+                    G8RTOS_SignalSemaphore(&sem_SPIA);
+
+                    prev_col = col;
+
+                    uint8_t note_playing = 0;
+
+                    for (int row = 0; row < 8; row++) // Check each note in the column
+                    {
+                        if (grid[current_page][col][row] == 1)
+                        {
+                            PlayNoteAtRow(row);
+                            note_playing = 1;
+                        }
+                    }
+
+                    if (!note_playing) // Silence if no notes are selected in the column
+                    {
+                        TimerDisable(TIMER1_BASE, TIMER_A);
+                    }
+
+                    sleep(60000 / (tempo * 2));
+                }
+
+                // Clear the final column highlight after playback of the current page
+                if (prev_col != -1)
+                {
+                    G8RTOS_WaitSemaphore(&sem_SPIA);
                     ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
                     ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
+                    G8RTOS_SignalSemaphore(&sem_SPIA);
+                    prev_col = -1;
                 }
-
-                G8RTOS_SignalSemaphore(&sem_SPIA);
-
-                prev_col = col;
-
-                uint8_t note_playing = 0;
-
-                for (int row = 0; row < 8; row++) // Check each note in the column
-                {
-                    if (grid[col][row] == 1)
-                    {
-                        PlayNoteAtRow(row);
-                        note_playing = 1;
-                    }
-                }
-
-                if (!note_playing) // Silence if no notes are selected in the column
-                {
-                    TimerDisable(TIMER1_BASE, TIMER_A);
-                }
-
-                sleep(60000 / (tempo * 2)); // Half-note duration
             }
 
-            // Clear the final column highlight after playback
-            if (prev_col != -1)
-            {
-                G8RTOS_WaitSemaphore(&sem_SPIA);
-                ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
-                ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
-                G8RTOS_SignalSemaphore(&sem_SPIA);
-                prev_col = -1;
-            }
+            // Reset to the first page after completing playback of all pages
+            current_page = 0;
+            G8RTOS_WaitSemaphore(&sem_SPIA);
+            InitializeGridDisplay();
+            G8RTOS_SignalSemaphore(&sem_SPIA);
         }
         else
         {
@@ -140,7 +162,7 @@ void Speaker_Thread(void)
                 prev_col = -1;
             }
 
-            sleep(10); // Prevent tight looping
+            sleep(10);
         }
     }
 }
@@ -203,33 +225,56 @@ void Display_Thread(void)
 {
     // Initialize / declare any variables here
     uint8_t prev_x = 0, prev_y = 0;
-    uint8_t prev_grid[8][8] = {0};
+    uint8_t prev_page = current_page;
+    uint8_t prev_grid[MAX_PAGES][8][8] = {0};
 
     while (1)
     {
         G8RTOS_WaitSemaphore(&sem_SPIA);
 
-        // Clear the previous yellow highlight by restoring white grid lines
-        ST7789_DrawLine(prev_x * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, prev_y * cell_height, ST7789_WHITE);             // Top
-        ST7789_DrawLine(prev_x * cell_width, prev_y * cell_height, prev_x * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE);             // Left
-        ST7789_DrawLine((prev_x + 1) * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Right
-        ST7789_DrawLine(prev_x * cell_width, (prev_y + 1) * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Bottom
+        // Check if the page has changed
+        if (prev_page != current_page)
+        {
+            ST7789_Fill(ST7789_BLACK);
+            InitializeGridDisplay();
+
+            for (uint8_t col = 0; col < 8; col++)
+            {
+                for (uint8_t row = 0; row < 8; row++)
+                {
+                    if (grid[current_page][col][row] == 1)
+                    {
+                        uint16_t color = colors[row];
+                        ST7789_DrawRectangle(col * cell_width + 1, row * cell_height + 1, cell_width - 1, cell_height - 1, color);
+                    }
+                }
+            }
+            DisplayPageNumber();
+
+            prev_page = current_page;
+        }
 
         // Update grid contents based on note placement
         for (uint8_t col = 0; col < 8; col++)
         {
             for (uint8_t row = 0; row < 8; row++)
             {
-                if (grid[col][row] != prev_grid[col][row])
+                if (grid[current_page][col][row] != prev_grid[current_page][col][row])
                 {
-                    uint16_t color = (grid[col][row] == 1) ? colors[row] : ST7789_BLACK;
+                    uint16_t color = (grid[current_page][col][row] == 1) ? colors[row] : ST7789_BLACK;
 
                     ST7789_DrawRectangle(col * cell_width + 1, row * cell_height + 1, cell_width - 1, cell_height - 1, color);
 
-                    prev_grid[col][row] = grid[col][row];
+                    prev_grid[current_page][col][row] = grid[current_page][col][row];
                 }
             }
         }
+
+        // Clear the previous yellow highlight by restoring white grid lines
+        ST7789_DrawLine(prev_x * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, prev_y * cell_height, ST7789_WHITE);             // Top
+        ST7789_DrawLine(prev_x * cell_width, prev_y * cell_height, prev_x * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE);             // Left
+        ST7789_DrawLine((prev_x + 1) * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Right
+        ST7789_DrawLine(prev_x * cell_width, (prev_y + 1) * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Bottom
 
         // Draw new yellow highlight for the currently selected rectangle
         ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, highlight_y * cell_height, ST7789_YELLOW);             // Top
@@ -241,6 +286,7 @@ void Display_Thread(void)
         prev_y = highlight_y;
 
         G8RTOS_SignalSemaphore(&sem_SPIA);
+
         sleep(10);
     }
 }
@@ -294,11 +340,29 @@ void Navigation_Thread(void)
         }
         else if (buttons & SW3) // Left
         {
-            highlight_x = (highlight_x > 0) ? highlight_x - 1 : 7;
+            if (highlight_x == 0)
+            {
+                // Move to the previous page
+                current_page = (current_page > 0) ? current_page - 1 : MAX_PAGES - 1;
+                highlight_x = 7;
+            }
+            else
+            {
+                highlight_x--;
+            }
         }
         else if (buttons & SW4) // Right
         {
-            highlight_x = (highlight_x < 7) ? highlight_x + 1 : 0;
+            if (highlight_x == 7)
+            {
+                // Move to the next page
+                current_page = (current_page < MAX_PAGES - 1) ? current_page + 1 : 0;
+                highlight_x = 0;
+            }
+            else
+            {
+                highlight_x++;
+            }
         }
 
         // Clear button interrupt
@@ -320,7 +384,7 @@ void NotePlacement_Thread(void)
         sleep(100);
 
         // Toggle the note in the grid
-        grid[highlight_x][highlight_y] ^= 1;
+        grid[current_page][highlight_x][highlight_y] ^= 1;
 
         // Clear the interrupt
         GPIOIntClear(GPIO_PORTF_BASE, GPIO_PIN_0);
