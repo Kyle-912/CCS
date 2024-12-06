@@ -244,6 +244,7 @@ void Display_Thread(void)
     uint8_t prev_x = 0, prev_y = 0;
     uint8_t prev_page = current_page;
     uint8_t prev_grid[MAX_PAGES][8][8] = {0};
+    bool playing_started = false;
 
     while (1)
     {
@@ -253,7 +254,7 @@ void Display_Thread(void)
             IBit_State = StartCriticalSection();
             InitializeGridDisplay();
             EndCriticalSection(IBit_State);
-            start = false;
+            !start;
         }
 
         G8RTOS_WaitSemaphore(&sem_SPIA);
@@ -312,6 +313,17 @@ void Display_Thread(void)
             ST7789_DrawLine((highlight_x + 1) * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Right
             ST7789_DrawLine(highlight_x * cell_width, (highlight_y + 1) * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Bottom
         }
+        else if (playing_started)
+        {
+            // Clear the previous yellow highlight by restoring white grid lines
+            ST7789_DrawLine(prev_x * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, prev_y * cell_height, ST7789_WHITE);             // Top
+            ST7789_DrawLine(prev_x * cell_width, prev_y * cell_height, prev_x * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE);             // Left
+            ST7789_DrawLine((prev_x + 1) * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Right
+            ST7789_DrawLine(prev_x * cell_width, (prev_y + 1) * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Bottom
+
+            !playing_started;
+        }
+
 
         DisplayPageNumber();
 
