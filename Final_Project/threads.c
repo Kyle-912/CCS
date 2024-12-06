@@ -355,14 +355,10 @@ void JoystickPress_Thread()
         // Wait for a signal to read the joystick press
         G8RTOS_WaitSemaphore(&sem_Joystick_Debounce);
 
-            playing = !playing;
-        // Sleep to debounce
-        sleep(200);
+        playing = !playing;
 
-        // Switch status on the Multimod board.
-        // if (JOYSTICK_GetPress())
-        // {
-        // }
+        // Sleep to debounce
+        sleep(100);
 
         // Clear the interrupt
         GPIOIntClear(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
