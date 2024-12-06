@@ -305,6 +305,13 @@ void Display_Thread(void)
             ST7789_DrawLine(highlight_x * cell_width, (highlight_y + 1) * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Bottom
         }
 
+        if (highlight_x == 0 && highlight_y == 7)
+        {
+            G8RTOS_WaitSemaphore(&sem_SPIA);
+            DisplayPageNumber();
+            G8RTOS_SignalSemaphore(&sem_SPIA);
+        }
+
         prev_x = highlight_x;
         prev_y = highlight_y;
 
@@ -413,13 +420,6 @@ void NotePlacement_Thread(void)
         {
             // Toggle the note in the grid
             grid[current_page][highlight_x][highlight_y] ^= 1;
-
-            if (highlight_x == 0 && highlight_y == 7)
-            {
-                G8RTOS_WaitSemaphore(&sem_SPIA);
-                DisplayPageNumber();
-                G8RTOS_SignalSemaphore(&sem_SPIA);
-            }
         }
 
         // Clear the interrupt
