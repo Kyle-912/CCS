@@ -115,9 +115,9 @@ void SysTick_Handler()
         Ppt = Ppt->nextPTCB;
     }
 
-    EndCriticalSection(IBit_State);
 
     HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV;
+    EndCriticalSection(IBit_State);
 }
 
 // G8RTOS_Init
