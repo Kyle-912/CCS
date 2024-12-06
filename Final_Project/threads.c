@@ -42,7 +42,7 @@ void DisplayPageNumber()
 {
     display_drawChar(5, 260, current_page + 49, ST7789_WHITE, ST7789_WHITE, 1);
     display_drawChar(12, 260, '/', ST7789_WHITE, ST7789_WHITE, 1);
-    display_drawChar(20, 260, MAX_PAGES + 49, ST7789_WHITE, ST7789_WHITE, 1);
+    display_drawChar(20, 260, MAX_PAGES + 48, ST7789_WHITE, ST7789_WHITE, 1);
 }
 
 void InitializeGridDisplay()
