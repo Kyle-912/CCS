@@ -19,7 +19,7 @@
 #include "GFX_Library.h"
 
 #define SIGNAL_STEPS (2)
-#define MAX_PAGES 4
+#define MAX_PAGES 5
 
 /*********************************Global Variables**********************************/
 
@@ -30,14 +30,13 @@ int16_t tempo = 120;
 uint8_t grid[MAX_PAGES][8][8] = {0};
 uint8_t current_page = 0;
 uint8_t highlight_x = 0, highlight_y = 0;
+int prev_col = -1;
+bool start = true;
 uint8_t playing = 0;
 bool playing_started = false;
-int prev_col = -1;
 uint16_t cell_width = X_MAX / 8;
 uint16_t cell_height = Y_MAX / 8;
 uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
-
-bool start = true;
 
 /********************************Public Functions***********************************/
 void DisplayPageNumber()
@@ -115,7 +114,6 @@ void Speaker_Thread(void)
                         ST7789_DrawLine(X_MAX - 1, 0, X_MAX - 1, Y_MAX, ST7789_RED); // Handle right edge
                     }
 
-
                     if (prev_col != -1 && prev_col != col)
                     {
                         ST7789_DrawLine((prev_col * cell_width), 0, (prev_col * cell_width), Y_MAX, ST7789_WHITE); // Left vertical line of previous column
@@ -176,6 +174,12 @@ void Speaker_Thread(void)
                         }
                     }
 
+                    // Extra horizontal line one pixel in from the top edge
+                    ST7789_DrawLine(0, Y_MAX - 1, X_MAX, Y_MAX - 1, ST7789_WHITE);
+
+                    // Extra vertical line one pixel in from the right edge
+                    ST7789_DrawLine(X_MAX - 1, 0, X_MAX - 1, Y_MAX, ST7789_WHITE);
+
                     G8RTOS_SignalSemaphore(&sem_SPIA);
                     break;
                 }
@@ -203,24 +207,26 @@ void Volume_Thread(void)
         int16_t x = (joystick_data >> 16) & 0xFFFF;
         int16_t y = joystick_data & 0xFFFF;
 
+        x = -x;
+
         // Adjust volume
-        if (y > 50)
+        if (y > 400)
         {
             volume += 250;
         }
-        else if (y < -50)
+        else if (y < -400)
         {
             volume -= 250;
         }
 
         // Adjust tempo
-        if (x > 50)
+        if (x > 400)
         {
-            tempo = (tempo < 240) ? tempo + 1 : 240;
+            tempo = (tempo < 240) ? tempo + 5 : 240;
         }
-        else if (x < -50)
+        else if (x < -400)
         {
-            tempo = (tempo > 40) ? tempo - 1 : 40;
+            tempo = (tempo > 40) ? tempo - 5 : 40;
         }
 
         // Limit volume to 0-4095 (12 bit range)
@@ -331,7 +337,6 @@ void Display_Thread(void)
             playing_started = false;
         }
 
-
         DisplayPageNumber();
 
         prev_x = highlight_x;
@@ -350,14 +355,10 @@ void JoystickPress_Thread()
         // Wait for a signal to read the joystick press
         G8RTOS_WaitSemaphore(&sem_Joystick_Debounce);
 
-        // Sleep to debounce
-        sleep(10);
+        playing = !playing;
 
-        // Switch status on the Multimod board.
-        if (JOYSTICK_GetPress())
-        {
-            playing = !playing;
-        }
+        // Sleep to debounce
+        sleep(100);
 
         // Clear the interrupt
         GPIOIntClear(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
@@ -464,7 +465,7 @@ void Get_Joystick(void)
     int16_t x = (int16_t)(x_raw - 2048); // Center around 0
     int16_t y = (int16_t)(y_raw - 2048); // Center around 0
 
-    // Send through FIFO.
+    // // Send through FIFO.
     G8RTOS_WriteFIFO(JOYSTICK_FIFO, ((uint32_t)x << 16) | (uint32_t)y);
 }
 
