@@ -174,6 +174,12 @@ void Speaker_Thread(void)
                         }
                     }
 
+                    // Extra horizontal line one pixel in from the top edge
+                    ST7789_DrawLine(0, Y_MAX - 1, X_MAX, Y_MAX - 1, ST7789_WHITE);
+
+                    // Extra vertical line one pixel in from the right edge
+                    ST7789_DrawLine(X_MAX - 1, 0, X_MAX - 1, Y_MAX, ST7789_WHITE);
+
                     G8RTOS_SignalSemaphore(&sem_SPIA);
                     break;
                 }
@@ -351,7 +357,7 @@ void JoystickPress_Thread()
 
             playing = !playing;
         // Sleep to debounce
-        sleep(20);
+        sleep(200);
 
         // Switch status on the Multimod board.
         // if (JOYSTICK_GetPress())
