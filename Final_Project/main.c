@@ -46,7 +46,7 @@ int main(void)
     G8RTOS_InitFIFO(JOYSTICK_FIFO);
 
     // Add periodic and aperiodic events
-    G8RTOS_Add_PeriodicEvent(&Get_Joystick, 1000, 0);
+    // G8RTOS_Add_PeriodicEvent(&Get_Joystick, 1000, 0);
 
     G8RTOS_Add_APeriodicEvent(Button_Handler, 0, BUTTON_INTERRUPT);
     G8RTOS_Add_APeriodicEvent(Joystick_Button_Handler, 0, JOYSTICK_INTERRUPT);
