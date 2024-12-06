@@ -254,7 +254,7 @@ void Display_Thread(void)
             IBit_State = StartCriticalSection();
             InitializeGridDisplay();
             EndCriticalSection(IBit_State);
-            !start;
+            start = false;
         }
 
         G8RTOS_WaitSemaphore(&sem_SPIA);
@@ -321,7 +321,7 @@ void Display_Thread(void)
             ST7789_DrawLine((prev_x + 1) * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Right
             ST7789_DrawLine(prev_x * cell_width, (prev_y + 1) * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Bottom
 
-            !playing_started;
+            playing_started = false;
         }
 
 
