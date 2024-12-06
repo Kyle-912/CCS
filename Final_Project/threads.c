@@ -38,9 +38,33 @@ uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST
 /********************************Public Functions***********************************/
 void DisplayPageNumber()
 {
-    display_drawChar(5, 260, (uint8_t) 'A', ST7789_WHITE, ST7789_WHITE, 1);
+    // SysCtlDelay(10000);
+    // display_drawChar(5, 260, current_page, ST7789_WHITE, ST7789_WHITE, 1);
     // display_drawChar(7, 260, '/', ST7789_WHITE, ST7789_WHITE, 1);
     // display_drawChar(20, 260, MAX_PAGES, ST7789_WHITE, ST7789_WHITE, 1);
+    uint16_t x = 0; // Starting X position
+    uint16_t y = 0; // Starting Y position
+
+    for (uint8_t c = 0; c < 256; c++)
+    {
+        // Draw the character at the current position
+        display_drawChar(x, y, c, ST7789_WHITE, ST7789_BLACK, 1);
+
+        // Move to the next position
+        x += 6; // Move horizontally by character width
+        if (x + 6 > X_MAX)
+        {
+            // If the character would exceed the screen width, move to the next row
+            x = 0;
+            y += 8;
+        }
+
+        // If the Y position exceeds the screen height, stop printing
+        if (y + 8 > Y_MAX)
+        {
+            break;
+        }
+    }
 }
 
 void InitializeGridDisplay()
