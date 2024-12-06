@@ -363,6 +363,8 @@ void JoystickPress_Thread()
 
         // Re-enable the interrupt so it can occur again.
         GPIOIntEnable(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
+
+        sleep(15);
     }
 }
 
