@@ -26,7 +26,7 @@
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t volume = 0xFFF;
-int16_t tempo = 120;
+int16_t tempo = 40;
 uint8_t grid[MAX_PAGES][8][8] = {0};
 uint8_t current_page = 0;
 uint8_t highlight_x = 0, highlight_y = 0;
