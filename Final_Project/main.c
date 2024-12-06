@@ -1,6 +1,6 @@
 // Final Lab, uP2 Fall 2024
 // Created: 2024-11-30
-// Updated: 2024-11-30
+// Updated: 2024-12-01
 
 /************************************Includes***************************************/
 
@@ -28,8 +28,6 @@ int main(void)
     // Initialize the G8RTOS framework
     G8RTOS_Init();
     multimod_init();
-
-    InitializeGridDisplay();
 
     // Add semaphores, threads, FIFOs
     G8RTOS_InitSemaphore(&sem_SPIA, 1);
