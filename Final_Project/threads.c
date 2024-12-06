@@ -181,15 +181,15 @@ void Speaker_Thread(void)
         {
             TimerDisable(TIMER1_BASE, TIMER_A);
 
-            // Clear any remaining highlights when playback stops
-            if (prev_col != -1)
-            {
-                G8RTOS_WaitSemaphore(&sem_SPIA);
-                ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
-                ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
-                G8RTOS_SignalSemaphore(&sem_SPIA);
-                prev_col = -1;
-            }
+            // // Clear any remaining highlights when playback stops
+            // if (prev_col != -1)
+            // {
+            //     G8RTOS_WaitSemaphore(&sem_SPIA);
+            //     ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
+            //     ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
+            //     G8RTOS_SignalSemaphore(&sem_SPIA);
+            //     prev_col = -1;
+            // }
 
             sleep(10);
         }
