@@ -102,9 +102,6 @@ void Speaker_Thread(void)
                 {
                     G8RTOS_WaitSemaphore(&sem_SPIA);
 
-                    // Handle showing a note over the page number
-                    DisplayPageNumber();
-
                     // Highlight the current playing column with red
                     ST7789_DrawLine((col * cell_width) + 1, 0, (col * cell_width) + 1, Y_MAX - 1, ST7789_RED);                     // Left vertical line
                     ST7789_DrawLine(((col + 1) * cell_width - 1) + 1, 0, ((col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_RED); // Right vertical line
@@ -308,11 +305,7 @@ void Display_Thread(void)
             ST7789_DrawLine(highlight_x * cell_width, (highlight_y + 1) * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Bottom
         }
 
-        // Handle placing a note over the page number
-        if (highlight_x == 0 && highlight_y == 7)
-        {
-            DisplayPageNumber();
-        }
+        DisplayPageNumber();
 
         prev_x = highlight_x;
         prev_y = highlight_y;
