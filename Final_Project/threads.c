@@ -346,42 +346,45 @@ void Navigation_Thread(void)
         // Sleep to debounce
         sleep(10);
 
-        // Read buttons
-        buttons = -MultimodButtons_Get();
+        if (!playing)
+        {
+            // Read buttons
+            buttons = -MultimodButtons_Get();
 
-        // Move highlight box
-        if (buttons & SW1) // Up
-        {
-            highlight_y = (highlight_y < 7) ? highlight_y + 1 : 0;
-        }
-        else if (buttons & SW2) // Down
-        {
-            highlight_y = (highlight_y > 0) ? highlight_y - 1 : 7;
-        }
-        else if (buttons & SW3) // Left
-        {
-            if (highlight_x == 0)
+            // Move highlight box
+            if (buttons & SW1) // Up
             {
-                // Move to the previous page
-                current_page = (current_page > 0) ? current_page - 1 : MAX_PAGES - 1;
-                highlight_x = 7;
+                highlight_y = (highlight_y < 7) ? highlight_y + 1 : 0;
             }
-            else
+            else if (buttons & SW2) // Down
             {
-                highlight_x--;
+                highlight_y = (highlight_y > 0) ? highlight_y - 1 : 7;
             }
-        }
-        else if (buttons & SW4) // Right
-        {
-            if (highlight_x == 7)
+            else if (buttons & SW3) // Left
             {
-                // Move to the next page
-                current_page = (current_page < MAX_PAGES - 1) ? current_page + 1 : 0;
-                highlight_x = 0;
+                if (highlight_x == 0)
+                {
+                    // Move to the previous page
+                    current_page = (current_page > 0) ? current_page - 1 : MAX_PAGES - 1;
+                    highlight_x = 7;
+                }
+                else
+                {
+                    highlight_x--;
+                }
             }
-            else
+            else if (buttons & SW4) // Right
             {
-                highlight_x++;
+                if (highlight_x == 7)
+                {
+                    // Move to the next page
+                    current_page = (current_page < MAX_PAGES - 1) ? current_page + 1 : 0;
+                    highlight_x = 0;
+                }
+                else
+                {
+                    highlight_x++;
+                }
             }
         }
 
