@@ -92,6 +92,8 @@ void Speaker_Thread(void)
     {
         if (playing)
         {
+            saved_page = current_page;
+
             for (int page = 0; page < MAX_PAGES; page++)
             {
                 current_page = page;
@@ -151,7 +153,7 @@ void Speaker_Thread(void)
             }
 
             // Reset to the first page after completing playback of all pages
-            current_page = 0;
+            current_page = saved_page;
             G8RTOS_WaitSemaphore(&sem_SPIA);
             InitializeGridDisplay();
             G8RTOS_SignalSemaphore(&sem_SPIA);
