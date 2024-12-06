@@ -204,11 +204,11 @@ void Volume_Thread(void)
         y = -y;
 
         // Adjust volume
-        if (y > 50)
+        if (y > 100)
         {
             volume += 250;
         }
-        else if (y < -50)
+        else if (y < -100)
         {
             volume -= 250;
         }
@@ -216,11 +216,11 @@ void Volume_Thread(void)
         // Adjust tempo
         if (x > 50)
         {
-            tempo = (tempo < 240) ? tempo + 1 : 240;
+            tempo = (tempo < 240) ? tempo + 5 : 240;
         }
         else if (x < -50)
         {
-            tempo = (tempo > 40) ? tempo - 1 : 40;
+            tempo = (tempo > 40) ? tempo - 5 : 40;
         }
 
         // Limit volume to 0-4095 (12 bit range)
