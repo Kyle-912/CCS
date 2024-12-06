@@ -30,14 +30,13 @@ int16_t tempo = 120;
 uint8_t grid[MAX_PAGES][8][8] = {0};
 uint8_t current_page = 0;
 uint8_t highlight_x = 0, highlight_y = 0;
+int prev_col = -1;
+bool start = true;
 uint8_t playing = 0;
 bool playing_started = false;
-int prev_col = -1;
 uint16_t cell_width = X_MAX / 8;
 uint16_t cell_height = Y_MAX / 8;
 uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
-
-bool start = true;
 
 /********************************Public Functions***********************************/
 void DisplayPageNumber()
@@ -114,7 +113,6 @@ void Speaker_Thread(void)
                     {
                         ST7789_DrawLine(X_MAX - 1, 0, X_MAX - 1, Y_MAX, ST7789_RED); // Handle right edge
                     }
-
 
                     if (prev_col != -1 && prev_col != col)
                     {
@@ -330,7 +328,6 @@ void Display_Thread(void)
 
             playing_started = false;
         }
-
 
         DisplayPageNumber();
 
