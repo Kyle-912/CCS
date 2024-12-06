@@ -29,8 +29,6 @@ int main(void)
     G8RTOS_Init();
     multimod_init();
 
-    InitializeGridDisplay();
-
     // Add semaphores, threads, FIFOs
     G8RTOS_InitSemaphore(&sem_SPIA, 1);
     G8RTOS_InitSemaphore(&sem_PCA9555_Debounce, 0);
@@ -54,6 +52,8 @@ int main(void)
     G8RTOS_Add_APeriodicEvent(Joystick_Button_Handler, 0, JOYSTICK_INTERRUPT);
     G8RTOS_Add_APeriodicEvent(TivaButton_Handler, 0, INT_GPIOF);
     G8RTOS_Add_APeriodicEvent(DAC_Timer_Handler, 0, DAC_INTERRUPT);
+
+    InitializeGridDisplay();
 
     G8RTOS_Launch();
     while (1)
