@@ -307,9 +307,7 @@ void Display_Thread(void)
 
         if (highlight_x == 0 && highlight_y == 7)
         {
-            G8RTOS_WaitSemaphore(&sem_SPIA);
             DisplayPageNumber();
-            G8RTOS_SignalSemaphore(&sem_SPIA);
         }
 
         prev_x = highlight_x;
