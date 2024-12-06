@@ -38,17 +38,13 @@ uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST
 /********************************Public Functions***********************************/
 void DisplayPageNumber()
 {
-    IBit_State = StartCriticalSection();
-
     // SysCtlDelay(10000);
     // display_drawChar(5, 260, current_page, ST7789_WHITE, ST7789_WHITE, 1);
     // display_drawChar(5, 260, (unsigned char)0, ST7789_WHITE, ST7789_WHITE, 1);
-    if (current_page == 0)
+    if (current_page == 1)
     {
         display_drawChar(5, 260, 48, ST7789_WHITE, ST7789_WHITE, 1);
     }
-
-    EndCriticalSection(IBit_State);
 
     // display_drawChar(7, 260, '/', ST7789_WHITE, ST7789_WHITE, 1);
     // display_drawChar(20, 260, MAX_PAGES, ST7789_WHITE, ST7789_WHITE, 1);
