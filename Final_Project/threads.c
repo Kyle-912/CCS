@@ -68,7 +68,6 @@ void InitializeGridDisplay()
     // Extra vertical line one pixel in from the right edge
     ST7789_DrawLine(X_MAX - 1, 0, X_MAX - 1, Y_MAX, ST7789_WHITE);
 
-
     G8RTOS_SignalSemaphore(&sem_SPIA);
 
     DisplayPageNumber();
@@ -255,14 +254,16 @@ void Display_Thread(void)
             start = false;
         }
 
-        G8RTOS_WaitSemaphore(&sem_SPIA);
-
         // Check if the page has changed
         if (prev_page != current_page)
         {
+            G8RTOS_WaitSemaphore(&sem_SPIA);
             ST7789_Fill(ST7789_BLACK);
+            G8RTOS_SignalSemaphore(&sem_SPIA);
+
             InitializeGridDisplay();
 
+            G8RTOS_WaitSemaphore(&sem_SPIA);
             for (uint8_t col = 0; col < 8; col++)
             {
                 for (uint8_t row = 0; row < 8; row++)
@@ -274,9 +275,12 @@ void Display_Thread(void)
                     }
                 }
             }
+            G8RTOS_SignalSemaphore(&sem_SPIA);
 
             prev_page = current_page;
         }
+
+        G8RTOS_WaitSemaphore(&sem_SPIA);
 
         // Update grid contents based on note placement
         for (uint8_t col = 0; col < 8; col++)
