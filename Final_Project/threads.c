@@ -158,6 +158,17 @@ void Speaker_Thread(void)
                     G8RTOS_WaitSemaphore(&sem_SPIA);
                     ST7789_Fill(ST7789_BLACK);
                     InitializeGridDisplay();
+
+                    for (uint8_t col = 0; col < 8; col++)
+                    {
+                        for (uint8_t row = 0; row < 8; row++)
+                        {
+                            uint16_t color = (grid[current_page][col][row] == 1) ? colors[row] : ST7789_BLACK;
+
+                            ST7789_DrawRectangle(col * cell_width + 1, row * cell_height + 1, cell_width - 1, cell_height - 1, color);
+                        }
+                    }
+
                     G8RTOS_SignalSemaphore(&sem_SPIA);
                     break;
                 }
