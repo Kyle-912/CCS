@@ -40,7 +40,6 @@ bool start = true;
 /********************************Public Functions***********************************/
 void DisplayPageNumber()
 {
-    // SysCtlDelay(10000);
     display_drawChar(5, 260, current_page + 49, ST7789_WHITE, ST7789_WHITE, 1);
     // display_drawChar(5, 260, (unsigned char)0, ST7789_WHITE, ST7789_WHITE, 1);
     // if (current_page == 0)
@@ -53,27 +52,6 @@ void DisplayPageNumber()
 
     // uint16_t x = 0; // Starting X position
     // uint16_t y = 0; // Starting Y position
-
-    // for (uint8_t c = 0; c < 256; c++)
-    // {
-    //     // Draw the character at the current position
-    //     display_drawChar(x, y, c, ST7789_WHITE, ST7789_BLACK, 1);
-
-    //     // Move to the next position
-    //     x += 6; // Move horizontally by character width
-    //     if (x + 6 > X_MAX)
-    //     {
-    //         // If the character would exceed the screen width, move to the next row
-    //         x = 0;
-    //         y += 8;
-    //     }
-
-    //     // If the Y position exceeds the screen height, stop printing
-    //     if (y + 8 > Y_MAX)
-    //     {
-    //         break;
-    //     }
-    // }
 }
 
 void InitializeGridDisplay()
