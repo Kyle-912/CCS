@@ -416,7 +416,9 @@ void NotePlacement_Thread(void)
 
             if (highlight_x == 0 && highlight_y == 0)
             {
+                G8RTOS_WaitSemaphore(&sem_SPIA);
                 DisplayPageNumber();
+                G8RTOS_SignalSemaphore(&sem_SPIA);
             }
         }
 
