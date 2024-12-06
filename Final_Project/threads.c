@@ -95,7 +95,7 @@ void Speaker_Thread(void)
             for (int page = 0; page < MAX_PAGES; page++)
             {
                 current_page = page;
-                sleep(10);
+                sleep(8);
 
                 for (int col = 0; col < 8; col++)
                 {
