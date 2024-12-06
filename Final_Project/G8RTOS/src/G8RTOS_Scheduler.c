@@ -77,6 +77,8 @@ tcb_t *CurrentlyRunningThread;
 // Return: void
 void SysTick_Handler()
 {
+    IBit_State = StartCriticalSection();
+
     SystemTime++;
 
     tcb_t *pt = CurrentlyRunningThread;
@@ -112,6 +114,8 @@ void SysTick_Handler()
         // Move to the next periodic thread in the linked list
         Ppt = Ppt->nextPTCB;
     }
+
+    EndCriticalSection(IBit_State);
 
     HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV;
 }
