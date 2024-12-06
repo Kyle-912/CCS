@@ -144,14 +144,14 @@ void Speaker_Thread(void)
                 }
 
                 // Clear the final column highlight after playback of the current page
-                // if (prev_col != -1)
-                // {
-                //     G8RTOS_WaitSemaphore(&sem_SPIA);
-                //     ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
-                //     ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
-                //     G8RTOS_SignalSemaphore(&sem_SPIA);
-                //     prev_col = -1;
-                // }
+                if (prev_col != -1)
+                {
+                    G8RTOS_WaitSemaphore(&sem_SPIA);
+                    ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
+                    ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
+                    G8RTOS_SignalSemaphore(&sem_SPIA);
+                    prev_col = -1;
+                }
 
                 if (!playing)
                 {
