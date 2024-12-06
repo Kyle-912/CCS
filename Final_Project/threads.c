@@ -162,7 +162,7 @@ void Speaker_Thread(void)
                     {
                         for (uint8_t row = 0; row < 8; row++)
                         {
-                            uint16_t color = (grid[current_page][col][row] == 1) ? colors[row] : ST7789_BLACK;
+                            uint16_t color = (grid[saved_page][col][row] == 1) ? colors[row] : ST7789_BLACK;
 
                             ST7789_DrawRectangle(col * cell_width + 1, row * cell_height + 1, cell_width - 1, cell_height - 1, color);
                         }
