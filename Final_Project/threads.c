@@ -89,11 +89,6 @@ void Idle_Thread(void)
 {
     while (1)
     {
-        if (start)
-        {
-            InitializeGridDisplay();
-            start = false;
-        }
     }
 }
 
