@@ -86,6 +86,7 @@ void Idle_Thread(void)
 void Speaker_Thread(void)
 {
     int prev_col = -1;
+    uint8_t saved_page = 0;
 
     while (1)
     {
