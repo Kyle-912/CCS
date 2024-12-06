@@ -457,11 +457,11 @@ void Get_Joystick(void)
     // IBit_State = StartCriticalSection();
 
     // Read the joystick
-    // uint16_t x_raw = JOYSTICK_GetX();
-    // uint16_t y_raw = JOYSTICK_GetY();
+    uint16_t x_raw = JOYSTICK_GetX();
+    uint16_t y_raw = JOYSTICK_GetY();
 
-    // int16_t x = (int16_t)(x_raw - 2048); // Center around 0
-    // int16_t y = (int16_t)(y_raw - 2048); // Center around 0
+    int16_t x = (int16_t)(x_raw - 2048); // Center around 0
+    int16_t y = (int16_t)(y_raw - 2048); // Center around 0
 
     // // Send through FIFO.
     // G8RTOS_WriteFIFO(JOYSTICK_FIFO, ((uint32_t)x << 16) | (uint32_t)y);
