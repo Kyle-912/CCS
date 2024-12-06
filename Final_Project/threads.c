@@ -137,10 +137,6 @@ void Speaker_Thread(void)
 
                     if (!playing)
                     {
-                        G8RTOS_WaitSemaphore(&sem_SPIA);
-                        ST7789_Fill(ST7789_BLACK);
-                        InitializeGridDisplay();
-                        G8RTOS_SignalSemaphore(&sem_SPIA);
                         break;
                     }
 
@@ -155,6 +151,15 @@ void Speaker_Thread(void)
                     ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
                     G8RTOS_SignalSemaphore(&sem_SPIA);
                     prev_col = -1;
+                }
+
+                if (!playing)
+                {
+                    G8RTOS_WaitSemaphore(&sem_SPIA);
+                    ST7789_Fill(ST7789_BLACK);
+                    InitializeGridDisplay();
+                    G8RTOS_SignalSemaphore(&sem_SPIA);
+                    break;
                 }
             }
 
