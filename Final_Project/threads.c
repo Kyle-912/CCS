@@ -350,7 +350,7 @@ void JoystickPress_Thread()
         G8RTOS_WaitSemaphore(&sem_Joystick_Debounce);
 
         // Sleep to debounce
-        sleep(10);
+        sleep(20);
 
         // Switch status on the Multimod board.
         if (JOYSTICK_GetPress())
