@@ -41,9 +41,9 @@ void DisplayPageNumber()
     // SysCtlDelay(10000);
     // display_drawChar(5, 260, current_page, ST7789_WHITE, ST7789_WHITE, 1);
     // display_drawChar(5, 260, (unsigned char)0, ST7789_WHITE, ST7789_WHITE, 1);
-        display_drawChar(5, 260, (unsigned char)1, ST7789_WHITE, ST7789_WHITE, 1);
     if (current_page == 1)
     {
+        display_drawChar(5, 260, 48, ST7789_WHITE, ST7789_WHITE, 1);
     }
 
     // display_drawChar(7, 260, '/', ST7789_WHITE, ST7789_WHITE, 1);
