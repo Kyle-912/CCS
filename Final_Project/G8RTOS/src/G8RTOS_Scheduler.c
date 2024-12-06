@@ -77,8 +77,6 @@ tcb_t *CurrentlyRunningThread;
 // Return: void
 void SysTick_Handler()
 {
-    IBit_State = StartCriticalSection();
-
     SystemTime++;
 
     tcb_t *pt = CurrentlyRunningThread;
@@ -115,9 +113,7 @@ void SysTick_Handler()
         Ppt = Ppt->nextPTCB;
     }
 
-
     HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV;
-    EndCriticalSection(IBit_State);
 }
 
 // G8RTOS_Init
