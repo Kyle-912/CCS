@@ -156,9 +156,6 @@ void Speaker_Thread(void)
 
             // Reset to the first page after completing playback of all pages
             current_page = saved_page;
-            G8RTOS_WaitSemaphore(&sem_SPIA);
-            // InitializeGridDisplay();
-            G8RTOS_SignalSemaphore(&sem_SPIA);
         }
         else
         {
@@ -175,6 +172,7 @@ void Speaker_Thread(void)
             }
 
             G8RTOS_WaitSemaphore(&sem_SPIA);
+            ST7789_Fill(ST7789_BLACK);
             InitializeGridDisplay();
             G8RTOS_SignalSemaphore(&sem_SPIA);
 
