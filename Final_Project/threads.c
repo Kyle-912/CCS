@@ -157,6 +157,7 @@ void Speaker_Thread(void)
                 {
                     G8RTOS_WaitSemaphore(&sem_SPIA);
                     ST7789_Fill(ST7789_BLACK);
+                    sleep(10);
                     InitializeGridDisplay();
                     G8RTOS_SignalSemaphore(&sem_SPIA);
                     break;
