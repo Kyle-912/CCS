@@ -406,8 +406,11 @@ void NotePlacement_Thread(void)
         // Sleep to debounce
         sleep(100);
 
-        // Toggle the note in the grid
-        grid[current_page][highlight_x][highlight_y] ^= 1;
+        if (!playing)
+        {
+            // Toggle the note in the grid
+            grid[current_page][highlight_x][highlight_y] ^= 1;
+        }
 
         // Clear the interrupt
         GPIOIntClear(GPIO_PORTF_BASE, GPIO_PIN_0);
