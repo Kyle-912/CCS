@@ -413,6 +413,11 @@ void NotePlacement_Thread(void)
         {
             // Toggle the note in the grid
             grid[current_page][highlight_x][highlight_y] ^= 1;
+
+            if (highlight_x == 0 && highlight_y == 0)
+            {
+                DisplayPageNumber();
+            }
         }
 
         // Clear the interrupt
