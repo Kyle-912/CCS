@@ -249,6 +249,7 @@ void Display_Thread(void)
 
     while (1)
     {
+        // Starting initialization
         if (start)
         {
             IBit_State = StartCriticalSection();
