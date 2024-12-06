@@ -274,7 +274,6 @@ void Display_Thread(void)
                     }
                 }
             }
-            // DisplayPageNumber();
 
             prev_page = current_page;
         }
