@@ -40,19 +40,13 @@ bool start = true;
 /********************************Public Functions***********************************/
 void DisplayPageNumber()
 {
-    G8RTOS_WaitSemaphore(&sem_SPIA);
-
     display_drawChar(5, 260, current_page + 49, ST7789_WHITE, ST7789_WHITE, 1);
     display_drawChar(12, 260, '/', ST7789_WHITE, ST7789_WHITE, 1);
     display_drawChar(20, 260, MAX_PAGES + 48, ST7789_WHITE, ST7789_WHITE, 1);
-
-    G8RTOS_SignalSemaphore(&sem_SPIA);
 }
 
 void InitializeGridDisplay()
 {
-    G8RTOS_WaitSemaphore(&sem_SPIA);
-
     for (int y = 0; y <= 8; y++)
     {
         ST7789_DrawLine(0, y * cell_height, X_MAX, y * cell_height, ST7789_WHITE); // Horizontal lines
@@ -67,8 +61,6 @@ void InitializeGridDisplay()
 
     // Extra vertical line one pixel in from the right edge
     ST7789_DrawLine(X_MAX - 1, 0, X_MAX - 1, Y_MAX, ST7789_WHITE);
-
-    G8RTOS_SignalSemaphore(&sem_SPIA);
 
     DisplayPageNumber();
 }
@@ -162,7 +154,9 @@ void Speaker_Thread(void)
 
             // Reset to the first page after completing playback of all pages
             current_page = saved_page;
+            G8RTOS_WaitSemaphore(&sem_SPIA);
             InitializeGridDisplay();
+            G8RTOS_SignalSemaphore(&sem_SPIA);
         }
         else
         {
@@ -254,16 +248,14 @@ void Display_Thread(void)
             start = false;
         }
 
+        G8RTOS_WaitSemaphore(&sem_SPIA);
+
         // Check if the page has changed
         if (prev_page != current_page)
         {
-            G8RTOS_WaitSemaphore(&sem_SPIA);
             ST7789_Fill(ST7789_BLACK);
-            G8RTOS_SignalSemaphore(&sem_SPIA);
-
             InitializeGridDisplay();
 
-            G8RTOS_WaitSemaphore(&sem_SPIA);
             for (uint8_t col = 0; col < 8; col++)
             {
                 for (uint8_t row = 0; row < 8; row++)
@@ -275,12 +267,9 @@ void Display_Thread(void)
                     }
                 }
             }
-            G8RTOS_SignalSemaphore(&sem_SPIA);
 
             prev_page = current_page;
         }
-
-        G8RTOS_WaitSemaphore(&sem_SPIA);
 
         // Update grid contents based on note placement
         for (uint8_t col = 0; col < 8; col++)
