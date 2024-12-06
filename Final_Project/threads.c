@@ -31,6 +31,7 @@ uint8_t grid[MAX_PAGES][8][8] = {0};
 uint8_t current_page = 0;
 uint8_t highlight_x = 0, highlight_y = 0;
 uint8_t playing = 0;
+int prev_col = -1;
 uint16_t cell_width = X_MAX / 8;
 uint16_t cell_height = Y_MAX / 8;
 uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
@@ -83,7 +84,6 @@ void Idle_Thread(void)
 
 void Speaker_Thread(void)
 {
-    int prev_col = -1;
     uint8_t saved_page = 0;
 
     while (1)
@@ -95,7 +95,7 @@ void Speaker_Thread(void)
             for (int page = 0; page < MAX_PAGES; page++)
             {
                 current_page = page;
-                sleep(1);
+                sleep(10);
 
                 for (int col = 0; col < 8; col++)
                 {
@@ -284,7 +284,7 @@ void Display_Thread(void)
             }
         }
 
-        if (prev_x != highlight_x || prev_y != highlight_y)
+        if (prev_x != highlight_x || prev_y != highlight_y && prev_col + 1 != highlight_x)
         {
             // Clear the previous yellow highlight by restoring white grid lines
             ST7789_DrawLine(prev_x * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, prev_y * cell_height, ST7789_WHITE);             // Top
