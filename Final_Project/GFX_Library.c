@@ -448,7 +448,6 @@ void display_fillGradient(uint8_t r1, uint8_t g1, uint8_t b1, uint8_t r2, uint8_
     float rDiff = r2 - r1;
     float gDiff = g2 - g1;
     float bDiff = b2 - b1;
-    uint8_t rVal, bVal, gVal;
     float rChange, gChange, bChange;
 
     for (int i = Y_MAX; i >= 0; i--){
@@ -464,7 +463,6 @@ void display_fillChroma(uint8_t r1, uint8_t g1, uint8_t b1, uint8_t r2, uint8_t 
         float rDiff = r2 - r1;
         float gDiff = g2 - g1;
         float bDiff = b2 - b1;
-        uint8_t rVal, bVal, gVal;
         float rChange, gChange, bChange;
 
         for (int i = Y_MAX; i >= 0; i--){
@@ -474,35 +472,6 @@ void display_fillChroma(uint8_t r1, uint8_t g1, uint8_t b1, uint8_t r2, uint8_t 
             ST7789_DrawHLine(0,i,X_MAX,display_color565(b1+(int)bChange, g1+(int)gChange,r1+(int)rChange));
         }
 }
-
-//
-//void display_fillGradientArr(uint8_t r1, uint8_t g1, uint8_t b1, uint8_t r2, uint8_t g2, uint8_t b2, uint16_t* arr){
-//    float rDiff = r2 - r1;
-//    float gDiff = g2 - g1;
-//    float bDiff = b2 - b1;
-//    uint8_t rVal, bVal, gVal;
-//    rVal = r1;
-//    gVal = g1;
-//    bVal = b1;
-//    uint16_t temp_Color = 0;
-//    float rChange, gChange, bChange;
-//
-//    for (int i = Y_MAX; i >= 0; i--){
-//        rChange = ((float)i)/(((float)Y_MAX)/rDiff);
-//        gChange = ((float)i)/(((float)Y_MAX)/gDiff);
-//        bChange = ((float)i)/(((float)Y_MAX)/bDiff);
-//        for(int j = 0; j < X_MAX; j++){
-//            temp_Color = display_color565(b1+(int)bChange, g1+(int)gChange,r1+(int)rChange);
-//
-//            if(*((arr+((Y_MAX-i)*Y_MAX))+j) != temp_Color){
-//                *((arr+((Y_MAX-i)*Y_MAX))+j) = temp_Color;
-//                ST7789_DrawPixel(j, Y_MAX-i, temp_Color);
-//            }
-//        }
-//
-//    }
-//
-//}
 
 /**************************************************************************/
 /*!
