@@ -35,6 +35,8 @@ uint16_t cell_width = X_MAX / 8;
 uint16_t cell_height = Y_MAX / 8;
 uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
 
+bool start = true;
+
 /********************************Public Functions***********************************/
 void DisplayPageNumber()
 {
@@ -109,6 +111,11 @@ void Idle_Thread(void)
 {
     while (1)
     {
+        if (start)
+        {
+            InitializeGridDisplay();
+        }
+        start != start;
     }
 }
 
