@@ -210,21 +210,21 @@ void Volume_Thread(void)
         x = -x;
 
         // Adjust volume
-        if (y > 100)
+        if (y > 400)
         {
             volume += 250;
         }
-        else if (y < -100)
+        else if (y < -400)
         {
             volume -= 250;
         }
 
         // Adjust tempo
-        if (x > 100)
+        if (x > 400)
         {
             tempo = (tempo < 240) ? tempo + 5 : 240;
         }
-        else if (x < -100)
+        else if (x < -400)
         {
             tempo = (tempo > 40) ? tempo - 5 : 40;
         }
