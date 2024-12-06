@@ -101,14 +101,13 @@ void Speaker_Thread(void)
                     G8RTOS_WaitSemaphore(&sem_SPIA);
 
                     // Highlight the current playing column with red
-                    ST7789_DrawLine((col * cell_width), 0, (col * cell_width), Y_MAX, ST7789_RED);                             // Left vertical line
-                    ST7789_DrawLine(((col + 1) * cell_width - 1) + 1, 0, ((col + 1) * cell_width - 1) + 1, Y_MAX, ST7789_RED); // Right vertical line
+                    ST7789_DrawLine((col * cell_width), 0, (col * cell_width), Y_MAX, ST7789_RED);                     // Left vertical line
+                    ST7789_DrawLine(((col + 1) * cell_width - 1), 0, ((col + 1) * cell_width - 1), Y_MAX, ST7789_RED); // Right vertical line
 
-                    // Clear the previous column highlight
-                    if (prev_col != -1 && prev_col != col)
+                    // Clear the previous column's left vertical line and the current column's previous right vertical line
+                    if (prev_col != -1)
                     {
-                        ST7789_DrawLine((col * cell_width), 0, (col * cell_width), Y_MAX, ST7789_WHITE);                                       // Left vertical line
-                        ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX, ST7789_WHITE); // Right vertical line
+                        ST7789_DrawLine(((prev_col + 1) * cell_width - 1), 0, ((prev_col + 1) * cell_width - 1), Y_MAX, ST7789_WHITE); // Right vertical line of previous column
                     }
 
                     G8RTOS_SignalSemaphore(&sem_SPIA);
