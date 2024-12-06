@@ -157,7 +157,7 @@ void Speaker_Thread(void)
             // Reset to the first page after completing playback of all pages
             current_page = saved_page;
             G8RTOS_WaitSemaphore(&sem_SPIA);
-            InitializeGridDisplay();
+            // InitializeGridDisplay();
             G8RTOS_SignalSemaphore(&sem_SPIA);
         }
         else
@@ -173,6 +173,10 @@ void Speaker_Thread(void)
                 G8RTOS_SignalSemaphore(&sem_SPIA);
                 prev_col = -1;
             }
+
+            G8RTOS_WaitSemaphore(&sem_SPIA);
+            InitializeGridDisplay();
+            G8RTOS_SignalSemaphore(&sem_SPIA);
 
             sleep(10);
         }
