@@ -259,7 +259,7 @@ void Display_Thread(void)
         G8RTOS_WaitSemaphore(&sem_SPIA);
 
         // Check if the page has changed
-        if (prev_page != current_page)
+        if (prev_page != current_page && !playing)
         {
             ST7789_Fill(ST7789_BLACK);
             InitializeGridDisplay();
