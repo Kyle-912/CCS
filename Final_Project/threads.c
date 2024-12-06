@@ -114,8 +114,8 @@ void Idle_Thread(void)
         if (start)
         {
             InitializeGridDisplay();
+            start != start;
         }
-        start = false;
     }
 }
 
