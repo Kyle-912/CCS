@@ -91,7 +91,7 @@ void Speaker_Thread(void)
     {
         if (playing)
         {
-            for (int page = 0; page < MAX_PAGES; page++) // Iterate through all pages
+            for (int page = 0; page < MAX_PAGES; page++)
             {
                 current_page = page;
 
@@ -122,16 +122,17 @@ void Speaker_Thread(void)
                         {
                             PlayNoteAtRow(row);
                             note_playing = 1;
-                            if (!playing)
-                            {
-                                break;
-                            }
                         }
                     }
 
                     if (!note_playing) // Silence if no notes are selected in the column
                     {
                         TimerDisable(TIMER1_BASE, TIMER_A);
+                    }
+
+                    if (!playing)
+                    {
+                        break;
                     }
 
                     sleep(60000 / (tempo * 2));
