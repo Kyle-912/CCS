@@ -13,8 +13,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "inc/hw_nvic.h"
-
 #include "driverlib/timer.h"
 #include "driverlib/adc.h"
 
