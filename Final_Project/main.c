@@ -53,7 +53,7 @@ int main(void)
     G8RTOS_Add_APeriodicEvent(TivaButton_Handler, 0, INT_GPIOF);
     G8RTOS_Add_APeriodicEvent(DAC_Timer_Handler, 0, DAC_INTERRUPT);
 
-    InitializeGridDisplay();
+    // InitializeGridDisplay();
 
     G8RTOS_Launch();
     while (1)
