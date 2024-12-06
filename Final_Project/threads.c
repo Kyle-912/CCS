@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "inc/hw_nvic.h"
+
 #include "driverlib/timer.h"
 #include "driverlib/adc.h"
 
@@ -95,7 +97,7 @@ void Speaker_Thread(void)
             for (int page = 0; page < MAX_PAGES; page++)
             {
                 current_page = page;
-                sleep(8);
+                HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV;
 
                 for (int col = 0; col < 8; col++)
                 {
