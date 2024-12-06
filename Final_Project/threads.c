@@ -31,6 +31,7 @@ uint8_t grid[MAX_PAGES][8][8] = {0};
 uint8_t current_page = 0;
 uint8_t highlight_x = 0, highlight_y = 0;
 uint8_t playing = 0;
+bool playing_started = false;
 int prev_col = -1;
 uint16_t cell_width = X_MAX / 8;
 uint16_t cell_height = Y_MAX / 8;
@@ -90,6 +91,7 @@ void Speaker_Thread(void)
     {
         if (playing)
         {
+            playing_started = true;
             saved_page = current_page;
 
             for (int page = 0; page < MAX_PAGES; page++)
@@ -244,7 +246,6 @@ void Display_Thread(void)
     uint8_t prev_x = 0, prev_y = 0;
     uint8_t prev_page = current_page;
     uint8_t prev_grid[MAX_PAGES][8][8] = {0};
-    bool playing_started = false;
 
     while (1)
     {
