@@ -201,24 +201,26 @@ void Volume_Thread(void)
         int16_t x = (joystick_data >> 16) & 0xFFFF;
         int16_t y = joystick_data & 0xFFFF;
 
+        x = -x;
+
         // Adjust volume
         if (y > 100)
         {
-            volume -= 250;
+            volume += 250;
         }
         else if (y < -100)
         {
-            volume += 250;
+            volume -= 250;
         }
 
         // Adjust tempo
-        if (x > 50)
+        if (x > 100)
         {
-            tempo = (tempo < 240) ? tempo + 1 : 240;
+            tempo = (tempo < 240) ? tempo + 5 : 240;
         }
-        else if (x < -50)
+        else if (x < -100)
         {
-            tempo = (tempo > 40) ? tempo - 1 : 40;
+            tempo = (tempo > 40) ? tempo - 5 : 40;
         }
 
         // Limit volume to 0-4095 (12 bit range)
