@@ -122,6 +122,10 @@ void Speaker_Thread(void)
                         {
                             PlayNoteAtRow(row);
                             note_playing = 1;
+                            if (!playing)
+                            {
+                                break;
+                            }
                         }
                     }
 
