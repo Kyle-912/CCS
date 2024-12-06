@@ -137,6 +137,10 @@ void Speaker_Thread(void)
 
                     if (!playing)
                     {
+                        G8RTOS_WaitSemaphore(&sem_SPIA);
+                        ST7789_Fill(ST7789_BLACK);
+                        InitializeGridDisplay();
+                        G8RTOS_SignalSemaphore(&sem_SPIA);
                         break;
                     }
 
@@ -170,11 +174,6 @@ void Speaker_Thread(void)
                 G8RTOS_SignalSemaphore(&sem_SPIA);
                 prev_col = -1;
             }
-
-            G8RTOS_WaitSemaphore(&sem_SPIA);
-            ST7789_Fill(ST7789_BLACK);
-            InitializeGridDisplay();
-            G8RTOS_SignalSemaphore(&sem_SPIA);
 
             sleep(10);
         }
