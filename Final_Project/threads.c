@@ -349,6 +349,7 @@ void JoystickPress_Thread()
         GPIOIntEnable(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
     }
 }
+
 void Navigation_Thread(void)
 {
     uint8_t buttons;
