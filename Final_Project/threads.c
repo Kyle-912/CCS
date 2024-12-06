@@ -454,7 +454,7 @@ void NotePlacement_Thread(void)
 
 void Get_Joystick(void)
 {
-    IBit_State = StartCriticalSection();
+    // IBit_State = StartCriticalSection();
 
     // Read the joystick
     uint16_t x_raw = JOYSTICK_GetX();
@@ -466,7 +466,7 @@ void Get_Joystick(void)
     // Send through FIFO.
     G8RTOS_WriteFIFO(JOYSTICK_FIFO, ((uint32_t)x << 16) | (uint32_t)y);
 
-    EndCriticalSection(IBit_State);
+    // EndCriticalSection(IBit_State);
 }
 
 /*******************************Aperiodic Threads***********************************/
