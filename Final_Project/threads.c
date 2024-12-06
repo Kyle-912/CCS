@@ -110,6 +110,12 @@ void Speaker_Thread(void)
                     ST7789_DrawLine((col * cell_width), 0, (col * cell_width), Y_MAX, ST7789_RED);                             // Left vertical line
                     ST7789_DrawLine(((col + 1) * cell_width - 1) + 1, 0, ((col + 1) * cell_width - 1) + 1, Y_MAX, ST7789_RED); // Right vertical line
 
+                    if (col == 7)
+                    {
+                        ST7789_DrawLine(X_MAX - 1, 0, X_MAX - 1, Y_MAX, ST7789_RED); // Handle right edge
+                    }
+
+
                     if (prev_col != -1 && prev_col != col)
                     {
                         ST7789_DrawLine((prev_col * cell_width), 0, (prev_col * cell_width), Y_MAX, ST7789_WHITE); // Left vertical line of previous column
