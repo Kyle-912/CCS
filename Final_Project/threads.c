@@ -353,18 +353,16 @@ void JoystickPress_Thread()
         sleep(15);
 
         // Switch status on the Multimod board.
-        if (JOYSTICK_GetPress())
-        {
+        // if (JOYSTICK_GetPress())
+        // {
             playing = !playing;
-        }
+        // }
 
         // Clear the interrupt
         GPIOIntClear(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
 
         // Re-enable the interrupt so it can occur again.
         GPIOIntEnable(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
-
-        sleep(15);
     }
 }
 
