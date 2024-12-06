@@ -153,6 +153,7 @@ void Speaker_Thread(void)
                     prev_col = -1;
                 }
 
+                // Reset when done (mostly important for restarting while on first page)
                 if (!playing)
                 {
                     G8RTOS_WaitSemaphore(&sem_SPIA);
