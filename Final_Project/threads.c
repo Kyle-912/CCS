@@ -97,7 +97,10 @@ void Speaker_Thread(void)
             for (int page = 0; page < MAX_PAGES; page++)
             {
                 current_page = page;
-                HWREG(NVIC_INT_CTRL) |= NVIC_INT_CTRL_PEND_SV;
+                if (playing)
+                {
+                    sleep(10);
+                }
 
                 for (int col = 0; col < 8; col++)
                 {
