@@ -40,7 +40,7 @@ void DisplayPageNumber()
 {
     // SysCtlDelay(10000);
     display_drawChar(5, 260, current_page, ST7789_WHITE, ST7789_WHITE, 1);
-    // display_drawChar(5, 260, (unsigned char) 1, ST7789_WHITE, ST7789_WHITE, 1);
+    display_drawChar(5, 260, (unsigned char) 1, ST7789_WHITE, ST7789_WHITE, 1);
     // display_drawChar(7, 260, '/', ST7789_WHITE, ST7789_WHITE, 1);
     // display_drawChar(20, 260, MAX_PAGES, ST7789_WHITE, ST7789_WHITE, 1);
 
