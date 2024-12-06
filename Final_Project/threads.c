@@ -41,7 +41,7 @@ bool start = true;
 void DisplayPageNumber()
 {
     // SysCtlDelay(10000);
-    display_drawChar(5, 260, current_page + 48, ST7789_WHITE, ST7789_WHITE, 1);
+    display_drawChar(5, 260, current_page + 49, ST7789_WHITE, ST7789_WHITE, 1);
     // display_drawChar(5, 260, (unsigned char)0, ST7789_WHITE, ST7789_WHITE, 1);
     // if (current_page == 0)
     // {
@@ -313,7 +313,7 @@ void Display_Thread(void)
         ST7789_DrawLine((prev_x + 1) * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Right
         ST7789_DrawLine(prev_x * cell_width, (prev_y + 1) * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Bottom
 
-        if (!playing && current_page == 0)
+        if (!playing)
         {
             // Draw new yellow highlight for the currently selected rectangle
             ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, highlight_y * cell_height, ST7789_YELLOW);             // Top
