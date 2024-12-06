@@ -99,7 +99,7 @@ void Speaker_Thread(void)
                 current_page = page;
                 if (playing)
                 {
-                    sleep(10);
+                    sleep(10); // Yields for display thread so red lines aren't covered by grid
                 }
 
                 for (int col = 0; col < 8; col++)
@@ -180,17 +180,6 @@ void Speaker_Thread(void)
         else
         {
             TimerDisable(TIMER1_BASE, TIMER_A);
-
-            // // Clear any remaining highlights when playback stops
-            // if (prev_col != -1)
-            // {
-            //     G8RTOS_WaitSemaphore(&sem_SPIA);
-            //     ST7789_DrawLine((prev_col * cell_width) + 1, 0, (prev_col * cell_width) + 1, Y_MAX - 1, ST7789_WHITE);                     // Left vertical line
-            //     ST7789_DrawLine(((prev_col + 1) * cell_width - 1) + 1, 0, ((prev_col + 1) * cell_width - 1) + 1, Y_MAX - 1, ST7789_WHITE); // Right vertical line
-            //     G8RTOS_SignalSemaphore(&sem_SPIA);
-            //     prev_col = -1;
-            // }
-
             sleep(10);
         }
     }
