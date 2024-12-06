@@ -95,6 +95,7 @@ void Speaker_Thread(void)
             for (int page = 0; page < MAX_PAGES; page++)
             {
                 current_page = page;
+                sleep(1);
 
                 for (int col = 0; col < 8; col++)
                 {
@@ -283,7 +284,7 @@ void Display_Thread(void)
             }
         }
 
-        if (prev_x != highlight_x || prev_y != highlight_y || playing)
+        if (prev_x != highlight_x || prev_y != highlight_y)
         {
             // Clear the previous yellow highlight by restoring white grid lines
             ST7789_DrawLine(prev_x * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, prev_y * cell_height, ST7789_WHITE);             // Top
