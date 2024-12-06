@@ -39,8 +39,6 @@ void JOYSTICK_Init(void) {
     ADCSequenceStepConfigure(ADC0_BASE, 2, 1, ADC_CTL_CH1 | ADC_CTL_IE | ADC_CTL_END);
     ADCSequenceEnable(ADC0_BASE, 2);
 
-
-
     return;
 }
 
