@@ -40,9 +40,9 @@ bool start = true;
 /********************************Public Functions***********************************/
 void DisplayPageNumber()
 {
-    display_drawChar(5, 260, current_page + 49, ST7789_WHITE, ST7789_WHITE, 1);
-    display_drawChar(12, 260, '/', ST7789_WHITE, ST7789_WHITE, 1);
-    display_drawChar(20, 260, MAX_PAGES + 48, ST7789_WHITE, ST7789_WHITE, 1);
+    display_drawChar(7, 260, current_page + 49, ST7789_WHITE, ST7789_WHITE, 1);
+    display_drawChar(14, 260, '/', ST7789_WHITE, ST7789_WHITE, 1);
+    display_drawChar(21, 260, MAX_PAGES + 48, ST7789_WHITE, ST7789_WHITE, 1);
 }
 
 void InitializeGridDisplay()
@@ -305,6 +305,7 @@ void Display_Thread(void)
             ST7789_DrawLine(highlight_x * cell_width, (highlight_y + 1) * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Bottom
         }
 
+        // Handle placing a box over the page number
         if (highlight_x == 0 && highlight_y == 7)
         {
             DisplayPageNumber();
