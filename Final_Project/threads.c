@@ -41,17 +41,8 @@ bool start = true;
 void DisplayPageNumber()
 {
     display_drawChar(5, 260, current_page + 49, ST7789_WHITE, ST7789_WHITE, 1);
-    // display_drawChar(5, 260, (unsigned char)0, ST7789_WHITE, ST7789_WHITE, 1);
-    // if (current_page == 0)
-    // {
-        // display_drawChar(5, 260, 48, ST7789_WHITE, ST7789_WHITE, 1);
-    // }
-
     display_drawChar(12, 260, '/', ST7789_WHITE, ST7789_WHITE, 1);
-    // display_drawChar(20, 260, MAX_PAGES, ST7789_WHITE, ST7789_WHITE, 1);
-
-    // uint16_t x = 0; // Starting X position
-    // uint16_t y = 0; // Starting Y position
+    display_drawChar(20, 260, MAX_PAGES + 49, ST7789_WHITE, ST7789_WHITE, 1);
 }
 
 void InitializeGridDisplay()
@@ -242,6 +233,14 @@ void Display_Thread(void)
     while (1)
     {
         G8RTOS_WaitSemaphore(&sem_SPIA);
+
+        if (start)
+        {
+            IBit_State = StartCriticalSection();
+            InitializeGridDisplay();
+            EndCriticalSection(IBit_State);
+            start = false;
+        }
 
         // Check if the page has changed
         if (prev_page != current_page)
