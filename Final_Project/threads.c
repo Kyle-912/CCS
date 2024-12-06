@@ -201,6 +201,8 @@ void Volume_Thread(void)
         int16_t x = (joystick_data >> 16) & 0xFFFF;
         int16_t y = joystick_data & 0xFFFF;
 
+        y = -y;
+
         // Adjust volume
         if (y > 50)
         {
