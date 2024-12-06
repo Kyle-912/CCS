@@ -19,7 +19,7 @@
 #include "GFX_Library.h"
 
 #define SIGNAL_STEPS (2)
-#define MAX_PAGES 4
+#define MAX_PAGES 5
 
 /*********************************Global Variables**********************************/
 
