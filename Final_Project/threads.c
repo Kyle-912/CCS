@@ -305,7 +305,7 @@ void Display_Thread(void)
             ST7789_DrawLine(highlight_x * cell_width, (highlight_y + 1) * cell_height, (highlight_x + 1) * cell_width, (highlight_y + 1) * cell_height, ST7789_YELLOW); // Bottom
         }
 
-        // Handle placing a box over the page number
+        // Handle placing a note over the page number
         if (highlight_x == 0 && highlight_y == 7)
         {
             DisplayPageNumber();
