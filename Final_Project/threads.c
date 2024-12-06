@@ -28,7 +28,7 @@ int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t volume = 0xFFF;
 int16_t tempo = 120;
 uint8_t grid[MAX_PAGES][8][8] = {0};
-uint8_t current_page = -1;
+uint8_t current_page = 0;
 uint8_t highlight_x = 0, highlight_y = 0;
 uint8_t playing = 0;
 uint16_t cell_width = X_MAX / 8;
@@ -41,7 +41,7 @@ void DisplayPageNumber()
     // SysCtlDelay(10000);
     // display_drawChar(5, 260, current_page, ST7789_WHITE, ST7789_WHITE, 1);
     // display_drawChar(5, 260, (unsigned char)0, ST7789_WHITE, ST7789_WHITE, 1);
-    if (current_page == -1)
+    if (current_page == 1)
     {
         display_drawChar(5, 260, 48, ST7789_WHITE, ST7789_WHITE, 1);
     }
@@ -306,7 +306,7 @@ void Display_Thread(void)
         ST7789_DrawLine((prev_x + 1) * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Right
         ST7789_DrawLine(prev_x * cell_width, (prev_y + 1) * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Bottom
 
-        if (!playing)
+        if (!playing && current_page == 0)
         {
             // Draw new yellow highlight for the currently selected rectangle
             ST7789_DrawLine(highlight_x * cell_width, highlight_y * cell_height, (highlight_x + 1) * cell_width, highlight_y * cell_height, ST7789_YELLOW);             // Top
