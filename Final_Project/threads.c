@@ -34,6 +34,9 @@ uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t volume = 0xFFF;
 int16_t tempo = 120;
+bool start = true;
+bool playing_started = false;
+uint8_t playing = 0;
 
 // Grid
 uint8_t grid[MAX_PAGES][8][8] = {0};
@@ -43,11 +46,6 @@ uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST
 uint8_t current_page = 0;
 uint8_t highlight_x = 0, highlight_y = 0;
 int prev_col = -1;
-
-// Playing
-bool start = true;
-bool playing_started = false;
-uint8_t playing = 0;
 
 /********************************Public Functions***********************************/
 void DisplayPageNumber()
