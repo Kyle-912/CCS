@@ -346,7 +346,6 @@ void Display_Thread(void)
     }
 }
 
-
 void Navigation_Thread(void)
 {
     uint8_t buttons;
@@ -430,6 +429,26 @@ void NotePlacement_Thread(void)
 
         // Re-enable the interrupt
         GPIOIntEnable(GPIO_PORTF_BASE, GPIO_PIN_0);
+    }
+}
+
+void JoystickPress_Thread()
+{
+    while (1)
+    {
+        // Wait for a signal to read the joystick press
+        G8RTOS_WaitSemaphore(&sem_Joystick_Debounce);
+
+        playing = !playing;
+
+        // Sleep to debounce
+        sleep(100);
+
+        // Clear the interrupt
+        GPIOIntClear(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
+
+        // Re-enable the interrupt so it can occur again.
+        GPIOIntEnable(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
     }
 }
 
