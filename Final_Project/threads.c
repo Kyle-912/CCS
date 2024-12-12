@@ -1,6 +1,6 @@
 // G8RTOS_Threads.c
 // Date Created: 2024-11-30
-// Date Updated: 2024-12-01
+// Date Updated: 2024-12-12
 // Defines for thread functions.
 
 /************************************Includes***************************************/
@@ -19,19 +19,23 @@
 #include "GFX_Library.h"
 
 #define SIGNAL_STEPS (2)
-#define MAX_PAGES 5
+
+#define MAX_PAGES 5 // Modify to add or remove pages
 
 /*********************************Global Variables**********************************/
 
+// Settings
 uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260}; // Modify to change pitches played
 uint16_t volume_step = 250;                                         // Modify to change volume adjustment speed
 uint8_t tempo_step = 5;                                             // Modify to change tempo adjustment speed
 
+// Playback
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t volume = 0xFFF;
 int16_t tempo = 120;
 
+// Grid
 uint8_t grid[MAX_PAGES][8][8] = {0};
 uint16_t cell_width = X_MAX / 8;
 uint16_t cell_height = Y_MAX / 8;
@@ -40,6 +44,7 @@ uint8_t current_page = 0;
 uint8_t highlight_x = 0, highlight_y = 0;
 int prev_col = -1;
 
+// Playing
 bool start = true;
 bool playing_started = false;
 uint8_t playing = 0;
