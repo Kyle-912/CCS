@@ -43,7 +43,6 @@ uint16_t cell_height = Y_MAX / 8;
 uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
 uint8_t current_page = 0;
 uint8_t highlight_x = 0, highlight_y = 0;
-int prev_col = -1;
 
 /********************************Public Functions***********************************/
 void DisplayPageNumber()
@@ -91,6 +90,7 @@ void Idle_Thread(void)
 void Speaker_Thread(void)
 {
     uint8_t saved_page = 0;
+    uint8_t prev_col = -1;
 
     while (1)
     {
