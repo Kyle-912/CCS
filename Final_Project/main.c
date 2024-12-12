@@ -1,7 +1,18 @@
 // Final Lab, uP2 Fall 2024
 // Created: 2024-11-30
 // Updated: 2024-12-12
-/**/
+/*
+SW1 - Up
+SW2 - Down
+SW3 - Left
+SW4 - Right
+Tiva SW2 - Toggle cell
+Thumbstick press - Toggle playback
+Thumbstick up - Volume up
+Thumbstick down - Volume down
+Thumbstick left - Lower tempo
+Thumbstick right - Raise tempo
+*/
 
 /************************************Includes***************************************/
 
