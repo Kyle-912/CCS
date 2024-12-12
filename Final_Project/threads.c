@@ -198,7 +198,6 @@ void Speaker_Thread(void)
 
 void Volume_Thread(void)
 {
-    // Initialize / declare any variables here
     int32_t joystick_data;
 
     while (1)
@@ -254,7 +253,6 @@ void Volume_Thread(void)
 
 void Display_Thread(void)
 {
-    // Initialize / declare any variables here
     uint8_t prev_x = 0, prev_y = 0;
     uint8_t prev_page = current_page;
     uint8_t prev_grid[MAX_PAGES][8][8] = {0};
@@ -348,25 +346,6 @@ void Display_Thread(void)
     }
 }
 
-void JoystickPress_Thread()
-{
-    while (1)
-    {
-        // Wait for a signal to read the joystick press
-        G8RTOS_WaitSemaphore(&sem_Joystick_Debounce);
-
-        playing = !playing;
-
-        // Sleep to debounce
-        sleep(100);
-
-        // Clear the interrupt
-        GPIOIntClear(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
-
-        // Re-enable the interrupt so it can occur again.
-        GPIOIntEnable(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
-    }
-}
 
 void Navigation_Thread(void)
 {
