@@ -196,61 +196,6 @@ void Speaker_Thread(void)
     }
 }
 
-void Volume_Thread(void)
-{
-    int32_t joystick_data;
-
-    while (1)
-    {
-        joystick_data = G8RTOS_ReadFIFO(JOYSTICK_FIFO);
-        int16_t x = (joystick_data >> 16) & 0xFFFF;
-        int16_t y = joystick_data & 0xFFFF;
-
-        x = -x;
-
-        // Adjust volume
-        if (y > 400)
-        {
-            volume += 250;
-        }
-        else if (y < -400)
-        {
-            volume -= 250;
-        }
-
-        // Adjust tempo
-        if (x > 400)
-        {
-            tempo = (tempo < 240) ? tempo + 5 : 240;
-        }
-        else if (x < -400)
-        {
-            tempo = (tempo > 40) ? tempo - 5 : 40;
-        }
-
-        // Limit volume to 0-4095 (12 bit range)
-        if (volume < 0)
-        {
-            volume = 0;
-        }
-        if (volume > 4095)
-        {
-            volume = 4095;
-        }
-
-        if (tempo < 40)
-        {
-            tempo = 40;
-        }
-        if (tempo > 240)
-        {
-            tempo = 240;
-        }
-
-        sleep(10);
-    }
-}
-
 void Display_Thread(void)
 {
     uint8_t prev_x = 0, prev_y = 0;
@@ -449,6 +394,61 @@ void JoystickPress_Thread()
 
         // Re-enable the interrupt so it can occur again.
         GPIOIntEnable(GPIO_PORTD_BASE, JOYSTICK_INT_PIN);
+    }
+}
+
+void Volume_Thread(void)
+{
+    int32_t joystick_data;
+
+    while (1)
+    {
+        joystick_data = G8RTOS_ReadFIFO(JOYSTICK_FIFO);
+        int16_t x = (joystick_data >> 16) & 0xFFFF;
+        int16_t y = joystick_data & 0xFFFF;
+
+        x = -x;
+
+        // Adjust volume
+        if (y > 400)
+        {
+            volume += 250;
+        }
+        else if (y < -400)
+        {
+            volume -= 250;
+        }
+
+        // Adjust tempo
+        if (x > 400)
+        {
+            tempo = (tempo < 240) ? tempo + 5 : 240;
+        }
+        else if (x < -400)
+        {
+            tempo = (tempo > 40) ? tempo - 5 : 40;
+        }
+
+        // Limit volume to 0-4095 (12 bit range)
+        if (volume < 0)
+        {
+            volume = 0;
+        }
+        if (volume > 4095)
+        {
+            volume = 4095;
+        }
+
+        if (tempo < 40)
+        {
+            tempo = 40;
+        }
+        if (tempo > 240)
+        {
+            tempo = 240;
+        }
+
+        sleep(10);
     }
 }
 
