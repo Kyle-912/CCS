@@ -260,6 +260,7 @@ void Display_Thread(void)
             }
         }
 
+        // Draw or clear the highlighted cell
         if (prev_x != highlight_x || prev_y != highlight_y)
         {
             // Clear the previous yellow highlight by restoring white grid lines
@@ -268,7 +269,6 @@ void Display_Thread(void)
             ST7789_DrawLine((prev_x + 1) * cell_width, prev_y * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Right
             ST7789_DrawLine(prev_x * cell_width, (prev_y + 1) * cell_height, (prev_x + 1) * cell_width, (prev_y + 1) * cell_height, ST7789_WHITE); // Bottom
         }
-
         if (!playing)
         {
             // Draw new yellow highlight for the currently selected rectangle
@@ -316,7 +316,7 @@ void Navigation_Thread(void)
             // Read buttons
             buttons = -MultimodButtons_Get();
 
-            // Move highlight box
+            // Move highlighted cell
             if (buttons & SW1) // Up
             {
                 highlight_y = (highlight_y < 7) ? highlight_y + 1 : 0;
