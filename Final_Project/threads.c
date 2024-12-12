@@ -25,7 +25,7 @@
 /*********************************Global Variables**********************************/
 
 // Settings
-uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260}; // Modify to change pitches played
+uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260}; // Modify to change pitches played in Hz
 uint16_t volume_step = 250;                                         // Modify to change volume adjustment speed
 uint8_t tempo_step = 5;                                             // Modify to change tempo adjustment speed
 
@@ -437,7 +437,7 @@ void Volume_Thread(void)
             tempo = (tempo > 40) ? tempo - tempo_step : 40;
         }
 
-        // Limit volume to 0-4095 (12 bit range)
+        // Limit volume and tempo to accepted ranges
         if (volume < 0)
         {
             volume = 0;
@@ -471,7 +471,7 @@ void Get_Joystick(void)
     int16_t x = (int16_t)(x_raw - 2048); // Center around 0
     int16_t y = (int16_t)(y_raw - 2048); // Center around 0
 
-    // // Send through FIFO.
+    // Send through FIFO.
     G8RTOS_WriteFIFO(JOYSTICK_FIFO, ((uint32_t)x << 16) | (uint32_t)y);
 }
 

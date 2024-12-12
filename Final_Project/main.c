@@ -6,7 +6,11 @@ SW1 - Up
 SW2 - Down
 SW3 - Left
 SW4 - Right
+
+Tiva SW1 - Unmappable (conflicts with display)
 Tiva SW2 - Toggle cell
+Tiva reset - Clear all notes
+
 Thumbstick press - Toggle playback
 Thumbstick up - Volume up
 Thumbstick down - Volume down
