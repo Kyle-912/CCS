@@ -23,22 +23,26 @@
 
 /*********************************Global Variables**********************************/
 
-uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
+uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260}; // Modify to change pitches played
+uint16_t volume_step = 250;                                         // Modify to change volume adjustment speed
+uint8_t tempo_step = 5;                                             // Modify to change tempo adjustment speed
 
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t volume = 0xFFF;
 int16_t tempo = 120;
+
 uint8_t grid[MAX_PAGES][8][8] = {0};
-uint8_t current_page = 0;
-uint8_t highlight_x = 0, highlight_y = 0;
-int prev_col = -1;
-bool start = true;
-uint8_t playing = 0;
-bool playing_started = false;
 uint16_t cell_width = X_MAX / 8;
 uint16_t cell_height = Y_MAX / 8;
 uint16_t colors[8] = {ST7789_RED, ST7789_ORANGE, ST7789_YELLOW, ST7789_GREEN, ST7789_BLUE, ST7789_VIOLET, ST7789_PINK, ST7789_RED};
+uint8_t current_page = 0;
+uint8_t highlight_x = 0, highlight_y = 0;
+int prev_col = -1;
+
+bool start = true;
+bool playing_started = false;
+uint8_t playing = 0;
 
 /********************************Public Functions***********************************/
 void DisplayPageNumber()
@@ -413,21 +417,21 @@ void Volume_Thread(void)
         // Adjust volume
         if (y > 400)
         {
-            volume += 250;
+            volume += volume_step;
         }
         else if (y < -400)
         {
-            volume -= 250;
+            volume -= volume_step;
         }
 
         // Adjust tempo
         if (x > 400)
         {
-            tempo = (tempo < 240) ? tempo + 5 : 240;
+            tempo = (tempo < 240) ? tempo + tempo_step : 240;
         }
         else if (x < -400)
         {
-            tempo = (tempo > 40) ? tempo - 5 : 40;
+            tempo = (tempo > 40) ? tempo - tempo_step : 40;
         }
 
         // Limit volume to 0-4095 (12 bit range)
