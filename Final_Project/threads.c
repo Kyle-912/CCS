@@ -24,7 +24,7 @@
 uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260}; // Modify to change pitches played in Hz (Currently a C major scale)
 uint16_t volume_step = 250;                                         // Modify to change volume adjustment speed
 uint8_t tempo_step = 5;                                             // Modify to change tempo adjustment speed
-#define MAX_PAGES 3                                                 // Modify to add or remove pages
+#define MAX_PAGES 2                                                 // Modify to add or remove pages
 
 // Playback
 #define SIGNAL_STEPS (2)
