@@ -20,7 +20,7 @@
 
 #define SIGNAL_STEPS (2)
 
-#define MAX_PAGES 2 // Modify to add or remove pages
+#define MAX_PAGES 3 // Modify to add or remove pages
 
 /*********************************Global Variables**********************************/
 
