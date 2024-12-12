@@ -18,18 +18,16 @@
 
 #include "GFX_Library.h"
 
-#define SIGNAL_STEPS (2)
-
-#define MAX_PAGES 3 // Modify to add or remove pages
-
 /*********************************Global Variables**********************************/
 
 // Settings
 uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260}; // Modify to change pitches played in Hz (Currently a C major scale)
 uint16_t volume_step = 250;                                         // Modify to change volume adjustment speed
 uint8_t tempo_step = 5;                                             // Modify to change tempo adjustment speed
+#define MAX_PAGES 3                                                 // Modify to add or remove pages
 
 // Playback
+#define SIGNAL_STEPS (2)
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t volume = 0xFFF;

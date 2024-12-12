@@ -2,6 +2,7 @@
 // Created: 2024-11-30
 // Updated: 2024-12-12
 /*
+Controls:
 SW1 - Up
 SW2 - Down
 SW3 - Left
@@ -16,6 +17,8 @@ Thumbstick up - Volume up
 Thumbstick down - Volume down
 Thumbstick left - Lower tempo
 Thumbstick right - Raise tempo
+
+Settings at the top of threads.c
 */
 
 /************************************Includes***************************************/
@@ -38,7 +41,7 @@ Thumbstick right - Raise tempo
 
 int main(void)
 {
-    // Sets clock speed to 80 MHz. You'll need it!
+    // Sets clock speed to 80 MHz
     SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
 
     // Initialize the G8RTOS framework
