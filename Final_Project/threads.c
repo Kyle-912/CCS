@@ -23,6 +23,8 @@
 
 /*********************************Global Variables**********************************/
 
+uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
+
 uint16_t dac_step = 0;
 int16_t dac_signal[SIGNAL_STEPS] = {0x001, 0x000};
 int16_t volume = 0xFFF;
@@ -66,7 +68,6 @@ void InitializeGridDisplay()
 
 void PlayNoteAtRow(uint8_t row)
 {
-    uint16_t frequencies[8] = {130, 147, 165, 175, 196, 220, 247, 260};
     uint32_t period = SysCtlClockGet() / (frequencies[row] * 2);
     TimerDisable(TIMER1_BASE, TIMER_A);
     TimerLoadSet(TIMER1_BASE, TIMER_A, period - 1);
