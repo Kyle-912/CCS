@@ -90,7 +90,7 @@ void Idle_Thread(void)
 void Speaker_Thread(void)
 {
     uint8_t saved_page = 0;
-    uint8_t prev_col = -1;
+    int8_t prev_col = -1;
 
     while (1)
     {
